@@ -1,0 +1,37 @@
+{
+  "name": "anytype-test",
+  "version": "1.0.0",
+  "description": "middletest",
+  "main": "index.ts",
+  "scripts": {
+    "test": "test",
+    "test:e2e": "cucumber-js --require support/step_definitons/*.ts features/*.feature"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anyproto/anytype-test.git"
+  },
+  "author": "Anastasia Shamray",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anyproto/anytype-test/issues"
+  },
+  "homepage": "https://github.com/anyproto/anytype-test#readme",
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.8.0",
+    "@faker-js/faker": "^8.4.1",
+    "@grpc/grpc-js": "^1.10.10",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.10",
+    "@types/unzipper": "^0.10.10",
+    "axios": "^1.7.4",
+    "jest": "^29.2.0",
+    "ts-jest": "^29.2.0",
+    "ts-node": "^10.9.2",
+    "unzipper": "^0.12.3"
+  },
+  "dependencies": {
+    "@protobuf-ts/runtime-rpc": "^2.9.4",
+    "ejs": "^3.1.10"
+  }
+}

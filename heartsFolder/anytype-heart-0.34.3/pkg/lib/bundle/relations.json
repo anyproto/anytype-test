@@ -1,0 +1,1732 @@
+[
+  {
+    "format": "tag",
+    "hidden": false,
+    "key": "tag",
+    "maxCount": 0,
+    "name": "Tag",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Camera used to capture image or video",
+    "format": "longtext",
+    "hidden": false,
+    "key": "camera",
+    "maxCount": 1,
+    "name": "Camera",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Height of image/video in pixels",
+    "format": "number",
+    "hidden": false,
+    "key": "heightInPixels",
+    "maxCount": 1,
+    "name": "Height",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Date when the object was initially created",
+    "format": "date",
+    "hidden": false,
+    "key": "createdDate",
+    "maxCount": 1,
+    "name": "Creation date",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "description": "Date when the object will be deleted from your device",
+    "format": "date",
+    "hidden": true,
+    "key": "toBeDeletedDate",
+    "maxCount": 1,
+    "name": "Date to delete",
+    "readonly": true,
+    "source": "account"
+  },
+  {
+    "description": "Prioritized target types for the relation's value",
+    "format": "object",
+    "hidden": true,
+    "key": "relationFormatObjectTypes",
+    "maxCount": 0,
+    "name": "Relation's target object types",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Relation key",
+    "format": "longtext",
+    "hidden": true,
+    "key": "relationKey",
+    "maxCount": 1,
+    "name": "Relation key",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Relation option color",
+    "format": "longtext",
+    "hidden": true,
+    "key": "relationOptionColor",
+    "maxCount": 1,
+    "name": "Relation option color",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Latest Acl head id",
+    "format": "longtext",
+    "hidden": true,
+    "key": "latestAclHeadId",
+    "maxCount": 1,
+    "name": "Latest acl head id",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "instructions",
+    "maxCount": 1,
+    "name": "Instructions",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Done checkbox used to render action layout. ",
+    "format": "checkbox",
+    "hidden": true,
+    "key": "done",
+    "maxCount": 1,
+    "name": "Done",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Artist URL",
+    "format": "url",
+    "hidden": true,
+    "key": "mediaArtistURL",
+    "maxCount": 1,
+    "name": "Media Artist URL",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Specifies whether template is provided by anytype",
+    "format": "checkbox",
+    "hidden": true,
+    "key": "templateIsBundled",
+    "maxCount": 1,
+    "name": "Bundled Template",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "format": "date",
+    "hidden": false,
+    "key": "dateOfBirth",
+    "maxCount": 1,
+    "name": "Birthday",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Object restrictions list",
+    "format": "number",
+    "hidden": true,
+    "key": "restrictions",
+    "maxCount": 0,
+    "name": "Object restrictions",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "description": "Readers limit",
+    "format": "number",
+    "hidden": true,
+    "key": "readersLimit",
+    "maxCount": 1,
+    "name": "Readers limit",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "description": "Writers limit",
+    "format": "number",
+    "hidden": true,
+    "key": "writersLimit",
+    "maxCount": 1,
+    "name": "Writers limit",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "description": "Shared spaces limit",
+    "format": "number",
+    "hidden": true,
+    "key": "sharedSpacesLimit",
+    "maxCount": 1,
+    "name": "Shared spaces limit",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "description": "Adds the object to the highlighted dataview in space",
+    "format": "checkbox",
+    "hidden": true,
+    "key": "isHighlighted",
+    "maxCount": 1,
+    "name": "Highlighted",
+    "readonly": false,
+    "source": "account"
+  },
+  {
+    "format": "file",
+    "hidden": false,
+    "key": "thumbnailImage",
+    "maxCount": 0,
+    "name": "Thumbnail image",
+    "objectTypes": [
+      "image"
+    ],
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "file",
+    "hidden": false,
+    "key": "attachments",
+    "maxCount": 0,
+    "name": "Attachments",
+    "objectTypes": [
+      "file",
+      "image",
+      "video",
+      "audio"
+    ],
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "The artist that performed this album or recording",
+    "format": "longtext",
+    "hidden": false,
+    "key": "audioArtist",
+    "maxCount": 1,
+    "name": "Recording Artist",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "List of related tasks\n",
+    "format": "object",
+    "hidden": false,
+    "key": "tasks",
+    "maxCount": 0,
+    "name": "Tasks",
+    "objectTypes": [
+      "task"
+    ],
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Plaintext extracted from the object's blocks ",
+    "format": "longtext",
+    "hidden": true,
+    "key": "snippet",
+    "maxCount": 1,
+    "name": "Snippet",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "hypothesisAssumptions",
+    "maxCount": 1,
+    "name": "Hypothesis & assumptions",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Type of the underlying value",
+    "format": "number",
+    "hidden": true,
+    "key": "relationFormat",
+    "maxCount": 1,
+    "name": "Format",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Indicates whether the relation value is readonly",
+    "format": "checkbox",
+    "hidden": true,
+    "key": "relationReadonlyValue",
+    "maxCount": 1,
+    "name": "Relation value is readonly",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Image icon",
+    "format": "file",
+    "hidden": true,
+    "key": "iconImage",
+    "maxCount": 1,
+    "name": "Image",
+    "objectTypes": [
+      "image"
+    ],
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "ingredients",
+    "maxCount": 1,
+    "name": "Ingredients",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "tag",
+    "hidden": false,
+    "key": "genre",
+    "maxCount": 0,
+    "name": "Genre",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "solution",
+    "maxCount": 1,
+    "name": "Solution",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Year when this object were released",
+    "format": "number",
+    "hidden": false,
+    "key": "releasedYear",
+    "maxCount": 1,
+    "name": "Released year",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Option that contains scale of Cover the image",
+    "format": "number",
+    "hidden": true,
+    "key": "coverScale",
+    "maxCount": 1,
+    "name": "Cover scale",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "url",
+    "hidden": false,
+    "key": "twitter",
+    "maxCount": 1,
+    "name": "Twitter",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "userStories",
+    "maxCount": 1,
+    "name": "User stories",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "relationDefaultValue",
+    "maxCount": 1,
+    "name": "Default value",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "object",
+    "hidden": false,
+    "key": "linkedProjects",
+    "maxCount": 0,
+    "name": "Linked Projects",
+    "readonly": false,
+    "source": "details",
+    "objectTypes": [
+      "project"
+    ]
+  },
+  {
+    "description": "Audio record's album name",
+    "format": "longtext",
+    "hidden": false,
+    "key": "audioAlbum",
+    "maxCount": 1,
+    "name": "Album",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "problem",
+    "maxCount": 1,
+    "name": "Problem",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Specify visual align of the layout",
+    "format": "number",
+    "hidden": true,
+    "key": "layoutAlign",
+    "maxCount": 1,
+    "name": "Layout align",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "object",
+    "hidden": false,
+    "key": "class",
+    "maxCount": 0,
+    "name": "Class",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "number",
+    "hidden": false,
+    "key": "difficulty",
+    "maxCount": 1,
+    "name": "Difficulty",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "object",
+    "hidden": false,
+    "key": "director",
+    "maxCount": 0,
+    "name": "Director",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Task status",
+    "format": "status",
+    "hidden": false,
+    "key": "status",
+    "maxCount": 1,
+    "name": "Status",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "logic",
+    "maxCount": 1,
+    "name": "Logic",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "alternative",
+    "maxCount": 1,
+    "name": "Alternative",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "object",
+    "hidden": false,
+    "key": "linkedContacts",
+    "maxCount": 0,
+    "name": "Linked Contacts",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "number",
+    "hidden": false,
+    "key": "rottenTomatoesRating",
+    "maxCount": 1,
+    "name": "Rotten Tomatoes rating",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Specify if object is hidden",
+    "format": "checkbox",
+    "hidden": true,
+    "key": "isHidden",
+    "maxCount": 1,
+    "name": "Hidden",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Specify if object discovery is hidden",
+    "format": "checkbox",
+    "hidden": true,
+    "key": "isHiddenDiscovery",
+    "maxCount": 1,
+    "name": "Discovery hidden",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "additional",
+    "maxCount": 1,
+    "name": "Additional",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "number",
+    "hidden": false,
+    "key": "budget",
+    "maxCount": 1,
+    "name": "Budget",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Artist name",
+    "format": "longtext",
+    "hidden": true,
+    "key": "mediaArtistName",
+    "maxCount": 1,
+    "name": "Media Artist Name",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "rating",
+    "maxCount": 1,
+    "name": "Rating",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "email",
+    "hidden": false,
+    "key": "email",
+    "maxCount": 1,
+    "name": "Email",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "object",
+    "hidden": false,
+    "key": "company",
+    "maxCount": 1,
+    "name": "Company",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "aperture",
+    "maxCount": 1,
+    "name": "Camera aperture",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Date when the object was modified last time",
+    "format": "date",
+    "hidden": false,
+    "key": "lastModifiedDate",
+    "maxCount": 1,
+    "name": "Last modified date",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "format": "object",
+    "hidden": false,
+    "key": "stakeholders",
+    "maxCount": 0,
+    "name": "Stakeholders",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "measureOfSuccess",
+    "maxCount": 1,
+    "name": "Measure of success",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "List of recommended relations",
+    "format": "object",
+    "hidden": true,
+    "key": "recommendedRelations",
+    "maxCount": 0,
+    "name": "Recommended relations",
+    "objectTypes": [
+      "relation"
+    ],
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Human which created this object",
+    "format": "object",
+    "hidden": false,
+    "key": "creator",
+    "maxCount": 1,
+    "name": "Created by",
+    "readonly": true,
+    "source": "derived",
+    "revision": 1
+  },
+  {
+    "description": "Recommended layout for new templates and objects of specific objec",
+    "format": "number",
+    "hidden": true,
+    "key": "recommendedLayout",
+    "maxCount": 1,
+    "name": "Recommended layout",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "result",
+    "maxCount": 1,
+    "name": "Result",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "checkbox",
+    "hidden": false,
+    "key": "reflection",
+    "maxCount": 1,
+    "name": "Reflection",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Date when the object was modified last opened",
+    "format": "date",
+    "hidden": false,
+    "key": "lastOpenedDate",
+    "maxCount": 1,
+    "name": "Last opened date",
+    "readonly": true,
+    "source": "account"
+  },
+  {
+    "format": "object",
+    "hidden": false,
+    "key": "author",
+    "maxCount": 0,
+    "name": "Author",
+    "readonly": false,
+    "source": "details",
+    "objectTypes": [
+      "profile",
+      "contact",
+      "participant"
+    ],
+    "revision": 1
+  },
+  {
+    "description": "Name of artist",
+    "format": "longtext",
+    "hidden": false,
+    "key": "artist",
+    "maxCount": 1,
+    "name": "Artist",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "date",
+    "hidden": false,
+    "key": "dueDate",
+    "maxCount": 1,
+    "name": "Due date",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "records",
+    "maxCount": 1,
+    "name": "Records",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "1 emoji(can contains multiple UTF symbols) used as an icon",
+    "format": "emoji",
+    "hidden": true,
+    "key": "iconEmoji",
+    "maxCount": 1,
+    "name": "Emoji",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "1-image, 2-color, 3-gradient, 4-prebuilt bg image. Value stored in coverId",
+    "format": "number",
+    "hidden": true,
+    "key": "coverType",
+    "maxCount": 1,
+    "name": "Cover type",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Image y offset of the provided image",
+    "format": "number",
+    "hidden": true,
+    "key": "coverY",
+    "maxCount": 1,
+    "name": "Cover y offset",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "number",
+    "hidden": false,
+    "key": "time",
+    "maxCount": 1,
+    "name": "Time",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Size of file/image in bytes",
+    "format": "number",
+    "hidden": false,
+    "key": "sizeInBytes",
+    "maxCount": 1,
+    "name": "Size",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Point to the object types that can be added to collection. Empty means any object type can be added to the collection",
+    "format": "object",
+    "hidden": false,
+    "key": "collectionOf",
+    "maxCount": 0,
+    "name": "Collection of",
+    "objectTypes": [
+      "objectType"
+    ],
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "object",
+    "hidden": false,
+    "key": "events",
+    "maxCount": 0,
+    "name": "Events",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "timeframe",
+    "maxCount": 1,
+    "name": "Timeframe",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Indicates whether the object is read-only. Means it can't be edited and archived",
+    "format": "checkbox",
+    "hidden": true,
+    "key": "isReadonly",
+    "maxCount": 1,
+    "name": "Readonly",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "description": "Date when the file were added into the anytype",
+    "format": "date",
+    "hidden": false,
+    "key": "addedDate",
+    "maxCount": 1,
+    "name": "Added date",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Person who is responsible for this task or object",
+    "format": "object",
+    "hidden": false,
+    "key": "assignee",
+    "maxCount": 0,
+    "name": "Assignee",
+    "readonly": false,
+    "source": "details",
+    "objectTypes": [
+      "profile",
+      "contact",
+      "participant"
+    ],
+    "revision": 1
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "exposure",
+    "maxCount": 1,
+    "name": "Camera exposure",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Type that is used for templating",
+    "format": "object",
+    "hidden": true,
+    "key": "targetObjectType",
+    "maxCount": 1,
+    "name": "Template's Type",
+    "objectTypes": [
+      "objectType"
+    ],
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "materials",
+    "maxCount": 1,
+    "name": "Materials",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Adds the object to the home dashboard",
+    "format": "checkbox",
+    "hidden": true,
+    "key": "isFavorite",
+    "maxCount": 1,
+    "name": "Favorited",
+    "readonly": false,
+    "source": "account"
+  },
+  {
+    "format": "object",
+    "hidden": false,
+    "key": "stars",
+    "maxCount": 0,
+    "name": "Stars",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Space object belongs to",
+    "format": "object",
+    "hidden": true,
+    "key": "workspaceId",
+    "maxCount": 1,
+    "name": "Space",
+    "objectTypes": [
+      "space"
+    ],
+    "readonly": true,
+    "source": "local"
+  },
+  {
+    "description": "Space belongs to",
+    "format": "object",
+    "hidden": true,
+    "key": "spaceId",
+    "maxCount": 1,
+    "name": "Space ID",
+    "objectTypes": [
+      "space"
+    ],
+    "readonly": true,
+    "source": "local"
+  },
+  {
+    "description": "Audio record's genre name",
+    "format": "longtext",
+    "hidden": false,
+    "key": "audioGenre",
+    "maxCount": 1,
+    "name": "Genre",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "url",
+    "hidden": false,
+    "key": "telegram",
+    "maxCount": 1,
+    "name": "Telegram",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "file",
+    "hidden": false,
+    "key": "trailer",
+    "maxCount": 0,
+    "name": "Trailer",
+    "objectTypes": [
+      "file",
+      "image",
+      "video",
+      "audio"
+    ],
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Name of the object",
+    "format": "shorttext",
+    "hidden": true,
+    "key": "name",
+    "maxCount": 1,
+    "name": "Name",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "tag",
+    "hidden": false,
+    "key": "mood",
+    "maxCount": 0,
+    "name": "Mood",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "The text lyrics of the music record",
+    "format": "longtext",
+    "hidden": false,
+    "key": "audioLyrics",
+    "maxCount": 1,
+    "name": "Lyrics",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "url",
+    "hidden": false,
+    "key": "instagram",
+    "maxCount": 1,
+    "name": "Instagram",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "tag",
+    "hidden": false,
+    "key": "classType",
+    "maxCount": 0,
+    "name": "Class type",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "howToReproduce",
+    "maxCount": 1,
+    "name": "How-to reproduce",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "number",
+    "hidden": false,
+    "key": "focalRatio",
+    "maxCount": 1,
+    "name": "Focal ratio",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Used to order tasks in list/canban",
+    "format": "number",
+    "hidden": false,
+    "key": "priority",
+    "maxCount": 1,
+    "name": "Priority",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Mime type of object",
+    "format": "longtext",
+    "hidden": true,
+    "key": "fileMimeType",
+    "maxCount": 1,
+    "name": "Mime type",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Relation that stores the object's type",
+    "format": "object",
+    "hidden": false,
+    "key": "type",
+    "maxCount": 1,
+    "name": "Object type",
+    "objectTypes": [
+      "objectType"
+    ],
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "description": "Anytype layout ID(from pb enum)",
+    "format": "number",
+    "hidden": true,
+    "key": "layout",
+    "maxCount": 1,
+    "name": "Layout",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Number of the track in the",
+    "format": "number",
+    "hidden": false,
+    "key": "audioAlbumTrackNumber",
+    "maxCount": 1,
+    "name": "Track #",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "placeOfBirth",
+    "maxCount": 1,
+    "name": "Place of birth",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "composer",
+    "maxCount": 1,
+    "name": "Composer",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Set of internal flags",
+    "format": "number",
+    "hidden": true,
+    "key": "internalFlags",
+    "maxCount": 0,
+    "name": "Internal flags",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "format": "url",
+    "hidden": false,
+    "key": "socialProfile",
+    "maxCount": 1,
+    "name": "Profile in social media",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "occupation",
+    "maxCount": 1,
+    "name": "Occupation",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Image x offset of the provided image",
+    "format": "number",
+    "hidden": true,
+    "key": "coverX",
+    "maxCount": 1,
+    "name": "Cover x offset",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "description",
+    "maxCount": 1,
+    "name": "Description",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "url",
+    "hidden": false,
+    "key": "facebook",
+    "maxCount": 1,
+    "name": "Facebook",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "An image is an artifact that depicts visual perception, such as a photograph or other two-dimensional picture",
+    "format": "file",
+    "hidden": true,
+    "key": "picture",
+    "maxCount": 1,
+    "name": "Picture",
+    "objectTypes": [
+      "image"
+    ],
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Link to itself. Used in databases",
+    "format": "object",
+    "hidden": true,
+    "key": "id",
+    "maxCount": 1,
+    "name": "Anytype ID",
+    "readonly": false,
+    "source": "derived"
+  },
+  {
+    "description": "Web address, a reference to a web resource that specifies its location on a computer network and a mechanism for retrieving it",
+    "format": "url",
+    "hidden": false,
+    "key": "url",
+    "maxCount": 1,
+    "name": "URL",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "objectives",
+    "maxCount": 1,
+    "name": "Objectives",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "number",
+    "hidden": false,
+    "key": "cameraIso",
+    "maxCount": 1,
+    "name": "ISO",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Relation that indicates document has been deleted",
+    "format": "checkbox",
+    "hidden": true,
+    "key": "isDeleted",
+    "maxCount": 1,
+    "name": "Is deleted",
+    "readonly": true,
+    "source": "local"
+  },
+  {
+    "description": "Outgoing links",
+    "format": "object",
+    "hidden": false,
+    "key": "links",
+    "maxCount": 0,
+    "name": "Links",
+    "readonly": true,
+    "source": "derived",
+    "revision": 3
+  },
+  {
+    "format": "number",
+    "hidden": false,
+    "key": "servings",
+    "maxCount": 1,
+    "name": "Servings",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "tag",
+    "hidden": false,
+    "key": "category",
+    "maxCount": 0,
+    "name": "Category",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Can contains image hash, color or prebuild bg id, depends on coverType relation",
+    "format": "longtext",
+    "hidden": true,
+    "key": "coverId",
+    "maxCount": 1,
+    "name": "Cover image or color",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Human who updated the object last time",
+    "format": "object",
+    "hidden": false,
+    "key": "lastModifiedBy",
+    "maxCount": 1,
+    "name": "Last modified by",
+    "objectTypes": [
+      "participant"
+    ],
+    "readonly": true,
+    "source": "derived",
+    "revision": 1
+  },
+  {
+    "description": "Relation allows multi values",
+    "format": "number",
+    "hidden": false,
+    "key": "relationMaxCount",
+    "maxCount": 1,
+    "name": "Max values",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "questions",
+    "maxCount": 1,
+    "name": "Questions",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Width of image/video in pixels",
+    "format": "number",
+    "hidden": false,
+    "key": "widthInPixels",
+    "maxCount": 1,
+    "name": "Width",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "number",
+    "hidden": false,
+    "key": "progress",
+    "maxCount": 1,
+    "name": "Progress",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Point to the object types or realtions used to aggregate the set. Empty means object of all types will be aggregated ",
+    "format": "object",
+    "hidden": false,
+    "key": "setOf",
+    "maxCount": 0,
+    "name": "Set of",
+    "objectTypes": [
+      "objectType"
+    ],
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "format": "status",
+    "hidden": false,
+    "key": "gender",
+    "maxCount": 1,
+    "name": "Gender",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Hides the object",
+    "format": "checkbox",
+    "hidden": true,
+    "key": "isArchived",
+    "maxCount": 1,
+    "name": "Archived",
+    "readonly": false,
+    "source": "account"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "fileExt",
+    "maxCount": 1,
+    "name": "File extension",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "scope",
+    "maxCount": 1,
+    "name": "Scope",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": false,
+    "key": "job",
+    "maxCount": 1,
+    "name": "Job",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Important relations that always appear at the top of the object",
+    "format": "object",
+    "hidden": true,
+    "key": "featuredRelations",
+    "maxCount": 0,
+    "name": "Featured Relations",
+    "objectTypes": [
+      "relation"
+    ],
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "phone",
+    "hidden": false,
+    "key": "phone",
+    "maxCount": 1,
+    "name": "Phone",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "number",
+    "hidden": false,
+    "key": "imdbRating",
+    "maxCount": 1,
+    "name": "IMDb rating",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Stored for object type. Contains tge list of smartblock types used to create the object",
+    "format": "number",
+    "hidden": true,
+    "key": "smartblockTypes",
+    "maxCount": 0,
+    "name": "Smartblock types",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "format": "url",
+    "hidden": false,
+    "key": "source",
+    "maxCount": 1,
+    "name": "Source",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "format": "object",
+    "hidden": false,
+    "key": "sourceObject",
+    "maxCount": 1,
+    "name": "Source object",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "format": "longtext",
+    "hidden": true,
+    "key": "oldAnytypeID",
+    "maxCount": 1,
+    "name": "Old Anytype ID",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Space Dashboard object ID",
+    "format": "object",
+    "key": "spaceDashboardId",
+    "maxCount": 1,
+    "hidden": true,
+    "name": "Space Dashboard ID",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Choose one of our pre-installed icons during On-boarding",
+    "format": "number",
+    "hidden": true,
+    "key": "iconOption",
+    "maxCount": 1,
+    "name": "Icon option",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "There are two options of accessibility of workspace - private (0) or public (1)",
+    "format": "number",
+    "hidden": true,
+    "key": "spaceAccessibility",
+    "maxCount": 1,
+    "name": "Space accessibility",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Space access type, see enum model.SpaceAccessType",
+    "format": "number",
+    "hidden": true,
+    "key": "spaceAccessType",
+    "maxCount": 1,
+    "name": "Space access type",
+    "readonly": false,
+    "source": "derived"
+  },
+  {
+    "description": "File path or url with original object",
+    "format": "longtext",
+    "hidden": true,
+    "key": "sourceFilePath",
+    "maxCount": 1,
+    "name": "Source file path",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "File sync status",
+    "format": "number",
+    "hidden": true,
+    "key": "fileSyncStatus",
+    "maxCount": 1,
+    "name": "File sync status",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "description": "File backup status",
+    "format": "number",
+    "hidden": true,
+    "key": "fileBackupStatus",
+    "maxCount": 1,
+    "name": "File backup status",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "File indexing status",
+    "format": "number",
+    "hidden": true,
+    "key": "fileIndexingStatus",
+    "maxCount": 1,
+    "name": "File indexing status",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Last change ID",
+    "format": "longtext",
+    "hidden": true,
+    "key": "lastChangeId",
+    "maxCount": 1,
+    "name": "Last change ID of the object",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "format": "checkbox",
+    "hidden": false,
+    "key": "starred",
+    "maxCount": 1,
+    "name": "Starred",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "ID of template chosen as default for particular object type",
+    "format": "object",
+    "key": "defaultTemplateId",
+    "maxCount": 1,
+    "hidden": true,
+    "name": "Default Template ID",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Unique key used to ensure object uniqueness within the space",
+    "format": "longtext",
+    "key": "uniqueKey",
+    "maxCount": 1,
+    "hidden": true,
+    "name": "Unique object key",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "description": "List of links coming to object",
+    "format": "object",
+    "key": "backlinks",
+    "maxCount": 0,
+    "hidden": false,
+    "name": "Backlinks",
+    "readonly": true,
+    "source": "local",
+    "revision": 3
+  },
+  {
+    "description": "Relation that indicates document has been uninstalled",
+    "format": "checkbox",
+    "hidden": true,
+    "key": "isUninstalled",
+    "maxCount": 1,
+    "name": "Is uninstalled",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Source of objects in Anytype (clipboard, import)",
+    "format": "number",
+    "hidden": false,
+    "key": "origin",
+    "maxCount": 1,
+    "name": "Origin",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Relation that indicates the local status of space. Possible values: models.SpaceStatus",
+    "format": "number",
+    "hidden": true,
+    "key": "spaceLocalStatus",
+    "maxCount": 1,
+    "name": "Space local status",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "description": "Relation that indicates the remote status of space. Possible values: models.SpaceStatus",
+    "format": "number",
+    "hidden": true,
+    "key": "spaceRemoteStatus",
+    "maxCount": 1,
+    "name": "Space remote status",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "description": "Specify if the space is shareable",
+    "format": "number",
+    "hidden": true,
+    "key": "spaceShareableStatus",
+    "maxCount": 1,
+    "name": "Space shareable status",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "description": "Specify if access control list is shared",
+    "format": "checkbox",
+    "hidden": true,
+    "key": "isAclShared",
+    "maxCount": 1,
+    "name": "Is Acl Shared",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "description": "Relation that indicates the status of space that the user is set. Possible values: models.SpaceStatus",
+    "format": "number",
+    "hidden": true,
+    "key": "spaceAccountStatus",
+    "maxCount": 1,
+    "name": "Space account status",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "CID of invite file for current space. It stored in SpaceView",
+    "format": "shorttext",
+    "hidden": true,
+    "key": "spaceInviteFileCid",
+    "maxCount": 1,
+    "name": "CID of invite file for current space",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Encoded encryption key of invite file for current space. It stored in SpaceView",
+    "format": "shorttext",
+    "hidden": true,
+    "key": "spaceInviteFileKey",
+    "maxCount": 1,
+    "name": "Encoded encryption key of invite file for current space",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Participant permissions. Possible values: models.ParticipantPermissions",
+    "format": "number",
+    "hidden": true,
+    "key": "participantPermissions",
+    "maxCount": 1,
+    "name": "Participant permissions",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Identity",
+    "format": "longtext",
+    "hidden": true,
+    "key": "identity",
+    "maxCount": 1,
+    "name": "Identity",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Participant status. Possible values: models.ParticipantStatus",
+    "format": "number",
+    "hidden": true,
+    "key": "participantStatus",
+    "maxCount": 1,
+    "name": "Participant status",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Link to the profile attached to Anytype Identity",
+    "format": "object",
+    "hidden": true,
+    "key": "identityProfileLink",
+    "maxCount": 1,
+    "name": "Profile link",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "description": "Link the profile object to specific Identity",
+    "format": "shorttext",
+    "key": "profileOwnerIdentity",
+    "maxCount": 1,
+    "hidden": false,
+    "name": "Anytype Identity",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "description": "Relation that indicates the real space id on the spaceView",
+    "format": "longtext",
+    "hidden": true,
+    "key": "targetSpaceId",
+    "maxCount": 1,
+    "name": "Target space id",
+    "readonly": true,
+    "source": "derived"
+  },
+  {
+    "format": "shorttext",
+    "hidden": true,
+    "key": "fileId",
+    "maxCount": 0,
+    "name": "Underlying file id",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Last time object type was used",
+    "format": "date",
+    "hidden": true,
+    "key": "lastUsedDate",
+    "maxCount": 1,
+    "name": "Last Used date",
+    "readonly": true,
+    "source": "local"
+  },
+  {
+    "description": "Revision of system object",
+    "format": "number",
+    "hidden": true,
+    "key": "revision",
+    "maxCount": 1,
+    "name": "Revision",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Describes how this image is used",
+    "format": "number",
+    "hidden": true,
+    "key": "imageKind",
+    "maxCount": 1,
+    "name": "Image kind",
+    "readonly": false,
+    "source": "details"
+  },
+  {
+    "description": "Import type, used to create object (notion, md and etc)",
+    "format": "number",
+    "hidden": false,
+    "key": "importType",
+    "maxCount": 1,
+    "name": "Import Type",
+    "readonly": true,
+    "source": "details"
+  },
+  {
+    "description": "Name of profile that the user could be mentioned by",
+    "format": "shorttext",
+    "hidden": false,
+    "key": "globalName",
+    "maxCount": 1,
+    "name": "Global name",
+    "readonly": true,
+    "source": "derived"
+  }
+]
