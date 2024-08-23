@@ -1,6 +1,0 @@
-server
-lib.a
-lib.h
-ios/*
-android/*
-cli
