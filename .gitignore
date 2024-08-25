@@ -2,3 +2,7 @@ node_modules
 heart
 cmd
 heartsFolder
+# Ignore everything in the tmp folder
+tmp/*
+# Except for the tmp directory itself
+!tmp/
