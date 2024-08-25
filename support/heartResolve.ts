@@ -7,12 +7,12 @@ export async function heartResolve(heartVersion: string) {
 
   switch (true) {
     case heartVersion === "default":
+      // Construct binPath and workingDir using __dirname to make them relative to the current script's location
       binPath = path.resolve(
-        "/Users/shamray/workspace/anytype-test/cmd/anytype-heart/cmd/grpcserver"
+        __dirname,
+        "../../cmd/anytype-heart/cmd/grpcserver"
       );
-      workingDir = path.resolve(
-        "/Users/shamray/workspace/anytype-test/cmd/anytype-heart"
-      );
+      workingDir = path.resolve(__dirname, "../../cmd/anytype-heart");
       break;
 
     case heartVersion.startsWith("v0"):

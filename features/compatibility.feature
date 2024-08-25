@@ -16,8 +16,8 @@ Feature: Compatibility
     Then the user can open the object 1
 
     Examples:
-      | version1  | version2  |
-      | "v0.33.7" | "v0.34.3" |
+      | version1 | version2 |
       # | "default" | "default" |
-      #| "v0.33.7" | "v0.35.3" |
-      #| "v0.34.3" | "v0.35.3" |
+      | "v0.34.3" | "v0.35.4" |
+      | "v0.34.3" | "v0.36.0-rc1" |
+      | "v0.35.4" | "v0.36.0-rc1" |

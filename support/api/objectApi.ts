@@ -15,7 +15,6 @@ import {
  */
 export async function callCreateObject(objectNumber: number): Promise<void> {
   console.log("### Initiating object creation...");
-
   const client = getCurrentClient();
   const currentUser = store.currentUser;
 

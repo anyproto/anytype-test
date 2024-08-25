@@ -37,6 +37,7 @@ function getCurrentClient() {
           }
 
           console.log(`Adding metadata to method ${prop.toString()}`);
+          console.log(`The used token is ${token}`);
 
           // Find the correct position to insert or merge metadata
           const lastArg = args[args.length - 1];

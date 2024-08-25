@@ -1,0 +1,96 @@
+{
+  "index_settings": {
+    "docstore_compression": "lz4",
+    "docstore_blocksize": 16384
+  },
+  "segments": [
+    {
+      "segment_id": "65546912-d255-4bf2-992c-dfebed7aa9ed",
+      "max_doc": 660,
+      "deletes": null
+    },
+    {
+      "segment_id": "0282c029-8cf9-4a1f-87b2-74dca663b5b6",
+      "max_doc": 1,
+      "deletes": null
+    },
+    {
+      "segment_id": "f15b89f4-103b-4d4d-ac47-1cd07837a6bf",
+      "max_doc": 1,
+      "deletes": null
+    },
+    {
+      "segment_id": "72477cc8-71d4-4d06-8a25-eec90bcfebda",
+      "max_doc": 1,
+      "deletes": null
+    }
+  ],
+  "schema": [
+    {
+      "name": "Id",
+      "type": "text",
+      "options": {
+        "indexing": {
+          "record": "position",
+          "fieldnorms": true,
+          "tokenizer": "SimpleIdTokenizer"
+        },
+        "stored": true,
+        "fast": false
+      }
+    },
+    {
+      "name": "IdRaw",
+      "type": "text",
+      "options": {
+        "indexing": {
+          "record": "basic",
+          "fieldnorms": true,
+          "tokenizer": "raw"
+        },
+        "stored": true,
+        "fast": true
+      }
+    },
+    {
+      "name": "SpaceID",
+      "type": "text",
+      "options": {
+        "indexing": {
+          "record": "basic",
+          "fieldnorms": true,
+          "tokenizer": "raw"
+        },
+        "stored": true,
+        "fast": true
+      }
+    },
+    {
+      "name": "Title",
+      "type": "text",
+      "options": {
+        "indexing": {
+          "record": "position",
+          "fieldnorms": true,
+          "tokenizer": "ngram"
+        },
+        "stored": true,
+        "fast": false
+      }
+    },
+    {
+      "name": "Text",
+      "type": "text",
+      "options": {
+        "indexing": {
+          "record": "position",
+          "fieldnorms": true,
+          "tokenizer": "simple"
+        },
+        "stored": true,
+        "fast": false
+      }
+    }
+  ],
+  "opstamp": 1345
+}

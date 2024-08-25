@@ -2,9 +2,17 @@ import { getCurrentClient, GRPCClientManager } from "../client";
 import { store } from "../helpers/store";
 import { UserType } from "../dataTypes";
 import * as fs from "fs";
+import * as path from "path";
 import { faker } from "@faker-js/faker";
 import { Rpc_Wallet_CreateSession_Request } from "../../pb/pb/protos/commands";
-const tempDir = fs.mkdtempSync("./tmp/anytype-test-");
+// Create a unique temporary directory inside the 'tmp' folder located two levels up from the current directory.
+// 'path.resolve' navigates to the project root by moving up two levels ('../../') and then appending 'tmp'.
+// 'fs.mkdtempSync' creates a new temporary directory with a unique name that starts with 'anytype-test-'.
+const tempDir = fs.mkdtempSync(
+  path.join(path.resolve(__dirname, "../../tmp"), "anytype-test-")
+);
+
+console.log(`Temporary directory created at: ${tempDir}`);
 
 export async function callWalletCreate(userNumber: number): Promise<void> {
   console.log("### Calling method 'walletCreate'...");
@@ -88,7 +96,7 @@ export async function callWalletRecover(userNumber: number): Promise<void> {
         }
       }
     );
-
+    console.log(tempDir);
     call.on("metadata", (metadata) => {
       console.log("Response headers:", JSON.stringify(metadata, null, 2));
     });
@@ -113,7 +121,6 @@ export async function callWalletCreateSession(
         mnemonic: mnemonic,
       },
     };
-
     const call = client.walletCreateSession(request, (err, value) => {
       if (err) {
         console.error("Error:", JSON.stringify(err, null, 2));
