@@ -6,3 +6,7 @@ heartsFolder
 tmp/*
 # Except for the tmp directory itself
 !tmp/
+cmd/*
+!cmd/
+# macOS system files
+.DS_Store
