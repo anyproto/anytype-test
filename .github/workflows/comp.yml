@@ -1,0 +1,52 @@
+name: Run Compatibility Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Tests on Different Platforms
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        architecture: [amd64, arm64] # arm64 is included but we will conditionally skip it for certain OS
+        exclude:
+          - os: ubuntu-latest
+            architecture: arm64
+          - os: windows-latest
+            architecture: arm64
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm # Cache the npm modules
+          key: ${{ runner.os }}-npm-cache-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-cache-
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '22' # or specify any version you need
+
+      - name: Cache downloaded versions
+        uses: actions/cache@v3
+        with:
+          path: heartsFolder/ # Cache the heartsFolder directory
+          key: ${{ runner.os }}-hearts-cache
+
+      - name: Run getHearts.sh script
+        run: |
+          chmod +x ./getHearts.sh
+          ./getHearts.sh ${{ matrix.os }} ${{ matrix.architecture }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run compatibility tests
+        run: npm run test:comp
