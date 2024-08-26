@@ -39,7 +39,7 @@ jobs:
         with:
           path: heartsFolder/ # Cache the heartsFolder directory
           key: ${{ runner.os }}-hearts-cache
-
+      
       - name: Run getHearts.sh script
         run: |
           chmod +x ./getHearts.sh
@@ -47,6 +47,12 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Print Directory Structure
+        run: |
+          echo "Printing the directory structure..."
+          find . -type d
+          find . -type f
 
       - name: Run compatibility tests
         run: npm run test:comp
