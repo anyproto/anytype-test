@@ -98,3 +98,7 @@ for ((i = 0; i < ${#versions[@]}; i++)); do
  done
 done
 printf "All tasks completed. Compatibility combinations appended to $FEATURE_FILE_SYNC and $FEATURE_FILE_LOCAL.\n"
+   echo "   | \"${versions[$i]}\" | \"${versions[$j]}\" |" >> "$FEATURE_FILE"
+ done
+done
+printf "All tasks completed. Compatibility combinations appended to $FEATURE_FILE.\n"
