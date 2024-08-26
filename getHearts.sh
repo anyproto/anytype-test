@@ -11,13 +11,13 @@ platform=${1:-ubuntu-latest};
 arch=$2;
 folder="build";
 
-if [ "$platform" = "ubuntu-latest" ]; then
+if [ "$platform" = "ubuntu" ]; then
   arch="linux-$arch";
   folder="$arch";
-elif [ "$platform" = "macos-12" ]; then
+elif [ "$platform" = "macos" ]; then
   arch="darwin-$arch";
   folder="$arch";
-elif [ "$platform" = "windows-latest" ]; then
+elif [ "$platform" = "windows" ]; then
   arch="windows";
   folder="dist";
   FILE="addon.zip"  # File name for Windows platform
@@ -27,7 +27,7 @@ echo "Arch: $arch"
 echo "Folder: $folder"
 echo ""
 
-if [ "$arch" = "" ]; then
+if [ -z "$arch" ]; then
   echo "ERROR: arch not found"
   exit 1
 fi;
@@ -53,6 +53,13 @@ for i in "${!versions[@]}"; do
 
   echo "Latest release: $release_tag"
   
+  # Check if the version folder already exists
+  version_folder="$HEARTS_FOLDER/$(echo $release_tag | sed 's/^v//')"
+  if [ -d "$version_folder" ] && [ "$(ls -A $version_folder)" ]; then
+    echo "Folder $version_folder already exists and is not empty. Skipping download."
+    continue
+  fi
+
   # Get the asset ID for the release
   asset_id=$(echo "$release_info" | jq -r --arg tag "$release_tag" --arg arch "$arch" '.[] | select(.tag_name == $tag) | .assets[] | select(.name | test(".*_" + $arch)) | .id')
 
@@ -62,14 +69,13 @@ for i in "${!versions[@]}"; do
   fi
 
   # Create a version-specific folder in heartsFolder
-  version_folder="$HEARTS_FOLDER/$(echo $release_tag | sed 's/^v//')"
   mkdir -p "$version_folder"
 
   # Define the file path where the downloaded file will be saved
   file_path="$version_folder/$FILE"
   
   echo "Downloading file for $release_tag..."
-  curl -sL -H 'Accept: application/octet-stream' "https://$GITHUB/repos/$REPO/releases/assets/$asset_id" > "$file_path"
+  curl -sL -H 'Accept: application/octet-stream' "https://$GITHUB/repos/$REPO/releases/assets/$asset_id" -o "$file_path"
   
   echo "Uncompressing..."
   if [ "$platform" = "windows-latest" ]; then
