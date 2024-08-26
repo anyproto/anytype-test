@@ -4,8 +4,8 @@
   "description": "middletest",
   "main": "index.ts",
   "scripts": {
-    "test": "test",
-    "test:e2e": "cucumber-js --require support/step_definitons/*.ts features/*.feature"
+    "test:e2e": "cucumber-js --tags @e2e",
+    "test:comp": "cucumber-js --tags @compatibility"
   },
   "repository": {
     "type": "git",

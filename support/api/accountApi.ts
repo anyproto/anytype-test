@@ -3,10 +3,12 @@ import { store } from "../helpers/store";
 import {
   Rpc_Account_Create_Request,
   Rpc_Account_Create_Response,
+  Rpc_Account_NetworkMode,
   Rpc_Account_Select_Request,
   Rpc_Account_Select_Response,
 } from "../../pb/pb/protos/commands";
 import { makeGrpcCall } from "../helpers/utils";
+import * as path from "path";
 /**
  * Calls the accountCreate method on the gRPC client and handles the response.
  * @param userNumber The number associated with the user in the store.
@@ -19,6 +21,9 @@ export async function callAccountCreate(userNumber: number): Promise<void> {
   if (!userData) {
     throw new Error(`User data not found for user number ${userNumber}`);
   }
+  //check if "../../config.yml" is the correct path
+  const configPath = path.resolve(__dirname, "../../config.yml");
+  console.log(`Using config path: ${configPath}`);
 
   const request: Rpc_Account_Create_Request = {
     name: userData.name || "test",
@@ -26,8 +31,8 @@ export async function callAccountCreate(userNumber: number): Promise<void> {
     storePath: "",
     icon: BigInt(5),
     disableLocalNetworkSync: false,
-    networkMode: 0,
-    networkCustomConfigFilePath: "",
+    networkMode: Rpc_Account_NetworkMode.CustomConfig,
+    networkCustomConfigFilePath: configPath,
     preferYamuxTransport: false,
   };
 
@@ -63,6 +68,8 @@ export async function callAccountCreate(userNumber: number): Promise<void> {
  */
 export async function callAccountSelect(userNumber: number): Promise<void> {
   console.log("### Initiating account selection...");
+  const configPath = path.resolve(__dirname, "../../config.yml");
+  console.log(`Using config path: ${configPath}`);
 
   const userData = store.users.get(userNumber);
   if (!userData || !userData.accountId) {
@@ -75,8 +82,8 @@ export async function callAccountSelect(userNumber: number): Promise<void> {
     id: userData.accountId,
     rootPath: "",
     disableLocalNetworkSync: false,
-    networkMode: 0,
-    networkCustomConfigFilePath: "",
+    networkMode: Rpc_Account_NetworkMode.CustomConfig,
+    networkCustomConfigFilePath: configPath,
     preferYamuxTransport: false,
   };
 

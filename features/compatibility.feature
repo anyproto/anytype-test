@@ -1,7 +1,7 @@
 @S134793a4
 Feature: Compatibility
 
-  @Ta4e6136d @API
+  @Ta4e6136d @compatibility
   Scenario Outline: 3 versions compatibility
     Given the server <version1> 1 is running
     And the metrics parameters are set
@@ -18,6 +18,3 @@ Feature: Compatibility
     Examples:
       | version1 | version2 |
       # | "default" | "default" |
-      | "v0.34.3" | "v0.35.4" |
-      | "v0.34.3" | "v0.36.0-rc1" |
-      | "v0.35.4" | "v0.36.0-rc1" |

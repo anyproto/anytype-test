@@ -2,11 +2,17 @@ node_modules
 heart
 cmd
 heartsFolder
+config.yml
 # Ignore everything in the tmp folder
 tmp/*
 # Except for the tmp directory itself
 !tmp/
 cmd/*
 !cmd/
-# macOS system files
+# Log files
+*.log
+# Operating system files
 .DS_Store
+# IDE files
+.vscode/
+.idea/
