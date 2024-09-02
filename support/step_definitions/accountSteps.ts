@@ -129,7 +129,7 @@ Then("the account is synced", async () => {
       store.currentServerVersion &&
       isVersion034OrLess(store.currentServerVersion)
     ) {
-      await new Promise((resolve) => setTimeout(resolve, 15000));
+      await new Promise((resolve) => setTimeout(resolve, 30000));
     }
     logger.info("The account is successfully synced.");
     //Wait for another 15 seconds to ensure the account is fully synced
