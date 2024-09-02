@@ -12,6 +12,12 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v2
 
+      - name: Create config.yml file from secret
+        env:
+          CONFIG_YML_CONTENT: ${{ secrets.CONFIG_YML_CONTENT }}
+        run: |
+          echo "$CONFIG_YML_CONTENT" > config.yml
+
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
@@ -39,11 +45,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Print Directory Structure
-        run: |
-          echo "Printing the directory structure..."
-          find . -type d
-          find . -type f
 
       - name: Run compatibility tests
         run: npm run test:comp
