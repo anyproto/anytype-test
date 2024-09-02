@@ -14,6 +14,7 @@ Feature: Compatibility
     And the user is using client 2
     When the user logs in to their account
     Then the user can open the object 1
+    And the server 2 is stopped
 
     Examples:
       | version1 | version2 |
