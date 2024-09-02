@@ -1,8 +1,8 @@
-@S134793a4
-Feature: Compatibility
+Feature: Compatibility local only
+  # to run test with local middleware use "default" as version variable and clone anytype-heart to cmd folder
 
-  @Ta4e6136d @compatibility
-  Scenario Outline: 3 versions compatibility
+  @compatibility
+  Scenario Outline: 3 versions compatibility local only
     Given the server <version1> 1 is running
     And the metrics parameters are set
     And the user is using client 1
@@ -18,4 +18,3 @@ Feature: Compatibility
 
     Examples:
       | version1 | version2 |
-      # | "default" | "default" |

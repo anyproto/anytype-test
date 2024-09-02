@@ -1,4 +1,14 @@
-# Feature: Vault
+Feature: Vault Management
+
+  Background:
+    Given the application is running
+
+  @e2e
+  Scenario: Enter my Vault
+    When I choose to sign up
+    And I select the option to create a new vault
+    And I complete the onboarding process
+    Then I should be inside my vault
 #   Background:
 #     Given the application is running
 #   Scenario: New user creates a vault

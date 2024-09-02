@@ -7,6 +7,4 @@ Before(function () {
 });
 
 // Optionally, clear the store after each scenario to ensure no residual state
-After(function () {
-  store.clear();
-});
+After(function () {});

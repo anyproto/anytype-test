@@ -16,6 +16,7 @@ export type storeType = {
   getClientInstance: (clientId: number) => IClientCommandsClient | undefined;
   getClientAuthToken: (clientId: number) => string | undefined;
   clear: () => void;
+  spaceSyncStatusReceived: boolean;
 };
 
 export const store: storeType = {
@@ -24,6 +25,7 @@ export const store: storeType = {
   objects: new Map(),
   clients: new Map(),
   grpcClientManager: undefined,
+  spaceSyncStatusReceived: false,
 
   get currentClient(): ClientType {
     if (this.currentClientNumber !== undefined) {
@@ -43,11 +45,14 @@ export const store: storeType = {
   },
 
   get currentUser(): UserType {
+    console.log("Current users are called");
     if (this.currentUserNumber !== undefined) {
+      console.log("STORED USERS ARE" + JSON.stringify(this.users));
       const user = this.users.get(this.currentUserNumber) as UserType;
       if (user) {
         return user;
       } else {
+        console.log(this.users);
         throw new Error(
           "Error in test scenario logic. User with the current user number does not exist in users collection"
         );
@@ -79,5 +84,6 @@ export const store: storeType = {
     this.servers = new Map();
     this.objects = new Map();
     this.clients = new Map();
+    this.spaceSyncStatusReceived = false;
   },
 };

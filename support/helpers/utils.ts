@@ -1,4 +1,7 @@
 import { getCurrentClient } from "./proxy";
+import * as fs from "fs";
+import * as path from "path";
+
 /**
  * Generic function to make gRPC calls and handle common error scenarios.
  * @param grpcMethod The gRPC method to call.
@@ -41,3 +44,32 @@ export function makeGrpcCall<T>(
     });
   });
 }
+
+// Function to delete contents of a directory but keep the directory itself
+export const clearDirectoryContents = async (
+  dirPath: string
+): Promise<void> => {
+  try {
+    if (fs.existsSync(dirPath)) {
+      const files = await fs.promises.readdir(dirPath);
+      for (const file of files) {
+        const curPath = path.join(dirPath, file);
+        const stat = await fs.promises.stat(curPath);
+        if (stat.isDirectory()) {
+          // Recursively clear subdirectory contents
+          await clearDirectoryContents(curPath);
+          // Remove the now-empty subdirectory
+          await fs.promises.rmdir(curPath);
+        } else {
+          // Delete file
+          await fs.promises.unlink(curPath);
+        }
+      }
+      console.log(`Contents of directory ${dirPath} cleared successfully.`);
+    } else {
+      console.log(`Directory ${dirPath} does not exist.`);
+    }
+  } catch (error) {
+    console.error(`Error clearing directory contents of ${dirPath}:`, error);
+  }
+};

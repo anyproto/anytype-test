@@ -27,6 +27,9 @@ class GRPCServerManager {
           cwd: this.workingDir,
           env: {
             ...process.env,
+            // DEBUG
+            //ANYTYPE_GRPC_LOG: "3",
+            //ANYTYPE_LOG_LEVEL: "info",
             ANYTYPE_GRPC_ADDR: "127.0.0.1:0",
             ANYTYPE_GRPCWEB_ADDR: "127.0.0.1:0",
           }, // Ensures dynamic port assignment

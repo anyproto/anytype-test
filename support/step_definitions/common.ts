@@ -5,6 +5,10 @@ import { store } from "../helpers/store";
 import { GRPCServerManager, stopServer } from "../server";
 import { GRPCClientManager } from "../client";
 import { setUserAsCurrentUser } from "./accountSteps";
+import { Logger } from "@origranot/ts-logger";
+import { stopListenSessionEvents } from "../api/streamRequest";
+
+const logger = new Logger();
 
 interface Paths {
   binPath: string;
@@ -18,19 +22,20 @@ setDefaultTimeout(120 * 1000);
  * Sets the current client in the store.
  * @param clientNumber The client number to set as current.
  */
-export const setClientAsCurrentClient = (clientNumber: number) => {
+export const setClientAsCurrentClient = (clientNumber: number): void => {
   store.currentClientNumber = clientNumber;
-  console.log(`Switched to client number ${clientNumber}`);
-
-  console.log(
-    "Current stored clients:",
-    JSON.stringify(Array.from(store.clients.entries()))
-  );
-  return store;
+  logger.info(`Switched to client number ${clientNumber}`);
+  logger.debug("Current stored clients:", Array.from(store.clients.entries()));
 };
 
 Given("the metrics parameters are set", async () => {
-  await callMetricsSetParameters();
+  try {
+    await callMetricsSetParameters();
+    logger.info("Metrics parameters set successfully");
+  } catch (error) {
+    logger.error("Failed to set metrics parameters:", error);
+    throw error;
+  }
 });
 
 /**
@@ -41,69 +46,66 @@ Given("the metrics parameters are set", async () => {
 Given(
   "the server {string} {int} is running",
   async (heartVersion: string, serverNumber: number) => {
-    console.log(
+    logger.info(
       `Starting server for version: ${heartVersion}, server number: ${serverNumber}`
     );
 
-    const paths: Paths = await resolveHeartPaths(heartVersion);
-    const grpcServerManager = new GRPCServerManager(
-      paths.binPath,
-      paths.workingDir,
-      heartVersion
-    );
-    await grpcServerManager.startServer(serverNumber);
-
-    const server = store.servers.get(serverNumber);
-    if (!server) {
-      throw new Error(
-        `Failed to start the server for version: ${heartVersion}`
+    try {
+      const paths: Paths = await resolveHeartPaths(heartVersion);
+      const grpcServerManager = new GRPCServerManager(
+        paths.binPath,
+        paths.workingDir,
+        heartVersion
       );
+      await grpcServerManager.startServer(serverNumber);
+
+      const server = store.servers.get(serverNumber);
+      if (!server) {
+        throw new Error(
+          `Failed to start the server for version: ${heartVersion}`
+        );
+      }
+      server.version = heartVersion;
+
+      logger.info(
+        `Server started at: ${server.address}, version: ${heartVersion}`
+      );
+
+      const grpcClientManager = new GRPCClientManager(server.address);
+      store.grpcClientManager = grpcClientManager;
+      grpcClientManager.createClient(serverNumber);
+      setClientAsCurrentClient(serverNumber);
+    } catch (error) {
+      logger.error(`Failed to start server ${serverNumber}:`, error);
+      throw error;
     }
-    server.version = heartVersion;
-
-    console.log(
-      `Server started at: ${server.address}, version: ${heartVersion}`
-    );
-
-    // Initialize and store the GRPCClientManager
-    const grpcClientManager = new GRPCClientManager(server.address);
-    store.grpcClientManager = grpcClientManager;
-    grpcClientManager.createClient(serverNumber);
-    setClientAsCurrentClient(serverNumber);
   }
 );
 
-/**
- * Step to set a specific client as the active client.
- * @param clientNumber The client number to use.
- */
 Given("client {int} is used", (clientNumber: number) => {
   setClientAsCurrentClient(clientNumber);
 });
-/**
- * Step to set a specific client as the active client and the user as the active user.
- * @param userNumber The user number to use. Defaults to 1.
- * @param clientNumber The client number to use.
- */
+
 Given(
   /^the user(?: (\d+))? is using client (\d+)$/,
-  function (userNumber: number | undefined, clientNumber: number) {
+  (userNumber: number, clientNumber: number) => {
     // Default userNumber to 1 if not provided
     userNumber = userNumber ? userNumber : 1;
-    clientNumber = clientNumber;
-
     setClientAsCurrentClient(clientNumber);
     setUserAsCurrentUser(userNumber);
   }
 );
 
-/**
- * Kills the gRPC server
- * @param serverNumber The server number identifier.
- */
 Given("the server {int} is stopped", async (serverNumber: number) => {
-  console.log(`Stoping server number: ${serverNumber}`);
-  stopServer(serverNumber);
+  try {
+    logger.info(`Stopping server number: ${serverNumber}`);
+    stopServer(serverNumber);
+    stopListenSessionEvents();
+    logger.info(`Server ${serverNumber} stopped successfully`);
+  } catch (error) {
+    logger.error(`Failed to stop server ${serverNumber}:`, error);
+    throw error;
+  }
 });
 
 /**
@@ -114,12 +116,12 @@ Given("the server {int} is stopped", async (serverNumber: number) => {
  */
 async function resolveHeartPaths(heartVersion: string): Promise<Paths> {
   try {
-    console.log(`Resolving paths for heart version: ${heartVersion}`);
+    logger.debug(`Resolving paths for heart version: ${heartVersion}`);
     const paths = await heartResolve(heartVersion);
-    console.log("Resolved paths:", paths);
+    logger.debug("Resolved paths:", paths);
     return paths;
   } catch (error) {
-    console.error(
+    logger.error(
       `Failed to resolve paths for heart version ${heartVersion}:`,
       error
     );
