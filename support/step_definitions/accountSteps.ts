@@ -8,6 +8,7 @@ import { callAccountCreate, callAccountSelect } from "../api/accountApi";
 import { store } from "../helpers/store";
 import { Given, Then } from "@cucumber/cucumber";
 import { callListenSessionEvents } from "../api/streamRequest";
+import { isVersion034OrLess } from "../helpers/utils";
 
 // Initialize the logger
 const logger = new Logger();
@@ -121,11 +122,16 @@ async function waitForCondition(
 Then("the account is synced", async () => {
   logger.info("STEP: the account is synced");
   try {
-    // Wait for the variable to become true with a timeout of 150 seconds
-    await waitForCondition(() => store.spaceSyncStatusReceived, 150000);
-    logger.info("The account is successfully synced.");
-    //Wait for another 30 seconds to ensure the account is fully synced
-    await new Promise((resolve) => setTimeout(resolve, 30000));
+    // Wait for the variable to become true with a timeout of 60 seconds
+    await waitForCondition(() => store.spaceSyncStatusReceived, 60000);
+
+    if (
+      store.currentServerVersion &&
+      isVersion034OrLess(store.currentServerVersion)
+    )
+      logger.info("The account is successfully synced.");
+    //Wait for another 15 seconds to ensure the account is fully synced
+    await new Promise((resolve) => setTimeout(resolve, 15000));
   } catch (error) {
     // Log an error and throw it to fail the test
     logger.error(

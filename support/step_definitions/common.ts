@@ -7,6 +7,7 @@ import { GRPCClientManager } from "../client";
 import { setUserAsCurrentUser } from "./accountSteps";
 import { Logger } from "@origranot/ts-logger";
 import { stopListenSessionEvents } from "../api/streamRequest";
+import { callAccountStop } from "../api/accountApi";
 
 const logger = new Logger();
 
@@ -97,10 +98,14 @@ Given(
 );
 
 Given("the server {int} is stopped", async (serverNumber: number) => {
+  logger.info(`STEP: the server ${serverNumber} is stopped`);
   try {
+    logger.info(`Call account stop`);
+    await callAccountStop();
+    logger.info(`Stop listen session events`);
+    stopListenSessionEvents();
     logger.info(`Stopping server number: ${serverNumber}`);
     stopServer(serverNumber);
-    stopListenSessionEvents();
     logger.info(`Server ${serverNumber} stopped successfully`);
   } catch (error) {
     logger.error(`Failed to stop server ${serverNumber}:`, error);

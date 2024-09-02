@@ -1,4 +1,4 @@
-import { getCurrentClient } from "../client";
+import { getCurrentClient } from "../helpers/proxy";
 import { store } from "../helpers/store";
 import {
   Rpc_Account_Create_Request,
@@ -6,6 +6,8 @@ import {
   Rpc_Account_NetworkMode,
   Rpc_Account_Select_Request,
   Rpc_Account_Select_Response,
+  Rpc_Account_Stop_Request,
+  Rpc_Account_Stop_Response,
 } from "../../pb/pb/protos/commands";
 import { makeGrpcCall } from "../helpers/utils";
 import * as path from "path";
@@ -95,6 +97,31 @@ export async function callAccountSelect(userNumber: number): Promise<void> {
     console.log("Account selected successfully:", response);
   } catch (error) {
     console.error("Failed to select account:", error);
+    throw error;
+  }
+}
+
+/**
+ * Calls the accountStop method on the gRPC client and handles the response.
+ * @param userNumber The number associated with the user in the store.
+ * @param removeData Flag to determine if the local data should be removed.
+ * @returns A promise that resolves when the gRPC call completes.
+ */
+export async function callAccountStop(): Promise<void> {
+  console.log("### Initiating account stop...");
+
+  const request: Rpc_Account_Stop_Request = {
+    removeData: false,
+  };
+
+  try {
+    const response = await makeGrpcCall<Rpc_Account_Stop_Response>(
+      getCurrentClient().accountStop,
+      request
+    );
+    console.log("Account stopped successfully:", response);
+  } catch (error) {
+    console.error("Failed to stop account:", error);
     throw error;
   }
 }

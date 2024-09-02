@@ -1,4 +1,4 @@
-import { getCurrentClient, GRPCClientManager } from "../client";
+import { getCurrentClient } from "../client";
 import { store } from "../helpers/store";
 import { UserType } from "../dataTypes";
 import * as fs from "fs";

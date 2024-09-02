@@ -10,6 +10,7 @@ export type storeType = {
   clients: Map<number, ClientType>;
   currentUserNumber?: number;
   currentClientNumber?: number;
+  currentServerVersion?: string;
   currentUser: UserType;
   currentClient: ClientType;
   getClientDirectory: (clientId: number) => string | undefined;
@@ -40,6 +41,23 @@ export const store: storeType = {
     } else {
       throw new Error(
         "Error in test scenario logic. Need to set current client before calling currentClient getter"
+      );
+    }
+  },
+
+  get currentServerVersion(): string {
+    if (this.currentClientNumber !== undefined) {
+      const server = this.servers.get(this.currentClientNumber);
+      if (server) {
+        return server.version as string;
+      } else {
+        throw new Error(
+          "Error in test scenario logic. Server with the current client number does not exist in server collection"
+        );
+      }
+    } else {
+      throw new Error(
+        "Error in test scenario logic. Need to set current client before calling currentServerVersion getter"
       );
     }
   },

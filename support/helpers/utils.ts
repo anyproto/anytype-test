@@ -3,6 +3,28 @@ import * as fs from "fs";
 import * as path from "path";
 
 /**
+ * Checks if the current server version is 0.34 or less.
+ * @param version - The server version string (e.g., "v0.33.2" or "v0.34.7").
+ * @returns {boolean} - Returns true if the server version is 0.34 or less, false otherwise.
+ */
+export function isVersion034OrLess(version: string): boolean {
+  // Remove the 'v' prefix if it exists
+  if (version.startsWith("v")) {
+    version = version.slice(1);
+  }
+
+  // Split the version string to extract major and minor versions
+  const [, minor] = version.split(".").map(Number);
+
+  // Check if the minor version is 34 or less
+  if (minor <= 34) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
  * Generic function to make gRPC calls and handle common error scenarios.
  * @param grpcMethod The gRPC method to call.
  * @param request The request object.

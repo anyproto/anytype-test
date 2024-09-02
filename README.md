@@ -10,6 +10,7 @@ Welcome to the **Test Repository for Anytype**. This repository is used to manag
   - [Installation](#installation)
   - [Run tests](#run-tests)
     - [Anytype-heart compatibility tests](#anytype-heart-compatibility-tests)
+      - [Running Tests with Local Middleware](#running-tests-with-local-middleware)
 
 ## Prerequisites
 
@@ -36,3 +37,31 @@ Then run tests with:
 ```bash
 npm run test:comp
 ```
+#### Running Tests with Local Middleware
+
+To run tests using the local middleware, follow these steps:
+
+1. **Set the Version to "default" in the .feature File:**
+
+  In the .feature file, set the version variable to "default" in the Scenario Outline or Server Test Step. This configuration tells the testing framework to use the local middleware built with Go instead of a specific version.
+
+   For example, you can set the versions like this:
+   ```bash
+   Examples:
+      | version1 | version2 |
+      | "default" | "default" |
+   ```
+   Or like this:
+   ```bash
+   Given the server "default" 1 is running
+   ```
+1. **Clone the `anytype-heart` Repository:**
+
+   Clone the anytype-heart repository into the anytype-test/cmd folder:
+   ```bash
+   git clone https://github.com/anyproto/anytype-heart.git anytype-test/cmd/anytype-heart
+   ```
+   
+2. **Follow the Instructions for `anytype-heart`:**
+
+   Navigate to the anytype-heart repository and follow the setup and build instructions provided in its README file.
