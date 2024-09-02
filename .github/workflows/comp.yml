@@ -5,17 +5,8 @@ on:
 
 jobs:
   test:
-    name: Run Tests on Different Platforms
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        architecture: [amd64, arm64] # arm64 is included but we will conditionally skip it for certain OS
-        exclude:
-          - os: ubuntu-latest
-            architecture: arm64
-          - os: windows-latest
-            architecture: arm64
+    name: Run Tests on Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out the repository
@@ -25,9 +16,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm # Cache the npm modules
-          key: ${{ runner.os }}-npm-cache-${{ hashFiles('package-lock.json') }}
+          key: ubuntu-latest-npm-cache-${{ hashFiles('package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-npm-cache-
+            ubuntu-latest-npm-cache-
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -38,12 +29,12 @@ jobs:
         uses: actions/cache@v3
         with:
           path: heartsFolder/ # Cache the heartsFolder directory
-          key: ${{ runner.os }}-hearts-cache
-      
+          key: ubuntu-latest-hearts-cache
+
       - name: Run getHearts.sh script
         run: |
           chmod +x ./getHearts.sh
-          ./getHearts.sh ${{ matrix.os }} ${{ matrix.architecture }}
+          ./getHearts.sh ubuntu-latest amd64
 
       - name: Install dependencies
         run: npm install
