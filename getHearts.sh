@@ -6,7 +6,8 @@ GITHUB="api.github.com"
 HEARTS_FOLDER="./heartsFolder"
 NUM_VERSIONS=3 # Number of latest major versions to process
 FILE="addon.tar.gz" # Default file name for non-Windows platforms
-FEATURE_FILE="./features/compatibility.feature" # Output feature file
+FEATURE_FILE_SYNC="./features/compatibilitySync.feature" # Output feature file
+FEATURE_FILE_LOCAL="./features/compatibilityLocal.feature" # Output feature file
 
 platform="${1:-ubuntu-latest}"
 arch="$2"
@@ -94,11 +95,8 @@ done
 # Append version combinations to compatibility.feature
 for ((i = 0; i < ${#versions[@]}; i++)); do
  for ((j = i + 1; j < ${#versions[@]}; j++)); do
-   echo "      | \"${versions[$i]}\" | \"${versions[$j]}\" |" >> "$FEATURE_FILE"
+   echo "      | \"${versions[$i]}\" | \"${versions[$j]}\" |" >> "$FEATURE_FILE_SYNC"
+   echo "      | \"${versions[$i]}\" | \"${versions[$j]}\" |" >> "$FEATURE_FILE_LOCAL"
  done
 done
 printf "All tasks completed. Compatibility combinations appended to $FEATURE_FILE_SYNC and $FEATURE_FILE_LOCAL.\n"
-   echo "   | \"${versions[$i]}\" | \"${versions[$j]}\" |" >> "$FEATURE_FILE"
- done
-done
-printf "All tasks completed. Compatibility combinations appended to $FEATURE_FILE.\n"
