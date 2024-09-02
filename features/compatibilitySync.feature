@@ -1,5 +1,5 @@
 @S134793a4
-Feature: Compatibility
+Feature: Compatibility with Sync
   # to run test with local middleware use "default" as version variable and clone anytype-heart to cmd folder
 
   @Ta4e6136d @compatibility
