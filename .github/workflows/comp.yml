@@ -36,11 +36,17 @@ jobs:
         with:
           path: heartsFolder/ # Cache the heartsFolder directory
           key: ubuntu-latest-hearts-cache
-
+          
       - name: Run getHearts.sh script
         run: |
           chmod +x ./getHearts.sh
           ./getHearts.sh ubuntu-latest amd64
+
+      - name: Print compatibilityLocal.feature
+        run: cat features/compatibilityLocal.feature
+
+      - name: Print compatibilitySync.feature
+        run: cat features/compatibilitySync.feature
 
       - name: Install dependencies
         run: npm install
