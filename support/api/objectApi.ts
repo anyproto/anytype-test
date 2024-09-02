@@ -6,6 +6,7 @@ import {
   Rpc_Object_Create_Request,
   Rpc_Object_Create_Response,
   Rpc_Object_Open_Response,
+  Rpc_Object_Open_Response_Error_Code,
 } from "../../pb/pb/protos/commands";
 
 /**
@@ -84,8 +85,19 @@ export async function callOpenObject(objectNumber: number): Promise<void> {
       request
     );
     console.log(`Object opened successfully:`, response);
-  } catch (error) {
-    console.error("Failed to open object:", error);
+  } catch (error: any) {
+    if (
+      error &&
+      typeof error.code === "number" &&
+      typeof error.description === "string"
+    ) {
+      const errorCodeName = Rpc_Object_Open_Response_Error_Code[error.code];
+      console.error(
+        `Failed to open object (gRPC error): Code ${error.code} (${errorCodeName}), Description: ${error.description}`
+      );
+    } else {
+      console.error(`Failed to open object (unexpected error):`, error);
+    }
     throw error;
   }
 }
