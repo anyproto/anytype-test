@@ -21,4 +21,5 @@ Feature: Compatibility with Sync
     And the server 2 is stopped
 
     Examples:
-      | version1 | version2 |
+      | version1  | version2  |
+      | "v0.34.3" | "v0.35.5" |
