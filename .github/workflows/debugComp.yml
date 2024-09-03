@@ -1,4 +1,4 @@
-name: Run Compatibility Tests
+name: Debug Compatibility Tests
 
 on:
   workflow_dispatch:
