@@ -1,0 +1,254 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "compatibility-with-sync;3-versions-compatibility-with-sync-on-staging-nodes",
+        "keyword": "Scenario Outline",
+        "line": 25,
+        "name": "3 versions compatibility with sync on staging nodes",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 470209
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 7,
+            "name": "the server \"v0.34.3\" 1 is running",
+            "match": {
+              "location": "support/step_definitions/common.ts:47"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 48085791
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "the metrics parameters are set",
+            "match": {
+              "location": "support/step_definitions/common.ts:32"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 19114500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "the user is using client 1",
+            "match": {
+              "location": "support/step_definitions/common.ts:90"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 206124
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "the user creates a new account on \"staging\"",
+            "match": {
+              "location": "support/step_definitions/accountSteps.ts:25"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 631413499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 11,
+            "name": "the user creates an object 1 in the account",
+            "match": {
+              "location": "support/step_definitions/objectSteps.ts:4"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4397624
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 12,
+            "name": "the user can open the object 1",
+            "match": {
+              "location": "support/step_definitions/objectSteps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3535417
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 13,
+            "name": "the account is synced",
+            "match": {
+              "location": "support/step_definitions/accountSteps.ts:147"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 60069938374,
+              "error_message": "Error: Test failed: The account did not sync within the expected time.\n    at /Users/shamray/workspace/anytype-test/support/step_definitions/accountSteps.ts:167:11\n    at rejected (/Users/shamray/workspace/anytype-test/support/step_definitions/accountSteps.ts:6:65)"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 14,
+            "name": "the server 1 is stopped",
+            "match": {
+              "location": "support/step_definitions/common.ts:100"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 15,
+            "name": "data is deleted",
+            "match": {
+              "location": "support/step_definitions/fileSteps.ts:5"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 16,
+            "name": "the server \"v0.35.5\" 2 is running",
+            "match": {
+              "location": "support/step_definitions/common.ts:47"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 17,
+            "name": "the metrics parameters are set",
+            "match": {
+              "location": "support/step_definitions/common.ts:32"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 18,
+            "name": "the user is using client 2",
+            "match": {
+              "location": "support/step_definitions/common.ts:90"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 19,
+            "name": "the user logs in to their account on \"staging\"",
+            "match": {
+              "location": "support/step_definitions/accountSteps.ts:70"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 20,
+            "name": "the user can open the object 1",
+            "match": {
+              "location": "support/step_definitions/objectSteps.ts:11"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 21,
+            "name": "the server 2 is stopped",
+            "match": {
+              "location": "support/step_definitions/common.ts:100"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 156583
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@S134793a4",
+            "line": 1
+          },
+          {
+            "name": "@Ta4e6136d",
+            "line": 5
+          },
+          {
+            "name": "@compatibility",
+            "line": 5
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "compatibility-with-sync",
+    "line": 2,
+    "keyword": "Feature",
+    "name": "Compatibility with Sync",
+    "tags": [
+      {
+        "name": "@S134793a4",
+        "line": 1
+      }
+    ],
+    "uri": "features/compatibilitySyncStaging.feature"
+  }
+]

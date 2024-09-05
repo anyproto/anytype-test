@@ -11,21 +11,39 @@ import {
 } from "../../pb/pb/protos/commands";
 import { makeGrpcCall } from "../helpers/utils";
 import * as path from "path";
-/**
- * Calls the accountCreate method on the gRPC client and handles the response.
- * @param userNumber The number associated with the user in the store.
- * @returns A promise that resolves when the gRPC call completes.
- */
-export async function callAccountCreate(userNumber: number): Promise<void> {
+
+interface NetworkConfig {
+  mode: Rpc_Account_NetworkMode;
+  configPath: string;
+}
+
+function getNetworkConfig(isProd: boolean): NetworkConfig {
+  if (isProd) {
+    return {
+      mode: Rpc_Account_NetworkMode.DefaultConfig,
+      configPath: "",
+    };
+  } else {
+    return {
+      mode: Rpc_Account_NetworkMode.CustomConfig,
+      configPath: path.resolve(__dirname, "../../config.yml"),
+    };
+  }
+}
+
+export async function callAccountCreate(
+  userNumber: number,
+  isProd: boolean = false
+): Promise<void> {
   console.log("### Initiating account creation...");
 
   const userData = store.users.get(userNumber);
   if (!userData) {
     throw new Error(`User data not found for user number ${userNumber}`);
   }
-  //check if "../../config.yml" is the correct path
-  const configPath = path.resolve(__dirname, "../../config.yml");
-  console.log(`Using config path: ${configPath}`);
+
+  const { mode, configPath } = getNetworkConfig(isProd);
+  console.log(`Using network mode: ${mode}, config path: ${configPath}`);
 
   const request: Rpc_Account_Create_Request = {
     name: userData.name || "test",
@@ -33,7 +51,7 @@ export async function callAccountCreate(userNumber: number): Promise<void> {
     storePath: "",
     icon: BigInt(5),
     disableLocalNetworkSync: false,
-    networkMode: Rpc_Account_NetworkMode.CustomConfig,
+    networkMode: mode,
     networkCustomConfigFilePath: configPath,
     preferYamuxTransport: false,
   };
@@ -63,15 +81,11 @@ export async function callAccountCreate(userNumber: number): Promise<void> {
   }
 }
 
-/**
- * Calls the accountSelect method on the gRPC client and handles the response.
- * @param userNumber The number associated with the user in the store.
- * @returns A promise that resolves when the gRPC call completes.
- */
-export async function callAccountSelect(userNumber: number): Promise<void> {
+export async function callAccountSelect(
+  userNumber: number,
+  isProd: boolean = false
+): Promise<void> {
   console.log("### Initiating account selection...");
-  const configPath = path.resolve(__dirname, "../../config.yml");
-  console.log(`Using config path: ${configPath}`);
 
   const userData = store.users.get(userNumber);
   if (!userData || !userData.accountId) {
@@ -80,11 +94,14 @@ export async function callAccountSelect(userNumber: number): Promise<void> {
     );
   }
 
+  const { mode, configPath } = getNetworkConfig(isProd);
+  console.log(`Using network mode: ${mode}, config path: ${configPath}`);
+
   const request: Rpc_Account_Select_Request = {
     id: userData.accountId,
     rootPath: "",
     disableLocalNetworkSync: false,
-    networkMode: Rpc_Account_NetworkMode.CustomConfig,
+    networkMode: mode,
     networkCustomConfigFilePath: configPath,
     preferYamuxTransport: false,
   };

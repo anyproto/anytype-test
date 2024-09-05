@@ -1,6 +1,6 @@
 import { getCurrentClient } from "../helpers/proxy";
 import { store } from "../helpers/store";
-import { makeGrpcCall } from "../helpers/utils";
+import { isVersion035, makeGrpcCall } from "../helpers/utils";
 import {
   Rpc_Object_Open_Request,
   Rpc_Object_Create_Request,
@@ -65,6 +65,14 @@ export async function callOpenObject(objectNumber: number): Promise<void> {
   );
 
   const client = getCurrentClient();
+  //wait for 60 seconds
+  if (store.currentServerVersion && isVersion035(store.currentServerVersion)) {
+    console.log(
+      "Heart verison 35, Waiting for 15 seconds before objectOpening..."
+    );
+    await new Promise((resolve) => setTimeout(resolve, 15000));
+  }
+
   const object = store.objects.get(objectNumber);
 
   if (!object) {
@@ -86,18 +94,22 @@ export async function callOpenObject(objectNumber: number): Promise<void> {
     );
     console.log(`Object opened successfully:`, response);
   } catch (error: any) {
-    if (
-      error &&
-      typeof error.code === "number" &&
-      typeof error.description === "string"
-    ) {
-      const errorCodeName = Rpc_Object_Open_Response_Error_Code[error.code];
-      console.error(
-        `Failed to open object (gRPC error): Code ${error.code} (${errorCodeName}), Description: ${error.description}`
-      );
-    } else {
-      console.error(`Failed to open object (unexpected error):`, error);
+    console.error(`Failed to open object. Error details:`, error);
+
+    if (error && typeof error.code === "number") {
+      const errorCodeName =
+        Rpc_Object_Open_Response_Error_Code[error.code] || "UNKNOWN";
+      console.error(`Error Code: ${error.code} (${errorCodeName})`);
     }
+
+    if (error && error.details) {
+      console.error(`Error Details: ${error.details}`);
+    }
+
+    if (error && error.metadata) {
+      console.error(`Error Metadata:`, error.metadata.getMap());
+    }
+
     throw error;
   }
 }

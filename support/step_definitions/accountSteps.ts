@@ -22,7 +22,7 @@ export const setUserAsCurrentUser = (userNumber: number) => {
   return;
 };
 
-Given("the user creates a new account", async () => {
+Given("the user creates a new account on {string}", async (network: string) => {
   logger.info("STEP: the user creates a new account");
   const userNumber = store.currentUserNumber;
   if (!userNumber) {
@@ -52,43 +52,68 @@ Given("the user creates a new account", async () => {
     }
   }
   callListenSessionEvents();
-  logger.info("Saved space sync status promise in store");
-  await callAccountCreate(userNumber);
+
+  //Switch to choose the network
+  switch (network) {
+    case "prod":
+      await callAccountCreate(userNumber, true);
+      break;
+    case "staging":
+      await callAccountCreate(userNumber);
+      break;
+    default:
+      logger.error("Error: Invalid network");
+      throw new Error("Invalid network");
+  }
 });
 
-Given("the user logs in to their account", async () => {
-  logger.info("STEP: the user logs in to their account");
-  const userNumber = store.currentUserNumber;
-  if (!userNumber) {
-    logger.error("Error: Current user number is not defined");
-    throw new Error("Current user number is not defined");
-  }
-  await callWalletRecover(userNumber);
-  const user = store.users.get(userNumber);
-  if (!user) {
-    logger.error("Error: User is not defined");
-    throw new Error("User is not defined");
-  }
-  logger.info("Getting mnemonic", user.mnemonic);
-  const mnemonic = user.mnemonic;
-  const token = await callWalletCreateSession(mnemonic);
+Given(
+  "the user logs in to their account on {string}",
+  async (network: string) => {
+    logger.info("STEP: the user logs in to their account");
+    const userNumber = store.currentUserNumber;
+    if (!userNumber) {
+      logger.error("Error: Current user number is not defined");
+      throw new Error("Current user number is not defined");
+    }
+    await callWalletRecover(userNumber);
+    const user = store.users.get(userNumber);
+    if (!user) {
+      logger.error("Error: User is not defined");
+      throw new Error("User is not defined");
+    }
+    logger.info("Getting mnemonic", user.mnemonic);
+    const mnemonic = user.mnemonic;
+    const token = await callWalletCreateSession(mnemonic);
 
-  // Update the client token using the stored grpcClientManager
-  if (store.grpcClientManager) {
-    logger.info("Updating client token");
-    if (store.currentClientNumber) {
-      store.grpcClientManager.updateClientToken(
-        store.currentClientNumber,
-        token
-      );
-      callListenSessionEvents();
-    } else {
-      logger.error("Error: Current client number is not defined");
-      throw new Error("Current client number is not defined");
+    // Update the client token using the stored grpcClientManager
+    if (store.grpcClientManager) {
+      logger.info("Updating client token");
+      if (store.currentClientNumber) {
+        store.grpcClientManager.updateClientToken(
+          store.currentClientNumber,
+          token
+        );
+        callListenSessionEvents();
+      } else {
+        logger.error("Error: Current client number is not defined");
+        throw new Error("Current client number is not defined");
+      }
+    }
+    //Switch to choose the network
+    switch (network) {
+      case "prod":
+        await callAccountCreate(userNumber, true);
+        break;
+      case "staging":
+        await callAccountCreate(userNumber);
+        break;
+      default:
+        logger.error("Error: Invalid network");
+        throw new Error("Invalid network");
     }
   }
-  await callAccountSelect(userNumber);
-});
+);
 
 /**
  * Utility function to wait for a condition to be true with a timeout.
@@ -129,6 +154,7 @@ Then("the account is synced", async () => {
       store.currentServerVersion &&
       isVersion034OrLess(store.currentServerVersion)
     ) {
+      logger.info("Heart version is 0.34 or less, wait for 30 seconds");
       await new Promise((resolve) => setTimeout(resolve, 30000));
     }
     logger.info("The account is successfully synced.");
