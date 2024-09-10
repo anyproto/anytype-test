@@ -103,10 +103,10 @@ Given(
     //Switch to choose the network
     switch (network) {
       case "prod":
-        await callAccountCreate(userNumber, true);
+        await callAccountSelect(userNumber, true);
         break;
       case "staging":
-        await callAccountCreate(userNumber);
+        await callAccountSelect(userNumber);
         break;
       default:
         logger.error("Error: Invalid network");

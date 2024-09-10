@@ -62,7 +62,10 @@ export async function callListenSessionEvents(): Promise<void> {
             const { id, status } = message.value.spaceSyncStatusUpdate;
             logger.info("DEBUG CurrentUser is ", store.currentUserNumber);
             // Check if the ID matches the current user's spaceId and status is 0
-            if (id === store.currentUser.spaceId && status === 0) {
+            if (
+              (id === store.currentUser.spaceId && status === 0) ||
+              status + 0 === 4
+            ) {
               console.log(
                 "Desired spaceSyncStatusUpdate received:",
                 message.value.spaceSyncStatusUpdate
