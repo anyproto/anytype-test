@@ -16,7 +16,10 @@ jobs:
       pull-requests: write
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          repository: anyproto/anytype-test   # Specify the repository explicitly
+          token: ${{ secrets.GITHUB_TOKEN }}  # Use GITHUB_TOKEN for authentication
 
       - name: Create config.yml file from secret
         env:
@@ -56,10 +59,3 @@ jobs:
         env:
           TESTOMATIO: ${{ secrets.TESTOMATIO }}
           GH_PAT: ${{ github.token }}
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: cucumber-report
-          path: cucumber_report.json
