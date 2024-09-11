@@ -16,7 +16,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Create config.yml file from secret
         env:
