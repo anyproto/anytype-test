@@ -1,8 +1,8 @@
-@S134793a4
+@S27ebe52d
 Feature: Compatibility with Sync
   # to run test with local middleware use "default" as version variable and clone anytype-heart to cmd folder
 
-  @Ta4e6136d @compatibility
+  @compatibility @T75496a29
   Scenario Outline: 3 versions compatibility with sync on staging nodes
     Given the server <version1> 1 is running
     And the metrics parameters are set

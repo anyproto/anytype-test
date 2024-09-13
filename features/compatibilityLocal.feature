@@ -1,7 +1,8 @@
+@Sacfc5c28
 Feature: Compatibility local only
   # to run test with local middleware use "default" as version variable and clone anytype-heart to cmd folder
 
-  @compatibility
+  @compatibility @Te360e532
   Scenario Outline: 3 versions compatibility local only
     Given the server <version1> 1 is running
     And the metrics parameters are set

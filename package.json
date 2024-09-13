@@ -6,7 +6,8 @@
   "scripts": {
     "test:e2e": "cucumber-js --tags @e2e",
     "test:comp": "cucumber-js --tags @compatibility",
-    "test:comp:prod": "NODE_ENV=prod cucumber-js --tags @compatibility"
+    "test:comp:prod": "NODE_ENV=prod cucumber-js --tags @compatibility",
+    "test:comp:testomatio": "cucumber-js --tags @compatibility --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js"
   },
   "repository": {
     "type": "git",
