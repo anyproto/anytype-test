@@ -53,7 +53,8 @@ jobs:
         run: npm install
 
       - name: Run compatibility tests
-        run: npm run test:comp testomatio
+        run: npm run test:comp:testomatio
         env:
           TESTOMATIO: ${{ secrets.TESTOMATIO }}
           GH_PAT: ${{ github.token }}
+          GH_KEEP_OUTDATED_REPORTS: 1
