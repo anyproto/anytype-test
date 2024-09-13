@@ -1,4 +1,4 @@
-name: Run Compatibility Tests with Testomat
+name: Debug Compatibility Tests
 
 on:
   push:
@@ -12,15 +12,13 @@ jobs:
     name: Run Tests on Ubuntu
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       issues: write
       pull-requests: write
     steps:
       - name: Check out the repository
         uses: actions/checkout@v3
-        with:
-          repository: anyproto/anytype-test   # Specify the repository explicitly
-          token: ${{ secrets.GITHUB_TOKEN }}  # Use GITHUB_TOKEN for authentication
-
+        
       - name: Create config.yml file from secret
         env:
           CONFIG_YML_CONTENT: ${{ secrets.CONFIG_YML_CONTENT }}
@@ -55,7 +53,8 @@ jobs:
         run: npm install
 
       - name: Run compatibility tests
-        run: npm run test:comp
+        run: npm run test:comp:testomatio
         env:
           TESTOMATIO: ${{ secrets.TESTOMATIO }}
           GH_PAT: ${{ github.token }}
+          GH_KEEP_OUTDATED_REPORTS: 1
