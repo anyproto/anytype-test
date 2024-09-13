@@ -58,3 +58,5 @@ jobs:
           TESTOMATIO: ${{ secrets.TESTOMATIO }}
           GH_PAT: ${{ github.token }}
           GH_KEEP_OUTDATED_REPORTS: 1
+          SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: 'C07MSKBQ7SM'  #test-reports channel id
