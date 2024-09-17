@@ -46,6 +46,7 @@ export function isVersion035(version: string): boolean {
 
   return false;
 }
+
 /**
  * Generic function to make gRPC calls and handle common error scenarios.
  * @param grpcMethod The gRPC method to call.
@@ -62,23 +63,15 @@ export function makeGrpcCall<T>(
       request,
       (err: any, response: T) => {
         if (err) {
-          console.error("gRPC call error:", err);
           const errorDetails = {
             code: err.code,
-            details: err.details,
-            metadata: err.metadata ? err.metadata.getMap() : {},
-            name: err.name,
-            stack: err.stack,
+            description: err.details || err.message,
           };
-          console.error(
-            "Detailed gRPC error:",
-            JSON.stringify(errorDetails, null, 2)
-          );
+          console.error("gRPC call failed with error:", errorDetails);
+
           return reject(
             new Error(
-              `gRPC call failed: ${err.message}\nDetails: ${JSON.stringify(
-                errorDetails
-              )}`
+              `gRPC call failed: ${JSON.stringify(errorDetails, null, 2)}`
             )
           );
         }
@@ -90,12 +83,15 @@ export function makeGrpcCall<T>(
           responseError.code !== undefined &&
           responseError.code !== 0
         ) {
-          console.error(`gRPC call failed with error:`, responseError);
+          const errorDetails = {
+            code: responseError.code,
+            description: responseError.description || responseError.message,
+          };
+          console.error("gRPC call failed with error:", errorDetails);
+
           return reject(
             new Error(
-              `gRPC call failed with error code: ${
-                responseError.code
-              }, message: ${responseError.message || "Unknown error"}`
+              `gRPC call failed: ${JSON.stringify(errorDetails, null, 2)}`
             )
           );
         }
@@ -104,28 +100,17 @@ export function makeGrpcCall<T>(
       }
     );
 
-    call.on("metadata", (metadata: any) => {
-      console.log("Received response headers:", metadata.getMap());
-    });
-
     call.on("status", (status: any) => {
-      console.log("Call status:", {
-        code: status.code,
-        details: status.details,
-        metadata: status.metadata ? status.metadata.getMap() : {},
-      });
       if (status.code !== grpcStatus.OK) {
-        console.error(
-          `gRPC call failed with status code: ${status.code} (${
-            grpcStatus[status.code]
-          })`
-        );
+        const statusError = {
+          code: status.code,
+          description: status.details,
+        };
+        console.error("gRPC call failed with status:", statusError);
       }
     });
   });
 }
-
-// ... (rest of the file remains the same)
 
 // Function to delete contents of a directory but keep the directory itself
 export const clearDirectoryContents = async (

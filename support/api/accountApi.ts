@@ -75,9 +75,14 @@ export async function callAccountCreate(
     } else {
       throw new Error("Account or space ID not returned in the response.");
     }
-  } catch (error) {
-    console.error("Failed to create account:", error);
-    throw error;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw error.message;
+    } else {
+      // If it's not an Error instance, log it and throw a generic error
+      console.error("An unknown error occurred:", error);
+      throw new Error("An unknown error occurred during account selection");
+    }
   }
 }
 
@@ -87,34 +92,40 @@ export async function callAccountSelect(
 ): Promise<void> {
   console.log("### Initiating account selection...");
 
-  const userData = store.users.get(userNumber);
-  if (!userData || !userData.accountId) {
-    throw new Error(
-      `User data for user ${userNumber} is incomplete or missing`
-    );
-  }
-
-  const { mode, configPath } = getNetworkConfig(isProd);
-  console.log(`Using network mode: ${mode}, config path: ${configPath}`);
-
-  const request: Rpc_Account_Select_Request = {
-    id: userData.accountId,
-    rootPath: "",
-    disableLocalNetworkSync: false,
-    networkMode: mode,
-    networkCustomConfigFilePath: configPath,
-    preferYamuxTransport: false,
-  };
-
   try {
+    const userData = store.users.get(userNumber);
+    if (!userData || !userData.accountId) {
+      throw new Error(
+        `User data for user ${userNumber} is incomplete or missing`
+      );
+    }
+
+    const { mode, configPath } = getNetworkConfig(isProd);
+    console.log(`Using network mode: ${mode}, config path: ${configPath}`);
+
+    const request: Rpc_Account_Select_Request = {
+      id: userData.accountId,
+      rootPath: "",
+      disableLocalNetworkSync: false,
+      networkMode: mode,
+      networkCustomConfigFilePath: configPath,
+      preferYamuxTransport: false,
+    };
+
     const response = await makeGrpcCall<Rpc_Account_Select_Response>(
       getCurrentClient().accountSelect,
       request
     );
+
     console.log("Account selected successfully:", response);
-  } catch (error) {
-    console.error("Failed to select account:", error);
-    throw error;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw error.message;
+    } else {
+      // If it's not an Error instance, log it and throw a generic error
+      console.error("An unknown error occurred:", error);
+      throw new Error("An unknown error occurred during account selection");
+    }
   }
 }
 

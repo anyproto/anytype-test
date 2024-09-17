@@ -1,28 +1,26 @@
 import { getCurrentClient } from "../client";
+import { makeGrpcCall } from "../helpers/utils";
+import {
+  Rpc_Metrics_SetParameters_Request,
+  Rpc_Metrics_SetParameters_Response,
+} from "../../pb/pb/protos/commands";
 
-export function callMetricsSetParameters() {
+export async function callMetricsSetParameters(): Promise<void> {
   console.log(`### calling method "setMetrics"...`);
-  const client = getCurrentClient();
-  const call = client.metricsSetParameters(
-    {
-      platform: "test",
-      version: "0.0.1",
-    },
-    (err, value) => {
-      if (err) {
-        console.log("got err: ", err);
-      }
-      if (value) {
-        console.log("got response message: ", value);
-      }
-    }
-  );
 
-  call.on("metadata", (arg1) => {
-    console.log("got response headers: ", arg1);
-  });
+  const request: Rpc_Metrics_SetParameters_Request = {
+    platform: "test",
+    version: "0.0.1",
+  };
 
-  return new Promise<void>((resolve) => {
-    call.on("status", () => resolve());
-  });
+  try {
+    const response = await makeGrpcCall<Rpc_Metrics_SetParameters_Response>(
+      getCurrentClient().metricsSetParameters,
+      request
+    );
+    console.log("Metrics parameters set successfully:", response);
+  } catch (error) {
+    console.error("Failed to set metrics parameters:", error);
+    throw error;
+  }
 }

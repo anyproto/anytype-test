@@ -154,11 +154,10 @@ Then("the account is synced", async () => {
       store.currentServerVersion &&
       isVersion034OrLess(store.currentServerVersion)
     ) {
-      logger.info("Heart version is 0.34 or less, wait for 30 seconds");
-      await new Promise((resolve) => setTimeout(resolve, 30000));
+      logger.info("Heart version is 0.34 or less, wait for 20 seconds");
+      await new Promise((resolve) => setTimeout(resolve, 20000));
     }
     logger.info("The account is successfully synced.");
-    //Wait for another 15 seconds to ensure the account is fully synced
   } catch (error) {
     // Log an error and throw it to fail the test
     logger.error(

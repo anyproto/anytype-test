@@ -1,15 +1,19 @@
 {
-    "compilerOptions": {
-      "target": "ES6",
-      "module": "commonjs",
-      "strict": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "outDir": "dist"
-    },
-    "include": [
-      "support/**/*.ts",
-      "features/**/*.ts"
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
     ]
-  }
-  
+  },
+  "include": [
+    "support/**/*.ts",
+    "features/**/*.ts",
+    "types/**/*.d.ts"
+  ]
+}
