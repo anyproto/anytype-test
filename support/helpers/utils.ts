@@ -30,7 +30,7 @@ export function isVersion034OrLess(version: string): boolean {
  * @param version - The server version string (e.g., "v0.33.2" or "v0.34.7").
  * @returns {boolean} - Returns true if the server version is 0.34 or less, false otherwise.
  */
-export function isVersion035(version: string): boolean {
+export function isVersion035OrMore(version: string): boolean {
   // Remove the 'v' prefix if it exists
   if (version.startsWith("v")) {
     version = version.slice(1);
@@ -40,7 +40,7 @@ export function isVersion035(version: string): boolean {
   const [, minor] = version.split(".").map(Number);
 
   // Check if the minor version is 35
-  if (minor == 35) {
+  if (minor >= 35) {
     return true;
   }
 

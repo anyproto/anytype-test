@@ -1,6 +1,6 @@
 import { getCurrentClient } from "../helpers/proxy";
 import { store } from "../helpers/store";
-import { isVersion035, makeGrpcCall } from "../helpers/utils";
+import { isVersion035OrMore, makeGrpcCall } from "../helpers/utils";
 import {
   Rpc_Object_Open_Request,
   Rpc_Object_Create_Request,
@@ -65,8 +65,10 @@ export async function callOpenObject(objectNumber: number): Promise<void> {
   );
 
   const client = getCurrentClient();
-  //wait for 60 seconds
-  if (store.currentServerVersion && isVersion035(store.currentServerVersion)) {
+  if (
+    store.currentServerVersion &&
+    isVersion035OrMore(store.currentServerVersion)
+  ) {
     console.log(
       "Heart verison 35, Waiting for 15 seconds before objectOpening..."
     );
