@@ -1,4 +1,4 @@
-name: Debug Compatibility Tests
+name: Compatibility tests with testomat and slack (test-debugging)
 
 on:
   push:
@@ -59,4 +59,4 @@ jobs:
           GH_PAT: ${{ github.token }}
           GH_KEEP_OUTDATED_REPORTS: 1
           SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          SLACK_CHANNEL: 'C07MSKBQ7SM'  #test-reports channel id
+          SLACK_CHANNEL: 'C07NFB0H5RN'  #test-debugging channel id
