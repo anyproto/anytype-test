@@ -11,29 +11,46 @@ import {
 } from "../../pb/pb/protos/commands";
 import { makeGrpcCall } from "../helpers/utils";
 import * as path from "path";
+import * as fs from "fs";
 
 interface NetworkConfig {
   mode: Rpc_Account_NetworkMode;
   configPath: string;
 }
 
-function getNetworkConfig(isProd: boolean): NetworkConfig {
-  if (isProd) {
+function getNetworkConfig(networkType: string): NetworkConfig {
+  if (networkType === "prod") {
     return {
       mode: Rpc_Account_NetworkMode.DefaultConfig,
       configPath: "",
     };
+  }
+  if (networkType === "local only") {
+    return {
+      mode: Rpc_Account_NetworkMode.LocalOnly,
+      configPath: "",
+    };
+  }
+  if (networkType === "staging") {
+    return {
+      mode: Rpc_Account_NetworkMode.LocalOnly,
+      configPath: path.resolve(__dirname, `../../config.yml`),
+    };
   } else {
+    const configPath = path.resolve(__dirname, `../../${networkType}.yml`);
+    if (!fs.existsSync(configPath)) {
+      throw new Error(`Network configuration file not found: ${configPath}`);
+    }
     return {
       mode: Rpc_Account_NetworkMode.CustomConfig,
-      configPath: path.resolve(__dirname, "../../config.yml"),
+      configPath: configPath,
     };
   }
 }
 
 export async function callAccountCreate(
   userNumber: number,
-  isProd: boolean = false
+  networkType: string = "local"
 ): Promise<void> {
   console.log("### Initiating account creation...");
 
@@ -42,7 +59,7 @@ export async function callAccountCreate(
     throw new Error(`User data not found for user number ${userNumber}`);
   }
 
-  const { mode, configPath } = getNetworkConfig(isProd);
+  const { mode, configPath } = getNetworkConfig(networkType);
   console.log(`Using network mode: ${mode}, config path: ${configPath}`);
 
   const request: Rpc_Account_Create_Request = {
@@ -88,7 +105,7 @@ export async function callAccountCreate(
 
 export async function callAccountSelect(
   userNumber: number,
-  isProd: boolean = false
+  networkType: string = "local"
 ): Promise<void> {
   console.log("### Initiating account selection...");
 
@@ -100,7 +117,7 @@ export async function callAccountSelect(
       );
     }
 
-    const { mode, configPath } = getNetworkConfig(isProd);
+    const { mode, configPath } = getNetworkConfig(networkType);
     console.log(`Using network mode: ${mode}, config path: ${configPath}`);
 
     const request: Rpc_Account_Select_Request = {

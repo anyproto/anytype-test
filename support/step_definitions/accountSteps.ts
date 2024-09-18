@@ -53,18 +53,7 @@ Given("the user creates a new account on {string}", async (network: string) => {
   }
   callListenSessionEvents();
 
-  //Switch to choose the network
-  switch (network) {
-    case "prod":
-      await callAccountCreate(userNumber, true);
-      break;
-    case "staging":
-      await callAccountCreate(userNumber);
-      break;
-    default:
-      logger.error("Error: Invalid network");
-      throw new Error("Invalid network");
-  }
+  await callAccountCreate(userNumber, network);
 });
 
 Given(
@@ -100,18 +89,8 @@ Given(
         throw new Error("Current client number is not defined");
       }
     }
-    //Switch to choose the network
-    switch (network) {
-      case "prod":
-        await callAccountSelect(userNumber, true);
-        break;
-      case "staging":
-        await callAccountSelect(userNumber);
-        break;
-      default:
-        logger.error("Error: Invalid network");
-        throw new Error("Invalid network");
-    }
+
+    await callAccountSelect(userNumber, network);
   }
 );
 
