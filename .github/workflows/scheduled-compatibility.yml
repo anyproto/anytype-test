@@ -11,6 +11,7 @@ jobs:
   test:
     name: Run Tests on Ubuntu
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       contents: read
       issues: write
@@ -54,6 +55,7 @@ jobs:
 
       - name: Run compatibility tests
         run: npm run test:comp:testomatio
+        timeout-minutes: 10
         env:
           TESTOMATIO: ${{ secrets.TESTOMATIO }}
           GH_PAT: ${{ github.token }}
