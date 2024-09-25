@@ -1,7 +1,14 @@
 import { getCurrentClient } from "../helpers/proxy";
 import { store } from "../helpers/store";
 import { StreamRequest } from "../../pb/pb/protos/commands";
-import { Event, Event_Message } from "../../pb/pb/protos/events";
+import {
+  Event,
+  Event_Message,
+  Event_Space_Network,
+  Event_Space_Status,
+  Event_Space_SyncError,
+  Event_Status_Thread_SyncStatus,
+} from "../../pb/pb/protos/events";
 import { Logger } from "@origranot/ts-logger";
 
 let call: any; // Declare the 'call' variable outside to manage its lifecycle
@@ -56,15 +63,32 @@ export async function callListenSessionEvents(): Promise<void> {
           case "spaceSyncStatusUpdate":
             console.log(
               "Space Sync Status Update:",
-              safeStringify(message.value.spaceSyncStatusUpdate)
+              safeStringify({
+                ...message.value.spaceSyncStatusUpdate,
+                status:
+                  Event_Space_Status[
+                    message.value.spaceSyncStatusUpdate.status
+                  ],
+                network:
+                  Event_Space_Network[
+                    message.value.spaceSyncStatusUpdate.network
+                  ],
+                error:
+                  Event_Space_SyncError[
+                    message.value.spaceSyncStatusUpdate.error
+                  ],
+              })
             );
 
             const { id, status } = message.value.spaceSyncStatusUpdate;
+            const syncingObjectsCounter =
+              message.value.spaceSyncStatusUpdate.syncingObjectsCounter;
             logger.info("DEBUG CurrentUser is ", store.currentUserNumber);
             // Check if the ID matches the current user's spaceId and status is 0
             if (
-              (id === store.currentUser.spaceId && status === 0) ||
-              status + 0 === 4
+              id === store.currentUser.spaceId &&
+              (status === 0 || status + 0 === 4) &&
+              syncingObjectsCounter === 0n
             ) {
               console.log(
                 "Desired spaceSyncStatusUpdate received:",
@@ -121,6 +145,12 @@ export async function callListenSessionEvents(): Promise<void> {
               "Account Show:",
               safeStringify(message.value.accountShow)
             );
+            if (
+              store.onAccountShowEvent &&
+              message.value.accountShow.account?.id
+            ) {
+              store.onAccountShowEvent(message.value.accountShow.account.id);
+            }
             break;
           case "accountDetails":
             console.log(

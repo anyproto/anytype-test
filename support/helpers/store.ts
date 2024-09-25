@@ -18,6 +18,8 @@ export type storeType = {
   getClientAuthToken: (clientId: number) => string | undefined;
   clear: () => void;
   spaceSyncStatusReceived: boolean;
+  accountSelectTime?: number;
+  onAccountShowEvent: ((accountId: string) => void) | null;
 };
 
 export const store: storeType = {
@@ -25,8 +27,10 @@ export const store: storeType = {
   servers: new Map(),
   objects: new Map(),
   clients: new Map(),
+  accountSelectTime: undefined,
   grpcClientManager: undefined,
   spaceSyncStatusReceived: false,
+  onAccountShowEvent: null,
 
   get currentClient(): ClientType {
     if (this.currentClientNumber !== undefined) {
@@ -65,9 +69,10 @@ export const store: storeType = {
   get currentUser(): UserType {
     console.log("Current users are called");
     if (this.currentUserNumber !== undefined) {
-      console.log("STORED USERS ARE" + JSON.stringify(this.users));
+      console.log("currentUser is" + this.currentUserNumber);
       const user = this.users.get(this.currentUserNumber) as UserType;
       if (user) {
+        console.log("user is" + user);
         return user;
       } else {
         console.log(this.users);
@@ -103,5 +108,6 @@ export const store: storeType = {
     this.objects = new Map();
     this.clients = new Map();
     this.spaceSyncStatusReceived = false;
+    this.onAccountShowEvent = null;
   },
 };

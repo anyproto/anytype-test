@@ -1,9 +1,7 @@
 import { getCurrentClient } from "../client";
 import { store } from "../helpers/store";
-import { UserType } from "../dataTypes";
 import * as fs from "fs";
 import * as path from "path";
-import { faker } from "@faker-js/faker";
 import {
   Rpc_Wallet_Create_Request,
   Rpc_Wallet_Create_Response,
@@ -23,9 +21,8 @@ const tempDir = fs.mkdtempSync(
 
 console.log(`Temporary directory created at: ${tempDir}`);
 
-export async function callWalletCreate(userNumber: number): Promise<void> {
+export async function callWalletCreate(): Promise<string> {
   console.log("### Calling method 'walletCreate'...");
-  const name = faker.person.firstName();
 
   const request: Rpc_Wallet_Create_Request = {
     rootPath: tempDir,
@@ -38,18 +35,8 @@ export async function callWalletCreate(userNumber: number): Promise<void> {
     );
 
     if (response.error?.code === 0) {
-      const userToSave: UserType = {
-        mnemonic: response.mnemonic,
-        name: name,
-      };
-      store.users.set(userNumber, userToSave);
-      console.log(
-        `Saving user as user number ${userNumber}`,
-        JSON.stringify(userToSave)
-      );
-      console.log(
-        `Mnemonic for user ${userNumber} saved: ${response.mnemonic}`
-      );
+      console.log(`Mnemonic created: ${response.mnemonic}`);
+      return response.mnemonic;
     } else {
       throw new Error(
         response.error ? response.error.description : "Unknown error"
@@ -61,17 +48,10 @@ export async function callWalletCreate(userNumber: number): Promise<void> {
   }
 }
 
-export async function callWalletRecover(userNumber: number): Promise<void> {
-  console.log("### Calling method 'walletRecovery'...");
-  const user = store.users.get(userNumber);
-
-  if (!user || !user.mnemonic) {
-    throw new Error(`Mnemonic not found for user number ${userNumber}`);
-  }
-
+export async function callWalletRecover(mnemonic: string): Promise<void> {
   const request: Rpc_Wallet_Recover_Request = {
     rootPath: tempDir,
-    mnemonic: user.mnemonic,
+    mnemonic: mnemonic,
   };
 
   try {
@@ -108,6 +88,8 @@ export async function callWalletCreateSession(
       console.log(
         "Session created successfully, token returned: " + response.token
       );
+      console.log("repsponse is", JSON.stringify(response, null, 2));
+      console.log("returned accountId is ", response.accountId);
       return response.token;
     } else {
       throw new Error(

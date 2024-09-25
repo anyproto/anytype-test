@@ -2,6 +2,28 @@ import { getCurrentClient } from "./proxy";
 import * as fs from "fs";
 import * as path from "path";
 import { status as grpcStatus } from "@grpc/grpc-js";
+import { store } from "./store";
+import { Logger } from "@origranot/ts-logger";
+
+const logger = new Logger();
+
+export const setUserAsCurrentUser = (userNumber: number) => {
+  store.currentUserNumber = userNumber;
+  logger.info(`Current user is user number ${userNumber}`);
+
+  // returning this here to make this function chainable and reuse somewhere else
+  logger.info("Stored users", JSON.stringify(Array.from(store.users)));
+  return;
+};
+
+export function getCurrentUserNumber(): number {
+  const userNumber = store.currentUserNumber;
+  if (!userNumber) {
+    logger.error("Error: Current user number is not defined");
+    throw new Error("Current user number is not defined");
+  }
+  return userNumber;
+}
 
 /**
  * Checks if the current server version is 0.34 or less.

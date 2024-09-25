@@ -1,9 +1,14 @@
 import { getCurrentClient } from "../helpers/proxy";
 import { store } from "../helpers/store";
+import { callListenSessionEvents } from "./streamRequest";
 import {
   Rpc_Account_Create_Request,
   Rpc_Account_Create_Response,
+  Rpc_Account_Delete_Request,
+  Rpc_Account_Delete_Response,
   Rpc_Account_NetworkMode,
+  Rpc_Account_Recover_Request,
+  Rpc_Account_Recover_Response,
   Rpc_Account_Select_Request,
   Rpc_Account_Select_Response,
   Rpc_Account_Stop_Request,
@@ -33,7 +38,7 @@ function getNetworkConfig(networkType: string): NetworkConfig {
   }
   if (networkType === "staging") {
     return {
-      mode: Rpc_Account_NetworkMode.LocalOnly,
+      mode: Rpc_Account_NetworkMode.CustomConfig,
       configPath: path.resolve(__dirname, `../../config.yml`),
     };
   } else {
@@ -104,24 +109,17 @@ export async function callAccountCreate(
 }
 
 export async function callAccountSelect(
-  userNumber: number,
-  networkType: string = "local"
+  accountId: string,
+  networkType: string = "local only"
 ): Promise<void> {
   console.log("### Initiating account selection...");
 
   try {
-    const userData = store.users.get(userNumber);
-    if (!userData || !userData.accountId) {
-      throw new Error(
-        `User data for user ${userNumber} is incomplete or missing`
-      );
-    }
-
     const { mode, configPath } = getNetworkConfig(networkType);
     console.log(`Using network mode: ${mode}, config path: ${configPath}`);
 
     const request: Rpc_Account_Select_Request = {
-      id: userData.accountId,
+      id: accountId,
       rootPath: "",
       disableLocalNetworkSync: false,
       networkMode: mode,
@@ -165,8 +163,77 @@ export async function callAccountStop(): Promise<void> {
       request
     );
     console.log("Account stopped successfully:", response);
-  } catch (error) {
-    console.error("Failed to stop account:", error);
-    throw error;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw error.message;
+    } else {
+      // If it's not an Error instance, log it and throw a generic error
+      console.error("An unknown error occurred:", error);
+      throw new Error("An unknown error occurred during account stop");
+    }
+  }
+}
+
+export async function callAccountDelete(): Promise<void> {
+  console.log("### Initiating account deletion...");
+
+  const request: Rpc_Account_Delete_Request = {};
+  try {
+    const response = await makeGrpcCall<Rpc_Account_Delete_Response>(
+      getCurrentClient().accountDelete,
+      request
+    );
+    console.log("Account deleted successfully:", response);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw error.message;
+    } else {
+      // If it's not an Error instance, log it and throw a generic error
+      console.error("An unknown error occurred:", error);
+      throw new Error("An unknown error occurred during account deletion");
+    }
+  }
+}
+
+export async function callAccountRecover(): Promise<string> {
+  console.log("### Initiating account recovery...");
+
+  const request: Rpc_Account_Recover_Request = {
+    rootPath: "",
+  };
+
+  try {
+    // Start listening for events before initiating recovery
+    const eventPromise = new Promise<string>((resolve) => {
+      store.onAccountShowEvent = (accountId: string) => {
+        resolve(accountId);
+      };
+    });
+
+    // Call listenSessionEvents in the background
+    callListenSessionEvents();
+
+    // Initiate account recovery
+    const response = await makeGrpcCall<Rpc_Account_Recover_Response>(
+      getCurrentClient().accountRecover,
+      request
+    );
+    console.log("Account recovery initiated successfully:", response);
+
+    // Wait for the AccountShow event
+    const accountId = await eventPromise;
+    console.log("Received AccountShow event with account ID:", accountId);
+
+    return accountId;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw error.message;
+    } else {
+      console.error("An unknown error occurred:", error);
+      throw new Error("An unknown error occurred during account recovery");
+    }
+  } finally {
+    // Clean up the event listener
+    store.onAccountShowEvent = null;
   }
 }

@@ -4,55 +4,41 @@ import {
   callWalletCreateSession,
   callWalletRecover,
 } from "../api/walletApi";
-import { callAccountCreate, callAccountSelect } from "../api/accountApi";
+import {
+  callAccountCreate,
+  callAccountDelete,
+  callAccountRecover,
+  callAccountSelect,
+} from "../api/accountApi";
 import { store } from "../helpers/store";
 import { Given, Then } from "@cucumber/cucumber";
 import { callListenSessionEvents } from "../api/streamRequest";
-import { isVersion034OrLess } from "../helpers/utils";
+import { getCurrentUserNumber, isVersion034OrLess } from "../helpers/utils";
+import { faker } from "@faker-js/faker";
+import { UserType } from "../dataTypes";
+import { updateClientToken } from "../helpers/tokenManager";
 
 // Initialize the logger
 const logger = new Logger();
 
-export const setUserAsCurrentUser = (userNumber: number) => {
-  store.currentUserNumber = userNumber;
-  logger.info(`Current user is user number ${userNumber}`);
-
-  // returning this here to make this function chainable and reuse somewhere else
-  logger.info("Stored users", JSON.stringify(Array.from(store.users)));
-  return;
-};
+export function saveUser(userNumber: number, user: UserType): void {
+  store.users.set(userNumber, user);
+  logger.info(`Saving user as user number ${userNumber}`, JSON.stringify(user));
+}
 
 Given("the user creates a new account on {string}", async (network: string) => {
   logger.info("STEP: the user creates a new account");
-  const userNumber = store.currentUserNumber;
-  if (!userNumber) {
-    logger.error("Error: Current user number is not defined");
-    throw new Error("Current user number is not defined");
-  }
-  await callWalletCreate(userNumber);
-  const user = store.users.get(userNumber);
-  if (!user) {
-    logger.error("Error: User is not defined");
-    throw new Error("User is not defined");
-  }
-  const mnemonic = user.mnemonic;
+  const userNumber = getCurrentUserNumber();
+  const mnemonic = await callWalletCreate();
+
+  const userToSave: UserType = {
+    mnemonic: mnemonic,
+    name: faker.person.fullName(),
+  };
+  saveUser(userNumber, userToSave);
   const token = await callWalletCreateSession(mnemonic);
-
-  // Update the client token using the stored grpcClientManager
-  if (store.grpcClientManager) {
-    logger.info("Updating client token");
-    if (store.currentClientNumber) {
-      store.grpcClientManager.updateClientToken(
-        store.currentClientNumber,
-        token
-      );
-    } else {
-      logger.error("Error: Current client number is not defined");
-      throw new Error("Current client number is not defined");
-    }
-  }
+  updateClientToken(token);
   callListenSessionEvents();
-
   await callAccountCreate(userNumber, network);
 });
 
@@ -60,37 +46,20 @@ Given(
   "the user logs in to their account on {string}",
   async (network: string) => {
     logger.info("STEP: the user logs in to their account");
-    const userNumber = store.currentUserNumber;
-    if (!userNumber) {
-      logger.error("Error: Current user number is not defined");
-      throw new Error("Current user number is not defined");
-    }
-    await callWalletRecover(userNumber);
-    const user = store.users.get(userNumber);
-    if (!user) {
-      logger.error("Error: User is not defined");
-      throw new Error("User is not defined");
-    }
-    logger.info("Getting mnemonic", user.mnemonic);
-    const mnemonic = user.mnemonic;
-    const token = await callWalletCreateSession(mnemonic);
 
-    // Update the client token using the stored grpcClientManager
-    if (store.grpcClientManager) {
-      logger.info("Updating client token");
-      if (store.currentClientNumber) {
-        store.grpcClientManager.updateClientToken(
-          store.currentClientNumber,
-          token
-        );
-        callListenSessionEvents();
-      } else {
-        logger.error("Error: Current client number is not defined");
-        throw new Error("Current client number is not defined");
-      }
-    }
+    const user = store.currentUser;
+    logger.info("Recovering wallet", user.mnemonic);
+    await callWalletRecover(user.mnemonic);
 
-    await callAccountSelect(userNumber, network);
+    const token = await callWalletCreateSession(user.mnemonic);
+    updateClientToken(token);
+
+    if (!user.accountId) {
+      const accountId = await callAccountRecover();
+      user.accountId = accountId;
+      saveUser(store.currentUserNumber!, user);
+    }
+    await callAccountSelect(user.accountId, network);
   }
 );
 
@@ -146,4 +115,9 @@ Then("the account is synced", async () => {
       "Test failed: The account did not sync within the expected time."
     );
   }
+});
+
+Then("the account is deleted", async () => {
+  logger.info("STEP: the account is deleted");
+  await callAccountDelete();
 });

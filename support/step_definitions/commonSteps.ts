@@ -4,10 +4,10 @@ import { heartResolve } from "../heartResolve";
 import { store } from "../helpers/store";
 import { GRPCServerManager, stopServer } from "../server";
 import { GRPCClientManager } from "../client";
-import { setUserAsCurrentUser } from "./accountSteps";
 import { Logger } from "@origranot/ts-logger";
 import { stopListenSessionEvents } from "../api/streamRequest";
 import { callAccountStop } from "../api/accountApi";
+import { setUserAsCurrentUser } from "../helpers/utils";
 
 const logger = new Logger();
 

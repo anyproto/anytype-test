@@ -6,8 +6,9 @@
   "scripts": {
     "test:e2e": "cucumber-js --tags @e2e",
     "test:comp": "cucumber-js --tags @compatibility",
-    "test:comp:prod": "NODE_ENV=prod cucumber-js --tags @compatibility",
-    "test:comp:testomatio": "cucumber-js --tags @compatibility --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js"
+    "test:comp:testomatio": "cucumber-js --tags @compatibility --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
+    "test:perf": "cucumber-js --tags @perfomance",
+    "test:local": "cucumber-js --tags @local"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,7 @@
     "@cucumber/pretty-formatter": "^1.0.1",
     "@faker-js/faker": "^8.4.1",
     "@grpc/grpc-js": "^1.10.10",
-    "@playwright/test": "^1.46.1",
+    "@playwright/test": "^1.47.2",
     "@testomatio/reporter": "github:anshamray/reporter#fix-slack",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.16.4",
