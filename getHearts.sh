@@ -45,11 +45,15 @@ fi
 
 # Fetch the list of releases
 release_info=$(curl -sL https://$GITHUB/repos/$REPO/releases?per_page=100)
+
 # Extract and process the latest major versions
 all_versions=($(echo "$release_info" | jq -r '.[] | .tag_name' | grep -Eo '^v[0-9]+\.[0-9]+' | sort -V | uniq | tail -n $NUM_VERSIONS))
 
-echo "Processing all versions for compatibilitySyncProd.feature and compatibilityLocal.feature" >&2
-echo "Processing versions >= v0.35.0 for compatibilitySyncStaging.feature" >&2
+# Filter versions >= v0.35.0 for prod and staging
+filtered_versions=($(for v in "${all_versions[@]}"; do if [[ "$v" > "v0.34.9" ]]; then echo "$v"; fi; done))
+
+echo "Processing all versions for compatibilityLocal.feature" >&2
+echo "Processing versions >= v0.35.0 for compatibilitySyncProd.feature and compatibilitySyncStaging.feature" >&2
 
 # Function to process and download releases
 process_releases() {
@@ -94,12 +98,11 @@ process_releases() {
     echo "${processed_versions[@]}"
 }
 
-# Process all versions
+# Process all versions for local
 all_processed_versions=($(process_releases "${all_versions[@]}"))
 
-# Process versions >= v0.35.0
-staging_versions=($(for v in "${all_versions[@]}"; do if [[ "$v" > "v0.34.9" ]]; then echo "$v"; fi; done))
-staging_processed_versions=($(process_releases "${staging_versions[@]}"))
+# Process filtered versions for prod and staging
+filtered_processed_versions=($(process_releases "${filtered_versions[@]}"))
 
 # Function to append combinations to a file
 append_combinations() {
@@ -114,8 +117,8 @@ append_combinations() {
 }
 
 # Append combinations to feature files
-append_combinations "$FEATURE_FILE_SYNC_PROD" "${all_processed_versions[@]}"
+append_combinations "$FEATURE_FILE_SYNC_PROD" "${filtered_processed_versions[@]}"
 append_combinations "$FEATURE_FILE_LOCAL" "${all_processed_versions[@]}"
-append_combinations "$FEATURE_FILE_SYNC_STAGING" "${staging_processed_versions[@]}"
+append_combinations "$FEATURE_FILE_SYNC_STAGING" "${filtered_processed_versions[@]}"
 
 printf "All tasks completed. Compatibility combinations appended to feature files.\n" >&2
