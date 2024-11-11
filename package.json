@@ -12,10 +12,9 @@
     "test:ios:parallel": "cucumber-js -p parallel-ios",
     "test:e2e": "cucumber-js -p api --tags @e2e",
     "test:comp": "cucumber-js -p api --tags @compatibility",
-    "test:comp:testomatio": "cucumber-js -p all --tags @compatibility --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
+    "test:comp:testomatio": "cucumber-js -p api --tags @compatibility --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
     "test:perf": "cucumber-js -p all --tags @perfomance",
     "test:local": "cucumber-js -p all --tags @local",
-    "test:migration": "cucumber-js -p all --tags @migration",
     "test:all": "npm run test:api && npm run test:desktop && npm run test:ios",
     "test:all:parallel": "npm run test:api:parallel && npm run test:desktop:parallel && npm run test:ios:parallel"
   },
