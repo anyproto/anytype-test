@@ -225,9 +225,13 @@ export const getTempDirectory = (): string => {
 };
 
 export const createAndSetTempDirectory = (): string => {
-  const tempDir = fs.mkdtempSync(
-    path.join(path.resolve(__dirname, "../../../tmp"), "anytype-test-")
-  );
+  // Create the tmp directory if it doesn't exist
+  const tmpBasePath = path.resolve(__dirname, "../../../tmp");
+  if (!fs.existsSync(tmpBasePath)) {
+    fs.mkdirSync(tmpBasePath, { recursive: true });
+  }
+
+  const tempDir = fs.mkdtempSync(path.join(tmpBasePath, "anytype-test-"));
   console.log(`Temporary directory created at: ${tempDir}`);
   setTempDirectory(tempDir);
   return tempDir;
