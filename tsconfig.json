@@ -9,11 +9,16 @@
     "typeRoots": [
       "./node_modules/@types",
       "./types"
-    ]
+    ],
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "declaration": true,
+    "sourceMap": true
   },
   "include": [
     "support/**/*.ts",
-    "features/**/*.ts",
-    "types/**/*.d.ts"
+    "step_definitions/**/*.ts",
+    "types/**/*.d.ts",
+    "features/**/*.ts"
   ]
 }

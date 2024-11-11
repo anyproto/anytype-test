@@ -2,6 +2,7 @@
 // @generated from protobuf file "pb/protos/events.proto" (package "anytype", syntax proto3)
 // tslint:disable
 import { MessageType } from "@protobuf-ts/runtime";
+import { Import_Type } from "../../pkg/lib/pb/model/protos/models";
 import { Notification } from "../../pkg/lib/pb/model/protos/models";
 import { Membership } from "../../pkg/lib/pb/model/protos/models";
 import { Range } from "../../pkg/lib/pb/model/protos/models";
@@ -39,6 +40,8 @@ import { Value } from "../../google/protobuf/struct";
 import { Account_Status } from "../../pkg/lib/pb/model/protos/models";
 import { Account_Config } from "../../pkg/lib/pb/model/protos/models";
 import { Struct } from "../../google/protobuf/struct";
+import { ChatMessage_Reactions } from "../../pkg/lib/pb/model/protos/models";
+import { ChatMessage } from "../../pkg/lib/pb/model/protos/models";
 import { Account } from "../../pkg/lib/pb/model/protos/models";
 /**
  *
@@ -490,8 +493,95 @@ export interface Event_Message {
          */
         p2PStatusUpdate: Event_P2PStatus_Update;
     } | {
+        oneofKind: "importFinish";
+        /**
+         * @generated from protobuf field: anytype.Event.Import.Finish importFinish = 121;
+         */
+        importFinish: Event_Import_Finish;
+    } | {
+        oneofKind: "chatAdd";
+        /**
+         * @generated from protobuf field: anytype.Event.Chat.Add chatAdd = 128;
+         */
+        chatAdd: Event_Chat_Add;
+    } | {
+        oneofKind: "chatUpdate";
+        /**
+         * @generated from protobuf field: anytype.Event.Chat.Update chatUpdate = 129;
+         */
+        chatUpdate: Event_Chat_Update;
+    } | {
+        oneofKind: "chatUpdateReactions";
+        /**
+         * @generated from protobuf field: anytype.Event.Chat.UpdateReactions chatUpdateReactions = 130;
+         */
+        chatUpdateReactions: Event_Chat_UpdateReactions;
+    } | {
+        oneofKind: "chatDelete";
+        /**
+         * @generated from protobuf field: anytype.Event.Chat.Delete chatDelete = 131;
+         */
+        chatDelete: Event_Chat_Delete;
+    } | {
         oneofKind: undefined;
     };
+}
+/**
+ * @generated from protobuf message anytype.Event.Chat
+ */
+export interface Event_Chat {
+}
+/**
+ * @generated from protobuf message anytype.Event.Chat.Add
+ */
+export interface Event_Chat_Add {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: string orderId = 2;
+     */
+    orderId: string;
+    /**
+     * @generated from protobuf field: anytype.model.ChatMessage message = 3;
+     */
+    message?: ChatMessage;
+}
+/**
+ * @generated from protobuf message anytype.Event.Chat.Delete
+ */
+export interface Event_Chat_Delete {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+}
+/**
+ * @generated from protobuf message anytype.Event.Chat.Update
+ */
+export interface Event_Chat_Update {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: anytype.model.ChatMessage message = 2;
+     */
+    message?: ChatMessage;
+}
+/**
+ * @generated from protobuf message anytype.Event.Chat.UpdateReactions
+ */
+export interface Event_Chat_UpdateReactions {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: anytype.model.ChatMessage.Reactions reactions = 2;
+     */
+    reactions?: ChatMessage_Reactions;
 }
 /**
  * @generated from protobuf message anytype.Event.Account
@@ -2852,7 +2942,11 @@ export enum Event_Status_Thread_SyncStatus {
     /**
      * @generated from protobuf enum value: IncompatibleVersion = 5;
      */
-    IncompatibleVersion = 5
+    IncompatibleVersion = 5,
+    /**
+     * @generated from protobuf enum value: NetworkNeedsUpdate = 6;
+     */
+    NetworkNeedsUpdate = 6
 }
 /**
  * @generated from protobuf message anytype.Event.File
@@ -3008,7 +3102,11 @@ export enum Event_Space_Status {
     /**
      * @generated from protobuf enum value: Offline = 3;
      */
-    Offline = 3
+    Offline = 3,
+    /**
+     * @generated from protobuf enum value: NetworkNeedsUpdate = 4;
+     */
+    NetworkNeedsUpdate = 4
 }
 /**
  * @generated from protobuf enum anytype.Event.Space.Network
@@ -3085,7 +3183,35 @@ export enum Event_P2PStatus_Status {
     /**
      * @generated from protobuf enum value: Connected = 2;
      */
-    Connected = 2
+    Connected = 2,
+    /**
+     * only for ios for now, fallback to NotPossible if not implemented on client
+     *
+     * @generated from protobuf enum value: Restricted = 3;
+     */
+    Restricted = 3
+}
+/**
+ * @generated from protobuf message anytype.Event.Import
+ */
+export interface Event_Import {
+}
+/**
+ * @generated from protobuf message anytype.Event.Import.Finish
+ */
+export interface Event_Import_Finish {
+    /**
+     * @generated from protobuf field: string rootCollectionID = 1;
+     */
+    rootCollectionID: string;
+    /**
+     * @generated from protobuf field: int64 objectsCount = 2;
+     */
+    objectsCount: bigint;
+    /**
+     * @generated from protobuf field: anytype.model.Import.Type importType = 3;
+     */
+    importType: Import_Type;
 }
 /**
  * @generated from protobuf message anytype.ResponseEvent
@@ -3288,7 +3414,12 @@ class Event_Message$Type extends MessageType<Event_Message> {
             { no: 116, name: "payloadBroadcast", kind: "message", oneof: "value", T: () => Event_Payload_Broadcast },
             { no: 117, name: "membershipUpdate", kind: "message", oneof: "value", T: () => Event_Membership_Update },
             { no: 119, name: "spaceSyncStatusUpdate", kind: "message", oneof: "value", T: () => Event_Space_SyncStatus_Update },
-            { no: 120, name: "p2pStatusUpdate", kind: "message", jsonName: "p2pStatusUpdate", oneof: "value", T: () => Event_P2PStatus_Update }
+            { no: 120, name: "p2pStatusUpdate", kind: "message", jsonName: "p2pStatusUpdate", oneof: "value", T: () => Event_P2PStatus_Update },
+            { no: 121, name: "importFinish", kind: "message", oneof: "value", T: () => Event_Import_Finish },
+            { no: 128, name: "chatAdd", kind: "message", oneof: "value", T: () => Event_Chat_Add },
+            { no: 129, name: "chatUpdate", kind: "message", oneof: "value", T: () => Event_Chat_Update },
+            { no: 130, name: "chatUpdateReactions", kind: "message", oneof: "value", T: () => Event_Chat_UpdateReactions },
+            { no: 131, name: "chatDelete", kind: "message", oneof: "value", T: () => Event_Chat_Delete }
         ]);
     }
 }
@@ -3296,6 +3427,68 @@ class Event_Message$Type extends MessageType<Event_Message> {
  * @generated MessageType for protobuf message anytype.Event.Message
  */
 export const Event_Message = new Event_Message$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Event_Chat$Type extends MessageType<Event_Chat> {
+    constructor() {
+        super("anytype.Event.Chat", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Event.Chat
+ */
+export const Event_Chat = new Event_Chat$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Event_Chat_Add$Type extends MessageType<Event_Chat_Add> {
+    constructor() {
+        super("anytype.Event.Chat.Add", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "orderId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "message", kind: "message", T: () => ChatMessage }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Event.Chat.Add
+ */
+export const Event_Chat_Add = new Event_Chat_Add$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Event_Chat_Delete$Type extends MessageType<Event_Chat_Delete> {
+    constructor() {
+        super("anytype.Event.Chat.Delete", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Event.Chat.Delete
+ */
+export const Event_Chat_Delete = new Event_Chat_Delete$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Event_Chat_Update$Type extends MessageType<Event_Chat_Update> {
+    constructor() {
+        super("anytype.Event.Chat.Update", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "message", kind: "message", T: () => ChatMessage }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Event.Chat.Update
+ */
+export const Event_Chat_Update = new Event_Chat_Update$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Event_Chat_UpdateReactions$Type extends MessageType<Event_Chat_UpdateReactions> {
+    constructor() {
+        super("anytype.Event.Chat.UpdateReactions", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "reactions", kind: "message", T: () => ChatMessage_Reactions }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Event.Chat.UpdateReactions
+ */
+export const Event_Chat_UpdateReactions = new Event_Chat_UpdateReactions$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Event_Account$Type extends MessageType<Event_Account> {
     constructor() {
@@ -5713,6 +5906,30 @@ class Event_P2PStatus_Update$Type extends MessageType<Event_P2PStatus_Update> {
  * @generated MessageType for protobuf message anytype.Event.P2PStatus.Update
  */
 export const Event_P2PStatus_Update = new Event_P2PStatus_Update$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Event_Import$Type extends MessageType<Event_Import> {
+    constructor() {
+        super("anytype.Event.Import", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Event.Import
+ */
+export const Event_Import = new Event_Import$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Event_Import_Finish$Type extends MessageType<Event_Import_Finish> {
+    constructor() {
+        super("anytype.Event.Import.Finish", [
+            { no: 1, name: "rootCollectionID", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "objectsCount", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 0 /*LongType.BIGINT*/ },
+            { no: 3, name: "importType", kind: "enum", T: () => ["anytype.model.Import.Type", Import_Type] }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Event.Import.Finish
+ */
+export const Event_Import_Finish = new Event_Import_Finish$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ResponseEvent$Type extends MessageType<ResponseEvent> {
     constructor() {

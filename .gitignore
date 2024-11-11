@@ -3,6 +3,7 @@ heart
 cmd
 heartsFolder
 config.yml
+results/*
 # Ignore everything in the tmp folder
 tmp/*
 # Except for the tmp directory itself

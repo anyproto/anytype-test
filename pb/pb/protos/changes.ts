@@ -19,24 +19,6 @@ import { SmartBlockSnapshotBase } from "../../pkg/lib/pb/model/protos/models";
  */
 export interface Change {
     /**
-     * ids of previous changes
-     *
-     * @generated from protobuf field: repeated string previous_ids = 1;
-     */
-    previousIds: string[];
-    /**
-     * id of the last snapshot
-     *
-     * @generated from protobuf field: string last_snapshot_id = 2;
-     */
-    lastSnapshotId: string;
-    /**
-     * ids of the last changes with details/relations content
-     *
-     * @generated from protobuf field: repeated string previous_meta_ids = 5;
-     */
-    previousMetaIds: string[];
-    /**
      * set of actions to apply
      *
      * @generated from protobuf field: repeated anytype.Change.Content content = 3;
@@ -525,13 +507,174 @@ export interface Change_DeviceUpdate {
      */
     name: string;
 }
+/**
+ * @generated from protobuf message anytype.ChangeNoSnapshot
+ */
+export interface ChangeNoSnapshot {
+    /**
+     * set of actions to apply
+     *
+     * @generated from protobuf field: repeated anytype.Change.Content content = 3;
+     */
+    content: Change_Content[];
+    /**
+     * file keys related to changes content
+     *
+     * @generated from protobuf field: repeated anytype.Change.FileKeys fileKeys = 6;
+     */
+    fileKeys: Change_FileKeys[];
+    /**
+     * creation timestamp
+     *
+     * @generated from protobuf field: int64 timestamp = 7;
+     */
+    timestamp: bigint;
+    /**
+     * version of business logic
+     *
+     * @generated from protobuf field: uint32 version = 8;
+     */
+    version: number;
+}
+/**
+ * @generated from protobuf message anytype.StoreChange
+ */
+export interface StoreChange {
+    /**
+     * @generated from protobuf field: repeated anytype.StoreChangeContent changeSet = 1;
+     */
+    changeSet: StoreChangeContent[];
+}
+/**
+ * @generated from protobuf message anytype.StoreChangeContent
+ */
+export interface StoreChangeContent {
+    /**
+     * @generated from protobuf oneof: change
+     */
+    change: {
+        oneofKind: "create";
+        /**
+         * @generated from protobuf field: anytype.DocumentCreate create = 1;
+         */
+        create: DocumentCreate;
+    } | {
+        oneofKind: "modify";
+        /**
+         * @generated from protobuf field: anytype.DocumentModify modify = 2;
+         */
+        modify: DocumentModify;
+    } | {
+        oneofKind: "delete";
+        /**
+         * @generated from protobuf field: anytype.DocumentDelete delete = 3;
+         */
+        delete: DocumentDelete;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message anytype.DocumentCreate
+ */
+export interface DocumentCreate {
+    /**
+     * @generated from protobuf field: string collection = 1;
+     */
+    collection: string;
+    /**
+     * @generated from protobuf field: string documentId = 2;
+     */
+    documentId: string;
+    /**
+     * json
+     *
+     * @generated from protobuf field: string value = 3;
+     */
+    value: string;
+}
+/**
+ * @generated from protobuf message anytype.DocumentModify
+ */
+export interface DocumentModify {
+    /**
+     * @generated from protobuf field: string collection = 1;
+     */
+    collection: string;
+    /**
+     * @generated from protobuf field: string documentId = 2;
+     */
+    documentId: string;
+    /**
+     * @generated from protobuf field: repeated anytype.KeyModify keys = 4;
+     */
+    keys: KeyModify[];
+}
+/**
+ * @generated from protobuf message anytype.KeyModify
+ */
+export interface KeyModify {
+    /**
+     * key path; example: [user, email]
+     *
+     * @generated from protobuf field: repeated string keyPath = 1;
+     */
+    keyPath: string[];
+    /**
+     * modify op: set, unset, inc, etc.
+     *
+     * @generated from protobuf field: anytype.ModifyOp modifyOp = 3;
+     */
+    modifyOp: ModifyOp;
+    /**
+     * json value; example: '"new@email.com"'
+     *
+     * @generated from protobuf field: string modifyValue = 4;
+     */
+    modifyValue: string;
+}
+/**
+ * @generated from protobuf message anytype.DocumentDelete
+ */
+export interface DocumentDelete {
+    /**
+     * @generated from protobuf field: string collection = 1;
+     */
+    collection: string;
+    /**
+     * @generated from protobuf field: string documentId = 2;
+     */
+    documentId: string;
+}
+/**
+ * @generated from protobuf enum anytype.ModifyOp
+ */
+export enum ModifyOp {
+    /**
+     * @generated from protobuf enum value: Set = 0;
+     */
+    Set = 0,
+    /**
+     * @generated from protobuf enum value: Unset = 1;
+     */
+    Unset = 1,
+    /**
+     * @generated from protobuf enum value: Inc = 2;
+     */
+    Inc = 2,
+    /**
+     * @generated from protobuf enum value: AddToSet = 3;
+     */
+    AddToSet = 3,
+    /**
+     * @generated from protobuf enum value: Pull = 4;
+     */
+    Pull = 4
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class Change$Type extends MessageType<Change> {
     constructor() {
         super("anytype.Change", [
-            { no: 1, name: "previous_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "last_snapshot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "previous_meta_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "content", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Change_Content },
             { no: 4, name: "snapshot", kind: "message", T: () => Change_Snapshot },
             { no: 6, name: "fileKeys", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Change_FileKeys },
@@ -895,3 +1038,99 @@ class Change_DeviceUpdate$Type extends MessageType<Change_DeviceUpdate> {
  * @generated MessageType for protobuf message anytype.Change.DeviceUpdate
  */
 export const Change_DeviceUpdate = new Change_DeviceUpdate$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChangeNoSnapshot$Type extends MessageType<ChangeNoSnapshot> {
+    constructor() {
+        super("anytype.ChangeNoSnapshot", [
+            { no: 3, name: "content", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Change_Content },
+            { no: 6, name: "fileKeys", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Change_FileKeys },
+            { no: 7, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 0 /*LongType.BIGINT*/ },
+            { no: 8, name: "version", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.ChangeNoSnapshot
+ */
+export const ChangeNoSnapshot = new ChangeNoSnapshot$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoreChange$Type extends MessageType<StoreChange> {
+    constructor() {
+        super("anytype.StoreChange", [
+            { no: 1, name: "changeSet", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoreChangeContent }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.StoreChange
+ */
+export const StoreChange = new StoreChange$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoreChangeContent$Type extends MessageType<StoreChangeContent> {
+    constructor() {
+        super("anytype.StoreChangeContent", [
+            { no: 1, name: "create", kind: "message", oneof: "change", T: () => DocumentCreate },
+            { no: 2, name: "modify", kind: "message", oneof: "change", T: () => DocumentModify },
+            { no: 3, name: "delete", kind: "message", oneof: "change", T: () => DocumentDelete }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.StoreChangeContent
+ */
+export const StoreChangeContent = new StoreChangeContent$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DocumentCreate$Type extends MessageType<DocumentCreate> {
+    constructor() {
+        super("anytype.DocumentCreate", [
+            { no: 1, name: "collection", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "documentId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "value", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.DocumentCreate
+ */
+export const DocumentCreate = new DocumentCreate$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DocumentModify$Type extends MessageType<DocumentModify> {
+    constructor() {
+        super("anytype.DocumentModify", [
+            { no: 1, name: "collection", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "documentId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "keys", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => KeyModify }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.DocumentModify
+ */
+export const DocumentModify = new DocumentModify$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class KeyModify$Type extends MessageType<KeyModify> {
+    constructor() {
+        super("anytype.KeyModify", [
+            { no: 1, name: "keyPath", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "modifyOp", kind: "enum", T: () => ["anytype.ModifyOp", ModifyOp] },
+            { no: 4, name: "modifyValue", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.KeyModify
+ */
+export const KeyModify = new KeyModify$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DocumentDelete$Type extends MessageType<DocumentDelete> {
+    constructor() {
+        super("anytype.DocumentDelete", [
+            { no: 1, name: "collection", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "documentId", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.DocumentDelete
+ */
+export const DocumentDelete = new DocumentDelete$Type();

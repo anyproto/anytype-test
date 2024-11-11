@@ -1,6 +1,11 @@
-import { UserType, ServerType, ObjectType, ClientType } from "./../dataTypes";
+import {
+  UserType,
+  ServerType,
+  ObjectType,
+  ClientType,
+} from "../types/dataTypes";
 import { IClientCommandsClient } from "../../pb/pb/protos/service/service.grpc-client";
-import { GRPCClientManager } from "../client";
+import { GRPCClientManager } from "../api/services/gprcClient";
 
 export type storeType = {
   grpcClientManager?: GRPCClientManager;
@@ -20,6 +25,12 @@ export type storeType = {
   spaceSyncStatusReceived: boolean;
   accountSelectTime?: number;
   onAccountShowEvent: ((accountId: string) => void) | null;
+  setUserProperty: (
+    userNumber: number,
+    property: keyof UserType,
+    value: UserType[keyof UserType]
+  ) => void;
+  tempDir: string | undefined;
 };
 
 export const store: storeType = {
@@ -31,6 +42,7 @@ export const store: storeType = {
   grpcClientManager: undefined,
   spaceSyncStatusReceived: false,
   onAccountShowEvent: null,
+  tempDir: undefined,
 
   get currentClient(): ClientType {
     if (this.currentClientNumber !== undefined) {
@@ -109,5 +121,20 @@ export const store: storeType = {
     this.clients = new Map();
     this.spaceSyncStatusReceived = false;
     this.onAccountShowEvent = null;
+    this.tempDir = undefined;
+  },
+
+  setUserProperty<K extends keyof UserType>(
+    userNumber: number,
+    property: K,
+    value: UserType[K]
+  ): void {
+    const user = this.users.get(userNumber);
+    if (user) {
+      user[property] = value;
+      this.users.set(userNumber, user);
+    } else {
+      throw new Error(`User with number ${userNumber} not found`);
+    }
   },
 };

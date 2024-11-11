@@ -1,14 +1,23 @@
 {
   "name": "anytype-test",
   "version": "1.0.0",
-  "description": "middletest",
+  "description": "everything test",
   "main": "index.ts",
   "scripts": {
-    "test:e2e": "cucumber-js --tags @e2e",
-    "test:comp": "cucumber-js --tags @compatibility",
-    "test:comp:testomatio": "cucumber-js --tags @compatibility --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
-    "test:perf": "cucumber-js --tags @perfomance",
-    "test:local": "cucumber-js --tags @local"
+    "test:api": "cucumber-js -p api",
+    "test:desktop": "cucumber-js -p desktop",
+    "test:ios": "cucumber-js -p ios",
+    "test:api:parallel": "cucumber-js -p parallel-api",
+    "test:desktop:parallel": "cucumber-js -p parallel-desktop",
+    "test:ios:parallel": "cucumber-js -p parallel-ios",
+    "test:e2e": "cucumber-js -p api --tags @e2e",
+    "test:comp": "cucumber-js -p api --tags @compatibility",
+    "test:comp:testomatio": "cucumber-js -p all --tags @compatibility --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
+    "test:perf": "cucumber-js -p all --tags @perfomance",
+    "test:local": "cucumber-js -p all --tags @local",
+    "test:migration": "cucumber-js -p all --tags @migration",
+    "test:all": "npm run test:api && npm run test:desktop && npm run test:ios",
+    "test:all:parallel": "npm run test:api:parallel && npm run test:desktop:parallel && npm run test:ios:parallel"
   },
   "repository": {
     "type": "git",
@@ -28,16 +37,18 @@
     "@playwright/test": "^1.47.2",
     "@testomatio/reporter": "github:anshamray/reporter#fix-slack",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.16.4",
+    "@types/node": "^22.8.1",
     "@types/unzipper": "^0.10.10",
     "axios": "^1.7.4",
+    "bip39": "^3.1.0",
     "electron-playwright-helpers": "^1.7.1",
     "jest": "^29.2.0",
     "playwright": "^1.46.1",
     "ts-jest": "^29.2.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.4",
-    "unzipper": "^0.12.3"
+    "typescript": "^5.6.3",
+    "unzipper": "^0.12.3",
+    "webdriverio": "^9.2.2"
   },
   "dependencies": {
     "@origranot/ts-logger": "^1.12.0",

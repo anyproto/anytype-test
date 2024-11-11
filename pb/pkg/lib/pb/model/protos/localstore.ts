@@ -174,11 +174,19 @@ export interface ObjectStoreChecksums {
     /**
      * @generated from protobuf field: bool areDeletedObjectsReindexed = 13;
      */
-    areDeletedObjectsReindexed: boolean;
+    areDeletedObjectsReindexed: boolean; // DEPRECATED
     /**
      * @generated from protobuf field: int32 linksErase = 14;
      */
     linksErase: number;
+    /**
+     * @generated from protobuf field: int32 marketplaceForceReindexCounter = 15;
+     */
+    marketplaceForceReindexCounter: number;
+    /**
+     * @generated from protobuf field: int32 reindexDeletedObjects = 16;
+     */
+    reindexDeletedObjects: number;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ObjectInfo$Type extends MessageType<ObjectInfo> {
@@ -294,7 +302,9 @@ class ObjectStoreChecksums$Type extends MessageType<ObjectStoreChecksums> {
             { no: 10, name: "filestoreKeysForceReindexCounter", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 12, name: "areOldFilesRemoved", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 13, name: "areDeletedObjectsReindexed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 14, name: "linksErase", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 14, name: "linksErase", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 15, name: "marketplaceForceReindexCounter", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 16, name: "reindexDeletedObjects", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
 }

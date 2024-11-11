@@ -1,9 +1,14 @@
 import { Metadata } from "@grpc/grpc-js";
-import { getCurrentClient as getClientInstance } from "../client";
+import { getCurrentClient as getClientInstance } from "../api/services/gprcClient";
 import { store } from "./store";
 
 // Define the list of methods to exclude from metadata injection
-const excludedMethods = ["setMetrics", "accountCreate", "accountSelect"];
+const excludedMethods = [
+  "setMetrics",
+  "accountCreate",
+  "accountSelect",
+  "initialSetParameters",
+];
 
 // Wrap the client methods to inject metadata
 function getCurrentClient() {

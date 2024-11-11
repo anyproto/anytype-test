@@ -240,6 +240,12 @@ export interface Block {
          */
         widget: Block_Content_Widget;
     } | {
+        oneofKind: "chat";
+        /**
+         * @generated from protobuf field: anytype.model.Block.Content.Chat chat = 30;
+         */
+        chat: Block_Content_Chat;
+    } | {
         oneofKind: undefined;
     };
 }
@@ -1171,19 +1177,27 @@ export interface Block_Content_Dataview_Filter {
      * @generated from protobuf field: bool includeTime = 8;
      */
     includeTime: boolean;
+    /**
+     * @generated from protobuf field: repeated anytype.model.Block.Content.Dataview.Filter nestedFilters = 10;
+     */
+    nestedFilters: Block_Content_Dataview_Filter[];
 }
 /**
  * @generated from protobuf enum anytype.model.Block.Content.Dataview.Filter.Operator
  */
 export enum Block_Content_Dataview_Filter_Operator {
     /**
-     * @generated from protobuf enum value: And = 0;
+     * @generated from protobuf enum value: No = 0;
      */
-    And = 0,
+    No = 0,
     /**
      * @generated from protobuf enum value: Or = 1;
      */
-    Or = 1
+    Or = 1,
+    /**
+     * @generated from protobuf enum value: And = 2;
+     */
+    And = 2
 }
 /**
  * @generated from protobuf enum anytype.model.Block.Content.Dataview.Filter.Condition
@@ -1542,7 +1556,23 @@ export enum Block_Content_Latex_Processor {
     /**
      * @generated from protobuf enum value: Excalidraw = 18;
      */
-    Excalidraw = 18
+    Excalidraw = 18,
+    /**
+     * @generated from protobuf enum value: Kroki = 19;
+     */
+    Kroki = 19,
+    /**
+     * @generated from protobuf enum value: Graphviz = 20;
+     */
+    Graphviz = 20,
+    /**
+     * @generated from protobuf enum value: Sketchfab = 21;
+     */
+    Sketchfab = 21,
+    /**
+     * @generated from protobuf enum value: Image = 22;
+     */
+    Image = 22
 }
 /**
  * @generated from protobuf message anytype.model.Block.Content.TableOfContents
@@ -1609,6 +1639,11 @@ export enum Block_Content_Widget_Layout {
      * @generated from protobuf enum value: View = 4;
      */
     View = 4
+}
+/**
+ * @generated from protobuf message anytype.model.Block.Content.Chat
+ */
+export interface Block_Content_Chat {
 }
 /**
  * @generated from protobuf enum anytype.model.Block.Position
@@ -1813,6 +1848,10 @@ export interface Account_Info {
      * @generated from protobuf field: string marketplaceWorkspaceId = 11;
      */
     marketplaceWorkspaceId: string; // marketplace workspace id
+    /**
+     * @generated from protobuf field: string workspaceObjectId = 15;
+     */
+    workspaceObjectId: string; // workspace object id. used for space-level chat
     /**
      * @generated from protobuf field: string deviceId = 8;
      */
@@ -2214,7 +2253,21 @@ export enum ObjectType_Layout {
     /**
      * @generated from protobuf enum value: pdf = 20;
      */
-    pdf = 20
+    pdf = 20,
+    /**
+     * deprecated
+     *
+     * @generated from protobuf enum value: chat = 21;
+     */
+    chat = 21,
+    /**
+     * @generated from protobuf enum value: chatDerived = 22;
+     */
+    chatDerived = 22,
+    /**
+     * @generated from protobuf enum value: tag = 23;
+     */
+    tag = 23
 }
 /**
  * @generated from protobuf message anytype.model.Layout
@@ -2318,7 +2371,7 @@ export interface Relation {
      *
      * @generated from protobuf field: anytype.model.Relation.Scope scope = 20;
      */
-    scope: Relation_Scope; // scope from which this relation have been aggregated
+    scope: Relation_Scope; // deprecated, to be removed
     /**
      * @generated from protobuf field: string creator = 21;
      */
@@ -3055,21 +3108,45 @@ export enum Import_ErrorCode {
      */
     INTERNAL_ERROR = 3,
     /**
-     * @generated from protobuf enum value: NO_OBJECTS_TO_IMPORT = 5;
+     * @generated from protobuf enum value: FILE_LOAD_ERROR = 8;
      */
-    NO_OBJECTS_TO_IMPORT = 5,
+    FILE_LOAD_ERROR = 8,
     /**
      * @generated from protobuf enum value: IMPORT_IS_CANCELED = 6;
      */
     IMPORT_IS_CANCELED = 6,
     /**
-     * @generated from protobuf enum value: LIMIT_OF_ROWS_OR_RELATIONS_EXCEEDED = 7;
+     * @generated from protobuf enum value: NOTION_NO_OBJECTS_IN_INTEGRATION = 5;
      */
-    LIMIT_OF_ROWS_OR_RELATIONS_EXCEEDED = 7,
+    NOTION_NO_OBJECTS_IN_INTEGRATION = 5,
     /**
-     * @generated from protobuf enum value: FILE_LOAD_ERROR = 8;
+     * @generated from protobuf enum value: NOTION_SERVER_IS_UNAVAILABLE = 12;
      */
-    FILE_LOAD_ERROR = 8,
+    NOTION_SERVER_IS_UNAVAILABLE = 12,
+    /**
+     * @generated from protobuf enum value: NOTION_RATE_LIMIT_EXCEEDED = 13;
+     */
+    NOTION_RATE_LIMIT_EXCEEDED = 13,
+    /**
+     * @generated from protobuf enum value: FILE_IMPORT_NO_OBJECTS_IN_ZIP_ARCHIVE = 14;
+     */
+    FILE_IMPORT_NO_OBJECTS_IN_ZIP_ARCHIVE = 14,
+    /**
+     * @generated from protobuf enum value: FILE_IMPORT_NO_OBJECTS_IN_DIRECTORY = 17;
+     */
+    FILE_IMPORT_NO_OBJECTS_IN_DIRECTORY = 17,
+    /**
+     * @generated from protobuf enum value: HTML_WRONG_HTML_STRUCTURE = 10;
+     */
+    HTML_WRONG_HTML_STRUCTURE = 10,
+    /**
+     * @generated from protobuf enum value: PB_NOT_ANYBLOCK_FORMAT = 11;
+     */
+    PB_NOT_ANYBLOCK_FORMAT = 11,
+    /**
+     * @generated from protobuf enum value: CSV_LIMIT_OF_ROWS_OR_RELATIONS_EXCEEDED = 7;
+     */
+    CSV_LIMIT_OF_ROWS_OR_RELATIONS_EXCEEDED = 7,
     /**
      * @generated from protobuf enum value: INSUFFICIENT_PERMISSIONS = 9;
      */
@@ -3535,6 +3612,120 @@ export interface DeviceInfo {
     isConnected: boolean;
 }
 /**
+ * @generated from protobuf message anytype.model.ChatMessage
+ */
+export interface ChatMessage {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string; // Unique message identifier
+    /**
+     * @generated from protobuf field: string orderId = 2;
+     */
+    orderId: string; // Used for subscriptions
+    /**
+     * @generated from protobuf field: string creator = 3;
+     */
+    creator: string; // Identifier for the message creator
+    /**
+     * @generated from protobuf field: int64 createdAt = 4;
+     */
+    createdAt: bigint;
+    /**
+     * @generated from protobuf field: int64 modifiedAt = 9;
+     */
+    modifiedAt: bigint;
+    /**
+     * @generated from protobuf field: string replyToMessageId = 5;
+     */
+    replyToMessageId: string; // Identifier for the message being replied to
+    /**
+     * @generated from protobuf field: anytype.model.ChatMessage.MessageContent message = 6;
+     */
+    message?: ChatMessage_MessageContent; // Message content
+    /**
+     * @generated from protobuf field: repeated anytype.model.ChatMessage.Attachment attachments = 7;
+     */
+    attachments: ChatMessage_Attachment[]; // Attachments slice
+    /**
+     * @generated from protobuf field: anytype.model.ChatMessage.Reactions reactions = 8;
+     */
+    reactions?: ChatMessage_Reactions; // Reactions to the message
+}
+/**
+ * @generated from protobuf message anytype.model.ChatMessage.MessageContent
+ */
+export interface ChatMessage_MessageContent {
+    /**
+     * @generated from protobuf field: string text = 1;
+     */
+    text: string; // The text content of the message part
+    /**
+     * @generated from protobuf field: anytype.model.Block.Content.Text.Style style = 2;
+     */
+    style: Block_Content_Text_Style; // The style/type of the message part
+    /**
+     * @generated from protobuf field: repeated anytype.model.Block.Content.Text.Mark marks = 3;
+     */
+    marks: Block_Content_Text_Mark[]; // List of marks applied to the text
+}
+/**
+ * @generated from protobuf message anytype.model.ChatMessage.Attachment
+ */
+export interface ChatMessage_Attachment {
+    /**
+     * @generated from protobuf field: string target = 1;
+     */
+    target: string; // Identifier for the attachment object
+    /**
+     * @generated from protobuf field: anytype.model.ChatMessage.Attachment.AttachmentType type = 2;
+     */
+    type: ChatMessage_Attachment_AttachmentType; // Type of attachment
+}
+/**
+ * @generated from protobuf enum anytype.model.ChatMessage.Attachment.AttachmentType
+ */
+export enum ChatMessage_Attachment_AttachmentType {
+    /**
+     * File attachment
+     *
+     * @generated from protobuf enum value: FILE = 0;
+     */
+    FILE = 0,
+    /**
+     * Image attachment
+     *
+     * @generated from protobuf enum value: IMAGE = 1;
+     */
+    IMAGE = 1,
+    /**
+     * Link attachment
+     *
+     * @generated from protobuf enum value: LINK = 2;
+     */
+    LINK = 2
+}
+/**
+ * @generated from protobuf message anytype.model.ChatMessage.Reactions
+ */
+export interface ChatMessage_Reactions {
+    /**
+     * @generated from protobuf field: map<string, anytype.model.ChatMessage.Reactions.IdentityList> reactions = 1;
+     */
+    reactions: {
+        [key: string]: ChatMessage_Reactions_IdentityList;
+    }; // Map of emoji to list of user IDs
+}
+/**
+ * @generated from protobuf message anytype.model.ChatMessage.Reactions.IdentityList
+ */
+export interface ChatMessage_Reactions_IdentityList {
+    /**
+     * @generated from protobuf field: repeated string ids = 1;
+     */
+    ids: string[]; // List of user IDs
+}
+/**
  * @generated from protobuf enum anytype.model.SmartBlockType
  */
 export enum SmartBlockType {
@@ -3643,7 +3834,25 @@ export enum SmartBlockType {
     /**
      * @generated from protobuf enum value: DevicesObject = 536;
      */
-    DevicesObject = 536
+    DevicesObject = 536,
+    /**
+     * Container for any-store based chats
+     *
+     * @generated from protobuf enum value: ChatObject = 537;
+     */
+    ChatObject = 537,
+    /**
+     * Any-store based object for chat
+     *
+     * @generated from protobuf enum value: ChatDerivedObject = 544;
+     */
+    ChatDerivedObject = 544,
+    /**
+     * Container for account data in tech space
+     *
+     * @generated from protobuf enum value: AccountObject = 545;
+     */
+    AccountObject = 545
 }
 /**
  * RelationFormat describes how the underlying data is stored in the google.protobuf.Value and how it should be validated/sanitized
@@ -3930,7 +4139,11 @@ export enum ImageKind {
     /**
      * @generated from protobuf enum value: Icon = 2;
      */
-    Icon = 2
+    Icon = 2,
+    /**
+     * @generated from protobuf enum value: AutomaticallyAdded = 3;
+     */
+    AutomaticallyAdded = 3
 }
 /**
  * @generated from protobuf enum anytype.model.FileIndexingStatus
@@ -4083,7 +4296,8 @@ class Block$Type extends MessageType<Block> {
             { no: 26, name: "table", kind: "message", oneof: "content", T: () => Block_Content_Table },
             { no: 27, name: "tableColumn", kind: "message", oneof: "content", T: () => Block_Content_TableColumn },
             { no: 28, name: "tableRow", kind: "message", oneof: "content", T: () => Block_Content_TableRow },
-            { no: 29, name: "widget", kind: "message", oneof: "content", T: () => Block_Content_Widget }
+            { no: 29, name: "widget", kind: "message", oneof: "content", T: () => Block_Content_Widget },
+            { no: 30, name: "chat", kind: "message", oneof: "content", T: () => Block_Content_Chat }
         ]);
     }
 }
@@ -4367,7 +4581,8 @@ class Block_Content_Dataview_Filter$Type extends MessageType<Block_Content_Datav
             { no: 4, name: "value", kind: "message", T: () => Value },
             { no: 6, name: "quickOption", kind: "enum", T: () => ["anytype.model.Block.Content.Dataview.Filter.QuickOption", Block_Content_Dataview_Filter_QuickOption] },
             { no: 7, name: "format", kind: "enum", T: () => ["anytype.model.RelationFormat", RelationFormat] },
-            { no: 8, name: "includeTime", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 8, name: "includeTime", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 10, name: "nestedFilters", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Block_Content_Dataview_Filter }
         ]);
     }
 }
@@ -4561,6 +4776,16 @@ class Block_Content_Widget$Type extends MessageType<Block_Content_Widget> {
  */
 export const Block_Content_Widget = new Block_Content_Widget$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class Block_Content_Chat$Type extends MessageType<Block_Content_Chat> {
+    constructor() {
+        super("anytype.model.Block.Content.Chat", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.model.Block.Content.Chat
+ */
+export const Block_Content_Chat = new Block_Content_Chat$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class BlockMetaOnly$Type extends MessageType<BlockMetaOnly> {
     constructor() {
         super("anytype.model.BlockMetaOnly", [
@@ -4638,6 +4863,7 @@ class Account_Info$Type extends MessageType<Account_Info> {
             { no: 3, name: "archiveObjectId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "profileObjectId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 11, name: "marketplaceWorkspaceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 15, name: "workspaceObjectId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 8, name: "deviceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 9, name: "accountSpaceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 10, name: "widgetsId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -5365,3 +5591,74 @@ class DeviceInfo$Type extends MessageType<DeviceInfo> {
  * @generated MessageType for protobuf message anytype.model.DeviceInfo
  */
 export const DeviceInfo = new DeviceInfo$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatMessage$Type extends MessageType<ChatMessage> {
+    constructor() {
+        super("anytype.model.ChatMessage", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "orderId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "creator", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "createdAt", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 0 /*LongType.BIGINT*/ },
+            { no: 9, name: "modifiedAt", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 0 /*LongType.BIGINT*/ },
+            { no: 5, name: "replyToMessageId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "message", kind: "message", T: () => ChatMessage_MessageContent },
+            { no: 7, name: "attachments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessage_Attachment },
+            { no: 8, name: "reactions", kind: "message", T: () => ChatMessage_Reactions }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.model.ChatMessage
+ */
+export const ChatMessage = new ChatMessage$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatMessage_MessageContent$Type extends MessageType<ChatMessage_MessageContent> {
+    constructor() {
+        super("anytype.model.ChatMessage.MessageContent", [
+            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "style", kind: "enum", T: () => ["anytype.model.Block.Content.Text.Style", Block_Content_Text_Style] },
+            { no: 3, name: "marks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Block_Content_Text_Mark }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.model.ChatMessage.MessageContent
+ */
+export const ChatMessage_MessageContent = new ChatMessage_MessageContent$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatMessage_Attachment$Type extends MessageType<ChatMessage_Attachment> {
+    constructor() {
+        super("anytype.model.ChatMessage.Attachment", [
+            { no: 1, name: "target", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "type", kind: "enum", T: () => ["anytype.model.ChatMessage.Attachment.AttachmentType", ChatMessage_Attachment_AttachmentType] }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.model.ChatMessage.Attachment
+ */
+export const ChatMessage_Attachment = new ChatMessage_Attachment$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatMessage_Reactions$Type extends MessageType<ChatMessage_Reactions> {
+    constructor() {
+        super("anytype.model.ChatMessage.Reactions", [
+            { no: 1, name: "reactions", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => ChatMessage_Reactions_IdentityList } }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.model.ChatMessage.Reactions
+ */
+export const ChatMessage_Reactions = new ChatMessage_Reactions$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatMessage_Reactions_IdentityList$Type extends MessageType<ChatMessage_Reactions_IdentityList> {
+    constructor() {
+        super("anytype.model.ChatMessage.Reactions.IdentityList", [
+            { no: 1, name: "ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.model.ChatMessage.Reactions.IdentityList
+ */
+export const ChatMessage_Reactions_IdentityList = new ChatMessage_Reactions_IdentityList$Type();
