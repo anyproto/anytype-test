@@ -72,55 +72,6 @@ To run tests using the local middleware, follow these steps:
 
    Navigate to the anytype-heart repository and follow the setup and build instructions provided in its README file.
 
-## Project Structure
-
-Our test automation framework is organized as follows:
-ANYTYPE-TEST/
-├── features/                      # Gherkin feature files
-│   ├── api/                      # API-specific features
-│   ├── desktop/                  # Desktop-specific features
-│   └── ios/                      # iOS-specific features
-│
-├── step_definitions/             # Step definitions for features
-│   ├── api/                      # API test steps
-│   ├── desktop/                  # Desktop UI test steps
-│   └── ios/                      # iOS test steps
-│
-├── support/                      # Support code and utilities
-│   ├── api/
-│   │   ├── clients/             # High-level API clients
-│   │   │   ├── accountApi.ts
-│   │   │   ├── metricsApi.ts
-│   │   │   └── etc...
-│   │   └── services/            # Low-level services
-│   │       ├── grpc-client.ts
-│   │       ├── grpc-server.ts
-│   │       └── streamRequest.ts
-│   │
-│   ├── server/                  # Server-related utilities
-│   │   └── heartResolve.ts
-│   │
-│   ├── types/                   # Shared type definitions
-│   │   └── dataTypes.ts
-│   │
-│   ├── helpers/                 # Shared utilities
-│   │   ├── store.ts
-│   │   └── proxy.ts
-│   │
-│   └── hooks/                   # Test lifecycle hooks
-│       ├── api.hooks.ts
-│       ├── desktop.hooks.ts
-│       └── ios.hooks.ts
-│
-├── config/                      # Platform configurations
-│   ├── api.config.js           # API-specific config
-│   ├── desktop.config.js       # Desktop-specific config
-│   └── ios.config.js           # iOS-specific config
-│
-├── test-results/               # Test outputs
-│   ├── screenshots/
-│   └── reports/
-
 ## Test Execution
 
 ### Test Commands structure (not all available yet)
