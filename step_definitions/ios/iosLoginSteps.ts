@@ -1,51 +1,90 @@
 import { Given, Then, When } from "@cucumber/cucumber";
-
-import apiHelpers from "../../support/helpers/apiHelpers";
-import { LoginScreen } from "../../support/page_objects/ios/login_screen";
 import { VaultSetupPage } from "../../support/page_objects/ios/vaultSetupPage";
-import SpacePage from "../../support/page_objects/ios/spacePage";
 import MySpacesPage from "../../support/page_objects/ios/mySpacesPage";
+import { Logger } from "@origranot/ts-logger";
+import LoginPage from "../../support/page_objects/ios/loginPage";
+import { getUserDriver } from "../../support/ios/iosUtils";
 
-// Helper function to validate VaultSetupPage
-function validateVaultSetupPage(
-  vaultSetupPage: VaultSetupPage | undefined
-): asserts vaultSetupPage is VaultSetupPage {
-  if (!vaultSetupPage) {
-    throw new Error(
-      "VaultSetupPage not initialized. Make sure 'I create a new vault' step runs first"
-    );
-  }
-}
+const logger = new Logger({ name: "custom" });
 
-Given("I have a test account with data", async function () {
-  const account = await apiHelpers.createTestAccount();
-  await apiHelpers.populateAccountData(account);
-  this.testAccount = account;
-});
+Given("{string} chooses to create a new vault", async function (user: string) {
+  logger.info(`STEP: ${user} chooses to create a new vault`);
 
-When("I log in to the iOS app", async function () {
-  await LoginScreen.login(this.testAccount.email, this.testAccount.password);
-});
+  const userDriver = getUserDriver(user);
 
-When("I create a new vault", async function () {
-  this.vaultSetupPage = new VaultSetupPage(this.driver);
+  this.vaultSetupPage = new VaultSetupPage(userDriver);
   await this.vaultSetupPage.createNewVault();
   await this.vaultSetupPage.getMyKey();
 });
 
-When("I enter my name", async function () {
-  validateVaultSetupPage(this.vaultSetupPage);
-  await this.vaultSetupPage.enterName("Friedolin");
+When("{string} enters his name", async function (user: string) {
+  logger.info(`STEP: ${user} enters his name`);
+  const userDriver = getUserDriver(user);
+  this.vaultSetupPage = new VaultSetupPage(userDriver);
+  await this.vaultSetupPage.enterName(user);
 });
 
-When("I should see my recovery key and copy it", async function () {
-  validateVaultSetupPage(this.vaultSetupPage);
-  await this.vaultSetupPage.copyKeyToClipboardAndValidate();
-  await this.vaultSetupPage.proceedToNextStep();
-});
+When(
+  "{string} should see his recovery key and copy it",
+  async function (user: string) {
+    logger.info(`STEP: ${user} should see his recovery key and copy it`);
+    const userDriver = getUserDriver(user);
+    this.vaultSetupPage = new VaultSetupPage(userDriver);
 
-Then("I can enter my vault", async function () {
-  validateVaultSetupPage(this.vaultSetupPage);
+    try {
+      await this.vaultSetupPage.showMyKey();
+    } catch (error: unknown) {
+      logger.error(`Failed to show recovery key: ${(error as Error).message}`);
+      throw new Error(
+        `Failed to show recovery key: ${(error as Error).message}`
+      );
+    }
+
+    try {
+      await userDriver.pause(1000);
+      await this.vaultSetupPage.copyKeyToClipboardAndValidate();
+      await this.vaultSetupPage.proceedToNextStep();
+    } catch (error: unknown) {
+      logger.error(
+        `Failed to handle recovery key: ${(error as Error).message}`
+      );
+      throw error;
+    }
+  }
+);
+
+Then("{string} can enter his vault", async function (user: string) {
+  logger.info(`STEP: ${user} can enter his vault`);
+  const userDriver = getUserDriver(user);
+  this.vaultSetupPage = new VaultSetupPage(userDriver);
   await this.vaultSetupPage.enterVaultWithRetry();
   await this.vaultSetupPage.performSwipe(196, 87, 195, 655);
+});
+
+Given(
+  "{string} is on the first screen of ios app",
+  async function (user: string) {
+    logger.info(`STEP: ${user} is on the first screen of ios app`);
+    const userDriver = getUserDriver(user);
+    this.loginPage = new LoginPage(userDriver);
+    await this.loginPage.assertFirstPageIsVisible();
+  }
+);
+
+Given("{string} creates a new vault", async function (user: string) {
+  logger.info(`STEP: ${user} creates a new vault`);
+  const userDriver = getUserDriver(user);
+  this.vaultSetupPage = new VaultSetupPage(userDriver);
+  await this.vaultSetupPage.createNewVault();
+  await this.vaultSetupPage.getMyKey();
+  await this.vaultSetupPage.skipMyKey();
+  await this.vaultSetupPage.enterName(user);
+  await this.vaultSetupPage.enterVaultWithRetry();
+  await this.vaultSetupPage.performSwipe(196, 87, 195, 655);
+});
+
+Given("{string} goes to home screen", async function (user: string) {
+  logger.info(`STEP: ${user} goes to home screen`);
+  const userDriver = getUserDriver(user);
+  await userDriver.execute("mobile: pressButton", { name: "home" });
 });

@@ -1,16 +1,13 @@
+import { driver } from "@wdio/globals";
 import { BasePage } from "./basePage";
-import { Browser } from "webdriverio";
 
 class MySpacesPage extends BasePage {
-  constructor(driver: Browser) {
-    super(driver);
+  constructor(userDriver: WebdriverIO.Browser) {
+    super(userDriver);
   }
 
   async typeItemTitle(title: string) {
-    await this.tap("accessibility id:Untitled");
-    for (let char of title) {
-      await this.tap(`accessibility id:${char}`);
-    }
+    await this.enterTextInField(title, "accessibility id:Untitled");
   }
 
   async createItem() {
@@ -34,24 +31,33 @@ class MySpacesPage extends BasePage {
   async navigateToSettings() {
     await this.tap("accessibility id:NavigationBase/Settings");
   }
+
   async isCollaborateOnSpacesBannerVisible() {
     const selector =
       '//XCUIElementTypeStaticText[@name="Collaborate on spaces"]';
     try {
-      return await this.driver.$(selector).isDisplayed();
+      const element = this.userDriver.$(selector);
+      await element.waitForDisplayed({ timeout: 5000 });
+      return await element.isDisplayed();
     } catch (error) {
       return false;
     }
   }
+
   async checkSpacesExist(...spaceNames: string[]) {
     for (const spaceName of spaceNames) {
       const selector = `//XCUIElementTypeButton[contains(@name, '${spaceName}')]`;
       try {
-        await this.driver.$(selector).waitForExist({ timeout: 5000 });
+        await this.userDriver.$(selector).waitForExist({ timeout: 5000 });
       } catch (error) {
         throw new Error(`Space "${spaceName}" does not exist`);
       }
     }
+  }
+
+  async openSpace(spaceName: string) {
+    const selector = `//XCUIElementTypeButton[contains(@name, '${spaceName}')]`;
+    await this.userDriver.$(selector).click();
   }
 }
 

@@ -4,199 +4,117 @@
     "elements": [
       {
         "description": "",
-        "id": "compatibility-with-sync;3-versions-compatibility-with-sync-on-production-nodes",
-        "keyword": "Scenario Outline",
-        "line": 24,
-        "name": "3 versions compatibility with sync on production nodes",
+        "id": "compatibility-and-migration-scenarios;release-6-to-release-7-migration-from-nodes",
+        "keyword": "Scenario",
+        "line": 4,
+        "name": "Release 6 to Release 7 migration from Nodes",
         "steps": [
           {
             "keyword": "Before",
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 1185958
+              "duration": 13839393417
             }
           },
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 7,
+            "line": 5,
             "name": "the server \"v0.35.7\" 1 is running",
-            "match": {
-              "location": "step_definitions/api/commonSteps.ts:47"
-            },
             "result": {
-              "status": "passed",
-              "duration": 239998125
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 6,
+            "name": "the user is using client 1",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "the user creates a new account on \"staging\"",
+            "result": {
+              "status": "undefined",
+              "duration": 0
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
             "line": 8,
-            "name": "the user is using client 1",
-            "match": {
-              "location": "step_definitions/api/commonSteps.ts:114"
-            },
+            "name": "the account is synced",
             "result": {
-              "status": "passed",
-              "duration": 178084
+              "status": "undefined",
+              "duration": 0
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
             "line": 9,
-            "name": "the user creates a new account on \"prod\"",
-            "match": {
-              "location": "step_definitions/api/accountSteps.ts:39"
-            },
+            "name": "the server 1 is stopped",
             "result": {
-              "status": "passed",
-              "duration": 510758875
+              "status": "undefined",
+              "duration": 0
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
             "line": 10,
-            "name": "the user creates an object 1 in the account",
-            "match": {
-              "location": "step_definitions/api/objectSteps.ts:8"
-            },
+            "name": "data is deleted",
             "result": {
-              "status": "passed",
-              "duration": 7071332
+              "status": "undefined",
+              "duration": 0
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
             "line": 11,
-            "name": "the user can open the object 1",
-            "match": {
-              "location": "step_definitions/api/objectSteps.ts:17"
-            },
+            "name": "the server \"v0.36.4\" 2 is running",
             "result": {
-              "status": "passed",
-              "duration": 15021038082
+              "status": "undefined",
+              "duration": 0
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
             "line": 12,
-            "name": "the account is synced",
-            "match": {
-              "location": "step_definitions/api/accountSteps.ts:151"
-            },
+            "name": "the user is using client 2",
             "result": {
-              "status": "passed",
-              "duration": 8882256457
+              "status": "undefined",
+              "duration": 0
             }
           },
           {
             "arguments": [],
-            "keyword": "And ",
+            "keyword": "When ",
             "line": 13,
-            "name": "the server 1 is stopped",
-            "match": {
-              "location": "step_definitions/api/commonSteps.ts:124"
-            },
+            "name": "the user logs in to their account on \"staging\"",
             "result": {
-              "status": "passed",
-              "duration": 36579333
+              "status": "undefined",
+              "duration": 0
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
             "line": 14,
-            "name": "data is deleted",
-            "match": {
-              "location": "step_definitions/api/fileSteps.ts:4"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 26978167
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 15,
-            "name": "the server \"v0.37.0-alpha03\" 2 is running",
-            "match": {
-              "location": "step_definitions/api/commonSteps.ts:47"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 139024124
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 16,
-            "name": "the user is using client 2",
-            "match": {
-              "location": "step_definitions/api/commonSteps.ts:114"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 107416
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 17,
-            "name": "the user logs in to their account on \"prod\"",
-            "match": {
-              "location": "step_definitions/api/accountSteps.ts:123"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 943574874
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 18,
-            "name": "the user can open the object 1",
-            "match": {
-              "location": "step_definitions/api/objectSteps.ts:17"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 15017884708
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 19,
-            "name": "the account is deleted",
-            "match": {
-              "location": "step_definitions/api/accountSteps.ts:176"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 104862042
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 20,
             "name": "the server 2 is stopped",
-            "match": {
-              "location": "step_definitions/api/commonSteps.ts:124"
-            },
             "result": {
-              "status": "passed",
-              "duration": 38373375
+              "status": "undefined",
+              "duration": 0
             }
           },
           {
@@ -204,41 +122,930 @@
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 114916
+              "duration": 463707
             }
           }
         ],
         "tags": [
           {
-            "name": "@S134793a4",
-            "line": 1
+            "name": "@migration",
+            "line": 3
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "compatibility-and-migration-scenarios;release-6-to-release-7-migration-local-only",
+        "keyword": "Scenario",
+        "line": 17,
+        "name": "Release 6 to Release 7 migration local only",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 13053795125
+            }
           },
           {
-            "name": "@Ta4e6136d",
-            "line": 5
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 18,
+            "name": "the server \"v0.35.7\" 1 is running",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
           },
           {
-            "name": "@compatibility",
-            "line": 5
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "the user is using client 1",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
           },
           {
-            "name": "@prod",
-            "line": 5
+            "arguments": [],
+            "keyword": "And ",
+            "line": 20,
+            "name": "the user creates a new account on \"local only\"",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 21,
+            "name": "the server 1 is stopped",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 22,
+            "name": "the server \"v0.36.4\" 2 is running",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 23,
+            "name": "the user is using client 2",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 24,
+            "name": "the user logs in to their account on \"local only\"",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 25,
+            "name": "the server 2 is stopped",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1490124
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@migration",
+            "line": 16
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "compatibility-and-migration-scenarios;new-account-creation-on-release-7",
+        "keyword": "Scenario",
+        "line": 28,
+        "name": "New account creation on Release 7",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 12338405125
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 29,
+            "name": "the server \"default\" 1 is running",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 30,
+            "name": "the user is using client 1",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 31,
+            "name": "the user creates a new account on \"staging\"",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 32,
+            "name": "the account should have an analyticsId, profile picture and name",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 33,
+            "name": "the server 1 is stopped",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 386459
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@migration",
+            "line": 27
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "compatibility-and-migration-scenarios;opening-release-7-version-on-release-6",
+        "keyword": "Scenario",
+        "line": 36,
+        "name": "Opening Release 7 version on Release 6",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 10634333875
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 37,
+            "name": "the server \"default\" 1 is running",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 38,
+            "name": "the user is using client 1",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 39,
+            "name": "the user creates a new account on \"staging\"",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 40,
+            "name": "the server 1 is stopped",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 41,
+            "name": "the server \"v0.35.7\" 2 is running",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 42,
+            "name": "the user is using client 2",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 43,
+            "name": "the user logs in to their account on \"staging\"",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 44,
+            "name": "the ProfileObject should be empty",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 45,
+            "name": "the server 2 is stopped",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 807625
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@migration",
+            "line": 35
           }
         ],
         "type": "scenario"
       }
     ],
-    "id": "compatibility-with-sync",
+    "id": "compatibility-and-migration-scenarios",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Compatibility and Migration Scenarios",
+    "tags": [],
+    "uri": "features/api/migration.feature"
+  },
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "middleware-performance-testing;measure-response-times-for-accountselecthot",
+        "keyword": "Scenario",
+        "line": 4,
+        "name": "Measure response times for AccountSelectHot",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 10371826583
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 5,
+            "name": "the server \"v0.36.0-rc4\" 1 is running",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 6,
+            "name": "the user is using client 1",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "the user has a large account",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 8,
+            "name": "the user calls walletRecover",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "the user calls accountSelect on \"fakeStaging\"",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 10,
+            "name": "the account select time should be less than 25000 milliseconds",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 11,
+            "name": "the server 1 is stopped",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 805416
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@perfomance",
+            "line": 1
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "middleware-performance-testing;measure-response-times-for-accountselectcold",
+        "keyword": "Scenario",
+        "line": 13,
+        "name": "Measure response times for AccountSelectCold",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 9614738500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 14,
+            "name": "the server \"v0.36.0-rc4\" 1 is running",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 15,
+            "name": "the user is using client 1",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 16,
+            "name": "the user has a large account",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 17,
+            "name": "the user calls walletRecover",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 18,
+            "name": "the user calls accountSelect on \"fakeStaging\"",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "the user calls accountStop",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 20,
+            "name": "the user calls accountSelect on \"local only\"",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 21,
+            "name": "the account select time should be less than 25000 milliseconds",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 22,
+            "name": "the server 1 is stopped",
+            "result": {
+              "status": "undefined",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 477791
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@perfomance",
+            "line": 1
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "middleware-performance-testing",
     "line": 2,
     "keyword": "Feature",
-    "name": "Compatibility with Sync",
+    "name": "Middleware Performance Testing",
     "tags": [
       {
-        "name": "@S134793a4",
+        "name": "@perfomance",
         "line": 1
       }
     ],
-    "uri": "features/api/compatibilitySyncProd.feature"
+    "uri": "features/api/perfomance.feature"
+  },
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "inviting-a-user-to-a-space;end-to-end-flow-for-joining-a-shared-space-via-invitation-on-ios",
+        "keyword": "Scenario",
+        "line": 9,
+        "name": "End-to-End flow for joining a shared space via invitation on iOS",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 10421057165
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "\"User A\" is on the first screen of ios app",
+            "match": {
+              "location": "step_definitions/ios/iosLoginSteps.ts:64"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 230318705
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 5,
+            "name": "\"User A\" sets network to \"staging\"",
+            "match": {
+              "location": "step_definitions/ios/iosNetworkSteps.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 9730506874
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 6,
+            "name": "\"User B\" is on the first screen of ios app",
+            "match": {
+              "location": "step_definitions/ios/iosLoginSteps.ts:64"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 212409955
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "\"User B\" sets network to \"staging\"",
+            "match": {
+              "location": "step_definitions/ios/iosNetworkSteps.ts:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10437369664
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 10,
+            "name": "\"User A\" creates a new vault",
+            "match": {
+              "location": "step_definitions/ios/iosLoginSteps.ts:74"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12331388083
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 11,
+            "name": "\"User B\" creates a new vault",
+            "match": {
+              "location": "step_definitions/ios/iosLoginSteps.ts:74"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 17208313376
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 12,
+            "name": "\"User B\" goes to home screen",
+            "match": {
+              "location": "step_definitions/ios/iosLoginSteps.ts:86"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 490664497
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 13,
+            "name": "\"User A\" creates a new space named \"Playground\"",
+            "match": {
+              "location": "step_definitions/ios/iosMySpacesSteps.ts:31"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 8648910625
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 14,
+            "name": "\"User A\" is in \"Playground\" space",
+            "match": {
+              "location": "step_definitions/ios/iosMySpacesSteps.ts:47"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 650942876
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 15,
+            "name": "\"User A\" navigates to the \"Playground\" space settings screen",
+            "match": {
+              "location": "step_definitions/ios/iosInvitesSteps.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 818609371
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 16,
+            "name": "\"User A\" selects \"Share\" from space settings menu",
+            "match": {
+              "location": "step_definitions/ios/iosInvitesSteps.ts:23"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 919887833
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 17,
+            "name": "\"User A\" selects Generate Invite Link",
+            "match": {
+              "location": "step_definitions/ios/iosInvitesSteps.ts:42"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1271955707
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 18,
+            "name": "\"User A\" sends an invitation to \"User B\"",
+            "match": {
+              "location": "step_definitions/ios/iosInvitesSteps.ts:50"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3500881500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "\"User B\" receives and clicks the invitation link",
+            "match": {
+              "location": "step_definitions/ios/iosInvitesSteps.ts:62"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 509932081
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 20,
+            "name": "\"User B\" sends a request to join the \"Playground\" space",
+            "match": {
+              "location": "step_definitions/ios/iosInvitesSteps.ts:77"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3907103372
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 21,
+            "name": "\"User B\" sees the Request to join Confirmation popup",
+            "match": {
+              "location": "step_definitions/ios/iosInvitesSteps.ts:90"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 886926332
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 22,
+            "name": "\"User A\" approves the join request of \"User B\" with \"Editor\" rights",
+            "match": {
+              "location": "step_definitions/ios/iosInvitesSteps.ts:101"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 9978852830
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 23,
+            "name": "\"User B\" can access \"Playground\" space in the Anytype app",
+            "match": {
+              "location": "step_definitions/ios/iosMySpacesSteps.ts:77"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12952730290
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 24,
+            "name": "\"User B\" sends a message \"Hello World\" in chat",
+            "match": {
+              "location": "step_definitions/ios/iosInvitesSteps.ts:128"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1913345085
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 25,
+            "name": "\"User A\" sees the message \"Hello World\" in chat",
+            "match": {
+              "location": "step_definitions/ios/iosInvitesSteps.ts:117"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 861625081
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 26,
+            "name": "\"User B\" sends a message \"How are you?\" in chat",
+            "match": {
+              "location": "step_definitions/ios/iosInvitesSteps.ts:128"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1209318747
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 27,
+            "name": "\"User A\" sees the message \"How are you?\" in chat",
+            "match": {
+              "location": "step_definitions/ios/iosInvitesSteps.ts:117"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 923534665
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 28,
+            "name": "\"User A\" sends a message \"I am fine, thank you\" in chat",
+            "match": {
+              "location": "step_definitions/ios/iosInvitesSteps.ts:128"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2101528831
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 29,
+            "name": "\"User B\" sees the message \"I am fine, thank you\" in chat",
+            "match": {
+              "location": "step_definitions/ios/iosInvitesSteps.ts:117"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1501688123
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 94083
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "inviting-a-user-to-a-space",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Inviting a user to a space",
+    "tags": [],
+    "uri": "features/ios/iosInvite.feature"
   }
 ]

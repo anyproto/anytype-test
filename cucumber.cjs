@@ -40,9 +40,4 @@ module.exports = {
   api: `${commonRequire} ${apiConfig} ${commonFormats}`,
   desktop: `${commonRequire} ${desktopConfig} ${commonFormats}`,
   ios: `${commonRequire} ${iosConfig} ${commonFormats}`,
-
-  // Parallel execution configs
-  "parallel-api": `${commonRequire} ${apiConfig} ${commonFormats} --parallel 2`,
-  "parallel-desktop": `${commonRequire} ${desktopConfig} ${commonFormats} --parallel 2`,
-  "parallel-ios": `${commonRequire} ${iosConfig} ${commonFormats} --parallel 2`,
 };

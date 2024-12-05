@@ -13,7 +13,7 @@ import { Logger } from "@origranot/ts-logger";
 import { isVersion034OrLess } from "./utils";
 
 let call: any; // Declare the 'call' variable outside to manage its lifecycle
-const logger = new Logger();
+const logger = new Logger({ name: "custom" });
 /**
  * Utility function to safely convert an object to a JSON string,
  * handling BigInt values by converting them to strings.

@@ -1,31 +1,16 @@
-import { Before, After, BeforeAll, AfterAll } from "@cucumber/cucumber";
-import { remote, Browser } from "webdriverio";
-import iosConfig from "../../config/ios.config";
-import { ICustomWorld } from "../world";
+import { browser } from "@wdio/globals";
+import { AfterStep } from "@cucumber/cucumber";
 
-let driver: Browser;
+AfterStep(async function (stepResult: { result: { status: string } }) {
+  // Check if the step has failed
+  if (stepResult.result.status === "failed") {
+    // Generate a timestamp for the screenshot filename
+    const timestamp = new Date().toISOString().replace(/[^0-9]/g, "");
+    const screenshotPath = `./screenshots/failed-${timestamp}.png`;
 
-BeforeAll(async function () {
-  driver = await remote({
-    ...iosConfig.server,
-    capabilities: iosConfig.capabilities,
-  });
-});
+    // Capture the screenshot
+    await browser.saveScreenshot(screenshotPath);
 
-Before(async function (this: ICustomWorld) {
-  this.driver = driver;
-});
-
-After(async function (this: ICustomWorld) {
-  if (this.result?.status === "failed") {
-    await driver.saveScreenshot(
-      `${iosConfig.test.screenshotsPath}/failure-${Date.now()}.png`
-    );
-  }
-});
-
-AfterAll(async function () {
-  if (driver) {
-    await driver.deleteSession();
+    console.log(`Screenshot saved: ${screenshotPath}`);
   }
 });

@@ -29,7 +29,7 @@ import {
 import { callWorkspaceOpen } from "../../support/api/clients/workspaceApi";
 import { callInitialSetParameters } from "../../support/api/clients/metricsApi";
 // Initialize the logger
-const logger = new Logger();
+const logger = new Logger({ name: "custom" });
 
 export function saveUser(userNumber: number, user: UserType): void {
   store.users.set(userNumber, user);

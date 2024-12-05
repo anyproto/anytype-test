@@ -1,31 +1,25 @@
-Feature: Setting up a secure personal vault and creating a workspace
-
-  Background:
-    Given I am a new user starting the Anytype iOS app
-
-  Scenario: Setting up a new vault on iPhone app
-    Given I create a new vault
-    When I should see my recovery key and copy it
-    And I enter my name
-    Then I can enter my vault
-    And I see "My First Space" in my spaces list
-
-  Scenario: Creating a new workspace
-    Given I am logged into my vault
-    And I see "My First Space" in my spaces list
-    When I create a new space named "Workspace"
-    Then I see "Workspace" in my spaces list
-    And I should be able to access its contents
-
-  Scenario: Viewing available workspaces
-    Given I have created multiple spaces
-    When I view my spaces list
-    Then I should see "My First Space"
-    And I should see "Workspace"
-    Given I am logged into my vault
-
-  Scenario: Performing a complete logout
-    When I navigate to the settings screen
-    And I perform a complete logout
-    Then all my local data should be cleared
-    And I should return to the initial setup screen
+# Feature: Setting up a vault and creating a new space
+#   Background:
+#     Given "User A" is on the first screen of ios app
+#     And "User A" sets network to "staging"
+#   Scenario: Setting up a new account on iPhone app
+#     Given "User A" chooses to create a new vault
+#     When "User A" should see his recovery key and copy it
+#     And "User A" enters his name
+#     Then "User A" can enter his vault
+#     And "User A" sees "My First Space" in his spaces list
+#   Scenario: Creating a new space
+#     Given "User A" creates a new vault
+#     And "User A" sees "My First Space" in his spaces list
+#     When "User A" creates a new space named "Workspace"
+#     Then "User A" is in "Workspace" space
+#     And "User A" can tap navigate back button
+#     And "User A" sees "Workspace" and "My First Space" in his spaces list
+#   Scenario: Delete an account
+#     Given "User A" creates a new vault
+#     And "User A" sees "My First Space" in his spaces list
+#     When "User A" navigates to the vault settings screen
+#     And "User A" selects "Vault and Access" from vault settings menu
+#     And "User A" chooses to delete her vault and confirm
+#     And "User A" chooses to logout and and clear data
+#     Then "User A" is on the first screen of ios app

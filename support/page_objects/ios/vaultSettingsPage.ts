@@ -1,9 +1,11 @@
 import { BasePage } from "./basePage";
-import { Browser } from "webdriverio";
 
-class SettingsPage extends BasePage {
-  constructor(driver: Browser) {
-    super(driver);
+class VaultSettingsPage extends BasePage {
+  constructor(userDriver: WebdriverIO.Browser) {
+    super(userDriver);
+  }
+  async navigateToVaultSettings() {
+    await this.tap("accessibility id:NavigationBase/Settings");
   }
 
   async navigateToVaultAndAccess() {
@@ -28,4 +30,4 @@ class SettingsPage extends BasePage {
   }
 }
 
-export default SettingsPage;
+export default VaultSettingsPage;
