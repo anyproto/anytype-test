@@ -47,8 +47,12 @@ export class BasePage {
 
       // Small pause after swipe to let animations complete
       await this.userDriver.pause(500);
-    } catch (error) {
-      throw new Error(`Failed to perform swipe: ${error.message}`);
+    } catch (error: unknown) {
+      throw new Error(
+        `Failed to perform swipe: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
     }
   }
 

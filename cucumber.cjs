@@ -1,7 +1,7 @@
 // Common requirements that are shared across all test types
 const commonRequire = [
   "--require-module ts-node/register",
-  "--require support/types/**/*.ts", // Shared types
+  "--require support/types/dataTypes.ts", // Only load shared types
   "--require support/helpers/**/*.ts", // Shared helpers
 ].join(" ");
 

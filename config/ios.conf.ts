@@ -222,6 +222,7 @@ export const config: WebdriverIO.Config = {
     timeout: 60000,
     // <boolean> Enable this config to treat undefined definitions as warnings.
     ignoreUndefinedDefinitions: true,
+    retry: 1,
   },
 
   //
@@ -325,14 +326,14 @@ export const config: WebdriverIO.Config = {
    * @param {number}             result.duration  duration of scenario in milliseconds
    * @param {object}             context          Cucumber World object
    */
-  // afterStep: async function (step, scenario, result) {
-  //   if (!result.passed) {
-  //     // Take a screenshot if the step fails
-  //     const timestamp = new Date().toISOString().replace(/[^0-9]/g, "");
-  //     const screenshotPath = `./screenshots/failed-${timestamp}.png`;
-  //     await browser.saveScreenshot(screenshotPath);
-  //   }
-  // },
+  afterStep: async function (step, scenario, result) {
+    if (!result.passed) {
+      // Take a screenshot if the step fails
+      const timestamp = new Date().toISOString().replace(/[^0-9]/g, "");
+      const screenshotPath = `./screenshots/failed-${step}-${timestamp}.png`;
+      await browser.saveScreenshot(screenshotPath);
+    }
+  },
   /**
    *
    * Runs after a Cucumber Scenario.
