@@ -11,10 +11,6 @@ Welcome to the **Test Repository for Anytype**. This repository is used to manag
   - [Run tests](#run-tests)
     - [Anytype-heart compatibility tests](#anytype-heart-compatibility-tests)
       - [Running Tests with Local Middleware](#running-tests-with-local-middleware)
-  - [Project Structure](#project-structure)
-  - [Test Execution](#test-execution)
-    - [Test Commands structure (not all available yet)](#test-commands-structure-not-all-available-yet)
-  - [Configuration Files](#configuration-files)
 
 ## Prerequisites
 
@@ -71,31 +67,3 @@ To run tests using the local middleware, follow these steps:
 3. **Follow the Instructions for `anytype-heart`:**
 
    Navigate to the anytype-heart repository and follow the setup and build instructions provided in its README file.
-
-## Test Execution
-
-### Test Commands structure (not all available yet)
-
-```bash
-# Platform-specific tests
-npm run test:api            # Run API tests
-npm run test:desktop       # Run Desktop tests
-npm run test:ios          # Run iOS tests
-
-# Tagged tests for specific platforms
-npm run test:api:e2e      # Run API tests with @e2e tag
-npm run test:desktop:comp # Run Desktop tests with @compatibility tag
-npm run test:ios:chat     # Run iOS tests with @chat tag
-
-# Combined test runs
-npm run test:all          # Run all tests sequentially
-npm run test:all:parallel # Run all tests in parallel
-
-```
-## Configuration Files
-
-- `cucumber.js` - Test profiles and execution settings
-- `config/*.config.js` - Platform-specific configurations
-- `tsconfig.json` - TypeScript settings
-
-Each platform (API, Desktop, iOS) has its own configuration file in the config/ directory that defines platform-specific settings like timeouts, capabilities, and environment variables.

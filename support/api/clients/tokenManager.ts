@@ -1,7 +1,7 @@
 import { store } from "../../helpers/store";
 import { Logger } from "@origranot/ts-logger";
 
-const logger = new Logger();
+const logger = new Logger({ name: "custom" });
 
 export function updateClientToken(token: string): void {
   if (store.grpcClientManager) {

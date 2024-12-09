@@ -19,7 +19,7 @@ import {
 } from "../../support/api/services/utils";
 import { exec } from "child_process";
 
-const logger = new Logger();
+const logger = new Logger({ name: "custom" });
 
 interface Paths {
   binPath: string;

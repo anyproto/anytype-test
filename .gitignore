@@ -4,10 +4,13 @@ cmd
 heartsFolder
 config.yml
 results/*
+test-results/*
 # Ignore everything in the tmp folder
 tmp/*
 # Except for the tmp directory itself
 !tmp/
+screenshots/*
+!screenshots/
 cmd/*
 !cmd/
 # Log files

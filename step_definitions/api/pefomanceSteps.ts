@@ -16,7 +16,7 @@ import {
 import { expect } from "@playwright/test";
 import { updateClientToken } from "../../support/api/clients/tokenManager";
 
-const logger = new Logger();
+const logger = new Logger({ name: "custom" });
 
 Given("the user has a large account", async function () {
   logger.info("STEP: the user creates a new account");

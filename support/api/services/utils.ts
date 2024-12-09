@@ -5,7 +5,7 @@ import { status as grpcStatus } from "@grpc/grpc-js";
 import { store } from "../../helpers/store";
 import { Logger } from "@origranot/ts-logger";
 
-const logger = new Logger();
+const logger = new Logger({ name: "custom" });
 
 export const setUserAsCurrentUser = (userNumber: number) => {
   store.currentUserNumber = userNumber;
