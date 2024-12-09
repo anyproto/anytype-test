@@ -202,7 +202,7 @@ export const config: WebdriverIO.Config = {
     require: ["./step_definitions/ios/*.ts"],
     // <boolean> show full backtrace for errors
     backtrace: true,
-    // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
+    // <string[]> ("extension:module") require files with the given EXTENSION requiring MODULE (repeatable)
     requireModule: [],
     // <boolean> invoke formatters without executing steps
     dryRun: false,
