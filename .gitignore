@@ -17,3 +17,7 @@ cmd/*
 # IDE files
 .vscode/
 .idea/
+screenshots/*
+!screenshots/
+test-results/*
+!test-results/

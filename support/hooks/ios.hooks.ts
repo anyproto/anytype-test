@@ -1,31 +1,57 @@
-import { Before, After, BeforeAll, AfterAll } from "@cucumber/cucumber";
-import { remote, Browser } from "webdriverio";
-import iosConfig from "../../config/ios.config";
-import { ICustomWorld } from "../world";
+import { browser } from "@wdio/globals";
+import { AfterStep, After } from "@cucumber/cucumber";
+import { Logger } from "@origranot/ts-logger";
+import { GRPCServerManager } from "../api/services/gprcServerManager";
+import { GRPCClientManager } from "../api/services/gprcClient";
+import { store } from "../helpers/store";
+import { callAccountDelete } from "../api/clients/accountApi";
+import { callWalletCreateSession } from "../api/clients/walletApi";
+import { updateClientToken } from "../api/clients/tokenManager";
 
-let driver: Browser;
+const logger = new Logger({ name: "custom" });
 
-BeforeAll(async function () {
-  driver = await remote({
-    ...iosConfig.server,
-    capabilities: iosConfig.capabilities,
-  });
-});
-
-Before(async function (this: ICustomWorld) {
-  this.driver = driver;
-});
-
-After(async function (this: ICustomWorld) {
-  if (this.result?.status === "failed") {
-    await driver.saveScreenshot(
-      `${iosConfig.test.screenshotsPath}/failure-${Date.now()}.png`
-    );
+AfterStep(async function (stepResult: { result: { status: string } }) {
+  if (stepResult.result.status === "failed") {
+    const timestamp = new Date().toISOString().replace(/[^0-9]/g, "");
+    const screenshotPath = `./screenshots/failed-${timestamp}.png`;
+    await browser.saveScreenshot(screenshotPath);
+    console.log(`Screenshot saved: ${screenshotPath}`);
   }
 });
 
-AfterAll(async function () {
-  if (driver) {
-    await driver.deleteSession();
+After(async function () {
+  try {
+    const grpcServerManager = new GRPCServerManager(
+      "heart",
+      process.cwd(),
+      "default"
+    );
+
+    await grpcServerManager.startServer(1);
+
+    const server = store.servers.get(1);
+    if (!server) {
+      throw new Error("Failed to start the server");
+    }
+
+    const grpcClientManager = new GRPCClientManager(server.address);
+    store.grpcClientManager = grpcClientManager;
+    grpcClientManager.createClient(1);
+
+    if (store.users.size > 0) {
+      for (const [userNumber, user] of store.users) {
+        if (user.mnemonic) {
+          const token = await callWalletCreateSession(user.mnemonic);
+          updateClientToken(token);
+
+          await callAccountDelete();
+          logger.info(`Deleted account for user ${userNumber}`);
+        }
+      }
+    }
+  } catch (error) {
+    logger.error("Failed to cleanup accounts:", error);
+  } finally {
+    store.clear();
   }
 });

@@ -1,14 +1,20 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "commonjs",
-    "strict": true,
+    "module": "CommonJS",
     "esModuleInterop": true,
+    "moduleResolution": "node",
+    "strict": true,
     "skipLibCheck": true,
     "outDir": "dist",
     "typeRoots": [
       "./node_modules/@types",
-      "./types"
+      "./types",
+      "node",
+      "@wdio/globals/types",
+      "expect-webdriverio",
+      "@wdio/cucumber-framework",
+      "@wdio/appium-service"
     ],
     "resolveJsonModule": true,
     "allowJs": true,

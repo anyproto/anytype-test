@@ -15,9 +15,17 @@ Feature: Compatibility with Sync
     And the server <version2> 2 is running
     And the user is using client 2
     When the user logs in to their account on "prod"
+    Then the account should have an analyticsId, profile picture and name
     Then the user can open the object 1
     And the account is deleted
     And the server 2 is stopped
+    #
+    #
+    #For every intended run you need to add a row with the versions you want to test
+    #It should look like this:
+    # Examples:
+    # | version1  | version2  |
+    # | "v0.38.0" | "v0.38.1" |
 
     Examples:
       | version1 | version2 |

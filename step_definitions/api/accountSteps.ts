@@ -181,6 +181,9 @@ Then("the account is deleted", async () => {
 Then(
   "the account should have an analyticsId, profile picture and name",
   async () => {
+    logger.info(
+      "STEP: the account should have an analyticsId, profile picture and name"
+    );
     if (!store.currentUser.profileObjectId || !store.currentUser.techSpaceId) {
       throw new Error("ProfileObjectId or TechSpaceId is undefined");
     }
@@ -263,7 +266,7 @@ Then(
   }
 );
 
-Then("the ProfileObject should be empty", async () => {
+/* Then("the ProfileObject should be empty", async () => {
   const techSpaceId = store.currentUser.techSpaceId;
   if (!techSpaceId) {
     throw new Error("Error in scenario logic. TechSpaceId is undefined");
@@ -272,3 +275,4 @@ Then("the ProfileObject should be empty", async () => {
   console.log("responseInfo", responseInfo);
   console.log("responseInfo.profileObjectId:", responseInfo.profileObjectId);
 });
+ */
