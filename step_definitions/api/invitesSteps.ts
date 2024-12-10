@@ -14,9 +14,9 @@ Then(
   }
 );
 
-Then("the user makes his first space shareable", async () => {
-  await callMakeSpaceShareable(spaceId);
-});
+// Then("the user makes his first space shareable", async () => {
+//   await callMakeSpaceShareable(spaceId);
+// });
 
 Then("the user can open the object {int}", async (objectNumber: number) => {
   const object = store.objects.get(objectNumber);
