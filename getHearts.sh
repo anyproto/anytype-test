@@ -50,10 +50,10 @@ release_info=$(curl -sL https://$GITHUB/repos/$REPO/releases?per_page=100)
 all_versions=($(echo "$release_info" | jq -r '.[] | .tag_name' | grep -Eo '^v[0-9]+\.[0-9]+' | sort -V | uniq | tail -n $NUM_VERSIONS))
 
 # Filter versions >= v0.35.0 for prod and staging
-filtered_versions=($(for v in "${all_versions[@]}"; do if [[ "$v" > "v0.34.9" ]]; then echo "$v"; fi; done))
+# filtered_versions=($(for v in "${all_versions[@]}"; do if [[ "$v" > "v0.34.9" ]]; then echo "$v"; fi; done))
 
-echo "Processing all versions for compatibilityLocal.feature" >&2
-echo "Processing versions >= v0.35.0 for compatibilitySyncProd.feature and compatibilitySyncStaging.feature" >&2
+echo "Processing all versions" >&2
+
 
 # Function to process and download releases
 process_releases() {
@@ -101,24 +101,33 @@ process_releases() {
 # Process all versions for local
 all_processed_versions=($(process_releases "${all_versions[@]}"))
 
-# Process filtered versions for prod and staging
-filtered_processed_versions=($(process_releases "${filtered_versions[@]}"))
-
 # Function to append combinations to a file
 append_combinations() {
     local file="$1"
     shift
     local versions=("$@")
+    
+    # Add combinations of different versions
     for ((i = 0; i < ${#versions[@]}; i++)); do
         for ((j = i + 1; j < ${#versions[@]}; j++)); do
             echo "   | \"${versions[$i]}\" | \"${versions[$j]}\" |" >> "$file"
         done
     done
+    
+    # Add combination of last version with itself
+    local last_idx=$((${#versions[@]} - 1))
+    echo "   | \"${versions[$last_idx]}\" | \"${versions[$last_idx]}\" |" >> "$file"
+    
+    # Add combination of last version with second-to-last version (if there are at least 2 versions)
+    if [ ${#versions[@]} -ge 2 ]; then
+        local second_last_idx=$((${#versions[@]} - 2))
+        echo "   | \"${versions[$last_idx]}\" | \"${versions[$second_last_idx]}\" |" >> "$file"
+    fi
 }
 
 # Append combinations to feature files
-append_combinations "$FEATURE_FILE_SYNC_PROD" "${filtered_processed_versions[@]}"
+append_combinations "$FEATURE_FILE_SYNC_PROD" "${all_processed_versions[@]}"
 append_combinations "$FEATURE_FILE_LOCAL" "${all_processed_versions[@]}"
-append_combinations "$FEATURE_FILE_SYNC_STAGING" "${filtered_processed_versions[@]}"
+append_combinations "$FEATURE_FILE_SYNC_STAGING" "${all_processed_versions[@]}"
 
 printf "All tasks completed. Compatibility combinations appended to feature files.\n" >&2
