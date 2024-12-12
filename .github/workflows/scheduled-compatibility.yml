@@ -56,7 +56,7 @@ jobs:
 
       - name: Run compatibility tests
         run: npm run test:comp:testomatio
-        timeout-minutes: 10
+        timeout-minutes: 20
         env:
           TESTOMATIO: ${{ secrets.TESTOMATIO }}
           GH_PAT: ${{ github.token }}
