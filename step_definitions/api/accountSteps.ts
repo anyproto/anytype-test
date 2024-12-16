@@ -28,6 +28,7 @@ import {
 } from "../../support/api/clients/objectApi";
 import { callWorkspaceOpen } from "../../support/api/clients/workspaceApi";
 import { callInitialSetParameters } from "../../support/api/clients/metricsApi";
+import { exec } from "child_process";
 // Initialize the logger
 const logger = new Logger({ name: "custom" });
 
@@ -148,11 +149,11 @@ Given(
   }
 );
 
-Then("the account is synced", async () => {
+Then("the account is synced within {int} seconds", async (seconds: number) => {
   logger.info("STEP: the account is synced");
   try {
     // Wait for the variable to become true with a timeout of 60 seconds
-    await waitForCondition(() => store.spaceSyncStatusReceived, 60000);
+    await waitForCondition(() => store.spaceSyncStatusReceived, seconds * 1000);
 
     if (
       store.currentServerVersion &&
@@ -163,12 +164,31 @@ Then("the account is synced", async () => {
     }
     logger.info("The account is successfully synced.");
   } catch (error) {
-    // Log an error and throw it to fail the test
+    // Generate stack trace by sending SIGABRT to grpc-server
+    logger.info("Generating stack trace by sending SIGABRT to grpc-server");
+    try {
+      exec("pkill -SIGABRT grpc-server", (error, stdout, stderr) => {
+        if (error) {
+          logger.error("Failed to send SIGABRT to grpc-server:", error);
+        }
+        if (stderr) {
+          logger.error("pkill stderr:", stderr);
+        }
+      });
+    } catch (pkillError) {
+      logger.error("Failed to execute pkill command:", pkillError);
+    }
+
+    // Log the error with stack trace
     logger.error(
-      "The account is not synced. SpaceSyncStatusUpdate event not received in time."
+      "The account is not synced. SpaceSyncStatusUpdate event not received in time.",
+      error instanceof Error ? error.stack : undefined
     );
+
     throw new Error(
-      "Test failed: The account did not sync within the expected time."
+      `Test failed: The account did not sync within the expected time. Stack trace: ${
+        error instanceof Error ? error.stack : "No stack trace available"
+      }`
     );
   }
 });

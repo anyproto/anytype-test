@@ -9,7 +9,7 @@ Feature: Compatibility with Sync
     And the user creates a new account on "staging"
     And the user creates an object 1 in the account
     And the user can open the object 1
-    And the account is synced
+    And the account is synced within 60 seconds
     And the server 1 is stopped
     And data is deleted
     And the server <version2> 2 is running
