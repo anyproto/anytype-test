@@ -39,8 +39,8 @@ function getNetworkConfig(networkType: string): NetworkConfig {
     };
   }
   if (networkType === "staging") {
-    const configPath = path.resolve(__dirname, `../../../myDocker.yml`);
-    //const configPath = path.resolve(__dirname, `../../../config.yml`);
+    //const configPath = path.resolve(__dirname, `../../../myDocker.yml`);
+    const configPath = path.resolve(__dirname, `../../../config.yml`);
     logger.info(`Staging config path: ${configPath}`);
     return {
       mode: Rpc_Account_NetworkMode.CustomConfig,
