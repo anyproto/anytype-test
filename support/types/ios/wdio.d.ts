@@ -9,3 +9,7 @@ declare namespace WebdriverIO {
 declare global {
   var driver: WebdriverIO.MultiRemoteBrowser;
 }
+
+declare module "wdio-timeline-reporter" {
+  export const TimelineService: any;
+}

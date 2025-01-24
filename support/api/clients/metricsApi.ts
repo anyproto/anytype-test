@@ -1,4 +1,4 @@
-import { getCurrentClient } from "../../helpers/proxy";
+import { getCurrentClient } from "../helpers/proxy";
 import { makeGrpcCall } from "../services/utils";
 import {
   Rpc_Initial_SetParameters_Request,
@@ -6,7 +6,7 @@ import {
   Rpc_Metrics_SetParameters_Request,
   Rpc_Metrics_SetParameters_Response,
 } from "../../../pb/pb/protos/commands";
-import { store } from "../../helpers/store";
+import { store } from "../helpers/store";
 
 export async function callMetricsSetParameters(): Promise<void> {
   console.log(`### calling method "setMetrics"...`);

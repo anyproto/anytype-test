@@ -1,5 +1,5 @@
 import { spawn, ChildProcess } from "child_process";
-import { store } from "../../helpers/store"; // Import your store
+import { store } from "../helpers/store"; // Import your store
 
 class GRPCServerManager {
   constructor(
@@ -25,8 +25,8 @@ class GRPCServerManager {
           cwd: this.workingDir,
           env: {
             ...process.env,
-            ANYTYPE_GRPC_LOG: "3",
-            ANYTYPE_LOG_LEVEL: "info",
+            // ANYTYPE_GRPC_LOG: "3",
+            // ANYTYPE_LOG_LEVEL: "info",
             ANYTYPE_GRPC_ADDR: "127.0.0.1:0",
             ANYTYPE_GRPCWEB_ADDR: "127.0.0.1:0",
           }, // Ensures dynamic port assignment
@@ -38,8 +38,8 @@ class GRPCServerManager {
           env: {
             ...process.env,
             // Uncomment next 2 lines for DEBUG
-            //ANYTYPE_GRPC_LOG: "3",
-            //ANYTYPE_LOG_LEVEL: "info",
+            // ANYTYPE_GRPC_LOG: "3",
+            // ANYTYPE_LOG_LEVEL: "info",
             ANYTYPE_GRPC_ADDR: "127.0.0.1:0",
             ANYTYPE_GRPCWEB_ADDR: "127.0.0.1:0",
           }, // Ensures dynamic port assignment
@@ -70,7 +70,11 @@ class GRPCServerManager {
 
       serverProcess.stdout?.on("data", onData);
       serverProcess.stderr?.on("data", (data) => {
-        console.error(`stderr: ${data}`);
+        const logMessage = data.toString();
+        // Only log stderr messages that don't come from anytype-doc-indexer
+        if (!logMessage.includes('"logger":"anytype-doc-indexer"')) {
+          console.error(`stderr: ${logMessage}`);
+        }
       });
 
       serverProcess.on("error", (err) => {

@@ -1,5 +1,5 @@
-import { getCurrentClient } from "../../helpers/proxy";
-import { store } from "../../helpers/store";
+import { getCurrentClient } from "../helpers/proxy";
+import { store } from "../helpers/store";
 import { isVersion035OrMore, makeGrpcCall } from "../services/utils";
 import {
   Rpc_Object_Open_Request,
@@ -13,19 +13,32 @@ import {
   Rpc_Object_SubscribeIds_Request,
   Rpc_Object_SubscribeIds_Response,
   Rpc_Object_Search_Response,
+  Rpc_BlockText_SetText_Request,
+  Rpc_BlockText_SetText_Response,
+  Rpc_Object_ImportUseCase_Request,
+  Rpc_Object_ImportUseCase_Request_UseCase,
+  Rpc_Object_ImportUseCase_Response,
 } from "../../../pb/pb/protos/commands";
 import { Struct } from "../../../pb/google/protobuf/struct";
+import {
+  Block_Content_Dataview_Filter,
+  ObjectView,
+} from "../../../pb/pkg/lib/pb/model/protos/models";
+import { ObjectTypeKeys } from "../constants";
+import { ObjectTypeValue } from "../constants";
 
 /**
  * Calls the objectCreate method on the gRPC client and handles the response.
  * @param objectNumber The number to associate with the created object in the store.
  * @returns A promise that resolves when the gRPC call completes.
  */
-export async function callCreateObject(objectNumber: number): Promise<void> {
+export async function callCreateObject(
+  objectNumber: number,
+  objectType: ObjectTypeValue = ObjectTypeKeys.task
+): Promise<string> {
   console.log("### Initiating object creation...");
   const client = getCurrentClient();
   const currentUser = store.currentUser;
-
   if (!currentUser?.accountSpaceId) {
     throw new Error("Error: spaceId not found for the current user.");
   }
@@ -36,7 +49,7 @@ export async function callCreateObject(objectNumber: number): Promise<void> {
         type: {
           kind: {
             oneofKind: "stringValue",
-            stringValue: "ot-task",
+            stringValue: objectType,
           },
         },
       },
@@ -44,7 +57,7 @@ export async function callCreateObject(objectNumber: number): Promise<void> {
     internalFlags: [{ value: 2 }, { value: 0 }],
     templateId: "",
     spaceId: currentUser.accountSpaceId,
-    objectTypeUniqueKey: "ot-task",
+    objectTypeUniqueKey: objectType,
     withChat: false,
   };
 
@@ -53,6 +66,7 @@ export async function callCreateObject(objectNumber: number): Promise<void> {
       client.objectCreate,
       request
     );
+    console.log("Create object response:", JSON.stringify(response, null, 2));
 
     if (response.objectId) {
       store.objects.set(objectNumber, {
@@ -62,6 +76,7 @@ export async function callCreateObject(objectNumber: number): Promise<void> {
       console.log(
         `Object ${objectNumber} successfully created and saved in store.`
       );
+      return response.objectId;
     } else {
       throw new Error("Error: objectId not returned in the response.");
     }
@@ -71,15 +86,39 @@ export async function callCreateObject(objectNumber: number): Promise<void> {
   }
 }
 
+export async function callObjectSearch(
+  filters: Block_Content_Dataview_Filter[],
+  spaceId: string
+): Promise<Struct[]> {
+  console.log("### Initiating object search...");
+  const client = getCurrentClient();
+  const request: Rpc_Object_Search_Request = {
+    spaceId: spaceId,
+    filters: filters,
+    limit: 0,
+    offset: 0,
+    keys: [],
+    sorts: [],
+    fullText: "",
+    objectTypeFilter: [],
+  };
+  const response = await makeGrpcCall<Rpc_Object_Search_Response>(
+    client.objectSearch,
+    request
+  );
+  console.log("Object search response:", JSON.stringify(response, null, 2));
+  return response.records;
+}
 /**
  * Opens an object by sending a gRPC request to the server.
- * @param objectNumber The number of the object in the store to open.
- * @returns A promise that resolves when the gRPC call completes.
+ * @param objectId The ID of the object to open.
+ * @param spaceId The space ID where the object is located.
+ * @returns A promise that resolves to an ObjectView when the gRPC call completes.
  */
 export async function callOpenObject(
   objectId: string,
   spaceId: string
-): Promise<void> {
+): Promise<ObjectView> {
   console.log(
     `### Initiating object open for object with id ${objectId} and spaceId ${spaceId}...`
   );
@@ -90,9 +129,9 @@ export async function callOpenObject(
     isVersion035OrMore(store.currentServerVersion)
   ) {
     console.log(
-      "Heart verison 35, Waiting for 15 seconds before objectOpening..."
+      "Heart verison 35 or more, Waiting for 5 seconds before objectOpening..."
     );
-    await new Promise((resolve) => setTimeout(resolve, 15000));
+    await new Promise((resolve) => setTimeout(resolve, 5000));
   }
 
   const request: Rpc_Object_Open_Request = {
@@ -102,13 +141,20 @@ export async function callOpenObject(
     spaceId: spaceId,
     includeRelationsAsDependentObjects: false,
   };
-
+  console.log("Request to open object with client", JSON.stringify(client));
   try {
     const response = await makeGrpcCall<Rpc_Object_Open_Response>(
       client.objectOpen,
       request
     );
-    console.log(`Object opened successfully:`, response);
+    console.log(
+      "Object opened successfully:",
+      JSON.stringify(response, null, 2)
+    );
+    if (!response.objectView) {
+      throw new Error("Object view not returned in response");
+    }
+    return response.objectView;
   } catch (error: any) {
     console.error(`Failed to open object. Error details:`, error);
 
@@ -157,7 +203,10 @@ export async function setDescription(
       client.objectListSetDetails,
       request
     );
-    console.log("Object list set details successful:", response);
+    console.log(
+      "Object list set details successful:",
+      JSON.stringify(response, null, 2)
+    );
   } catch (error) {
     console.error("Failed to set object list details:", error);
     throw error;
@@ -185,7 +234,10 @@ export async function callObjectSubscribeIds(
       client.objectSubscribeIds,
       request
     );
-    console.log("Object subscribe ids successful:", response);
+    console.log(
+      "Object subscribe ids successful:",
+      JSON.stringify(response, null, 2)
+    );
     console.log(
       "json parse:",
       Rpc_Object_SubscribeIds_Response.toJson(response)
@@ -213,7 +265,7 @@ export async function callObjectSearchProfile(
         operator: 0, // Corresponds to Block_Content_Dataview_Filter_Operator.AND
         RelationKey: "id",
         relationProperty: "",
-        condition: 1, // Keeping the original value
+        condition: 1,
         value: {
           stringValue: profileId,
         },
@@ -261,9 +313,169 @@ export async function callObjectSearchProfile(
       client.objectSearch,
       request
     );
-    console.log("Object search successful:", response);
+    console.log("Object search successful:", JSON.stringify(response, null, 2));
   } catch (error) {
     console.error("Failed to search object:", error);
     throw error;
+  }
+}
+
+export async function callBlockTextSetTextForTitle(
+  objectId: string,
+  text: string
+): Promise<void> {
+  console.log("### Initiating object list set details...");
+  const client = getCurrentClient();
+  try {
+    const request: Rpc_BlockText_SetText_Request = {
+      blockId: "title",
+      contextId: objectId,
+      text: text,
+    };
+    const response = await makeGrpcCall<Rpc_BlockText_SetText_Response>(
+      client.blockTextSetText,
+      request
+    );
+    console.log(
+      "Block text set text successful:",
+      JSON.stringify(response, null, 2)
+    );
+  } catch (error) {
+    console.error("Failed to set object list details:", error);
+    throw error;
+  }
+}
+
+export async function callBlockTextSetText(
+  objectId: string,
+  blockId: string,
+  text: string
+): Promise<void> {
+  console.log("### Initiating object list set details...");
+  const client = getCurrentClient();
+  try {
+    const request: Rpc_BlockText_SetText_Request = {
+      blockId: blockId,
+      contextId: objectId,
+      text: text,
+    };
+    const response = await makeGrpcCall<Rpc_BlockText_SetText_Response>(
+      client.blockTextSetText,
+      request
+    );
+    console.log(
+      "Block text set text successful:",
+      JSON.stringify(response, null, 2)
+    );
+  } catch (error) {
+    console.error("Failed to set object list details:", error);
+    throw error;
+  }
+}
+
+export async function callBlockTextSetTextForTitleExpectError(
+  objectId: string,
+  text: string
+): Promise<boolean> {
+  console.log("### Checking block text set permissions...");
+  const request: Rpc_BlockText_SetText_Request = {
+    blockId: "title",
+    contextId: objectId,
+    text: text,
+  };
+
+  try {
+    console.log(
+      "Setting block text, expecting error code 1 - insufficient permissions"
+    );
+    const response = await makeGrpcCall<Rpc_BlockText_SetText_Response>(
+      getCurrentClient().blockTextSetText,
+      request,
+      [1]
+    );
+
+    if (!response.error || response.error.code === 0) {
+      return false;
+    }
+
+    // Check if error code is 1 (insufficient permissions)
+    return response.error.code === 1;
+  } catch (error: unknown) {
+    if (typeof error === "object" && error !== null && "code" in error) {
+      return (error as { code: number }).code === 1; // Expected permission error
+    }
+    console.error("Failed to set block text:", error);
+    throw error; // Re-throw if it's a different error
+  }
+}
+
+export async function callImportUseCase(
+  spaceId: string,
+  useCase: string
+): Promise<void> {
+  console.log("### Initiating object import use case...");
+  const client = getCurrentClient();
+
+  // Map string to enum value
+  const useCaseEnum =
+    Rpc_Object_ImportUseCase_Request_UseCase[
+      useCase as keyof typeof Rpc_Object_ImportUseCase_Request_UseCase
+    ] ?? Rpc_Object_ImportUseCase_Request_UseCase.NONE;
+
+  const request: Rpc_Object_ImportUseCase_Request = {
+    spaceId: spaceId,
+    useCase: useCaseEnum,
+  };
+
+  try {
+    const response = await makeGrpcCall<Rpc_Object_ImportUseCase_Response>(
+      client.objectImportUseCase,
+      request
+    );
+    console.log(
+      "Use case import successful:",
+      JSON.stringify(response, null, 2)
+    );
+  } catch (error) {
+    console.error("Failed to import use case:", error);
+    throw error;
+  }
+}
+
+export async function callOpenObjectWithExpectedError(
+  objectId: string,
+  spaceId: string
+): Promise<boolean> {
+  console.log("### Checking object open permissions...");
+  const request: Rpc_Object_Open_Request = {
+    contextId: "",
+    objectId: objectId,
+    traceId: "",
+    spaceId: spaceId,
+    includeRelationsAsDependentObjects: false,
+  };
+
+  try {
+    console.log(
+      "Opening object, expecting error code 1 - failed to load space"
+    );
+    const response = await makeGrpcCall<Rpc_Object_Open_Response>(
+      getCurrentClient().objectOpen,
+      request,
+      [1] // Expected error code
+    );
+
+    if (!response.error || response.error.code === 0) {
+      return false;
+    }
+    console.log("Error code:", response.error.code);
+    // Check if error code is 1 (failed to load space)
+    return response.error.code === 1;
+  } catch (error: unknown) {
+    if (typeof error === "object" && error !== null && "code" in error) {
+      return (error as { code: number }).code === 1; // Expected space loading error
+    }
+    console.error("Failed to open object:", error);
+    throw error; // Re-throw if it's a different error
   }
 }

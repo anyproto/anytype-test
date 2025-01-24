@@ -1,5 +1,5 @@
 import { Metadata } from "@grpc/grpc-js";
-import { getCurrentClient as getClientInstance } from "../api/services/gprcClient";
+import { getCurrentClient as getClientInstance } from "../services/gprcClient";
 import { store } from "./store";
 
 // Define the list of methods to exclude from metadata injection
@@ -12,7 +12,7 @@ const excludedMethods = [
 
 // Wrap the client methods to inject metadata
 function getCurrentClient() {
-  console.log("Proxy is being created");
+  console.log("current client with proxy is called");
   const client = getClientInstance();
 
   // This function will return a proxy that intercepts all gRPC calls to add metadata
@@ -21,7 +21,15 @@ function getCurrentClient() {
       const originalMethod = Reflect.get(target, prop, receiver);
       if (typeof originalMethod === "function") {
         return (...args: any[]) => {
-          console.log(`Intercepting call to method: ${prop.toString()}`);
+          // Add this check to show both method names when it's a unary request
+          if (prop.toString() === "makeUnaryRequest" && args[0]) {
+            console.log(
+              `Intercepting gRPC call: ${args[0]} (internal: makeUnaryRequest)`
+            );
+          } else {
+            console.log(`Intercepting call to method: ${prop.toString()}`);
+          }
+
           const currentClientNumber = store.currentClientNumber;
           if (!currentClientNumber) {
             throw new Error("No client number set");

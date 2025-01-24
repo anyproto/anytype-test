@@ -3,7 +3,7 @@ import { AfterStep, After } from "@cucumber/cucumber";
 import { Logger } from "@origranot/ts-logger";
 import { GRPCServerManager } from "../api/services/gprcServerManager";
 import { GRPCClientManager } from "../api/services/gprcClient";
-import { store } from "../helpers/store";
+import { store } from "../api/helpers/store";
 import { callAccountDelete } from "../api/clients/accountApi";
 import { callWalletCreateSession } from "../api/clients/walletApi";
 import { updateClientToken } from "../api/clients/tokenManager";

@@ -3,7 +3,7 @@ import {
   IClientCommandsClient,
   ClientCommandsClient,
 } from "../../../pb/pb/protos/service/service.grpc-client";
-import { store } from "../../helpers/store";
+import { store } from "../helpers/store";
 import { ClientType } from "../../types/dataTypes";
 import { EventEmitter } from "events";
 import { StreamRequest } from "../../../pb/pb/protos/commands";

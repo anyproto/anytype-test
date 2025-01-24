@@ -11,6 +11,7 @@ interface UserType {
   techSpaceId?: string;
   iconImage?: string;
   accountSpaceId?: string;
+  networkId?: string;
 }
 
 interface ServerType {

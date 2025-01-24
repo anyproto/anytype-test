@@ -34,7 +34,6 @@ const iosConfig = [
   "features/ios/*.feature",
 ].join(" ");
 
-// Replace module.exports with module.exports
 module.exports = {
   default: `${commonRequire} ${apiConfig} ${commonFormats}`,
   api: `${commonRequire} ${apiConfig} ${commonFormats}`,

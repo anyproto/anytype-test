@@ -1,48 +1,33 @@
-import { setWorldConstructor, World, IWorldOptions } from "@cucumber/cucumber";
-import { ElectronApplication, Page } from "playwright";
-import { store, storeType } from "./helpers/store";
-import { Browser } from "webdriverio";
-import { VaultSetupPage } from "../support/page_objects/ios/vaultSetupPage";
-import MySpacesPage from "./page_objects/ios/mySpacesPage";
+import { setWorldConstructor, IWorldOptions, World } from "@cucumber/cucumber";
+import { store, storeType } from "./api/helpers/store";
+import { setDefaultTimeout } from "@cucumber/cucumber";
 
-export interface ICustomWorld extends World {
-  driver: Browser;
-  result: any;
-  store: storeType;
-  page?: Page;
-  electronApp?: ElectronApplication;
-  clearStore: () => void;
-  assertUITest: () => asserts this is ICustomWorld & { page: Page };
-  vaultKey: string;
-  vaultSetupPage?: VaultSetupPage;
-  mySpacePage?: MySpacesPage;
-}
+// Set global timeout for all steps
+setDefaultTimeout(120 * 1000);
 
-export class CustomWorld extends World implements ICustomWorld {
-  store: storeType;
-  page?: Page;
-  electronApp?: ElectronApplication;
-  vaultKey = "";
-  vaultSetupPage?: VaultSetupPage;
+export class CustomWorld extends World {
+  inviteContentId?: string;
+  inviteFileKey?: string;
+  scenarioStore: storeType;
+
   constructor(options: IWorldOptions) {
     super(options);
-    this.store = store;
-  }
-  driver: any;
-  result: any;
-  mySpacePage?: MySpacesPage;
-  assertUITest(): asserts this is ICustomWorld & { page: Page } {
-    if (!this.page) {
-      throw new Error(
-        "This step requires a UI test environment with a page object"
-      );
-    }
-  }
 
-  clearStore() {
-    this.store.clear();
+    // Initialize scenario-specific properties
+    this.inviteContentId = undefined;
+    this.inviteFileKey = undefined;
+
+    // Create a new instance of the store for each scenario.
+    // This ensures that no state leaks between scenarios.
+    this.scenarioStore = {
+      ...store,
+      users: new Map(),
+      servers: new Map(),
+      objects: new Map(),
+      clients: new Map(),
+      // You can keep or remove other store properties as needed
+    };
   }
-  //add more methods here to interact with the store or manage state
 }
 
 setWorldConstructor(CustomWorld);

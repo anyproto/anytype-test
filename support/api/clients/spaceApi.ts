@@ -38,9 +38,11 @@ import {
   Rpc_Space_LeaveApprove_Request,
   Rpc_Space_LeaveApprove_Response,
   Rpc_Space_LeaveApprove_Response_Error_Code,
+  Rpc_Space_Delete_Request,
+  Rpc_Space_Delete_Response,
 } from "../../../pb/pb/protos/commands";
 import { ParticipantPermissions } from "../../../pb/pkg/lib/pb/model/protos/models";
-import { getCurrentClient } from "../../helpers/proxy";
+import { getCurrentClient } from "../helpers/proxy";
 import { makeGrpcCall } from "../services/utils";
 
 //OWNER ONLY
@@ -85,6 +87,7 @@ export async function callSpaceInviteGenerate(
     );
 
     if (!response.error || response.error.code === 0) {
+      console.log("Space invite generated successfully:", response);
       return {
         inviteContentId: response.inviteCid,
         inviteFileKey: response.inviteFileKey,
@@ -121,7 +124,7 @@ export async function callSpaceRequestApprove(
     identity: identity,
     permissions: permissionMap[permissions],
   };
-
+  console.log("Space request approve request:", JSON.stringify(request));
   try {
     const response = await makeGrpcCall<Rpc_Space_RequestApprove_Response>(
       getCurrentClient().spaceRequestApprove,
@@ -129,7 +132,10 @@ export async function callSpaceRequestApprove(
     );
 
     if (!response.error || response.error.code === 0) {
-      console.log("Space request approved successfully:", response);
+      console.log(
+        "Space request approved successfully:",
+        JSON.stringify(response)
+      );
     } else {
       throw new Error(
         `Failed to approve space request: ${
@@ -365,6 +371,7 @@ export async function callSpaceInviteView(
     );
 
     if (!response.error || response.error.code === 0) {
+      console.log("Space invite viewed successfully:", response);
       return {
         spaceId: response.spaceId,
         spaceName: response.spaceName,
@@ -405,7 +412,7 @@ export async function callSpaceJoin(
     );
 
     if (!response.error || response.error.code === 0) {
-      console.log("Space joined successfully:", response);
+      console.log("Space joined request sent successfully:", response);
     } else {
       throw new Error(
         `Failed to join space: ${response.error.description} (Error code: ${
@@ -475,6 +482,56 @@ export async function callSpaceInviteGetCurrent(
     );
   } catch (error) {
     console.error("Failed to get current space:", error);
+    throw error;
+  }
+}
+
+export async function checkSpaceInviteNotValid(
+  spaceId: string
+): Promise<boolean> {
+  const request: Rpc_Space_InviteGetCurrent_Request = {
+    spaceId: spaceId,
+  };
+
+  try {
+    console.log(
+      "Checking space invite, expecting error code 101 - invite not exists"
+    );
+    const response = await makeGrpcCall<Rpc_Space_InviteGetCurrent_Response>(
+      getCurrentClient().spaceInviteGetCurrent,
+      request,
+      [101]
+    );
+
+    if (!response.error || response.error.code === 0) {
+      return false; // Invite exists and is valid
+    }
+
+    // Check if error code is 101 (invite not exists)
+    return response.error.code === 101;
+  } catch (error: unknown) {
+    // Type guard to check if error is an object with a code property
+    if (typeof error === "object" && error !== null && "code" in error) {
+      return (error as { code: number }).code === 101; // Invite is invalid
+    }
+    console.error("Failed to check space invite validity:", error);
+    throw error; // Re-throw if it's a different error
+  }
+}
+
+export async function callSpaceDelete(spaceId: string): Promise<void> {
+  const request: Rpc_Space_Delete_Request = {
+    spaceId: spaceId,
+  };
+
+  try {
+    const response = await makeGrpcCall<Rpc_Space_Delete_Response>(
+      getCurrentClient().spaceDelete,
+      request
+    );
+    console.log("Space deleted successfully:", response);
+  } catch (error) {
+    console.error("Failed to delete space:", error);
     throw error;
   }
 }

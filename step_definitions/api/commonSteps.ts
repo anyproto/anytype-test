@@ -4,13 +4,12 @@ import {
   callMetricsSetParameters,
 } from "../../support/api/clients/metricsApi";
 import { heartResolve } from "../../support/api/services/heartResolve";
-import { store } from "../../support/helpers/store";
+import { store } from "../../support/api/helpers/store";
 import {
   GRPCServerManager,
   stopServer,
 } from "../../support/api/services/gprcServerManager";
 import { GRPCClientManager } from "../../support/api/services/gprcClient";
-import { Logger } from "@origranot/ts-logger";
 import { stopListenSessionEvents } from "../../support/api/services/streamRequest";
 import { callAccountStop } from "../../support/api/clients/accountApi";
 import {
@@ -18,25 +17,25 @@ import {
   setUserAsCurrentUser,
 } from "../../support/api/services/utils";
 import { exec } from "child_process";
-
-const logger = new Logger({ name: "custom" });
+import { logger } from "../../support/api/helpers/loggerConfig";
 
 interface Paths {
   binPath: string;
   workingDir: string;
 }
-
-// Set default timeout for Cucumber steps
-setDefaultTimeout(120 * 1000);
-
 /**
  * Sets the current client in the store.
  * @param clientNumber The client number to set as current.
  */
 export const setClientAsCurrentClient = (clientNumber: number): void => {
   store.currentClientNumber = clientNumber;
-  logger.info(`Switched to client number ${clientNumber}`);
-  logger.debug("Current stored clients:", Array.from(store.clients.entries()));
+  logger.info(`Switched to client number ${clientNumber}`, {
+    user: clientNumber,
+  });
+  logger.debug(
+    `${store.clients.size} clients stored:`,
+    Array.from(store.clients.entries())
+  );
 };
 
 /**
@@ -47,8 +46,12 @@ export const setClientAsCurrentClient = (clientNumber: number): void => {
 Given(
   "the server {string} {int} is running",
   async (heartVersion: string, serverNumber: number) => {
+    logger.info(`STEP: the server ${heartVersion} ${serverNumber} is running`);
     logger.info(
-      `Starting server for version: ${heartVersion}, server number: ${serverNumber}`
+      `Starting server for version: ${heartVersion}, server number: ${serverNumber}`,
+      {
+        user: serverNumber,
+      }
     );
 
     /* // Check Go installation
@@ -114,6 +117,12 @@ Given("client {int} is used", (clientNumber: number) => {
 Given(
   /^the user(?: (\d+))? is using client (\d+)$/,
   (userNumber: number, clientNumber: number) => {
+    logger.info(
+      `STEP: the user ${userNumber} is using client ${clientNumber}`,
+      {
+        user: userNumber,
+      }
+    );
     // Default userNumber to 1 if not provided
     userNumber = userNumber ? userNumber : 1;
     setClientAsCurrentClient(clientNumber);
@@ -122,12 +131,20 @@ Given(
 );
 
 Given("the server {int} is stopped", async (serverNumber: number) => {
-  logger.info(`STEP: the server ${serverNumber} is stopped`);
+  logger.info(`STEP: the server ${serverNumber} is stopped`, {
+    user: serverNumber,
+  });
+
   try {
-    logger.info(`Call account stop`);
+    logger.info(`Call account stop`, {
+      user: serverNumber,
+    });
     await callAccountStop();
   } catch (error) {
-    logger.warn(`Error during account stop: ${error}`);
+    logger.warn(`Error during account stop: ${error}`, {
+      user: serverNumber,
+    });
+    throw error;
   }
 
   try {
@@ -135,6 +152,7 @@ Given("the server {int} is stopped", async (serverNumber: number) => {
     stopListenSessionEvents();
   } catch (error) {
     logger.warn(`Error stopping listen session events: ${error}`);
+    throw error;
   }
 
   try {
@@ -147,13 +165,41 @@ Given("the server {int} is stopped", async (serverNumber: number) => {
   }
 });
 
+Given("both servers are stopped", async () => {
+  logger.info("STEP: both servers are stopped");
+
+  // Stop server 1
+  try {
+    setClientAsCurrentClient(1);
+    await callAccountStop();
+    stopListenSessionEvents(1);
+    stopServer(1);
+    logger.info("Server 1 stopped successfully");
+  } catch (error) {
+    logger.error("Failed to stop server 1:", error);
+    throw error;
+  }
+
+  // Stop server 2
+  try {
+    setClientAsCurrentClient(2);
+    await callAccountStop();
+    stopListenSessionEvents(2);
+    stopServer(2);
+    logger.info("Server 2 stopped successfully");
+  } catch (error) {
+    logger.error("Failed to stop server 2:", error);
+    throw error;
+  }
+});
+
 /**
  * Resolves the paths for the given heart version.
  * @param heartVersion The version of the heart to resolve.
  * @returns The resolved paths.
  * @throws If heart resolution fails.
  */
-async function resolveHeartPaths(heartVersion: string): Promise<Paths> {
+export async function resolveHeartPaths(heartVersion: string): Promise<Paths> {
   try {
     logger.debug(`Resolving paths for heart version: ${heartVersion}`);
     const paths = await heartResolve(heartVersion);

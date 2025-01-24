@@ -3,6 +3,7 @@ heart
 cmd
 heartsFolder
 config.yml
+myDocker.yml
 results/*
 test-results/*
 # Ignore everything in the tmp folder

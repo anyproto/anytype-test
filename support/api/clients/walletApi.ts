@@ -80,7 +80,9 @@ export async function callWalletCreateSession(
       if (response.accountId) {
         console.log("returned accountId is ", response.accountId);
       } else {
-        console.log("no accountId in response");
+        console.log(
+          "no accountId in response, as was replaced with AccountInfo message"
+        );
       }
       return response.token;
     } else {

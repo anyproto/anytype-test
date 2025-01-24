@@ -1,5 +1,5 @@
-import { getCurrentClient } from "../../helpers/proxy";
-import { store } from "../../helpers/store";
+import { getCurrentClient } from "../helpers/proxy";
+import { store } from "../helpers/store";
 import { StreamRequest } from "../../../pb/pb/protos/commands";
 import {
   Event,
@@ -9,11 +9,16 @@ import {
   Event_Space_SyncError,
   Event_Status_Thread_SyncStatus,
 } from "../../../pb/pb/protos/events";
-import { Logger } from "@origranot/ts-logger";
+import { logger } from "../helpers/loggerConfig";
 import { isVersion034OrLess } from "./utils";
+import { Metadata } from "@grpc/grpc-js";
+import { Status } from "@grpc/grpc-js/build/src/constants";
 
-let call: any; // Declare the 'call' variable outside to manage its lifecycle
-const logger = new Logger({ name: "custom" });
+let streamCalls: Map<number, any> = new Map();
+
+const MAX_RECONNECT_ATTEMPTS = 3;
+const RECONNECT_DELAY = 2000; // 2 seconds
+
 /**
  * Utility function to safely convert an object to a JSON string,
  * handling BigInt values by converting them to strings.
@@ -27,64 +32,100 @@ function safeStringify(obj: any): string {
 /**
  * Calls the listenSessionEvents method on the gRPC client and handles the server stream response.
  */
-export async function callListenSessionEvents(): Promise<void> {
-  console.log("### Initiating listenSessionEvents...");
+export async function callListenSessionEvents(
+  clientNumber: number
+): Promise<void> {
+  logger.info(`Initiating listenSessionEvents for client ${clientNumber}...`, {
+    user: "stream",
+  });
 
-  // Get the current gRPC client
   const client = getCurrentClient();
-  const currentClientNumber = store.currentClientNumber;
-  if (!currentClientNumber) {
-    throw new Error("No client number set");
-  }
-  if (!store.currentServerVersion) {
+
+  if (!store.getServerVersionForClient(clientNumber)) {
     throw new Error("No server version set");
   }
-  const heartVersion = store.currentServerVersion;
-  const token = store.getClientAuthToken(currentClientNumber);
+
+  const token = store.getClientAuthToken(clientNumber);
   if (!token) {
     throw new Error("No token found for client number");
   }
 
-  // Log the request object for debugging
   const request = StreamRequest.create({
     token: token,
   });
-  console.log("Request object:", safeStringify(request));
 
   try {
-    // Initiate the server-side streaming call using the client and request
-    const call = client.listenSessionEvents(request);
+    // Store the call in the map with client number as key
+    const streamCall = client.listenSessionEvents(request);
+    streamCalls.set(clientNumber, streamCall);
 
-    // Add error handler before other event handlers
-    call.on("error", (error: any) => {
-      console.error("Stream error details:", {
-        code: error?.code,
-        details: error?.details,
-        metadata: error?.metadata,
-        stack: error?.stack,
-      });
+    // Update the error handler to be more specific about cancellation
+    streamCall.on("error", (error: any) => {
+      if (
+        error.code === 1 &&
+        (error.details === "Call cancelled" ||
+          error.details === "Cancelled on client")
+      ) {
+        logger.info("Stream was intentionally cancelled", {
+          user: "stream",
+        });
+        return;
+      }
 
-      // Check if it's a serialization error
+      logger.error(
+        "Stream error details:",
+        { user: "stream" },
+        {
+          code: error?.code,
+          details: error?.details,
+          metadata: error?.metadata,
+          stack: error?.stack,
+        }
+      );
+
+      // Add reconnection logic for serialization error
       if (error.code === 13) {
-        console.error("Serialization error detected. Request object:", request);
+        logger.error(
+          "Serialization error detected. Request object:",
+          { user: "stream" },
+          request
+        );
+
+        // Stop the current stream before attempting to reconnect
+        stopListenSessionEvents(clientNumber);
+
+        // Attempt to reconnect with clientNumber
+        reconnectStream(clientNumber).catch((reconnectError) => {
+          logger.error(
+            `Failed to reconnect client ${clientNumber} after serialization error`,
+            { user: "stream" },
+            reconnectError
+          );
+        });
       }
     });
 
     // Handle the 'data' event to receive each Event message from the stream
-    call.on("data", (event: Event) => {
-      console.log(
-        `Received event with contextId: ${event.contextId}, traceId: ${event.traceId}`
+    streamCall.on("data", (event: Event) => {
+      logger.info(
+        `Received event with contextId: ${event.contextId}, traceId: ${event.traceId}`,
+        { user: "stream" }
       );
 
       // Iterate over the messages array in the event
       event.messages.forEach((message: Event_Message, index: number) => {
-        console.log(`Processing message ${index + 1}:`);
+        logger.info(`Processing message ${index + 1}:`, {
+          user: "stream",
+        });
         switch (message.value.oneofKind) {
           case "spaceSyncStatusUpdate":
-            console.log(
-              "Space Sync Status Update:",
+            logger.info(
+              `Space Sync Status Update for client ${clientNumber}:`,
+              { user: "stream" },
               safeStringify({
                 ...message.value.spaceSyncStatusUpdate,
+                syncingObjectsCounter:
+                  message.value.spaceSyncStatusUpdate.syncingObjectsCounter.toString(),
                 status:
                   Event_Space_Status[
                     message.value.spaceSyncStatusUpdate.status
@@ -109,58 +150,68 @@ export async function callListenSessionEvents(): Promise<void> {
               (status === 0 || status + 0 === 4) &&
               syncingObjectsCounter === 0n
             ) {
-              console.log(
-                "Desired spaceSyncStatusUpdate received:",
+              logger.info(
+                `Desired spaceSyncStatusUpdate received for client ${clientNumber}:`,
+                { user: "stream" },
                 message.value.spaceSyncStatusUpdate
               );
               store.spaceSyncStatusReceived = true; // Set the flag to true
             } else {
-              console.log(
-                `Received spaceSyncStatusUpdate with id ${id} and status ${status}, but conditions not met.`
+              logger.info(
+                `Received spaceSyncStatusUpdate for client ${clientNumber} with id ${id} and status ${status}, but conditions not met.`,
+                { user: "stream" }
               );
             }
             break;
 
           case "threadStatus":
-            console.log(
+            logger.info(
               "Thread Status Update:",
+              { user: "stream" },
               safeStringify(message.value.threadStatus)
             );
 
             const cafeStatus = message.value.threadStatus.cafe?.status;
 
-            if (cafeStatus === 3 && isVersion034OrLess(heartVersion)) {
-              console.log(
+            if (
+              cafeStatus === 3 &&
+              isVersion034OrLess(store.getServerVersionForClient(clientNumber))
+            ) {
+              logger.info(
                 "Desired threadStatus received with cafe.status = 3:",
+                { user: "stream" },
                 message.value.threadStatus
               );
               store.spaceSyncStatusReceived = true; // Set the flag to true
             } else {
-              console.log(
-                `Received threadStatus with cafe.status ${cafeStatus}, but conditions not met.`
+              logger.info(
+                `Received threadStatus with cafe.status ${cafeStatus}, but conditions not met.`,
+                { user: "stream" }
               );
             }
             break;
 
           case "accountUpdate":
-            console.log(
+            logger.info(
               "Account Update:",
+              { user: "stream" },
               safeStringify(message.value.accountUpdate)
             );
             // Add any specific handling for accountUpdate if needed
             break;
 
           case "membershipUpdate":
-            console.log(
+            logger.info(
               "Membership Update:",
+              { user: "stream" },
               safeStringify(message.value.membershipUpdate)
             );
             break;
 
-          // Handle other known message types
           case "accountShow":
-            console.log(
+            logger.info(
               "Account Show:",
+              { user: "stream" },
               safeStringify(message.value.accountShow)
             );
             if (
@@ -171,28 +222,46 @@ export async function callListenSessionEvents(): Promise<void> {
             }
             break;
           case "accountDetails":
-            console.log(
+            logger.info(
               "Account Details:",
+              { user: "stream" },
               safeStringify(message.value.accountDetails)
             );
             break;
           case "fileSpaceUsage":
-            console.log(
+            logger.info(
               "File Space Usage:",
+              { user: "stream" },
               safeStringify(message.value.fileSpaceUsage)
             );
             break;
           case "p2PStatusUpdate":
-            console.log(
+            logger.info(
               "P2P Status Update:",
+              { user: "stream" },
               safeStringify(message.value.p2PStatusUpdate)
             );
             break;
-          // ... (add more cases as needed for other types)
+          case "blockSetText":
+            logger.info(
+              "Block Set Text:",
+              { user: "stream" },
+              safeStringify(message.value.blockSetText)
+            );
+            break;
+
+          case "objectDetailsAmend":
+            logger.info(
+              "Object Details Amend:",
+              { user: "stream" },
+              safeStringify(message.value.objectDetailsAmend)
+            );
+            break;
 
           default:
-            console.warn(
+            logger.warn(
               "Unknown or unhandled message type:",
+              { user: "stream" },
               message.value.oneofKind
             );
             break;
@@ -200,38 +269,79 @@ export async function callListenSessionEvents(): Promise<void> {
       });
     });
 
-    call.on("metadata", (metadata) => {
-      console.log("Received metadata: ", metadata);
-    });
-
-    call.on("status", (status) => {
-      console.log("Received status: ", status);
-    });
-
-    call.on("end", () => {
-      console.log("Stream ended.");
-    });
-
+    // Modified end handling
     await new Promise<void>((resolve) => {
-      call.on("end", () => resolve());
+      streamCall.on("end", () => {
+        streamCalls.delete(clientNumber);
+        resolve();
+      });
     });
 
-    console.log("listenSessionEvents completed successfully.");
-  } catch (error) {
-    console.error("Failed to initialize listenSessionEvents:", {
-      error: error,
-      request: safeStringify(request),
+    logger.info("listenSessionEvents completed successfully.", {
+      user: "stream",
     });
+  } catch (error) {
+    streamCalls.delete(clientNumber);
+    logger.error(
+      "Failed to initialize listenSessionEvents:",
+      { user: "stream" },
+      {
+        error: error,
+        request: safeStringify(request),
+      }
+    );
     throw error;
   }
 }
 
-// Function to stop the gRPC stream
-export function stopListenSessionEvents() {
-  if (call) {
-    console.log("Stopping the gRPC stream...");
-    call.cancel();
+// Modified stop function to handle multiple streams
+export function stopListenSessionEvents(clientNumber?: number) {
+  if (clientNumber !== undefined) {
+    // Stop specific client stream
+    const streamCall = streamCalls.get(clientNumber);
+    if (streamCall) {
+      logger.info(`Stopping the gRPC stream for client ${clientNumber}...`, {
+        user: "stream",
+      });
+      streamCall.cancel();
+      streamCalls.delete(clientNumber);
+    }
   } else {
-    console.log("No active gRPC stream to stop.");
+    // Stop all streams
+    streamCalls.forEach((streamCall, clientNum) => {
+      logger.info(`Stopping the gRPC stream for client ${clientNum}...`, {
+        user: "stream",
+      });
+      streamCall.cancel();
+    });
+    streamCalls.clear();
+  }
+}
+
+// Add this new function for reconnection logic
+async function reconnectStream(
+  clientNumber: number,
+  attempt: number = 1
+): Promise<void> {
+  if (attempt > MAX_RECONNECT_ATTEMPTS) {
+    logger.error(
+      `Max reconnection attempts reached for client ${clientNumber}`,
+      { user: "stream" }
+    );
+    throw new Error("Failed to reconnect after maximum attempts");
+  }
+
+  logger.info(
+    `Attempting to reconnect client ${clientNumber} (attempt ${attempt})...`,
+    {
+      user: "stream",
+    }
+  );
+
+  try {
+    await new Promise((resolve) => setTimeout(resolve, RECONNECT_DELAY));
+    await callListenSessionEvents(clientNumber);
+  } catch (error) {
+    await reconnectStream(clientNumber, attempt + 1);
   }
 }

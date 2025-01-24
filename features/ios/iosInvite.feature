@@ -6,7 +6,7 @@ Feature: Inviting a user to a space
     And "User B" is on the first screen of ios app
     And "User B" sets network to "staging"
 
-  @invite
+  @smoke
   Scenario: Joining a shared space as Editor on iOS
     Given "User A" creates a new vault
     And "User B" creates a new vault
@@ -22,7 +22,7 @@ Feature: Inviting a user to a space
     And "User B" sees the Request to join Confirmation popup
     And "User A" approves the join request of "User B" with "Editor" rights
 
-  @invite
+  @smoke
   Scenario: Joining a shared space as Viewer on iOS
     Given "User A" creates a new vault
     And "User B" creates a new vault
@@ -38,7 +38,7 @@ Feature: Inviting a user to a space
     And "User B" sees the Request to join Confirmation popup
     And "User A" approves the join request of "User B" with "Viewer" rights
 
-  @invite
+  @smoke
   Scenario: Declining a join request on iOS
     Given "User A" creates a new vault
     And "User B" creates a new vault

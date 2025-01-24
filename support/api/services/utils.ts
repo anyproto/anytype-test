@@ -1,8 +1,8 @@
-import { getCurrentClient } from "../../helpers/proxy";
+import { getCurrentClient } from "../helpers/proxy";
 import * as fs from "fs";
 import * as path from "path";
 import { status as grpcStatus } from "@grpc/grpc-js";
-import { store } from "../../helpers/store";
+import { store } from "../helpers/store";
 import { Logger } from "@origranot/ts-logger";
 
 const logger = new Logger({ name: "custom" });
@@ -90,66 +90,84 @@ export function isVersion037OrMore(version: string): boolean {
 
   return false;
 }
+
+/**
+ * Formats and logs a gRPC error, then returns a new Error instance.
+ * @param error The error object (either from gRPC or an application-level error).
+ * @returns A new Error instance with a JSON representation of the error details.
+ */
+function formatGrpcError(error: {
+  code: number;
+  details?: string;
+  message?: string;
+  description?: string;
+}) {
+  const errorDetails = {
+    code: error.code,
+    description: error.details || error.message || error.description,
+  };
+  console.error("gRPC call failed with error:", errorDetails);
+  return new Error(
+    `gRPC call failed: ${JSON.stringify(errorDetails, null, 2)}`
+  );
+}
+
 /**
  * Generic function to make gRPC calls and handle common error scenarios.
+ * If `expectedErrors` includes an encountered error code, the function will
+ * log the error but still resolve the promise.
+ *
  * @param grpcMethod The gRPC method to call.
  * @param request The request object.
+ * @param expectedErrors (optional) An array of error codes that should be treated as non-fatal.
  * @returns A promise that resolves with the gRPC response.
  */
 export function makeGrpcCall<T>(
   grpcMethod: Function,
-  request: any
+  request: any,
+  expectedErrors?: number[]
 ): Promise<T> {
   return new Promise((resolve, reject) => {
-    const call = grpcMethod.call(
-      getCurrentClient(),
-      request,
-      (err: any, response: T) => {
-        if (err) {
-          const errorDetails = {
-            code: err.code,
-            description: err.details || err.message,
-          };
-          console.error("gRPC call failed with error:", errorDetails);
+    const client = getCurrentClient();
 
-          return reject(
-            new Error(
-              `gRPC call failed: ${JSON.stringify(errorDetails, null, 2)}`
-            )
-          );
+    const call = grpcMethod.call(client, request, (err: any, response: T) => {
+      if (err) {
+        if (expectedErrors?.includes(err.code)) {
+          // Log the expected error, but do not reject.
+          console.warn("Encountered an expected error code:", err.code);
+          return resolve(response);
         }
-
-        // Type assertion to access 'error' property
-        const responseError = (response as any)?.error;
-        if (
-          responseError &&
-          responseError.code !== undefined &&
-          responseError.code !== 0
-        ) {
-          const errorDetails = {
-            code: responseError.code,
-            description: responseError.description || responseError.message,
-          };
-          console.error("gRPC call failed with error:", errorDetails);
-
-          return reject(
-            new Error(
-              `gRPC call failed: ${JSON.stringify(errorDetails, null, 2)}`
-            )
-          );
-        }
-
-        resolve(response);
+        return reject(formatGrpcError(err));
       }
-    );
+
+      // Check for application-level error in the response
+      const responseError = (response as any)?.error;
+      if (
+        responseError &&
+        responseError.code !== undefined &&
+        responseError.code !== 0
+      ) {
+        if (expectedErrors?.includes(responseError.code)) {
+          // Log the expected error, but do not reject.
+          console.warn(
+            "Encountered an expected error code:",
+            responseError.code
+          );
+          return resolve(response);
+        }
+        return reject(formatGrpcError(responseError));
+      }
+
+      resolve(response);
+    });
 
     call.on("status", (status: any) => {
       if (status.code !== grpcStatus.OK) {
-        const statusError = {
+        // Log status errors but do not reject here since the main callback handles errors.
+        console.error("gRPC call non-OK status:", {
           code: status.code,
           description: status.details,
-        };
-        console.error("gRPC call failed with status:", statusError);
+        });
       }
     });
   });

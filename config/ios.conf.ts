@@ -1,5 +1,15 @@
-import { browser } from "@wdio/globals";
+import { browser, driver } from "@wdio/globals";
 import type { Browser } from "webdriverio";
+import { join } from "path";
+import fs from "fs";
+import { spawn } from "child_process";
+import { promisify } from "util";
+import { exec as exec } from "child_process";
+import { TimelineService } from "wdio-timeline-reporter";
+
+// Add this at the top of the file to store FFmpeg processes
+const ffmpegProcesses: { [key: string]: any } = {};
+
 export const config: WebdriverIO.Config = {
   //
   // ====================
@@ -80,6 +90,13 @@ export const config: WebdriverIO.Config = {
         "appium:language": process.env.IOS_LANGUAGE || "en",
         "appium:udid": "E448B4C9-48F4-467B-AE1D-5D440A6760C5",
         "appium:wdaLocalPort": 8100,
+        "appium:realDeviceScreenshotter": true,
+        "appium:simpleIsVisibleCheck": true,
+        // "appium:shouldTerminateApp": true,
+        // "appium:connectHardwareKeyboard": true,
+        // "appium:simpleIsVisibleCheck": true,
+        // "appium:useNativeCachingStrategy": true,
+        // "appium:shouldUseSingletonTestManager": false,
       },
     },
     UserB: {
@@ -95,6 +112,13 @@ export const config: WebdriverIO.Config = {
         "appium:language": process.env.IOS_LANGUAGE || "en",
         "appium:udid": "093D86AF-256E-4B70-AD5B-5D842C01D454",
         "appium:wdaLocalPort": 8101,
+        "appium:realDeviceScreenshotter": true,
+        "appium:simpleIsVisibleCheck": true,
+        // "appium:shouldTerminateApp": true,
+        // "appium:connectHardwareKeyboard": true,
+        // "appium:simpleIsVisibleCheck": true,
+        // "appium:useNativeCachingStrategy": true,
+        // "appium:shouldUseSingletonTestManager": false,
       },
     },
   },
@@ -171,6 +195,7 @@ export const config: WebdriverIO.Config = {
         logPath: "./",
       },
     ],
+    [TimelineService],
   ],
 
   // Framework you want to run your specs with.
@@ -195,6 +220,7 @@ export const config: WebdriverIO.Config = {
   // The only one supported by default is 'dot'
   // see also: https://webdriver.io/docs/dot-reporter
   // reporters: ['dot'],
+  reporters: [["timeline", { outputDir: "./test-results/timeline" }]],
 
   // If you are using Cucumber you need to specify the location of your step definitions.
   cucumberOpts: {
@@ -303,10 +329,67 @@ export const config: WebdriverIO.Config = {
    */
   // beforeScenario: function (world, context) {
   // },
-  beforeScenario: async function () {
-    // Start with fresh app state before each scenario
-    await global.driver.reloadSession();
-  },
+  // beforeScenario: async function (scenario) {
+  //   await driver.reloadSession();
+
+  //   try {
+  //     const timestamp = new Date().toISOString().replace(/[^0-9]/g, "");
+  //     const scenarioName = scenario.pickle.name.replace(/[^a-zA-Z0-9]/g, "_");
+
+  //     // Get the current driver's UDID and user identifier
+  //     const udid = driver.capabilities["appium:udid"];
+  //     const userIdentifier = driver.capabilities["appium:deviceName"].includes(
+  //       "User A"
+  //     )
+  //       ? "UserA"
+  //       : "UserB";
+
+  //     // Create video directory if it doesn't exist
+  //     const videoDir = join(process.cwd(), "test-results", "videos");
+  //     if (!fs.existsSync(videoDir)) {
+  //       fs.mkdirSync(videoDir, { recursive: true });
+  //     }
+
+  //     const videoPath = join(
+  //       videoDir,
+  //       `${userIdentifier}_${scenarioName}_${timestamp}.mp4`
+  //     );
+
+  //     // Get simulator window ID using osascript
+  //     const getSimWindowCmd = `osascript -e 'tell application "Simulator" to id of window 1 where name contains "${udid}"'`;
+  //     const simWindowId = (await exec(getSimWindowCmd)).stdout.trim();
+
+  //     // Start FFmpeg recording for this simulator
+  //     const ffmpegCmd = spawn("ffmpeg", [
+  //       "-f",
+  //       "avfoundation",
+  //       "-i",
+  //       `${simWindowId}:none`,
+  //       "-r",
+  //       "30",
+  //       "-vcodec",
+  //       "h264",
+  //       "-preset",
+  //       "ultrafast",
+  //       "-pix_fmt",
+  //       "yuv420p",
+  //       videoPath,
+  //     ]);
+
+  //     // Store the FFmpeg process reference with the UDID as key
+  //     ffmpegProcesses[udid] = {
+  //       process: ffmpegCmd,
+  //       videoPath: videoPath,
+  //     };
+
+  //     // Log any FFmpeg errors
+  //     ffmpegCmd.stderr.on("data", (data) => {
+  //       console.log(`FFmpeg stderr for ${userIdentifier}: ${data}`);
+  //     });
+  //   } catch (error) {
+  //     console.log(`Failed to start FFmpeg recording for simulator: ${error}`);
+  //   }
+  // },
   /**
    *
    * Runs before a Cucumber Step.
@@ -326,14 +409,14 @@ export const config: WebdriverIO.Config = {
    * @param {number}             result.duration  duration of scenario in milliseconds
    * @param {object}             context          Cucumber World object
    */
-  afterStep: async function (step, scenario, result) {
-    if (!result.passed) {
-      // Take a screenshot if the step fails
-      const timestamp = new Date().toISOString().replace(/[^0-9]/g, "");
-      const screenshotPath = `./screenshots/failed-${step}-${timestamp}.png`;
-      await browser.saveScreenshot(screenshotPath);
-    }
-  },
+  // afterStep: async function (step, scenario, result) {
+  //   if (!result.passed) {
+  //     // Take a screenshot if the step fails
+  //     const timestamp = new Date().toISOString().replace(/[^0-9]/g, "");
+  //     const screenshotPath = `./screenshots/failed-${step}-${timestamp}.png`;
+  //     await browser.saveScreenshot(screenshotPath);
+  //   }
+  // },
   /**
    *
    * Runs after a Cucumber Scenario.
@@ -345,14 +428,56 @@ export const config: WebdriverIO.Config = {
    * @param {object}                 context          Cucumber World object
    */
   // afterScenario: async function (world, result) {
-  //   if (!result.passed) {
-  //     // Take screenshot before reloading the session
-  //     const timestamp = new Date().toISOString().replace(/[^0-9]/g, "");
-  //     const screenshotPath = `./screenshots/failed-${timestamp}.png`;
-  //     await browser.saveScreenshot(screenshotPath);
+  //   try {
+  //     // Store capabilities before the session ends
+  //     const capabilities = driver.capabilities;
+
+  //     // Check if capabilities exist before proceeding
+  //     if (capabilities) {
+  //       const udid = capabilities["appium:udid"];
+
+  //       // Only proceed with FFmpeg cleanup if we have a valid UDID
+  //       if (udid && ffmpegProcesses[udid]) {
+  //         // Stop FFmpeg recording for this simulator
+  //         ffmpegProcesses[udid].process.kill("SIGTERM");
+
+  //         await new Promise((resolve) => {
+  //           ffmpegProcesses[udid].process.on("close", () => {
+  //             resolve(true);
+  //           });
+  //         });
+
+  //         // Handle failed test video renaming
+  //         if (!result.passed) {
+  //           const videoPath = ffmpegProcesses[udid].videoPath;
+  //           const failedVideoPath = videoPath.replace(".mp4", "_FAILED.mp4");
+  //           if (fs.existsSync(videoPath)) {
+  //             fs.renameSync(videoPath, failedVideoPath);
+  //           }
+  //         }
+
+  //         delete ffmpegProcesses[udid];
+  //       }
+
+  //       // Take screenshot on failure if session is still active
+  //       if (!result.passed && (await driver.sessionId)) {
+  //         const timestamp = new Date().toISOString().replace(/[^0-9]/g, "");
+  //         const userIdentifier = capabilities["appium:deviceName"].includes(
+  //           "User A"
+  //         )
+  //           ? "UserA"
+  //           : "UserB";
+  //         const screenshotPath = `./screenshots/${userIdentifier}_failed_${timestamp}.png`;
+  //         try {
+  //           await browser.saveScreenshot(screenshotPath);
+  //         } catch (screenshotError) {
+  //           console.log("Failed to save screenshot:", screenshotError);
+  //         }
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Error handling test artifacts:", error);
   //   }
-  //   // Reload session after taking screenshot
-  //   await global.driver.reloadSession();
   // },
   /**
    *
@@ -424,15 +549,4 @@ export const config: WebdriverIO.Config = {
       fs.mkdirSync("./screenshots");
     }
   },
-  /*   afterStep: async function (step, scenario, { error, duration, passed }) {
-    if (error || !passed) {
-      // Get current timestamp
-      const timestamp = new Date().toISOString().replace(/[^0-9]/g, "");
-      const screenshotPath = `./screenshots/failed-${timestamp}.png`;
-
-      await browser.saveScreenshot(screenshotPath);
-
-      console.log(`Screenshot saved: ${screenshotPath}`);
-    }
-  }, */
 };

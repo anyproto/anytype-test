@@ -1,5 +1,5 @@
-import { getCurrentClient } from "../../helpers/proxy";
-import { store } from "../../helpers/store";
+import { getCurrentClient } from "../helpers/proxy";
+import { store } from "../helpers/store";
 import { callListenSessionEvents } from "../services/streamRequest";
 import {
   Rpc_Account_Create_Request,
@@ -18,6 +18,7 @@ import { makeGrpcCall } from "../services/utils";
 import * as path from "path";
 import * as fs from "fs";
 import { Account } from "../../../pb/pkg/lib/pb/model/protos/models";
+import { logger } from "../helpers/loggerConfig";
 
 interface NetworkConfig {
   mode: Rpc_Account_NetworkMode;
@@ -38,8 +39,9 @@ function getNetworkConfig(networkType: string): NetworkConfig {
     };
   }
   if (networkType === "staging") {
-    const configPath = path.resolve(__dirname, `../../../config.yml`);
-    console.log("Staging config path:", configPath);
+    const configPath = path.resolve(__dirname, `../../../myDocker.yml`);
+    //const configPath = path.resolve(__dirname, `../../../config.yml`);
+    logger.info(`Staging config path: ${configPath}`);
     return {
       mode: Rpc_Account_NetworkMode.CustomConfig,
       configPath: configPath,
@@ -60,7 +62,7 @@ export async function callAccountCreate(
   userNumber: number,
   networkType: string = "local"
 ): Promise<Rpc_Account_Create_Response> {
-  console.log("### Initiating account creation...");
+  logger.info("### Initiating account creation...", { user: userNumber });
 
   const userData = store.users.get(userNumber);
   if (!userData) {
@@ -68,8 +70,9 @@ export async function callAccountCreate(
   }
 
   const { mode, configPath } = getNetworkConfig(networkType);
-  console.log(
-    `Using network mode: ${Rpc_Account_NetworkMode[mode]}, config path: ${configPath}`
+  logger.info(
+    `Using network mode: ${Rpc_Account_NetworkMode[mode]}, config path: ${configPath}`,
+    { user: userNumber }
   );
 
   const request: Rpc_Account_Create_Request = {
@@ -80,7 +83,7 @@ export async function callAccountCreate(
     },
     storePath: "",
     icon: BigInt(5),
-    disableLocalNetworkSync: false,
+    disableLocalNetworkSync: true,
     networkMode: mode,
     networkCustomConfigFilePath: configPath,
     preferYamuxTransport: false,
@@ -91,9 +94,9 @@ export async function callAccountCreate(
       getCurrentClient().accountCreate,
       request
     );
-    console.log(
-      "Account created successfully:",
-      JSON.stringify(response.account?.info)
+    logger.info(
+      `Account created successfully: ${JSON.stringify(response.account?.info)}`,
+      { user: userNumber }
     );
 
     return response;
@@ -111,31 +114,31 @@ export async function callAccountSelect(
   accountId: string,
   networkType: string = "local only"
 ): Promise<Account> {
-  console.log("### Initiating account selection...");
+  logger.info("### Initiating account selection...");
 
   try {
     const { mode, configPath } = getNetworkConfig(networkType);
-    console.log(
+    logger.info(
       `Using network mode: ${Rpc_Account_NetworkMode[mode]}, config path: ${configPath}`
     );
 
     const request: Rpc_Account_Select_Request = {
       id: accountId,
       rootPath: "",
-      disableLocalNetworkSync: false,
+      disableLocalNetworkSync: true,
       networkMode: mode,
       networkCustomConfigFilePath: configPath,
       preferYamuxTransport: false,
     };
 
-    console.log("Request:", request);
+    logger.info("Request:", request);
 
     const response = await makeGrpcCall<Rpc_Account_Select_Response>(
       getCurrentClient().accountSelect,
       request
     );
 
-    console.log("Account selected successfully:", response);
+    logger.info("Account selected successfully:", response);
     if (response.account) {
       return response.account;
     } else {
@@ -146,7 +149,7 @@ export async function callAccountSelect(
       throw error.message;
     } else {
       // If it's not an Error instance, log it and throw a generic error
-      console.error("An unknown error occurred:", error);
+      logger.error("An unknown error occurred:", error);
       throw new Error("An unknown error occurred during account selection");
     }
   }
@@ -223,9 +226,12 @@ export async function callAccountRecover(): Promise<string> {
       };
     });
 
+    const clientNumber = store.currentClientNumber;
+    if (!clientNumber) {
+      throw new Error("No client number set");
+    }
     // Call listenSessionEvents in the background
-    callListenSessionEvents();
-
+    callListenSessionEvents(clientNumber);
     // Initiate account recovery
     const response = await makeGrpcCall<Rpc_Account_Recover_Response>(
       getCurrentClient().accountRecover,

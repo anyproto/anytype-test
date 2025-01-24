@@ -1,4 +1,3 @@
-import { Logger } from "@origranot/ts-logger";
 import {
   callWalletCreate,
   callWalletCreateSession,
@@ -10,31 +9,42 @@ import {
   callAccountRecover,
   callAccountSelect,
 } from "../../support/api/clients/accountApi";
-import { store } from "../../support/helpers/store";
+import { store } from "../../support/api/helpers/store";
 import { Given, Then } from "@cucumber/cucumber";
 import { callListenSessionEvents } from "../../support/api/services/streamRequest";
 import {
   getCurrentUserNumber,
   isVersion034OrLess,
   isVersion037OrMore,
+  setUserAsCurrentUser,
   waitForCondition,
 } from "../../support/api/services/utils";
 import { faker } from "@faker-js/faker";
 import { UserType } from "../../support/types/dataTypes";
 import { updateClientToken } from "../../support/api/clients/tokenManager";
 import {
+  callImportUseCase,
   callObjectSubscribeIds,
   setDescription,
 } from "../../support/api/clients/objectApi";
-import { callWorkspaceOpen } from "../../support/api/clients/workspaceApi";
+import {
+  callWorkspaceOpen,
+  callWorkspaceSetInfo,
+} from "../../support/api/clients/workspaceApi";
 import { callInitialSetParameters } from "../../support/api/clients/metricsApi";
 import { exec } from "child_process";
-// Initialize the logger
-const logger = new Logger({ name: "custom" });
+import { logger } from "../../support/api/helpers/loggerConfig";
+import { setClientAsCurrentClient } from "./commonSteps";
 
 export function saveUser(userNumber: number, user: UserType): void {
   store.users.set(userNumber, user);
-  logger.info(`Saving user as user number ${userNumber}`, JSON.stringify(user));
+  logger.info(
+    `Saving user as user number ${userNumber}`,
+    JSON.stringify(user),
+    {
+      user: userNumber,
+    }
+  );
 }
 
 Given("the user creates a new account on {string}", async (network: string) => {
@@ -49,7 +59,7 @@ Given("the user creates a new account on {string}", async (network: string) => {
   saveUser(userNumber, userToSave);
   const token = await callWalletCreateSession(mnemonic);
   updateClientToken(token);
-  callListenSessionEvents();
+  callListenSessionEvents(userNumber);
   const response = await callAccountCreate(userNumber, network);
   const { account } = response;
 
@@ -57,16 +67,21 @@ Given("the user creates a new account on {string}", async (network: string) => {
     throw new Error("Account information not returned in the response");
   }
 
-  const { accountSpaceId, analyticsId, profileObjectId, techSpaceId } =
-    account.info;
+  const {
+    accountSpaceId,
+    analyticsId,
+    profileObjectId,
+    techSpaceId,
+    networkId,
+  } = account.info;
   const accountId = account.id;
-
   const missingFields: string[] = [];
   if (!accountSpaceId) missingFields.push("account space ID");
   if (!accountId) missingFields.push("account ID");
   if (!analyticsId) missingFields.push("analytics ID");
   if (!profileObjectId) missingFields.push("profile object ID");
-  //if (!techSpaceId) missingFields.push("tech space ID");
+  if (!techSpaceId) missingFields.push("tech space ID");
+  // if (!networkId) missingFields.push("network ID");
   if (missingFields.length > 0) {
     throw new Error(
       `The following fields were not returned in the response: ${missingFields.join(
@@ -80,17 +95,22 @@ Given("the user creates a new account on {string}", async (network: string) => {
   userToSave.analyticsId = analyticsId;
   userToSave.profileObjectId = profileObjectId;
   userToSave.techSpaceId = techSpaceId;
+  userToSave.networkId = networkId;
   saveUser(store.currentUserNumber!, userToSave);
   logger.info(
-    `AccountSpaceId for user ${store.currentUserNumber} saved: accountSpaceId: ${accountSpaceId}, accountId: ${accountId}, analyticsId: ${analyticsId}, profileObjectId: ${profileObjectId}`
+    `AccountSpaceId for user ${store.currentUserNumber} saved: accountSpaceId: ${accountSpaceId}, accountId: ${accountId}, analyticsId: ${analyticsId}, profileObjectId: ${profileObjectId}, networkId: ${networkId}`,
+    { user: store.currentUserNumber }
   );
+  await callImportUseCase(accountSpaceId, "GET_STARTED");
+  await callWorkspaceSetInfo(accountSpaceId, "My Ultimate Space");
   await setDescription(
     profileObjectId,
     "This description is funny and not funny until you read it."
   );
   // Subscribe to profileObjectId and techSpaceId
   logger.info(
-    "Subscribing to profile object with profileObjectId and techSpaceId"
+    "Subscribing to profile object with profileObjectId and techSpaceId",
+    { user: store.currentUserNumber }
   );
   const responseRecords = await callObjectSubscribeIds(
     [profileObjectId, techSpaceId],
@@ -103,22 +123,28 @@ Given("the user creates a new account on {string}", async (network: string) => {
       }`
     );
   }
-  logger.debug("DEBUG:responseRecords", responseRecords);
   if (responseRecords[0]?.fields?.iconImage?.kind) {
     const kind = responseRecords[0].fields.iconImage.kind;
     if (kind.oneofKind === "stringValue" && kind.stringValue) {
       const iconImage = kind.stringValue;
       store.setUserProperty(store.currentUserNumber!, "iconImage", iconImage);
       logger.debug(
-        `Icon image for user ${store.currentUserNumber} saved: ${iconImage}`
+        `Icon image for user ${store.currentUserNumber} saved: ${iconImage}`,
+        { user: store.currentUserNumber }
       );
     } else {
-      logger.warn("Icon image is not a string value");
+      logger.warn("Icon image is not a string value", {
+        user: store.currentUserNumber,
+      });
     }
   } else {
-    logger.warn("Icon image not found in the response");
+    logger.warn("Icon image not found in the response", {
+      user: store.currentUserNumber,
+    });
   }
-  logger.debug("DEBUG:current user in store", store.currentUser);
+  logger.debug("DEBUG:current user in store", store.currentUser, {
+    user: store.currentUserNumber,
+  });
 });
 
 Given(
@@ -127,7 +153,9 @@ Given(
     logger.info("STEP: the user logs in to their account");
 
     const user = store.currentUser;
-    logger.info("Recovering wallet", user.mnemonic);
+    logger.info("Recovering wallet", user.mnemonic, {
+      user: store.currentUserNumber,
+    });
     await callWalletRecover(user.mnemonic);
 
     const token = await callWalletCreateSession(user.mnemonic);
@@ -149,52 +177,76 @@ Given(
   }
 );
 
-Then("the account is synced within {int} seconds", async (seconds: number) => {
-  logger.info("STEP: the account is synced");
-  try {
-    // Wait for the variable to become true with a timeout of 60 seconds
-    await waitForCondition(() => store.spaceSyncStatusReceived, seconds * 1000);
-
-    if (
-      store.currentServerVersion &&
-      isVersion034OrLess(store.currentServerVersion)
-    ) {
-      logger.info("Heart version is 0.34 or less, wait for 20 seconds");
-      await new Promise((resolve) => setTimeout(resolve, 20000));
-    }
-    logger.info("The account is successfully synced.");
-  } catch (error) {
-    // Generate stack trace by sending SIGABRT to grpc-server
-    logger.info("Generating stack trace by sending SIGABRT to grpc-server");
+Then(
+  "the account is synced within {int} seconds",
+  { timeout: 100 * 1000 },
+  async (seconds: number) => {
+    logger.info("STEP: the account is synced");
     try {
-      exec("pkill -SIGABRT grpc-server", (error, stdout, stderr) => {
-        if (error) {
-          logger.error("Failed to send SIGABRT to grpc-server:", error);
-        }
-        if (stderr) {
-          logger.error("pkill stderr:", stderr);
-        }
+      await waitForCondition(
+        () => store.spaceSyncStatusReceived,
+        seconds * 1000
+      );
+
+      /*       if (
+        store.currentServerVersion &&
+        isVersion034OrLess(store.currentServerVersion)
+      ) {
+        logger.info("Heart version is 0.34 or less, wait for 20 seconds", {
+          user: store.currentUserNumber,
+        });
+        await new Promise((resolve) => setTimeout(resolve, 20000));
+      } */
+      logger.info("The account is successfully synced.", {
+        user: store.currentUserNumber,
       });
-    } catch (pkillError) {
-      logger.error("Failed to execute pkill command:", pkillError);
+    } catch (error) {
+      // Generate stack trace by sending SIGABRT to grpc-server
+      logger.info("Generating stack trace by sending SIGABRT to grpc-server");
+
+      // Wait for the SIGABRT operation to complete
+      await new Promise<void>((resolve, reject) => {
+        exec("pkill -SIGABRT grpc-server", (error, stdout, stderr) => {
+          if (error) {
+            logger.error("Failed to send SIGABRT to grpc-server:", error);
+          }
+          if (stderr) {
+            logger.error("pkill stderr:", stderr);
+          }
+
+          // Add a small delay to ensure the SIGABRT has time to generate the stack trace
+          setTimeout(() => {
+            resolve();
+          }, 2000); // 2 second delay
+        });
+      });
+
+      // Log the error with stack trace
+      logger.error(
+        "The account is not synced. SpaceSyncStatusUpdate event not received in time.",
+        error instanceof Error ? error.stack : undefined
+      );
+
+      throw new Error(
+        `Test failed: The account did not sync within the expected time. Stack trace: ${
+          error instanceof Error ? error.stack : "No stack trace available"
+        }`
+      );
     }
-
-    // Log the error with stack trace
-    logger.error(
-      "The account is not synced. SpaceSyncStatusUpdate event not received in time.",
-      error instanceof Error ? error.stack : undefined
-    );
-
-    throw new Error(
-      `Test failed: The account did not sync within the expected time. Stack trace: ${
-        error instanceof Error ? error.stack : "No stack trace available"
-      }`
-    );
   }
-});
+);
 
 Then("the account is deleted", async () => {
   logger.info("STEP: the account is deleted");
+  await callAccountDelete();
+});
+Then("both accounts are deleted", async () => {
+  logger.info("STEP: both accounts are deleted");
+  setClientAsCurrentClient(1);
+  setUserAsCurrentUser(1);
+  await callAccountDelete();
+  setClientAsCurrentClient(2);
+  setUserAsCurrentUser(2);
   await callAccountDelete();
 });
 
@@ -208,7 +260,8 @@ Then(
       throw new Error("ProfileObjectId or TechSpaceId is undefined");
     }
     logger.info(
-      "Subscribing to profile object with profileObjectId and SpaceId"
+      "Subscribing to profile object with profileObjectId and SpaceId",
+      { user: store.currentUserNumber }
     );
     const responseRecords = await callObjectSubscribeIds(
       [store.currentUser.profileObjectId],
@@ -285,14 +338,3 @@ Then(
     );
   }
 );
-
-/* Then("the ProfileObject should be empty", async () => {
-  const techSpaceId = store.currentUser.techSpaceId;
-  if (!techSpaceId) {
-    throw new Error("Error in scenario logic. TechSpaceId is undefined");
-  }
-  const responseInfo = await callWorkspaceOpen(techSpaceId);
-  console.log("responseInfo", responseInfo);
-  console.log("responseInfo.profileObjectId:", responseInfo.profileObjectId);
-});
- */

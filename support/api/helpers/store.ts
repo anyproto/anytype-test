@@ -3,9 +3,10 @@ import {
   ServerType,
   ObjectType,
   ClientType,
-} from "../types/dataTypes";
-import { IClientCommandsClient } from "../../pb/pb/protos/service/service.grpc-client";
-import { GRPCClientManager } from "../api/services/gprcClient";
+} from "../../types/dataTypes";
+import { IClientCommandsClient } from "../../../pb/pb/protos/service/service.grpc-client";
+import { GRPCClientManager } from "../services/gprcClient";
+import { logger } from "./loggerConfig";
 
 export type storeType = {
   grpcClientManager?: GRPCClientManager;
@@ -23,7 +24,6 @@ export type storeType = {
   getClientAuthToken: (clientId: number) => string | undefined;
   clear: () => void;
   spaceSyncStatusReceived: boolean;
-  accountSelectTime?: number;
   onAccountShowEvent: ((accountId: string) => void) | null;
   setUserProperty: (
     userNumber: number,
@@ -31,6 +31,7 @@ export type storeType = {
     value: UserType[keyof UserType]
   ) => void;
   tempDir: string | undefined;
+  getServerVersionForClient: (clientId: number) => string;
 };
 
 export const store: storeType = {
@@ -38,7 +39,6 @@ export const store: storeType = {
   servers: new Map(),
   objects: new Map(),
   clients: new Map(),
-  accountSelectTime: undefined,
   grpcClientManager: undefined,
   spaceSyncStatusReceived: false,
   onAccountShowEvent: null,
@@ -79,15 +79,21 @@ export const store: storeType = {
   },
 
   get currentUser(): UserType {
-    console.log("Current users are called");
+    logger.info("Current users are called");
     if (this.currentUserNumber !== undefined) {
-      console.log("currentUser is" + this.currentUserNumber);
+      logger.info(`Current user is user number ${this.currentUserNumber}`, {
+        user: this.currentUserNumber,
+      });
       const user = this.users.get(this.currentUserNumber) as UserType;
       if (user) {
-        console.log("user is" + user);
+        logger.info("User data:", JSON.stringify(user), {
+          user: this.currentUserNumber,
+        });
         return user;
       } else {
-        console.log(this.users);
+        logger.error("Users in store:", Array.from(this.users), {
+          user: this.currentUserNumber,
+        });
         throw new Error(
           "Error in test scenario logic. User with the current user number does not exist in users collection"
         );
@@ -136,5 +142,13 @@ export const store: storeType = {
     } else {
       throw new Error(`User with number ${userNumber} not found`);
     }
+  },
+
+  getServerVersionForClient(clientId: number): string {
+    const server = this.servers.get(clientId);
+    if (server?.version) {
+      return server.version;
+    }
+    throw new Error(`Server version not found for client ${clientId}`);
   },
 };
