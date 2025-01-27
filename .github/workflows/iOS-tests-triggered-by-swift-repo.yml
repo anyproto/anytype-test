@@ -1,0 +1,55 @@
+name: Test iOS Artifact
+
+on:
+  repository_dispatch:
+    types: [ trigger-ios-tests ]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download artifact from anytype-swift
+        run: |
+          # We retrieve the run_id from the "client_payload" that was sent.
+          RUN_ID="${{ github.event.client_payload.run_id }}"
+          echo "Run ID is: $RUN_ID"
+
+          # We'll need a token that can READ artifacts in anytype-swift.
+          # You can re-use the same personal access token (PAT_DISPATCH_TOKEN)
+          # if it has "public_repo" permissions (for public repos).
+          # Or "repo" if they are private.
+          
+          # 1) List artifacts in that run to find the artifact ID
+          curl -sS \
+               -H "Authorization: token ${{ secrets.ANYTYPE_PAT }}" \
+               -H "Accept: application/vnd.github+json" \
+               https://api.github.com/repos/anyproto/anytype-swift/actions/runs/$RUN_ID/artifacts \
+               -o artifacts.json
+
+          # This grabs the artifact ID for the artifact named "AnytypeIOS"
+          ARTIFACT_ID=$(jq -r '.artifacts[] | select(.name=="AnytypeIOS") | .id' artifacts.json)
+          echo "Found artifact ID: $ARTIFACT_ID"
+
+          # 2) Download the artifact ZIP
+          curl -sS -L \
+               -H "Authorization: token ${{ secrets.ANYTYPE_PAT }}" \
+               -H "Accept: application/vnd.github+json" \
+               https://api.github.com/repos/anyproto/anytype-swift/actions/artifacts/$ARTIFACT_ID/zip \
+               --output artifact.zip
+
+          # 3) Unzip the artifact into the current workspace
+          unzip artifact.zip
+
+      - name: Run Tests
+        run: |
+          echo "Artifact downloaded & unzipped. Now run your tests!"
+          # For example, run xcodebuild tests against the .ipa in your environment,
+          # or any custom test commands you need.
+
+          # Something like:
+          # xcrun simctl ... (if you run iOS simulator tests)
+          # or supply the .ipa to your test harness, etc.
