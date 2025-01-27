@@ -1,11 +1,11 @@
 name: Compatibility tests scheduled run with slack reporting
 
 on:
-  schedule:
-  - cron: "0 7 * * *"
-  - cron: "0 12 * * *"
-  - cron: "0 18 * * *"
-  - cron: "0 22 * * *"
+ # schedule:
+ # - cron: "0 7 * * *"
+ # - cron: "0 12 * * *"
+ # - cron: "0 18 * * *"
+ # - cron: "0 22 * * *"
   workflow_dispatch:
 
 jobs:
