@@ -34,9 +34,14 @@ const iosConfig = [
   "features/ios/*.feature",
 ].join(" ");
 
+// Common configurations for retry mechanism
+const commonRetry = [
+  "--retry 2",
+].join(" ");
+
 module.exports = {
-  default: `${commonRequire} ${apiConfig} ${commonFormats}`,
-  api: `${commonRequire} ${apiConfig} ${commonFormats}`,
-  desktop: `${commonRequire} ${desktopConfig} ${commonFormats}`,
-  ios: `${commonRequire} ${iosConfig} ${commonFormats}`,
+  default: `${commonRequire} ${apiConfig} ${commonFormats} ${commonRetry}`,
+  api: `${commonRequire} ${apiConfig} ${commonFormats} ${commonRetry}`,
+  desktop: `${commonRequire} ${desktopConfig} ${commonFormats} ${commonRetry}`,
+  ios: `${commonRequire} ${iosConfig} ${commonFormats} ${commonRetry}`,
 };

@@ -6,15 +6,18 @@ import {
   Rpc_Account_Create_Response,
   Rpc_Account_Delete_Request,
   Rpc_Account_Delete_Response,
+  Rpc_Account_Migrate_Request,
+  Rpc_Account_Migrate_Response,
   Rpc_Account_NetworkMode,
   Rpc_Account_Recover_Request,
   Rpc_Account_Recover_Response,
   Rpc_Account_Select_Request,
   Rpc_Account_Select_Response,
+  Rpc_Account_Select_Response_Error_Code,
   Rpc_Account_Stop_Request,
   Rpc_Account_Stop_Response,
 } from "../../../pb/pb/protos/commands";
-import { makeGrpcCall } from "../services/utils";
+import { getTempDirectory, makeGrpcCall } from "../services/utils";
 import * as path from "path";
 import * as fs from "fs";
 import { Account } from "../../../pb/pkg/lib/pb/model/protos/models";
@@ -39,9 +42,16 @@ function getNetworkConfig(networkType: string): NetworkConfig {
     };
   }
   if (networkType === "staging") {
-    //const configPath = path.resolve(__dirname, `../../../myDocker.yml`);
     const configPath = path.resolve(__dirname, `../../../config.yml`);
     logger.info(`Staging config path: ${configPath}`);
+    return {
+      mode: Rpc_Account_NetworkMode.CustomConfig,
+      configPath: configPath,
+    };
+  }
+  if (networkType === "docker") {
+    const configPath = path.resolve(__dirname, `../../../myDocker.yml`);
+    logger.info(`Docker config path: ${configPath}`);
     return {
       mode: Rpc_Account_NetworkMode.CustomConfig,
       configPath: configPath,
@@ -87,6 +97,7 @@ export async function callAccountCreate(
     networkMode: mode,
     networkCustomConfigFilePath: configPath,
     preferYamuxTransport: false,
+    jsonApiListenAddr: "",
   };
 
   try {
@@ -124,31 +135,55 @@ export async function callAccountSelect(
 
     const request: Rpc_Account_Select_Request = {
       id: accountId,
-      rootPath: "",
+      rootPath: getTempDirectory(),
       disableLocalNetworkSync: true,
       networkMode: mode,
       networkCustomConfigFilePath: configPath,
       preferYamuxTransport: false,
+      jsonApiListenAddr: "",
     };
 
     logger.info("Request:", request);
 
-    const response = await makeGrpcCall<Rpc_Account_Select_Response>(
-      getCurrentClient().accountSelect,
-      request
-    );
+    try {
+      const response = await makeGrpcCall<Rpc_Account_Select_Response>(
+        getCurrentClient().accountSelect,
+        request,
+        [Rpc_Account_Select_Response_Error_Code.ACCOUNT_STORE_NOT_MIGRATED]
+      );
 
-    logger.info("Account selected successfully:", response);
-    if (response.account) {
-      return response.account;
-    } else {
-      throw new Error("No account found in the response");
+      // Check if there's a migration needed error in the response
+      if (response.error?.code === Rpc_Account_Select_Response_Error_Code.ACCOUNT_STORE_NOT_MIGRATED) {
+        logger.info("Account needs migration, initiating migration process...");
+        await callAccountMigrate(accountId, getTempDirectory());
+        
+        // Retry account selection after migration
+        const retryResponse = await makeGrpcCall<Rpc_Account_Select_Response>(
+          getCurrentClient().accountSelect,
+          request
+        );
+        
+        if (retryResponse.account) {
+          return retryResponse.account;
+        } else {
+          throw new Error("No account found in the response after migration");
+        }
+      }
+
+      // If no migration error, proceed normally
+      logger.info("Account selected successfully:", response);
+      if (response.account) {
+        return response.account;
+      } else {
+        throw new Error("No account found in the response");
+      }
+    } catch (grpcError: any) {
+      throw grpcError;
     }
   } catch (error: unknown) {
     if (error instanceof Error) {
       throw error.message;
     } else {
-      // If it's not an Error instance, log it and throw a generic error
       logger.error("An unknown error occurred:", error);
       throw new Error("An unknown error occurred during account selection");
     }
@@ -215,7 +250,7 @@ export async function callAccountRecover(): Promise<string> {
   console.log("### Initiating account recovery...");
 
   const request: Rpc_Account_Recover_Request = {
-    rootPath: "",
+    rootPath: getTempDirectory(),
   };
 
   try {
@@ -255,4 +290,20 @@ export async function callAccountRecover(): Promise<string> {
     // Clean up the event listener
     store.onAccountShowEvent = null;
   }
+}
+
+export async function callAccountMigrate(
+  accountId: string,
+  rootPath: string
+): Promise<void> {
+  console.log("### Initiating account migration...");
+  const request: Rpc_Account_Migrate_Request = {
+    id: accountId,
+    rootPath: getTempDirectory(),
+  };
+  const response = await makeGrpcCall<Rpc_Account_Migrate_Response>(
+    getCurrentClient().accountMigrate,
+    request
+  );
+  console.log("Account migration initiated successfully:", response);
 }

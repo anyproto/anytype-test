@@ -1,6 +1,6 @@
 @Sacfc5c28
 Feature: Compatibility local only
-  # to run test with local middleware use "default" as version variable and clone anytype-heart to cmd folder
+  # to run test with local middleware use "default" as version variable and clone anytype-heart to mw folder
 
   @compatibility @Te360e532 @local
   Scenario Outline: 3 versions compatibility local only

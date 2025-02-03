@@ -1,4 +1,4 @@
-@invite
+@invite @S0cea2fd6
 Feature: Invites
 
   Background:
@@ -7,12 +7,14 @@ Feature: Invites
     And the user creates a new account on "staging"
     And the account is synced within 60 seconds
 
+  @T542b35d4
   Scenario: Make space shareable and generate an invite link
     When the user makes his first space shareable
     Then the user can generate an invite link
     And the account is deleted
     And the server 1 is stopped
 
+  @T2d184d47
   Scenario: Revoking an invite link
     Given the user has shared his space and generated an invite link
     When the user revokes the invite link
@@ -20,6 +22,7 @@ Feature: Invites
     And the account is deleted
     And the server 1 is stopped
 
+  @Td4806591
   Scenario: User cancels their join request
     Given the user creates an object 1 in the account
     And the user can open the object 1
@@ -35,6 +38,7 @@ Feature: Invites
     And both accounts are deleted
     And both servers are stopped
 
+  @T131f1ad1
   Scenario: User deletes the space and rejoins later
     Given the user creates an object 1 in the account
     And the user can open the object 1
@@ -52,6 +56,7 @@ Feature: Invites
     And both accounts are deleted
     And both servers are stopped
 
+  @T04ece8d3
   Scenario: Owner approves a join request with Viewer permissions
     Given the user creates an object 1 in the account
     And the user can open the object 1
@@ -68,6 +73,7 @@ Feature: Invites
     And both accounts are deleted
     And both servers are stopped
 
+  @Tb83f3025
   Scenario: Owner changes the rights of a user from Viewer to Editor
     Given the user creates an object 1 in the account
     And the user can open the object 1
@@ -85,6 +91,7 @@ Feature: Invites
     And both accounts are deleted
     And both servers are stopped
 
+  @T25be283b
   Scenario: Owner approves a join request with Editor permissions
     Given the user creates an object 1 in the account
     And the user can open the object 1
@@ -101,6 +108,7 @@ Feature: Invites
     And both accounts are deleted
     And both servers are stopped
 
+  @Tfc45a1ca
   Scenario: Owner declines a join request
     Given the user creates an object 1 in the account
     And the user can open the object 1
@@ -116,6 +124,7 @@ Feature: Invites
     And both accounts are deleted
     And both servers are stopped
 
+  @T37ee5567
   Scenario: Owner removes a participant from the space
     Given the user creates an object 1 in the account
     And the user can open the object 1
@@ -132,6 +141,7 @@ Feature: Invites
     And both accounts are deleted
     And both servers are stopped
 
+  @Td75a5aab
   Scenario: Owner deletes a space
     Given the user creates an object 1 in the account
     And the user can open the object 1
@@ -148,7 +158,8 @@ Feature: Invites
     And both accounts are deleted
     And both servers are stopped
 
-  Scenario: Onwer approves leave request
+  @Tea501913
+  Scenario: Owner approves leave request
     Given the user creates an object 1 in the account
     And the user can open the object 1
     And the user has shared his space and generated an invite link

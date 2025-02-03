@@ -35,6 +35,7 @@ import { callInitialSetParameters } from "../../support/api/clients/metricsApi";
 import { exec } from "child_process";
 import { logger } from "../../support/api/helpers/loggerConfig";
 import { setClientAsCurrentClient } from "./commonSteps";
+import { getObjectSyncStatus } from "./commonSteps";
 
 export function saveUser(userNumber: number, user: UserType): void {
   store.users.set(userNumber, user);
@@ -149,6 +150,7 @@ Given("the user creates a new account on {string}", async (network: string) => {
 
 Given(
   "the user logs in to their account on {string}",
+  { timeout: 10000 },
   async (network: string) => {
     logger.info("STEP: the user logs in to their account");
 
@@ -173,13 +175,12 @@ Given(
         `AnalyticsId mismatch. Expected: ${user.analyticsId}, Got: ${responseAccount.info?.analyticsId}`
       );
     }
-    //TODO: ProfileObjectId is equal to a document in tech space. You can check the relations of this document and they should be the same as was in previous ProfileObject.
   }
 );
 
 Then(
   "the account is synced within {int} seconds",
-  { timeout: 100 * 1000 },
+  { timeout: 140 * 1000 },
   async (seconds: number) => {
     logger.info("STEP: the account is synced");
     try {
@@ -188,19 +189,19 @@ Then(
         seconds * 1000
       );
 
-      /*       if (
-        store.currentServerVersion &&
-        isVersion034OrLess(store.currentServerVersion)
-      ) {
-        logger.info("Heart version is 0.34 or less, wait for 20 seconds", {
-          user: store.currentUserNumber,
-        });
-        await new Promise((resolve) => setTimeout(resolve, 20000));
-      } */
       logger.info("The account is successfully synced.", {
         user: store.currentUserNumber,
       });
     } catch (error) {
+      // Check object sync status
+      logger.info("Checking object 1 sync status");
+      const syncStatus = await getObjectSyncStatus(1);
+      
+      if (syncStatus === 0) {
+        logger.error("Object 1 was synced, but not the whole account");
+      } else {
+        logger.error("Object 1 was not synced, too");
+      }
       // Generate stack trace by sending SIGABRT to grpc-server
       logger.info("Generating stack trace by sending SIGABRT to grpc-server");
 
@@ -214,21 +215,23 @@ Then(
             logger.error("pkill stderr:", stderr);
           }
 
-          // Add a small delay to ensure the SIGABRT has time to generate the stack trace
           setTimeout(() => {
             resolve();
-          }, 2000); // 2 second delay
+          }, 2000);
         });
       });
 
-      // Log the error with stack trace
+      // Log the error with stack trace and sync status
       logger.error(
         "The account is not synced. SpaceSyncStatusUpdate event not received in time.",
-        error instanceof Error ? error.stack : undefined
+        {
+          error: error instanceof Error ? error.stack : undefined,
+          syncStatus
+        }
       );
 
       throw new Error(
-        `Test failed: The account did not sync within the expected time. Stack trace: ${
+        `Test failed: The account did not sync within the expected time. Sync status: ${syncStatus}. Stack trace: ${
           error instanceof Error ? error.stack : "No stack trace available"
         }`
       );

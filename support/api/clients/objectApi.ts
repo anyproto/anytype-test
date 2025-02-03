@@ -215,7 +215,8 @@ export async function setDescription(
 
 export async function callObjectSubscribeIds(
   objectIds: string[],
-  spaceId: string
+  spaceId: string,
+  subId: string = ""
 ): Promise<Struct[]> {
   console.log(
     `### Initiating object search for object with id ${objectIds} and spaceId ${spaceId}...`
@@ -224,10 +225,10 @@ export async function callObjectSubscribeIds(
   try {
     const request: Rpc_Object_SubscribeIds_Request = {
       spaceId: spaceId,
-      subId: "",
-      ids: objectIds,
-      keys: ["description", "iconImage", "name"],
-      noDepSubscription: true,
+      subId: subId, //(optional) subscription identifier client
+      ids: objectIds, //ids for subscribe
+      keys: ["description", "iconImage", "name", "syncStatus"], //sorts (required) needed keys in details for return, for object fields mw will return (and subscribe) objects as dependent
+      noDepSubscription: true, //disable dependent subscription
     };
     console.log("Request:", request);
     const response = await makeGrpcCall<Rpc_Object_SubscribeIds_Response>(
@@ -237,10 +238,6 @@ export async function callObjectSubscribeIds(
     console.log(
       "Object subscribe ids successful:",
       JSON.stringify(response, null, 2)
-    );
-    console.log(
-      "json parse:",
-      Rpc_Object_SubscribeIds_Response.toJson(response)
     );
     return response.records;
   } catch (error) {

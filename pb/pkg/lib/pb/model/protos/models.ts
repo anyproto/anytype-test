@@ -1021,6 +1021,14 @@ export interface Block_Content_Dataview_Relation {
      * @generated from protobuf field: anytype.model.Block.Content.Dataview.Relation.DateFormat dateFormat = 7;
      */
     dateFormat: Block_Content_Dataview_Relation_DateFormat;
+    /**
+     * @generated from protobuf field: anytype.model.Block.Content.Dataview.Relation.FormulaType formula = 8;
+     */
+    formula: Block_Content_Dataview_Relation_FormulaType;
+    /**
+     * @generated from protobuf field: anytype.model.Block.Align align = 9;
+     */
+    align: Block_Align;
 }
 /**
  * @generated from protobuf enum anytype.model.Block.Content.Dataview.Relation.DateFormat
@@ -1071,6 +1079,67 @@ export enum Block_Content_Dataview_Relation_TimeFormat {
     Format24 = 1
 }
 /**
+ * @generated from protobuf enum anytype.model.Block.Content.Dataview.Relation.FormulaType
+ */
+export enum Block_Content_Dataview_Relation_FormulaType {
+    /**
+     * @generated from protobuf enum value: None = 0;
+     */
+    None = 0,
+    /**
+     * @generated from protobuf enum value: Count = 1;
+     */
+    Count = 1,
+    /**
+     * @generated from protobuf enum value: CountValue = 2;
+     */
+    CountValue = 2,
+    /**
+     * @generated from protobuf enum value: CountDistinct = 3;
+     */
+    CountDistinct = 3,
+    /**
+     * @generated from protobuf enum value: CountEmpty = 4;
+     */
+    CountEmpty = 4,
+    /**
+     * @generated from protobuf enum value: CountNotEmpty = 5;
+     */
+    CountNotEmpty = 5,
+    /**
+     * @generated from protobuf enum value: PercentEmpty = 6;
+     */
+    PercentEmpty = 6,
+    /**
+     * @generated from protobuf enum value: PercentNotEmpty = 7;
+     */
+    PercentNotEmpty = 7,
+    /**
+     * @generated from protobuf enum value: MathSum = 8;
+     */
+    MathSum = 8,
+    /**
+     * @generated from protobuf enum value: MathAverage = 9;
+     */
+    MathAverage = 9,
+    /**
+     * @generated from protobuf enum value: MathMedian = 10;
+     */
+    MathMedian = 10,
+    /**
+     * @generated from protobuf enum value: MathMin = 11;
+     */
+    MathMin = 11,
+    /**
+     * @generated from protobuf enum value: MathMax = 12;
+     */
+    MathMax = 12,
+    /**
+     * @generated from protobuf enum value: Range = 13;
+     */
+    Range = 13
+}
+/**
  * @generated from protobuf message anytype.model.Block.Content.Dataview.Sort
  */
 export interface Block_Content_Dataview_Sort {
@@ -1102,6 +1171,10 @@ export interface Block_Content_Dataview_Sort {
      * @generated from protobuf field: anytype.model.Block.Content.Dataview.Sort.EmptyType emptyPlacement = 7;
      */
     emptyPlacement: Block_Content_Dataview_Sort_EmptyType;
+    /**
+     * @generated from protobuf field: bool noCollate = 8;
+     */
+    noCollate: boolean;
 }
 /**
  * @generated from protobuf enum anytype.model.Block.Content.Dataview.Sort.Type
@@ -1859,7 +1932,7 @@ export interface Account_Info {
     /**
      * @generated from protobuf field: string accountSpaceId = 9;
      */
-    accountSpaceId: string;
+    accountSpaceId: string; // the first created private space. It's filled only when account is created
     /**
      * @generated from protobuf field: string widgetsId = 10;
      */
@@ -1892,6 +1965,34 @@ export interface Account_Info {
      * @generated from protobuf field: string networkId = 106;
      */
     networkId: string; // network id to which anytype is connected
+}
+/**
+ * @generated from protobuf message anytype.model.Account.Auth
+ */
+export interface Account_Auth {
+}
+/**
+ * @generated from protobuf enum anytype.model.Account.Auth.LocalApiScope
+ */
+export enum Account_Auth_LocalApiScope {
+    /**
+     * Used in WebClipper; AccountSelect(to be deprecated), ObjectSearch, ObjectShow, ObjectCreate, ObjectCreateFromURL, BlockPreview, BlockPaste, BroadcastPayloadEvent
+     *
+     * @generated from protobuf enum value: Limited = 0;
+     */
+    Limited = 0,
+    /**
+     * JSON API only, no direct grpc api calls allowed
+     *
+     * @generated from protobuf enum value: JsonAPI = 1;
+     */
+    JsonAPI = 1,
+    /**
+     * Full access, not available via LocalLink
+     *
+     * @generated from protobuf enum value: Full = 2;
+     */
+    Full = 2
 }
 /**
  * @generated from protobuf enum anytype.model.Account.StatusType
@@ -2051,7 +2152,13 @@ export enum Restrictions_ObjectRestriction {
      *
      * @generated from protobuf enum value: CreateObjectOfThisType = 9;
      */
-    CreateObjectOfThisType = 9
+    CreateObjectOfThisType = 9,
+    /**
+     * object is not allowed to publish
+     *
+     * @generated from protobuf enum value: Publish = 10;
+     */
+    Publish = 10
 }
 /**
  * @generated from protobuf enum anytype.model.Restrictions.DataviewRestriction
@@ -3984,7 +4091,11 @@ export enum ObjectOrigin {
     /**
      * @generated from protobuf enum value: bookmark = 8;
      */
-    bookmark = 8
+    bookmark = 8,
+    /**
+     * @generated from protobuf enum value: api = 9;
+     */
+    api = 9
 }
 /**
  * @generated from protobuf enum anytype.model.SpaceStatus
@@ -4543,7 +4654,9 @@ class Block_Content_Dataview_Relation$Type extends MessageType<Block_Content_Dat
             { no: 3, name: "width", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 5, name: "dateIncludeTime", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 6, name: "timeFormat", kind: "enum", T: () => ["anytype.model.Block.Content.Dataview.Relation.TimeFormat", Block_Content_Dataview_Relation_TimeFormat] },
-            { no: 7, name: "dateFormat", kind: "enum", T: () => ["anytype.model.Block.Content.Dataview.Relation.DateFormat", Block_Content_Dataview_Relation_DateFormat] }
+            { no: 7, name: "dateFormat", kind: "enum", T: () => ["anytype.model.Block.Content.Dataview.Relation.DateFormat", Block_Content_Dataview_Relation_DateFormat] },
+            { no: 8, name: "formula", kind: "enum", T: () => ["anytype.model.Block.Content.Dataview.Relation.FormulaType", Block_Content_Dataview_Relation_FormulaType] },
+            { no: 9, name: "align", kind: "enum", T: () => ["anytype.model.Block.Align", Block_Align] }
         ]);
     }
 }
@@ -4561,7 +4674,8 @@ class Block_Content_Dataview_Sort$Type extends MessageType<Block_Content_Datavie
             { no: 4, name: "format", kind: "enum", T: () => ["anytype.model.RelationFormat", RelationFormat] },
             { no: 5, name: "includeTime", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 6, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "emptyPlacement", kind: "enum", T: () => ["anytype.model.Block.Content.Dataview.Sort.EmptyType", Block_Content_Dataview_Sort_EmptyType] }
+            { no: 7, name: "emptyPlacement", kind: "enum", T: () => ["anytype.model.Block.Content.Dataview.Sort.EmptyType", Block_Content_Dataview_Sort_EmptyType] },
+            { no: 8, name: "noCollate", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
@@ -4881,6 +4995,16 @@ class Account_Info$Type extends MessageType<Account_Info> {
  * @generated MessageType for protobuf message anytype.model.Account.Info
  */
 export const Account_Info = new Account_Info$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Account_Auth$Type extends MessageType<Account_Auth> {
+    constructor() {
+        super("anytype.model.Account.Auth", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.model.Account.Auth
+ */
+export const Account_Auth = new Account_Auth$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class LinkPreview$Type extends MessageType<LinkPreview> {
     constructor() {

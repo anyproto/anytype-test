@@ -59,11 +59,11 @@ To run tests using the local middleware, follow these steps:
    ```
    2. **Clone the `anytype-heart` Repository:**
 
-   Clone the anytype-heart repository into the anytype-test/cmd folder:
+   Clone the anytype-heart repository into the anytype-test/mw folder:
    ```bash
-   git clone https://github.com/anyproto/anytype-heart.git anytype-test/cmd/anytype-heart
+   git clone https://github.com/anyproto/anytype-heart.git anytype-test/mw/anytype-heart
    ```
    
-3. **Follow the Instructions for `anytype-heart`:**
+1. **Follow the Instructions for `anytype-heart`:**
 
    Navigate to the anytype-heart repository and follow the setup and build instructions provided in its README file.

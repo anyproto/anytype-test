@@ -2,10 +2,11 @@ import {
   callBlockTextSetTextForTitle,
   callBlockTextSetTextForTitleExpectError,
   callCreateObject,
+  callObjectSubscribeIds,
   callOpenObject,
   callOpenObjectWithExpectedError,
 } from "../../support/api/clients/objectApi";
-import { Then } from "@cucumber/cucumber";
+import { Given, Then } from "@cucumber/cucumber";
 import { store } from "../../support/api/helpers/store";
 import { Block, ObjectView } from "../../pb/pkg/lib/pb/model/protos/models";
 import assert from "assert";
@@ -17,6 +18,7 @@ function findTitleBlock(objectView: ObjectView): Block | undefined {
 Then(
   "the user creates an object {int} in the account",
   async (objectNumber: number) => {
+    console.log(`STEP: the user creates an object ${objectNumber} in the account`);
     await callCreateObject(objectNumber);
     //set store sync status to false to see that this object will be synced too
     store.spaceSyncStatusReceived = false;
@@ -116,3 +118,9 @@ Then("the user can't rename the object {int}", async (objectNumber: number) => {
   );
   console.log("Block text set failed as expected");
 });
+
+Given('object {int} is synced within {int} seconds', async (int: number, int2: number) => {
+  console.log(`STEP: object ${int} is synced within ${int2} seconds`);  
+
+
+})

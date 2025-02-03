@@ -18,6 +18,7 @@ import {
 } from "../../support/api/services/utils";
 import { exec } from "child_process";
 import { logger } from "../../support/api/helpers/loggerConfig";
+import { callObjectSubscribeIds } from "../../support/api/clients/objectApi";
 
 interface Paths {
   binPath: string;
@@ -44,7 +45,7 @@ export const setClientAsCurrentClient = (clientNumber: number): void => {
  * @param serverNumber The server number identifier.
  */
 Given(
-  "the server {string} {int} is running",
+  "the server {string} {int} is running", {timeout: 10000},
   async (heartVersion: string, serverNumber: number) => {
     logger.info(`STEP: the server ${heartVersion} ${serverNumber} is running`);
     logger.info(
@@ -54,14 +55,14 @@ Given(
       }
     );
 
-    /* // Check Go installation
+     // Check Go installation
     const isGoInstalled = await checkGoInstallation();
     if (!isGoInstalled) {
       logger.error(
         "Go is not installed or not in PATH. Please install Go and add it to your PATH."
       );
       throw new Error("Go is not installed or not in PATH");
-    } */
+    }
 
     try {
       const paths: Paths = await resolveHeartPaths(heartVersion);
@@ -233,4 +234,22 @@ function checkGoInstallation(): Promise<boolean> {
       }
     });
   });
+}
+
+export async function getObjectSyncStatus(objectNumber: number): Promise<number> {
+  const object = store.objects.get(objectNumber);
+  
+  if (!object) {
+    throw new Error(`Object with number ${objectNumber} not found in store.`);
+  }
+  const response = await callObjectSubscribeIds([object.objectId], object.spaceId, "objectSync");
+  const syncStatus = response[0]?.fields?.syncStatus?.kind?.oneofKind === "numberValue" 
+  ? response[0]?.fields?.syncStatus?.kind?.numberValue 
+  : undefined;
+
+  if (syncStatus === undefined) {
+    throw new Error(`Sync status not found for object ${objectNumber}`);
+  }
+  console.log("Returning Sync Status:", syncStatus);
+  return syncStatus;
 }

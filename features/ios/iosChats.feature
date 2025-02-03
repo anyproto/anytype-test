@@ -1,3 +1,4 @@
+@S9c6bc2d8
 Feature: Chats
 
   Background:
@@ -6,6 +7,7 @@ Feature: Chats
     And "User B" is on the first screen of ios app
     And "User B" sets network to "staging"
 
+  @Taefa56c2
   Scenario: End-to-End flow for sending a message in chat on iOS
     Given "User A" creates a new vault
     And "User B" creates a new vault

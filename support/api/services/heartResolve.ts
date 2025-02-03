@@ -10,13 +10,13 @@ export async function heartResolve(heartVersion: string) {
       // Construct binPath and workingDir using __dirname to make them relative to the current script's location
       binPath = path.resolve(
         __dirname,
-        "../../../cmd/anytype-heart/cmd/grpcserver"
+        "../../../mw/anytype-heart/cmd/grpcserver"
       );
-      workingDir = path.resolve(__dirname, "../../../cmd/anytype-heart");
+      workingDir = path.resolve(__dirname, "../../../mw/anytype-heart");
       break;
 
     case heartVersion.startsWith("v0"):
-      // Extract the version part after "v0."
+      // Extract the version part after "v"
       const versionNumber = heartVersion.slice(1); // "0.33.7"
       const versionFolderPath = path.resolve(
         __dirname,
@@ -33,7 +33,7 @@ export async function heartResolve(heartVersion: string) {
         );
       }
 
-      binPath = path.resolve(versionFolderPath, "cmd/grpcserver");
+      binPath = path.resolve(versionFolderPath, "grpc-server");
       workingDir = path.resolve(versionFolderPath);
       break;
 

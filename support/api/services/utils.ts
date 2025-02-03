@@ -75,6 +75,9 @@ export function isVersion035OrMore(version: string): boolean {
  * @returns {boolean} - Returns true if the server version is 0.37 or more, false otherwise.
  */
 export function isVersion037OrMore(version: string): boolean {
+  if (version === "default") {
+    return true;
+  }
   // Remove the 'v' prefix if it exists
   if (version.startsWith("v")) {
     version = version.slice(1);
@@ -101,10 +104,12 @@ function formatGrpcError(error: {
   details?: string;
   message?: string;
   description?: string;
-}) {
+}, methodName: string, request: any) {
   const errorDetails = {
     code: error.code,
+    method: methodName,
     description: error.details || error.message || error.description,
+    request: request
   };
   console.error("gRPC call failed with error:", errorDetails);
   return new Error(
@@ -129,15 +134,15 @@ export function makeGrpcCall<T>(
 ): Promise<T> {
   return new Promise((resolve, reject) => {
     const client = getCurrentClient();
+    const methodName = grpcMethod.name || 'unknown';
 
     const call = grpcMethod.call(client, request, (err: any, response: T) => {
       if (err) {
         if (expectedErrors?.includes(err.code)) {
-          // Log the expected error, but do not reject.
           console.warn("Encountered an expected error code:", err.code);
-          return resolve(response);
+          return resolve(response); 
         }
-        return reject(formatGrpcError(err));
+        return reject(formatGrpcError(err, methodName, request));
       }
 
       // Check for application-level error in the response
@@ -148,14 +153,13 @@ export function makeGrpcCall<T>(
         responseError.code !== 0
       ) {
         if (expectedErrors?.includes(responseError.code)) {
-          // Log the expected error, but do not reject.
           console.warn(
             "Encountered an expected error code:",
             responseError.code
           );
           return resolve(response);
         }
-        return reject(formatGrpcError(responseError));
+        return reject(formatGrpcError(responseError, methodName, request));
       }
 
       resolve(response);

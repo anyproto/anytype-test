@@ -37,6 +37,7 @@ import { Restrictions } from "../../pkg/lib/pb/model/protos/models";
 import { RelationLink } from "../../pkg/lib/pb/model/protos/models";
 import { Block_Content_Dataview_Group } from "../../pkg/lib/pb/model/protos/models";
 import { Value } from "../../google/protobuf/struct";
+import { Account_Auth_LocalApiScope } from "../../pkg/lib/pb/model/protos/models";
 import { Account_Status } from "../../pkg/lib/pb/model/protos/models";
 import { Account_Config } from "../../pkg/lib/pb/model/protos/models";
 import { Struct } from "../../google/protobuf/struct";
@@ -72,6 +73,10 @@ export interface Event {
  */
 export interface Event_Message {
     /**
+     * @generated from protobuf field: string spaceId = 132;
+     */
+    spaceId: string;
+    /**
      * @generated from protobuf oneof: value
      */
     value: {
@@ -104,6 +109,12 @@ export interface Event_Message {
          * @generated from protobuf field: anytype.Event.Account.LinkChallenge accountLinkChallenge = 204;
          */
         accountLinkChallenge: Event_Account_LinkChallenge;
+    } | {
+        oneofKind: "accountLinkChallengeHide";
+        /**
+         * @generated from protobuf field: anytype.Event.Account.LinkChallengeHide accountLinkChallengeHide = 205;
+         */
+        accountLinkChallengeHide: Event_Account_LinkChallengeHide;
     } | {
         oneofKind: "objectDetailsSet";
         /**
@@ -660,6 +671,10 @@ export interface Event_Account_LinkChallenge {
      * @generated from protobuf field: anytype.Event.Account.LinkChallenge.ClientInfo clientInfo = 2;
      */
     clientInfo?: Event_Account_LinkChallenge_ClientInfo;
+    /**
+     * @generated from protobuf field: anytype.model.Account.Auth.LocalApiScope scope = 3;
+     */
+    scope: Account_Auth_LocalApiScope;
 }
 /**
  * @generated from protobuf message anytype.Event.Account.LinkChallenge.ClientInfo
@@ -677,6 +692,15 @@ export interface Event_Account_LinkChallenge_ClientInfo {
      * @generated from protobuf field: bool signatureVerified = 3;
      */
     signatureVerified: boolean;
+}
+/**
+ * @generated from protobuf message anytype.Event.Account.LinkChallengeHide
+ */
+export interface Event_Account_LinkChallengeHide {
+    /**
+     * @generated from protobuf field: string challenge = 1;
+     */
+    challenge: string; // verify code before hiding to protect from MITM attacks
 }
 /**
  * @generated from protobuf message anytype.Event.Object
@@ -3244,10 +3268,6 @@ export interface Model_Process {
      */
     id: string;
     /**
-     * @generated from protobuf field: anytype.Model.Process.Type type = 2;
-     */
-    type: Model_Process_Type;
-    /**
      * @generated from protobuf field: anytype.Model.Process.State state = 3;
      */
     state: Model_Process_State;
@@ -3255,6 +3275,75 @@ export interface Model_Process {
      * @generated from protobuf field: anytype.Model.Process.Progress progress = 4;
      */
     progress?: Model_Process_Progress;
+    /**
+     * @generated from protobuf field: string spaceId = 5;
+     */
+    spaceId: string;
+    /**
+     * @generated from protobuf oneof: message
+     */
+    message: {
+        oneofKind: "dropFiles";
+        /**
+         * @generated from protobuf field: anytype.Model.Process.DropFiles dropFiles = 6;
+         */
+        dropFiles: Model_Process_DropFiles;
+    } | {
+        oneofKind: "import";
+        /**
+         * @generated from protobuf field: anytype.Model.Process.Import import = 7;
+         */
+        import: Model_Process_Import;
+    } | {
+        oneofKind: "export";
+        /**
+         * @generated from protobuf field: anytype.Model.Process.Export export = 8;
+         */
+        export: Model_Process_Export;
+    } | {
+        oneofKind: "saveFile";
+        /**
+         * @generated from protobuf field: anytype.Model.Process.SaveFile saveFile = 9;
+         */
+        saveFile: Model_Process_SaveFile;
+    } | {
+        oneofKind: "migration";
+        /**
+         * @generated from protobuf field: anytype.Model.Process.Migration migration = 10;
+         */
+        migration: Model_Process_Migration;
+    } | {
+        oneofKind: undefined;
+    };
+    /**
+     * @generated from protobuf field: string error = 11;
+     */
+    error: string;
+}
+/**
+ * @generated from protobuf message anytype.Model.Process.DropFiles
+ */
+export interface Model_Process_DropFiles {
+}
+/**
+ * @generated from protobuf message anytype.Model.Process.Import
+ */
+export interface Model_Process_Import {
+}
+/**
+ * @generated from protobuf message anytype.Model.Process.Export
+ */
+export interface Model_Process_Export {
+}
+/**
+ * @generated from protobuf message anytype.Model.Process.SaveFile
+ */
+export interface Model_Process_SaveFile {
+}
+/**
+ * @generated from protobuf message anytype.Model.Process.Migration
+ */
+export interface Model_Process_Migration {
 }
 /**
  * @generated from protobuf message anytype.Model.Process.Progress
@@ -3272,35 +3361,6 @@ export interface Model_Process_Progress {
      * @generated from protobuf field: string message = 3;
      */
     message: string;
-}
-/**
- * @generated from protobuf enum anytype.Model.Process.Type
- */
-export enum Model_Process_Type {
-    /**
-     * @generated from protobuf enum value: DropFiles = 0;
-     */
-    DropFiles = 0,
-    /**
-     * @generated from protobuf enum value: Import = 1;
-     */
-    Import = 1,
-    /**
-     * @generated from protobuf enum value: Export = 2;
-     */
-    Export = 2,
-    /**
-     * @generated from protobuf enum value: SaveFile = 3;
-     */
-    SaveFile = 3,
-    /**
-     * @generated from protobuf enum value: RecoverAccount = 4;
-     */
-    RecoverAccount = 4,
-    /**
-     * @generated from protobuf enum value: Migration = 5;
-     */
-    Migration = 5
 }
 /**
  * @generated from protobuf enum anytype.Model.Process.State
@@ -3346,11 +3406,13 @@ export const Event = new Event$Type();
 class Event_Message$Type extends MessageType<Event_Message> {
     constructor() {
         super("anytype.Event.Message", [
+            { no: 132, name: "spaceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 1, name: "accountShow", kind: "message", oneof: "value", T: () => Event_Account_Show },
             { no: 201, name: "accountDetails", kind: "message", oneof: "value", T: () => Event_Account_Details },
             { no: 202, name: "accountConfigUpdate", kind: "message", oneof: "value", T: () => Event_Account_Config_Update },
             { no: 203, name: "accountUpdate", kind: "message", oneof: "value", T: () => Event_Account_Update },
             { no: 204, name: "accountLinkChallenge", kind: "message", oneof: "value", T: () => Event_Account_LinkChallenge },
+            { no: 205, name: "accountLinkChallengeHide", kind: "message", oneof: "value", T: () => Event_Account_LinkChallengeHide },
             { no: 16, name: "objectDetailsSet", kind: "message", oneof: "value", T: () => Event_Object_Details_Set },
             { no: 50, name: "objectDetailsAmend", kind: "message", oneof: "value", T: () => Event_Object_Details_Amend },
             { no: 51, name: "objectDetailsUnset", kind: "message", oneof: "value", T: () => Event_Object_Details_Unset },
@@ -3566,7 +3628,8 @@ class Event_Account_LinkChallenge$Type extends MessageType<Event_Account_LinkCha
     constructor() {
         super("anytype.Event.Account.LinkChallenge", [
             { no: 1, name: "challenge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "clientInfo", kind: "message", T: () => Event_Account_LinkChallenge_ClientInfo }
+            { no: 2, name: "clientInfo", kind: "message", T: () => Event_Account_LinkChallenge_ClientInfo },
+            { no: 3, name: "scope", kind: "enum", T: () => ["anytype.model.Account.Auth.LocalApiScope", Account_Auth_LocalApiScope] }
         ]);
     }
 }
@@ -3588,6 +3651,18 @@ class Event_Account_LinkChallenge_ClientInfo$Type extends MessageType<Event_Acco
  * @generated MessageType for protobuf message anytype.Event.Account.LinkChallenge.ClientInfo
  */
 export const Event_Account_LinkChallenge_ClientInfo = new Event_Account_LinkChallenge_ClientInfo$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Event_Account_LinkChallengeHide$Type extends MessageType<Event_Account_LinkChallengeHide> {
+    constructor() {
+        super("anytype.Event.Account.LinkChallengeHide", [
+            { no: 1, name: "challenge", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Event.Account.LinkChallengeHide
+ */
+export const Event_Account_LinkChallengeHide = new Event_Account_LinkChallengeHide$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Event_Object$Type extends MessageType<Event_Object> {
     constructor() {
@@ -5959,9 +6034,15 @@ class Model_Process$Type extends MessageType<Model_Process> {
     constructor() {
         super("anytype.Model.Process", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "type", kind: "enum", T: () => ["anytype.Model.Process.Type", Model_Process_Type] },
             { no: 3, name: "state", kind: "enum", T: () => ["anytype.Model.Process.State", Model_Process_State] },
-            { no: 4, name: "progress", kind: "message", T: () => Model_Process_Progress }
+            { no: 4, name: "progress", kind: "message", T: () => Model_Process_Progress },
+            { no: 5, name: "spaceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "dropFiles", kind: "message", oneof: "message", T: () => Model_Process_DropFiles },
+            { no: 7, name: "import", kind: "message", oneof: "message", T: () => Model_Process_Import },
+            { no: 8, name: "export", kind: "message", oneof: "message", T: () => Model_Process_Export },
+            { no: 9, name: "saveFile", kind: "message", oneof: "message", T: () => Model_Process_SaveFile },
+            { no: 10, name: "migration", kind: "message", oneof: "message", T: () => Model_Process_Migration },
+            { no: 11, name: "error", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -5969,6 +6050,56 @@ class Model_Process$Type extends MessageType<Model_Process> {
  * @generated MessageType for protobuf message anytype.Model.Process
  */
 export const Model_Process = new Model_Process$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Model_Process_DropFiles$Type extends MessageType<Model_Process_DropFiles> {
+    constructor() {
+        super("anytype.Model.Process.DropFiles", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Model.Process.DropFiles
+ */
+export const Model_Process_DropFiles = new Model_Process_DropFiles$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Model_Process_Import$Type extends MessageType<Model_Process_Import> {
+    constructor() {
+        super("anytype.Model.Process.Import", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Model.Process.Import
+ */
+export const Model_Process_Import = new Model_Process_Import$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Model_Process_Export$Type extends MessageType<Model_Process_Export> {
+    constructor() {
+        super("anytype.Model.Process.Export", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Model.Process.Export
+ */
+export const Model_Process_Export = new Model_Process_Export$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Model_Process_SaveFile$Type extends MessageType<Model_Process_SaveFile> {
+    constructor() {
+        super("anytype.Model.Process.SaveFile", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Model.Process.SaveFile
+ */
+export const Model_Process_SaveFile = new Model_Process_SaveFile$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Model_Process_Migration$Type extends MessageType<Model_Process_Migration> {
+    constructor() {
+        super("anytype.Model.Process.Migration", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Model.Process.Migration
+ */
+export const Model_Process_Migration = new Model_Process_Migration$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Model_Process_Progress$Type extends MessageType<Model_Process_Progress> {
     constructor() {

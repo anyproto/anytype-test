@@ -64,10 +64,10 @@ import type { Rpc_Notification_List_Response } from "../commands";
 import type { Rpc_Notification_List_Request } from "../commands";
 import type { Event } from "../events";
 import type { StreamRequest } from "../commands";
-import type { Rpc_Metrics_SetParameters_Response } from "../commands";
-import type { Rpc_Metrics_SetParameters_Request } from "../commands";
 import type { Rpc_Initial_SetParameters_Response } from "../commands";
 import type { Rpc_Initial_SetParameters_Request } from "../commands";
+import type { Rpc_Metrics_SetParameters_Response } from "../commands";
+import type { Rpc_Metrics_SetParameters_Request } from "../commands";
 import type { Rpc_Debug_ExportLog_Response } from "../commands";
 import type { Rpc_Debug_ExportLog_Request } from "../commands";
 import type { Rpc_Debug_NetCheck_Response } from "../commands";
@@ -98,6 +98,10 @@ import type { Rpc_Debug_Stat_Response } from "../commands";
 import type { Rpc_Debug_Stat_Request } from "../commands";
 import type { Rpc_Log_Send_Response } from "../commands";
 import type { Rpc_Log_Send_Request } from "../commands";
+import type { Rpc_Process_Unsubscribe_Response } from "../commands";
+import type { Rpc_Process_Unsubscribe_Request } from "../commands";
+import type { Rpc_Process_Subscribe_Response } from "../commands";
+import type { Rpc_Process_Subscribe_Request } from "../commands";
 import type { Rpc_Process_Cancel_Response } from "../commands";
 import type { Rpc_Process_Cancel_Request } from "../commands";
 import type { Rpc_BlockLatex_SetText_Response } from "../commands";
@@ -354,6 +358,8 @@ import type { Rpc_ObjectCollection_Remove_Response } from "../commands";
 import type { Rpc_ObjectCollection_Remove_Request } from "../commands";
 import type { Rpc_ObjectCollection_Add_Response } from "../commands";
 import type { Rpc_ObjectCollection_Add_Request } from "../commands";
+import type { Rpc_Object_DateByTimestamp_Response } from "../commands";
+import type { Rpc_Object_DateByTimestamp_Request } from "../commands";
 import type { Rpc_Object_ImportExperience_Response } from "../commands";
 import type { Rpc_Object_ImportExperience_Request } from "../commands";
 import type { Rpc_Object_ImportUseCase_Response } from "../commands";
@@ -446,6 +452,20 @@ import type { Rpc_Object_Close_Response } from "../commands";
 import type { Rpc_Object_Close_Request } from "../commands";
 import type { Rpc_Object_Open_Response } from "../commands";
 import type { Rpc_Object_Open_Request } from "../commands";
+import type { Rpc_Publishing_GetStatus_Response } from "../commands";
+import type { Rpc_Publishing_GetStatus_Request } from "../commands";
+import type { Rpc_Publishing_ResolveUri_Response } from "../commands";
+import type { Rpc_Publishing_ResolveUri_Request } from "../commands";
+import type { Rpc_Publishing_List_Response } from "../commands";
+import type { Rpc_Publishing_List_Request } from "../commands";
+import type { Rpc_Publishing_Remove_Response } from "../commands";
+import type { Rpc_Publishing_Remove_Request } from "../commands";
+import type { Rpc_Publishing_Create_Response } from "../commands";
+import type { Rpc_Publishing_Create_Request } from "../commands";
+import type { Rpc_Space_UnsetOrder_Response } from "../commands";
+import type { Rpc_Space_UnsetOrder_Request } from "../commands";
+import type { Rpc_Space_SetOrder_Response } from "../commands";
+import type { Rpc_Space_SetOrder_Request } from "../commands";
 import type { Rpc_Space_ParticipantPermissionsChange_Response } from "../commands";
 import type { Rpc_Space_ParticipantPermissionsChange_Request } from "../commands";
 import type { Rpc_Space_ParticipantRemove_Response } from "../commands";
@@ -484,6 +504,8 @@ import type { Rpc_Account_Move_Response } from "../commands";
 import type { Rpc_Account_Move_Request } from "../commands";
 import type { Rpc_Account_Stop_Response } from "../commands";
 import type { Rpc_Account_Stop_Request } from "../commands";
+import type { Rpc_Account_ChangeJsonApiAddr_Response } from "../commands";
+import type { Rpc_Account_ChangeJsonApiAddr_Request } from "../commands";
 import type { Rpc_Account_EnableLocalNetworkSync_Response } from "../commands";
 import type { Rpc_Account_EnableLocalNetworkSync_Request } from "../commands";
 import type { Rpc_Account_Select_Response } from "../commands";
@@ -494,6 +516,10 @@ import type { Rpc_Account_Delete_Response } from "../commands";
 import type { Rpc_Account_Delete_Request } from "../commands";
 import type { Rpc_Account_Create_Response } from "../commands";
 import type { Rpc_Account_Create_Request } from "../commands";
+import type { Rpc_Account_MigrateCancel_Response } from "../commands";
+import type { Rpc_Account_MigrateCancel_Request } from "../commands";
+import type { Rpc_Account_Migrate_Response } from "../commands";
+import type { Rpc_Account_Migrate_Request } from "../commands";
 import type { Rpc_Account_Recover_Response } from "../commands";
 import type { Rpc_Account_Recover_Request } from "../commands";
 import type { Rpc_Workspace_Export_Response } from "../commands";
@@ -698,6 +724,20 @@ export interface IClientCommandsClient {
     accountRecover(input: Rpc_Account_Recover_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_Recover_Response) => void): grpc.ClientUnaryCall;
     accountRecover(input: Rpc_Account_Recover_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_Recover_Response) => void): grpc.ClientUnaryCall;
     /**
+     * @generated from protobuf rpc: AccountMigrate(anytype.Rpc.Account.Migrate.Request) returns (anytype.Rpc.Account.Migrate.Response);
+     */
+    accountMigrate(input: Rpc_Account_Migrate_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_Migrate_Response) => void): grpc.ClientUnaryCall;
+    accountMigrate(input: Rpc_Account_Migrate_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_Migrate_Response) => void): grpc.ClientUnaryCall;
+    accountMigrate(input: Rpc_Account_Migrate_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_Migrate_Response) => void): grpc.ClientUnaryCall;
+    accountMigrate(input: Rpc_Account_Migrate_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_Migrate_Response) => void): grpc.ClientUnaryCall;
+    /**
+     * @generated from protobuf rpc: AccountMigrateCancel(anytype.Rpc.Account.MigrateCancel.Request) returns (anytype.Rpc.Account.MigrateCancel.Response);
+     */
+    accountMigrateCancel(input: Rpc_Account_MigrateCancel_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_MigrateCancel_Response) => void): grpc.ClientUnaryCall;
+    accountMigrateCancel(input: Rpc_Account_MigrateCancel_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_MigrateCancel_Response) => void): grpc.ClientUnaryCall;
+    accountMigrateCancel(input: Rpc_Account_MigrateCancel_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_MigrateCancel_Response) => void): grpc.ClientUnaryCall;
+    accountMigrateCancel(input: Rpc_Account_MigrateCancel_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_MigrateCancel_Response) => void): grpc.ClientUnaryCall;
+    /**
      * @generated from protobuf rpc: AccountCreate(anytype.Rpc.Account.Create.Request) returns (anytype.Rpc.Account.Create.Response);
      */
     accountCreate(input: Rpc_Account_Create_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_Create_Response) => void): grpc.ClientUnaryCall;
@@ -732,6 +772,13 @@ export interface IClientCommandsClient {
     accountEnableLocalNetworkSync(input: Rpc_Account_EnableLocalNetworkSync_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_EnableLocalNetworkSync_Response) => void): grpc.ClientUnaryCall;
     accountEnableLocalNetworkSync(input: Rpc_Account_EnableLocalNetworkSync_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_EnableLocalNetworkSync_Response) => void): grpc.ClientUnaryCall;
     accountEnableLocalNetworkSync(input: Rpc_Account_EnableLocalNetworkSync_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_EnableLocalNetworkSync_Response) => void): grpc.ClientUnaryCall;
+    /**
+     * @generated from protobuf rpc: AccountChangeJsonApiAddr(anytype.Rpc.Account.ChangeJsonApiAddr.Request) returns (anytype.Rpc.Account.ChangeJsonApiAddr.Response);
+     */
+    accountChangeJsonApiAddr(input: Rpc_Account_ChangeJsonApiAddr_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_ChangeJsonApiAddr_Response) => void): grpc.ClientUnaryCall;
+    accountChangeJsonApiAddr(input: Rpc_Account_ChangeJsonApiAddr_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_ChangeJsonApiAddr_Response) => void): grpc.ClientUnaryCall;
+    accountChangeJsonApiAddr(input: Rpc_Account_ChangeJsonApiAddr_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_ChangeJsonApiAddr_Response) => void): grpc.ClientUnaryCall;
+    accountChangeJsonApiAddr(input: Rpc_Account_ChangeJsonApiAddr_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Account_ChangeJsonApiAddr_Response) => void): grpc.ClientUnaryCall;
     /**
      * @generated from protobuf rpc: AccountStop(anytype.Rpc.Account.Stop.Request) returns (anytype.Rpc.Account.Stop.Response);
      */
@@ -868,6 +915,58 @@ export interface IClientCommandsClient {
     spaceParticipantPermissionsChange(input: Rpc_Space_ParticipantPermissionsChange_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Space_ParticipantPermissionsChange_Response) => void): grpc.ClientUnaryCall;
     spaceParticipantPermissionsChange(input: Rpc_Space_ParticipantPermissionsChange_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Space_ParticipantPermissionsChange_Response) => void): grpc.ClientUnaryCall;
     spaceParticipantPermissionsChange(input: Rpc_Space_ParticipantPermissionsChange_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Space_ParticipantPermissionsChange_Response) => void): grpc.ClientUnaryCall;
+    /**
+     * @generated from protobuf rpc: SpaceSetOrder(anytype.Rpc.Space.SetOrder.Request) returns (anytype.Rpc.Space.SetOrder.Response);
+     */
+    spaceSetOrder(input: Rpc_Space_SetOrder_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Space_SetOrder_Response) => void): grpc.ClientUnaryCall;
+    spaceSetOrder(input: Rpc_Space_SetOrder_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Space_SetOrder_Response) => void): grpc.ClientUnaryCall;
+    spaceSetOrder(input: Rpc_Space_SetOrder_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Space_SetOrder_Response) => void): grpc.ClientUnaryCall;
+    spaceSetOrder(input: Rpc_Space_SetOrder_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Space_SetOrder_Response) => void): grpc.ClientUnaryCall;
+    /**
+     * @generated from protobuf rpc: SpaceUnsetOrder(anytype.Rpc.Space.UnsetOrder.Request) returns (anytype.Rpc.Space.UnsetOrder.Response);
+     */
+    spaceUnsetOrder(input: Rpc_Space_UnsetOrder_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Space_UnsetOrder_Response) => void): grpc.ClientUnaryCall;
+    spaceUnsetOrder(input: Rpc_Space_UnsetOrder_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Space_UnsetOrder_Response) => void): grpc.ClientUnaryCall;
+    spaceUnsetOrder(input: Rpc_Space_UnsetOrder_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Space_UnsetOrder_Response) => void): grpc.ClientUnaryCall;
+    spaceUnsetOrder(input: Rpc_Space_UnsetOrder_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Space_UnsetOrder_Response) => void): grpc.ClientUnaryCall;
+    /**
+     * Publishing
+     * ***
+     *
+     * @generated from protobuf rpc: PublishingCreate(anytype.Rpc.Publishing.Create.Request) returns (anytype.Rpc.Publishing.Create.Response);
+     */
+    publishingCreate(input: Rpc_Publishing_Create_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_Create_Response) => void): grpc.ClientUnaryCall;
+    publishingCreate(input: Rpc_Publishing_Create_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_Create_Response) => void): grpc.ClientUnaryCall;
+    publishingCreate(input: Rpc_Publishing_Create_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_Create_Response) => void): grpc.ClientUnaryCall;
+    publishingCreate(input: Rpc_Publishing_Create_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_Create_Response) => void): grpc.ClientUnaryCall;
+    /**
+     * @generated from protobuf rpc: PublishingRemove(anytype.Rpc.Publishing.Remove.Request) returns (anytype.Rpc.Publishing.Remove.Response);
+     */
+    publishingRemove(input: Rpc_Publishing_Remove_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_Remove_Response) => void): grpc.ClientUnaryCall;
+    publishingRemove(input: Rpc_Publishing_Remove_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_Remove_Response) => void): grpc.ClientUnaryCall;
+    publishingRemove(input: Rpc_Publishing_Remove_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_Remove_Response) => void): grpc.ClientUnaryCall;
+    publishingRemove(input: Rpc_Publishing_Remove_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_Remove_Response) => void): grpc.ClientUnaryCall;
+    /**
+     * @generated from protobuf rpc: PublishingList(anytype.Rpc.Publishing.List.Request) returns (anytype.Rpc.Publishing.List.Response);
+     */
+    publishingList(input: Rpc_Publishing_List_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_List_Response) => void): grpc.ClientUnaryCall;
+    publishingList(input: Rpc_Publishing_List_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_List_Response) => void): grpc.ClientUnaryCall;
+    publishingList(input: Rpc_Publishing_List_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_List_Response) => void): grpc.ClientUnaryCall;
+    publishingList(input: Rpc_Publishing_List_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_List_Response) => void): grpc.ClientUnaryCall;
+    /**
+     * @generated from protobuf rpc: PublishingResolveUri(anytype.Rpc.Publishing.ResolveUri.Request) returns (anytype.Rpc.Publishing.ResolveUri.Response);
+     */
+    publishingResolveUri(input: Rpc_Publishing_ResolveUri_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_ResolveUri_Response) => void): grpc.ClientUnaryCall;
+    publishingResolveUri(input: Rpc_Publishing_ResolveUri_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_ResolveUri_Response) => void): grpc.ClientUnaryCall;
+    publishingResolveUri(input: Rpc_Publishing_ResolveUri_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_ResolveUri_Response) => void): grpc.ClientUnaryCall;
+    publishingResolveUri(input: Rpc_Publishing_ResolveUri_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_ResolveUri_Response) => void): grpc.ClientUnaryCall;
+    /**
+     * @generated from protobuf rpc: PublishingGetStatus(anytype.Rpc.Publishing.GetStatus.Request) returns (anytype.Rpc.Publishing.GetStatus.Response);
+     */
+    publishingGetStatus(input: Rpc_Publishing_GetStatus_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_GetStatus_Response) => void): grpc.ClientUnaryCall;
+    publishingGetStatus(input: Rpc_Publishing_GetStatus_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_GetStatus_Response) => void): grpc.ClientUnaryCall;
+    publishingGetStatus(input: Rpc_Publishing_GetStatus_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_GetStatus_Response) => void): grpc.ClientUnaryCall;
+    publishingGetStatus(input: Rpc_Publishing_GetStatus_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Publishing_GetStatus_Response) => void): grpc.ClientUnaryCall;
     /**
      * Object
      * ***
@@ -1201,6 +1300,13 @@ export interface IClientCommandsClient {
     objectImportExperience(input: Rpc_Object_ImportExperience_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Object_ImportExperience_Response) => void): grpc.ClientUnaryCall;
     objectImportExperience(input: Rpc_Object_ImportExperience_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Object_ImportExperience_Response) => void): grpc.ClientUnaryCall;
     objectImportExperience(input: Rpc_Object_ImportExperience_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Object_ImportExperience_Response) => void): grpc.ClientUnaryCall;
+    /**
+     * @generated from protobuf rpc: ObjectDateByTimestamp(anytype.Rpc.Object.DateByTimestamp.Request) returns (anytype.Rpc.Object.DateByTimestamp.Response);
+     */
+    objectDateByTimestamp(input: Rpc_Object_DateByTimestamp_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Object_DateByTimestamp_Response) => void): grpc.ClientUnaryCall;
+    objectDateByTimestamp(input: Rpc_Object_DateByTimestamp_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Object_DateByTimestamp_Response) => void): grpc.ClientUnaryCall;
+    objectDateByTimestamp(input: Rpc_Object_DateByTimestamp_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Object_DateByTimestamp_Response) => void): grpc.ClientUnaryCall;
+    objectDateByTimestamp(input: Rpc_Object_DateByTimestamp_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Object_DateByTimestamp_Response) => void): grpc.ClientUnaryCall;
     /**
      * Collections
      * ***
@@ -2137,6 +2243,20 @@ export interface IClientCommandsClient {
     processCancel(input: Rpc_Process_Cancel_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Process_Cancel_Response) => void): grpc.ClientUnaryCall;
     processCancel(input: Rpc_Process_Cancel_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Process_Cancel_Response) => void): grpc.ClientUnaryCall;
     /**
+     * @generated from protobuf rpc: ProcessSubscribe(anytype.Rpc.Process.Subscribe.Request) returns (anytype.Rpc.Process.Subscribe.Response);
+     */
+    processSubscribe(input: Rpc_Process_Subscribe_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Process_Subscribe_Response) => void): grpc.ClientUnaryCall;
+    processSubscribe(input: Rpc_Process_Subscribe_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Process_Subscribe_Response) => void): grpc.ClientUnaryCall;
+    processSubscribe(input: Rpc_Process_Subscribe_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Process_Subscribe_Response) => void): grpc.ClientUnaryCall;
+    processSubscribe(input: Rpc_Process_Subscribe_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Process_Subscribe_Response) => void): grpc.ClientUnaryCall;
+    /**
+     * @generated from protobuf rpc: ProcessUnsubscribe(anytype.Rpc.Process.Unsubscribe.Request) returns (anytype.Rpc.Process.Unsubscribe.Response);
+     */
+    processUnsubscribe(input: Rpc_Process_Unsubscribe_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Process_Unsubscribe_Response) => void): grpc.ClientUnaryCall;
+    processUnsubscribe(input: Rpc_Process_Unsubscribe_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Process_Unsubscribe_Response) => void): grpc.ClientUnaryCall;
+    processUnsubscribe(input: Rpc_Process_Unsubscribe_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Process_Unsubscribe_Response) => void): grpc.ClientUnaryCall;
+    processUnsubscribe(input: Rpc_Process_Unsubscribe_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Process_Unsubscribe_Response) => void): grpc.ClientUnaryCall;
+    /**
      * @generated from protobuf rpc: LogSend(anytype.Rpc.Log.Send.Request) returns (anytype.Rpc.Log.Send.Response);
      */
     logSend(input: Rpc_Log_Send_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Log_Send_Response) => void): grpc.ClientUnaryCall;
@@ -2242,19 +2362,19 @@ export interface IClientCommandsClient {
     debugExportLog(input: Rpc_Debug_ExportLog_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Debug_ExportLog_Response) => void): grpc.ClientUnaryCall;
     debugExportLog(input: Rpc_Debug_ExportLog_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Debug_ExportLog_Response) => void): grpc.ClientUnaryCall;
     /**
-     * @generated from protobuf rpc: InitialSetParameters(anytype.Rpc.Initial.SetParameters.Request) returns (anytype.Rpc.Initial.SetParameters.Response);
-     */
-    initialSetParameters(input: Rpc_Initial_SetParameters_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Initial_SetParameters_Response) => void): grpc.ClientUnaryCall;
-    initialSetParameters(input: Rpc_Initial_SetParameters_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Initial_SetParameters_Response) => void): grpc.ClientUnaryCall;
-    initialSetParameters(input: Rpc_Initial_SetParameters_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Initial_SetParameters_Response) => void): grpc.ClientUnaryCall;
-    initialSetParameters(input: Rpc_Initial_SetParameters_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Initial_SetParameters_Response) => void): grpc.ClientUnaryCall;
-    /**
      * @generated from protobuf rpc: MetricsSetParameters(anytype.Rpc.Metrics.SetParameters.Request) returns (anytype.Rpc.Metrics.SetParameters.Response);
      */
     metricsSetParameters(input: Rpc_Metrics_SetParameters_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Metrics_SetParameters_Response) => void): grpc.ClientUnaryCall;
     metricsSetParameters(input: Rpc_Metrics_SetParameters_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Metrics_SetParameters_Response) => void): grpc.ClientUnaryCall;
     metricsSetParameters(input: Rpc_Metrics_SetParameters_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Metrics_SetParameters_Response) => void): grpc.ClientUnaryCall;
     metricsSetParameters(input: Rpc_Metrics_SetParameters_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Metrics_SetParameters_Response) => void): grpc.ClientUnaryCall;
+    /**
+     * @generated from protobuf rpc: InitialSetParameters(anytype.Rpc.Initial.SetParameters.Request) returns (anytype.Rpc.Initial.SetParameters.Response);
+     */
+    initialSetParameters(input: Rpc_Initial_SetParameters_Request, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Initial_SetParameters_Response) => void): grpc.ClientUnaryCall;
+    initialSetParameters(input: Rpc_Initial_SetParameters_Request, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: Rpc_Initial_SetParameters_Response) => void): grpc.ClientUnaryCall;
+    initialSetParameters(input: Rpc_Initial_SetParameters_Request, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: Rpc_Initial_SetParameters_Response) => void): grpc.ClientUnaryCall;
+    initialSetParameters(input: Rpc_Initial_SetParameters_Request, callback: (err: grpc.ServiceError | null, value?: Rpc_Initial_SetParameters_Response) => void): grpc.ClientUnaryCall;
     /**
      * used only for lib-server via grpc
      *
@@ -2663,73 +2783,94 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
         return this.makeUnaryRequest<Rpc_Account_Recover_Request, Rpc_Account_Recover_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Account_Recover_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Account_Recover_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
+     * @generated from protobuf rpc: AccountMigrate(anytype.Rpc.Account.Migrate.Request) returns (anytype.Rpc.Account.Migrate.Response);
+     */
+    accountMigrate(input: Rpc_Account_Migrate_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_Migrate_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_Migrate_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Account_Migrate_Response) => void)): grpc.ClientUnaryCall {
+        const method = ClientCommands.methods[21];
+        return this.makeUnaryRequest<Rpc_Account_Migrate_Request, Rpc_Account_Migrate_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Account_Migrate_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Account_Migrate_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+    }
+    /**
+     * @generated from protobuf rpc: AccountMigrateCancel(anytype.Rpc.Account.MigrateCancel.Request) returns (anytype.Rpc.Account.MigrateCancel.Response);
+     */
+    accountMigrateCancel(input: Rpc_Account_MigrateCancel_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_MigrateCancel_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_MigrateCancel_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Account_MigrateCancel_Response) => void)): grpc.ClientUnaryCall {
+        const method = ClientCommands.methods[22];
+        return this.makeUnaryRequest<Rpc_Account_MigrateCancel_Request, Rpc_Account_MigrateCancel_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Account_MigrateCancel_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Account_MigrateCancel_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+    }
+    /**
      * @generated from protobuf rpc: AccountCreate(anytype.Rpc.Account.Create.Request) returns (anytype.Rpc.Account.Create.Response);
      */
     accountCreate(input: Rpc_Account_Create_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_Create_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_Create_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Account_Create_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[21];
+        const method = ClientCommands.methods[23];
         return this.makeUnaryRequest<Rpc_Account_Create_Request, Rpc_Account_Create_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Account_Create_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Account_Create_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: AccountDelete(anytype.Rpc.Account.Delete.Request) returns (anytype.Rpc.Account.Delete.Response);
      */
     accountDelete(input: Rpc_Account_Delete_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_Delete_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_Delete_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Account_Delete_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[22];
+        const method = ClientCommands.methods[24];
         return this.makeUnaryRequest<Rpc_Account_Delete_Request, Rpc_Account_Delete_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Account_Delete_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Account_Delete_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: AccountRevertDeletion(anytype.Rpc.Account.RevertDeletion.Request) returns (anytype.Rpc.Account.RevertDeletion.Response);
      */
     accountRevertDeletion(input: Rpc_Account_RevertDeletion_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_RevertDeletion_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_RevertDeletion_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Account_RevertDeletion_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[23];
+        const method = ClientCommands.methods[25];
         return this.makeUnaryRequest<Rpc_Account_RevertDeletion_Request, Rpc_Account_RevertDeletion_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Account_RevertDeletion_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Account_RevertDeletion_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: AccountSelect(anytype.Rpc.Account.Select.Request) returns (anytype.Rpc.Account.Select.Response);
      */
     accountSelect(input: Rpc_Account_Select_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_Select_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_Select_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Account_Select_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[24];
+        const method = ClientCommands.methods[26];
         return this.makeUnaryRequest<Rpc_Account_Select_Request, Rpc_Account_Select_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Account_Select_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Account_Select_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: AccountEnableLocalNetworkSync(anytype.Rpc.Account.EnableLocalNetworkSync.Request) returns (anytype.Rpc.Account.EnableLocalNetworkSync.Response);
      */
     accountEnableLocalNetworkSync(input: Rpc_Account_EnableLocalNetworkSync_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_EnableLocalNetworkSync_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_EnableLocalNetworkSync_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Account_EnableLocalNetworkSync_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[25];
+        const method = ClientCommands.methods[27];
         return this.makeUnaryRequest<Rpc_Account_EnableLocalNetworkSync_Request, Rpc_Account_EnableLocalNetworkSync_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Account_EnableLocalNetworkSync_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Account_EnableLocalNetworkSync_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+    }
+    /**
+     * @generated from protobuf rpc: AccountChangeJsonApiAddr(anytype.Rpc.Account.ChangeJsonApiAddr.Request) returns (anytype.Rpc.Account.ChangeJsonApiAddr.Response);
+     */
+    accountChangeJsonApiAddr(input: Rpc_Account_ChangeJsonApiAddr_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_ChangeJsonApiAddr_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_ChangeJsonApiAddr_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Account_ChangeJsonApiAddr_Response) => void)): grpc.ClientUnaryCall {
+        const method = ClientCommands.methods[28];
+        return this.makeUnaryRequest<Rpc_Account_ChangeJsonApiAddr_Request, Rpc_Account_ChangeJsonApiAddr_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Account_ChangeJsonApiAddr_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Account_ChangeJsonApiAddr_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: AccountStop(anytype.Rpc.Account.Stop.Request) returns (anytype.Rpc.Account.Stop.Response);
      */
     accountStop(input: Rpc_Account_Stop_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_Stop_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_Stop_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Account_Stop_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[26];
+        const method = ClientCommands.methods[29];
         return this.makeUnaryRequest<Rpc_Account_Stop_Request, Rpc_Account_Stop_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Account_Stop_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Account_Stop_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: AccountMove(anytype.Rpc.Account.Move.Request) returns (anytype.Rpc.Account.Move.Response);
      */
     accountMove(input: Rpc_Account_Move_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_Move_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_Move_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Account_Move_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[27];
+        const method = ClientCommands.methods[30];
         return this.makeUnaryRequest<Rpc_Account_Move_Request, Rpc_Account_Move_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Account_Move_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Account_Move_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: AccountConfigUpdate(anytype.Rpc.Account.ConfigUpdate.Request) returns (anytype.Rpc.Account.ConfigUpdate.Response);
      */
     accountConfigUpdate(input: Rpc_Account_ConfigUpdate_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_ConfigUpdate_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_ConfigUpdate_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Account_ConfigUpdate_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[28];
+        const method = ClientCommands.methods[31];
         return this.makeUnaryRequest<Rpc_Account_ConfigUpdate_Request, Rpc_Account_ConfigUpdate_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Account_ConfigUpdate_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Account_ConfigUpdate_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: AccountRecoverFromLegacyExport(anytype.Rpc.Account.RecoverFromLegacyExport.Request) returns (anytype.Rpc.Account.RecoverFromLegacyExport.Response);
      */
     accountRecoverFromLegacyExport(input: Rpc_Account_RecoverFromLegacyExport_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_RecoverFromLegacyExport_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_RecoverFromLegacyExport_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Account_RecoverFromLegacyExport_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[29];
+        const method = ClientCommands.methods[32];
         return this.makeUnaryRequest<Rpc_Account_RecoverFromLegacyExport_Request, Rpc_Account_RecoverFromLegacyExport_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Account_RecoverFromLegacyExport_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Account_RecoverFromLegacyExport_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: AccountChangeNetworkConfigAndRestart(anytype.Rpc.Account.ChangeNetworkConfigAndRestart.Request) returns (anytype.Rpc.Account.ChangeNetworkConfigAndRestart.Response);
      */
     accountChangeNetworkConfigAndRestart(input: Rpc_Account_ChangeNetworkConfigAndRestart_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_ChangeNetworkConfigAndRestart_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Account_ChangeNetworkConfigAndRestart_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Account_ChangeNetworkConfigAndRestart_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[30];
+        const method = ClientCommands.methods[33];
         return this.makeUnaryRequest<Rpc_Account_ChangeNetworkConfigAndRestart_Request, Rpc_Account_ChangeNetworkConfigAndRestart_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Account_ChangeNetworkConfigAndRestart_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Account_ChangeNetworkConfigAndRestart_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -2739,99 +2880,151 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: SpaceDelete(anytype.Rpc.Space.Delete.Request) returns (anytype.Rpc.Space.Delete.Response);
      */
     spaceDelete(input: Rpc_Space_Delete_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_Delete_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_Delete_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_Delete_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[31];
+        const method = ClientCommands.methods[34];
         return this.makeUnaryRequest<Rpc_Space_Delete_Request, Rpc_Space_Delete_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_Delete_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_Delete_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: SpaceInviteGenerate(anytype.Rpc.Space.InviteGenerate.Request) returns (anytype.Rpc.Space.InviteGenerate.Response);
      */
     spaceInviteGenerate(input: Rpc_Space_InviteGenerate_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_InviteGenerate_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_InviteGenerate_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_InviteGenerate_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[32];
+        const method = ClientCommands.methods[35];
         return this.makeUnaryRequest<Rpc_Space_InviteGenerate_Request, Rpc_Space_InviteGenerate_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_InviteGenerate_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_InviteGenerate_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: SpaceInviteGetCurrent(anytype.Rpc.Space.InviteGetCurrent.Request) returns (anytype.Rpc.Space.InviteGetCurrent.Response);
      */
     spaceInviteGetCurrent(input: Rpc_Space_InviteGetCurrent_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_InviteGetCurrent_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_InviteGetCurrent_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_InviteGetCurrent_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[33];
+        const method = ClientCommands.methods[36];
         return this.makeUnaryRequest<Rpc_Space_InviteGetCurrent_Request, Rpc_Space_InviteGetCurrent_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_InviteGetCurrent_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_InviteGetCurrent_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: SpaceInviteRevoke(anytype.Rpc.Space.InviteRevoke.Request) returns (anytype.Rpc.Space.InviteRevoke.Response);
      */
     spaceInviteRevoke(input: Rpc_Space_InviteRevoke_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_InviteRevoke_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_InviteRevoke_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_InviteRevoke_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[34];
+        const method = ClientCommands.methods[37];
         return this.makeUnaryRequest<Rpc_Space_InviteRevoke_Request, Rpc_Space_InviteRevoke_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_InviteRevoke_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_InviteRevoke_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: SpaceInviteView(anytype.Rpc.Space.InviteView.Request) returns (anytype.Rpc.Space.InviteView.Response);
      */
     spaceInviteView(input: Rpc_Space_InviteView_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_InviteView_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_InviteView_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_InviteView_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[35];
+        const method = ClientCommands.methods[38];
         return this.makeUnaryRequest<Rpc_Space_InviteView_Request, Rpc_Space_InviteView_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_InviteView_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_InviteView_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: SpaceJoin(anytype.Rpc.Space.Join.Request) returns (anytype.Rpc.Space.Join.Response);
      */
     spaceJoin(input: Rpc_Space_Join_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_Join_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_Join_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_Join_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[36];
+        const method = ClientCommands.methods[39];
         return this.makeUnaryRequest<Rpc_Space_Join_Request, Rpc_Space_Join_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_Join_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_Join_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: SpaceJoinCancel(anytype.Rpc.Space.JoinCancel.Request) returns (anytype.Rpc.Space.JoinCancel.Response);
      */
     spaceJoinCancel(input: Rpc_Space_JoinCancel_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_JoinCancel_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_JoinCancel_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_JoinCancel_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[37];
+        const method = ClientCommands.methods[40];
         return this.makeUnaryRequest<Rpc_Space_JoinCancel_Request, Rpc_Space_JoinCancel_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_JoinCancel_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_JoinCancel_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: SpaceStopSharing(anytype.Rpc.Space.StopSharing.Request) returns (anytype.Rpc.Space.StopSharing.Response);
      */
     spaceStopSharing(input: Rpc_Space_StopSharing_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_StopSharing_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_StopSharing_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_StopSharing_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[38];
+        const method = ClientCommands.methods[41];
         return this.makeUnaryRequest<Rpc_Space_StopSharing_Request, Rpc_Space_StopSharing_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_StopSharing_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_StopSharing_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: SpaceRequestApprove(anytype.Rpc.Space.RequestApprove.Request) returns (anytype.Rpc.Space.RequestApprove.Response);
      */
     spaceRequestApprove(input: Rpc_Space_RequestApprove_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_RequestApprove_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_RequestApprove_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_RequestApprove_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[39];
+        const method = ClientCommands.methods[42];
         return this.makeUnaryRequest<Rpc_Space_RequestApprove_Request, Rpc_Space_RequestApprove_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_RequestApprove_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_RequestApprove_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: SpaceRequestDecline(anytype.Rpc.Space.RequestDecline.Request) returns (anytype.Rpc.Space.RequestDecline.Response);
      */
     spaceRequestDecline(input: Rpc_Space_RequestDecline_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_RequestDecline_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_RequestDecline_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_RequestDecline_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[40];
+        const method = ClientCommands.methods[43];
         return this.makeUnaryRequest<Rpc_Space_RequestDecline_Request, Rpc_Space_RequestDecline_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_RequestDecline_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_RequestDecline_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: SpaceLeaveApprove(anytype.Rpc.Space.LeaveApprove.Request) returns (anytype.Rpc.Space.LeaveApprove.Response);
      */
     spaceLeaveApprove(input: Rpc_Space_LeaveApprove_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_LeaveApprove_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_LeaveApprove_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_LeaveApprove_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[41];
+        const method = ClientCommands.methods[44];
         return this.makeUnaryRequest<Rpc_Space_LeaveApprove_Request, Rpc_Space_LeaveApprove_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_LeaveApprove_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_LeaveApprove_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: SpaceMakeShareable(anytype.Rpc.Space.MakeShareable.Request) returns (anytype.Rpc.Space.MakeShareable.Response);
      */
     spaceMakeShareable(input: Rpc_Space_MakeShareable_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_MakeShareable_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_MakeShareable_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_MakeShareable_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[42];
+        const method = ClientCommands.methods[45];
         return this.makeUnaryRequest<Rpc_Space_MakeShareable_Request, Rpc_Space_MakeShareable_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_MakeShareable_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_MakeShareable_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: SpaceParticipantRemove(anytype.Rpc.Space.ParticipantRemove.Request) returns (anytype.Rpc.Space.ParticipantRemove.Response);
      */
     spaceParticipantRemove(input: Rpc_Space_ParticipantRemove_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_ParticipantRemove_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_ParticipantRemove_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_ParticipantRemove_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[43];
+        const method = ClientCommands.methods[46];
         return this.makeUnaryRequest<Rpc_Space_ParticipantRemove_Request, Rpc_Space_ParticipantRemove_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_ParticipantRemove_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_ParticipantRemove_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: SpaceParticipantPermissionsChange(anytype.Rpc.Space.ParticipantPermissionsChange.Request) returns (anytype.Rpc.Space.ParticipantPermissionsChange.Response);
      */
     spaceParticipantPermissionsChange(input: Rpc_Space_ParticipantPermissionsChange_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_ParticipantPermissionsChange_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_ParticipantPermissionsChange_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_ParticipantPermissionsChange_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[44];
+        const method = ClientCommands.methods[47];
         return this.makeUnaryRequest<Rpc_Space_ParticipantPermissionsChange_Request, Rpc_Space_ParticipantPermissionsChange_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_ParticipantPermissionsChange_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_ParticipantPermissionsChange_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+    }
+    /**
+     * @generated from protobuf rpc: SpaceSetOrder(anytype.Rpc.Space.SetOrder.Request) returns (anytype.Rpc.Space.SetOrder.Response);
+     */
+    spaceSetOrder(input: Rpc_Space_SetOrder_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_SetOrder_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_SetOrder_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_SetOrder_Response) => void)): grpc.ClientUnaryCall {
+        const method = ClientCommands.methods[48];
+        return this.makeUnaryRequest<Rpc_Space_SetOrder_Request, Rpc_Space_SetOrder_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_SetOrder_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_SetOrder_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+    }
+    /**
+     * @generated from protobuf rpc: SpaceUnsetOrder(anytype.Rpc.Space.UnsetOrder.Request) returns (anytype.Rpc.Space.UnsetOrder.Response);
+     */
+    spaceUnsetOrder(input: Rpc_Space_UnsetOrder_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_UnsetOrder_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Space_UnsetOrder_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Space_UnsetOrder_Response) => void)): grpc.ClientUnaryCall {
+        const method = ClientCommands.methods[49];
+        return this.makeUnaryRequest<Rpc_Space_UnsetOrder_Request, Rpc_Space_UnsetOrder_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Space_UnsetOrder_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Space_UnsetOrder_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+    }
+    /**
+     * Publishing
+     * ***
+     *
+     * @generated from protobuf rpc: PublishingCreate(anytype.Rpc.Publishing.Create.Request) returns (anytype.Rpc.Publishing.Create.Response);
+     */
+    publishingCreate(input: Rpc_Publishing_Create_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Publishing_Create_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Publishing_Create_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Publishing_Create_Response) => void)): grpc.ClientUnaryCall {
+        const method = ClientCommands.methods[50];
+        return this.makeUnaryRequest<Rpc_Publishing_Create_Request, Rpc_Publishing_Create_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Publishing_Create_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Publishing_Create_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+    }
+    /**
+     * @generated from protobuf rpc: PublishingRemove(anytype.Rpc.Publishing.Remove.Request) returns (anytype.Rpc.Publishing.Remove.Response);
+     */
+    publishingRemove(input: Rpc_Publishing_Remove_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Publishing_Remove_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Publishing_Remove_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Publishing_Remove_Response) => void)): grpc.ClientUnaryCall {
+        const method = ClientCommands.methods[51];
+        return this.makeUnaryRequest<Rpc_Publishing_Remove_Request, Rpc_Publishing_Remove_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Publishing_Remove_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Publishing_Remove_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+    }
+    /**
+     * @generated from protobuf rpc: PublishingList(anytype.Rpc.Publishing.List.Request) returns (anytype.Rpc.Publishing.List.Response);
+     */
+    publishingList(input: Rpc_Publishing_List_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Publishing_List_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Publishing_List_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Publishing_List_Response) => void)): grpc.ClientUnaryCall {
+        const method = ClientCommands.methods[52];
+        return this.makeUnaryRequest<Rpc_Publishing_List_Request, Rpc_Publishing_List_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Publishing_List_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Publishing_List_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+    }
+    /**
+     * @generated from protobuf rpc: PublishingResolveUri(anytype.Rpc.Publishing.ResolveUri.Request) returns (anytype.Rpc.Publishing.ResolveUri.Response);
+     */
+    publishingResolveUri(input: Rpc_Publishing_ResolveUri_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Publishing_ResolveUri_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Publishing_ResolveUri_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Publishing_ResolveUri_Response) => void)): grpc.ClientUnaryCall {
+        const method = ClientCommands.methods[53];
+        return this.makeUnaryRequest<Rpc_Publishing_ResolveUri_Request, Rpc_Publishing_ResolveUri_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Publishing_ResolveUri_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Publishing_ResolveUri_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+    }
+    /**
+     * @generated from protobuf rpc: PublishingGetStatus(anytype.Rpc.Publishing.GetStatus.Request) returns (anytype.Rpc.Publishing.GetStatus.Response);
+     */
+    publishingGetStatus(input: Rpc_Publishing_GetStatus_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Publishing_GetStatus_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Publishing_GetStatus_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Publishing_GetStatus_Response) => void)): grpc.ClientUnaryCall {
+        const method = ClientCommands.methods[54];
+        return this.makeUnaryRequest<Rpc_Publishing_GetStatus_Request, Rpc_Publishing_GetStatus_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Publishing_GetStatus_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Publishing_GetStatus_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * Object
@@ -2840,21 +3033,21 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: ObjectOpen(anytype.Rpc.Object.Open.Request) returns (anytype.Rpc.Object.Open.Response);
      */
     objectOpen(input: Rpc_Object_Open_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Open_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Open_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_Open_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[45];
+        const method = ClientCommands.methods[55];
         return this.makeUnaryRequest<Rpc_Object_Open_Request, Rpc_Object_Open_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_Open_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_Open_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectClose(anytype.Rpc.Object.Close.Request) returns (anytype.Rpc.Object.Close.Response);
      */
     objectClose(input: Rpc_Object_Close_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Close_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Close_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_Close_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[46];
+        const method = ClientCommands.methods[56];
         return this.makeUnaryRequest<Rpc_Object_Close_Request, Rpc_Object_Close_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_Close_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_Close_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectShow(anytype.Rpc.Object.Show.Request) returns (anytype.Rpc.Object.Show.Response);
      */
     objectShow(input: Rpc_Object_Show_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Show_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Show_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_Show_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[47];
+        const method = ClientCommands.methods[57];
         return this.makeUnaryRequest<Rpc_Object_Show_Request, Rpc_Object_Show_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_Show_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_Show_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -2863,21 +3056,21 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: ObjectCreate(anytype.Rpc.Object.Create.Request) returns (anytype.Rpc.Object.Create.Response);
      */
     objectCreate(input: Rpc_Object_Create_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Create_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Create_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_Create_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[48];
+        const method = ClientCommands.methods[58];
         return this.makeUnaryRequest<Rpc_Object_Create_Request, Rpc_Object_Create_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_Create_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_Create_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectCreateBookmark(anytype.Rpc.Object.CreateBookmark.Request) returns (anytype.Rpc.Object.CreateBookmark.Response);
      */
     objectCreateBookmark(input: Rpc_Object_CreateBookmark_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateBookmark_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateBookmark_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateBookmark_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[49];
+        const method = ClientCommands.methods[59];
         return this.makeUnaryRequest<Rpc_Object_CreateBookmark_Request, Rpc_Object_CreateBookmark_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_CreateBookmark_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_CreateBookmark_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectCreateFromUrl(anytype.Rpc.Object.CreateFromUrl.Request) returns (anytype.Rpc.Object.CreateFromUrl.Response);
      */
     objectCreateFromUrl(input: Rpc_Object_CreateFromUrl_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateFromUrl_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateFromUrl_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateFromUrl_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[50];
+        const method = ClientCommands.methods[60];
         return this.makeUnaryRequest<Rpc_Object_CreateFromUrl_Request, Rpc_Object_CreateFromUrl_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_CreateFromUrl_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_CreateFromUrl_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -2886,84 +3079,84 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: ObjectCreateSet(anytype.Rpc.Object.CreateSet.Request) returns (anytype.Rpc.Object.CreateSet.Response);
      */
     objectCreateSet(input: Rpc_Object_CreateSet_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateSet_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateSet_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateSet_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[51];
+        const method = ClientCommands.methods[61];
         return this.makeUnaryRequest<Rpc_Object_CreateSet_Request, Rpc_Object_CreateSet_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_CreateSet_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_CreateSet_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectGraph(anytype.Rpc.Object.Graph.Request) returns (anytype.Rpc.Object.Graph.Response);
      */
     objectGraph(input: Rpc_Object_Graph_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Graph_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Graph_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_Graph_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[52];
+        const method = ClientCommands.methods[62];
         return this.makeUnaryRequest<Rpc_Object_Graph_Request, Rpc_Object_Graph_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_Graph_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_Graph_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectSearch(anytype.Rpc.Object.Search.Request) returns (anytype.Rpc.Object.Search.Response);
      */
     objectSearch(input: Rpc_Object_Search_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Search_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Search_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_Search_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[53];
+        const method = ClientCommands.methods[63];
         return this.makeUnaryRequest<Rpc_Object_Search_Request, Rpc_Object_Search_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_Search_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_Search_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectSearchWithMeta(anytype.Rpc.Object.SearchWithMeta.Request) returns (anytype.Rpc.Object.SearchWithMeta.Response);
      */
     objectSearchWithMeta(input: Rpc_Object_SearchWithMeta_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SearchWithMeta_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SearchWithMeta_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_SearchWithMeta_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[54];
+        const method = ClientCommands.methods[64];
         return this.makeUnaryRequest<Rpc_Object_SearchWithMeta_Request, Rpc_Object_SearchWithMeta_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_SearchWithMeta_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_SearchWithMeta_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectSearchSubscribe(anytype.Rpc.Object.SearchSubscribe.Request) returns (anytype.Rpc.Object.SearchSubscribe.Response);
      */
     objectSearchSubscribe(input: Rpc_Object_SearchSubscribe_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SearchSubscribe_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SearchSubscribe_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_SearchSubscribe_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[55];
+        const method = ClientCommands.methods[65];
         return this.makeUnaryRequest<Rpc_Object_SearchSubscribe_Request, Rpc_Object_SearchSubscribe_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_SearchSubscribe_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_SearchSubscribe_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectCrossSpaceSearchSubscribe(anytype.Rpc.Object.CrossSpaceSearchSubscribe.Request) returns (anytype.Rpc.Object.CrossSpaceSearchSubscribe.Response);
      */
     objectCrossSpaceSearchSubscribe(input: Rpc_Object_CrossSpaceSearchSubscribe_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CrossSpaceSearchSubscribe_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CrossSpaceSearchSubscribe_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_CrossSpaceSearchSubscribe_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[56];
+        const method = ClientCommands.methods[66];
         return this.makeUnaryRequest<Rpc_Object_CrossSpaceSearchSubscribe_Request, Rpc_Object_CrossSpaceSearchSubscribe_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_CrossSpaceSearchSubscribe_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_CrossSpaceSearchSubscribe_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectCrossSpaceSearchUnsubscribe(anytype.Rpc.Object.CrossSpaceSearchUnsubscribe.Request) returns (anytype.Rpc.Object.CrossSpaceSearchUnsubscribe.Response);
      */
     objectCrossSpaceSearchUnsubscribe(input: Rpc_Object_CrossSpaceSearchUnsubscribe_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CrossSpaceSearchUnsubscribe_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CrossSpaceSearchUnsubscribe_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_CrossSpaceSearchUnsubscribe_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[57];
+        const method = ClientCommands.methods[67];
         return this.makeUnaryRequest<Rpc_Object_CrossSpaceSearchUnsubscribe_Request, Rpc_Object_CrossSpaceSearchUnsubscribe_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_CrossSpaceSearchUnsubscribe_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_CrossSpaceSearchUnsubscribe_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectSubscribeIds(anytype.Rpc.Object.SubscribeIds.Request) returns (anytype.Rpc.Object.SubscribeIds.Response);
      */
     objectSubscribeIds(input: Rpc_Object_SubscribeIds_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SubscribeIds_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SubscribeIds_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_SubscribeIds_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[58];
+        const method = ClientCommands.methods[68];
         return this.makeUnaryRequest<Rpc_Object_SubscribeIds_Request, Rpc_Object_SubscribeIds_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_SubscribeIds_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_SubscribeIds_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectGroupsSubscribe(anytype.Rpc.Object.GroupsSubscribe.Request) returns (anytype.Rpc.Object.GroupsSubscribe.Response);
      */
     objectGroupsSubscribe(input: Rpc_Object_GroupsSubscribe_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_GroupsSubscribe_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_GroupsSubscribe_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_GroupsSubscribe_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[59];
+        const method = ClientCommands.methods[69];
         return this.makeUnaryRequest<Rpc_Object_GroupsSubscribe_Request, Rpc_Object_GroupsSubscribe_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_GroupsSubscribe_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_GroupsSubscribe_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectSearchUnsubscribe(anytype.Rpc.Object.SearchUnsubscribe.Request) returns (anytype.Rpc.Object.SearchUnsubscribe.Response);
      */
     objectSearchUnsubscribe(input: Rpc_Object_SearchUnsubscribe_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SearchUnsubscribe_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SearchUnsubscribe_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_SearchUnsubscribe_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[60];
+        const method = ClientCommands.methods[70];
         return this.makeUnaryRequest<Rpc_Object_SearchUnsubscribe_Request, Rpc_Object_SearchUnsubscribe_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_SearchUnsubscribe_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_SearchUnsubscribe_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectSetDetails(anytype.Rpc.Object.SetDetails.Request) returns (anytype.Rpc.Object.SetDetails.Response);
      */
     objectSetDetails(input: Rpc_Object_SetDetails_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SetDetails_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SetDetails_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_SetDetails_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[61];
+        const method = ClientCommands.methods[71];
         return this.makeUnaryRequest<Rpc_Object_SetDetails_Request, Rpc_Object_SetDetails_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_SetDetails_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_SetDetails_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectDuplicate(anytype.Rpc.Object.Duplicate.Request) returns (anytype.Rpc.Object.Duplicate.Response);
      */
     objectDuplicate(input: Rpc_Object_Duplicate_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Duplicate_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Duplicate_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_Duplicate_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[62];
+        const method = ClientCommands.methods[72];
         return this.makeUnaryRequest<Rpc_Object_Duplicate_Request, Rpc_Object_Duplicate_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_Duplicate_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_Duplicate_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -2972,105 +3165,105 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: ObjectSetObjectType(anytype.Rpc.Object.SetObjectType.Request) returns (anytype.Rpc.Object.SetObjectType.Response);
      */
     objectSetObjectType(input: Rpc_Object_SetObjectType_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SetObjectType_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SetObjectType_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_SetObjectType_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[63];
+        const method = ClientCommands.methods[73];
         return this.makeUnaryRequest<Rpc_Object_SetObjectType_Request, Rpc_Object_SetObjectType_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_SetObjectType_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_SetObjectType_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectSetLayout(anytype.Rpc.Object.SetLayout.Request) returns (anytype.Rpc.Object.SetLayout.Response);
      */
     objectSetLayout(input: Rpc_Object_SetLayout_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SetLayout_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SetLayout_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_SetLayout_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[64];
+        const method = ClientCommands.methods[74];
         return this.makeUnaryRequest<Rpc_Object_SetLayout_Request, Rpc_Object_SetLayout_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_SetLayout_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_SetLayout_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectSetInternalFlags(anytype.Rpc.Object.SetInternalFlags.Request) returns (anytype.Rpc.Object.SetInternalFlags.Response);
      */
     objectSetInternalFlags(input: Rpc_Object_SetInternalFlags_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SetInternalFlags_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SetInternalFlags_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_SetInternalFlags_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[65];
+        const method = ClientCommands.methods[75];
         return this.makeUnaryRequest<Rpc_Object_SetInternalFlags_Request, Rpc_Object_SetInternalFlags_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_SetInternalFlags_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_SetInternalFlags_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectSetIsFavorite(anytype.Rpc.Object.SetIsFavorite.Request) returns (anytype.Rpc.Object.SetIsFavorite.Response);
      */
     objectSetIsFavorite(input: Rpc_Object_SetIsFavorite_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SetIsFavorite_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SetIsFavorite_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_SetIsFavorite_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[66];
+        const method = ClientCommands.methods[76];
         return this.makeUnaryRequest<Rpc_Object_SetIsFavorite_Request, Rpc_Object_SetIsFavorite_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_SetIsFavorite_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_SetIsFavorite_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectSetIsArchived(anytype.Rpc.Object.SetIsArchived.Request) returns (anytype.Rpc.Object.SetIsArchived.Response);
      */
     objectSetIsArchived(input: Rpc_Object_SetIsArchived_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SetIsArchived_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SetIsArchived_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_SetIsArchived_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[67];
+        const method = ClientCommands.methods[77];
         return this.makeUnaryRequest<Rpc_Object_SetIsArchived_Request, Rpc_Object_SetIsArchived_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_SetIsArchived_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_SetIsArchived_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectSetSource(anytype.Rpc.Object.SetSource.Request) returns (anytype.Rpc.Object.SetSource.Response);
      */
     objectSetSource(input: Rpc_Object_SetSource_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SetSource_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_SetSource_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_SetSource_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[68];
+        const method = ClientCommands.methods[78];
         return this.makeUnaryRequest<Rpc_Object_SetSource_Request, Rpc_Object_SetSource_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_SetSource_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_SetSource_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectWorkspaceSetDashboard(anytype.Rpc.Object.WorkspaceSetDashboard.Request) returns (anytype.Rpc.Object.WorkspaceSetDashboard.Response);
      */
     objectWorkspaceSetDashboard(input: Rpc_Object_WorkspaceSetDashboard_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_WorkspaceSetDashboard_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_WorkspaceSetDashboard_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_WorkspaceSetDashboard_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[69];
+        const method = ClientCommands.methods[79];
         return this.makeUnaryRequest<Rpc_Object_WorkspaceSetDashboard_Request, Rpc_Object_WorkspaceSetDashboard_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_WorkspaceSetDashboard_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_WorkspaceSetDashboard_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectListDuplicate(anytype.Rpc.Object.ListDuplicate.Request) returns (anytype.Rpc.Object.ListDuplicate.Response);
      */
     objectListDuplicate(input: Rpc_Object_ListDuplicate_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListDuplicate_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListDuplicate_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ListDuplicate_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[70];
+        const method = ClientCommands.methods[80];
         return this.makeUnaryRequest<Rpc_Object_ListDuplicate_Request, Rpc_Object_ListDuplicate_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ListDuplicate_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ListDuplicate_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectListDelete(anytype.Rpc.Object.ListDelete.Request) returns (anytype.Rpc.Object.ListDelete.Response);
      */
     objectListDelete(input: Rpc_Object_ListDelete_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListDelete_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListDelete_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ListDelete_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[71];
+        const method = ClientCommands.methods[81];
         return this.makeUnaryRequest<Rpc_Object_ListDelete_Request, Rpc_Object_ListDelete_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ListDelete_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ListDelete_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectListSetIsArchived(anytype.Rpc.Object.ListSetIsArchived.Request) returns (anytype.Rpc.Object.ListSetIsArchived.Response);
      */
     objectListSetIsArchived(input: Rpc_Object_ListSetIsArchived_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListSetIsArchived_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListSetIsArchived_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ListSetIsArchived_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[72];
+        const method = ClientCommands.methods[82];
         return this.makeUnaryRequest<Rpc_Object_ListSetIsArchived_Request, Rpc_Object_ListSetIsArchived_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ListSetIsArchived_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ListSetIsArchived_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectListSetIsFavorite(anytype.Rpc.Object.ListSetIsFavorite.Request) returns (anytype.Rpc.Object.ListSetIsFavorite.Response);
      */
     objectListSetIsFavorite(input: Rpc_Object_ListSetIsFavorite_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListSetIsFavorite_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListSetIsFavorite_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ListSetIsFavorite_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[73];
+        const method = ClientCommands.methods[83];
         return this.makeUnaryRequest<Rpc_Object_ListSetIsFavorite_Request, Rpc_Object_ListSetIsFavorite_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ListSetIsFavorite_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ListSetIsFavorite_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectListSetObjectType(anytype.Rpc.Object.ListSetObjectType.Request) returns (anytype.Rpc.Object.ListSetObjectType.Response);
      */
     objectListSetObjectType(input: Rpc_Object_ListSetObjectType_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListSetObjectType_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListSetObjectType_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ListSetObjectType_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[74];
+        const method = ClientCommands.methods[84];
         return this.makeUnaryRequest<Rpc_Object_ListSetObjectType_Request, Rpc_Object_ListSetObjectType_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ListSetObjectType_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ListSetObjectType_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectListSetDetails(anytype.Rpc.Object.ListSetDetails.Request) returns (anytype.Rpc.Object.ListSetDetails.Response);
      */
     objectListSetDetails(input: Rpc_Object_ListSetDetails_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListSetDetails_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListSetDetails_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ListSetDetails_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[75];
+        const method = ClientCommands.methods[85];
         return this.makeUnaryRequest<Rpc_Object_ListSetDetails_Request, Rpc_Object_ListSetDetails_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ListSetDetails_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ListSetDetails_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectListModifyDetailValues(anytype.Rpc.Object.ListModifyDetailValues.Request) returns (anytype.Rpc.Object.ListModifyDetailValues.Response);
      */
     objectListModifyDetailValues(input: Rpc_Object_ListModifyDetailValues_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListModifyDetailValues_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListModifyDetailValues_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ListModifyDetailValues_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[76];
+        const method = ClientCommands.methods[86];
         return this.makeUnaryRequest<Rpc_Object_ListModifyDetailValues_Request, Rpc_Object_ListModifyDetailValues_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ListModifyDetailValues_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ListModifyDetailValues_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectApplyTemplate(anytype.Rpc.Object.ApplyTemplate.Request) returns (anytype.Rpc.Object.ApplyTemplate.Response);
      */
     objectApplyTemplate(input: Rpc_Object_ApplyTemplate_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ApplyTemplate_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ApplyTemplate_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ApplyTemplate_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[77];
+        const method = ClientCommands.methods[87];
         return this.makeUnaryRequest<Rpc_Object_ApplyTemplate_Request, Rpc_Object_ApplyTemplate_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ApplyTemplate_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ApplyTemplate_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -3079,92 +3272,99 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: ObjectToSet(anytype.Rpc.Object.ToSet.Request) returns (anytype.Rpc.Object.ToSet.Response);
      */
     objectToSet(input: Rpc_Object_ToSet_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ToSet_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ToSet_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ToSet_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[78];
+        const method = ClientCommands.methods[88];
         return this.makeUnaryRequest<Rpc_Object_ToSet_Request, Rpc_Object_ToSet_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ToSet_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ToSet_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectToCollection(anytype.Rpc.Object.ToCollection.Request) returns (anytype.Rpc.Object.ToCollection.Response);
      */
     objectToCollection(input: Rpc_Object_ToCollection_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ToCollection_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ToCollection_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ToCollection_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[79];
+        const method = ClientCommands.methods[89];
         return this.makeUnaryRequest<Rpc_Object_ToCollection_Request, Rpc_Object_ToCollection_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ToCollection_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ToCollection_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectShareByLink(anytype.Rpc.Object.ShareByLink.Request) returns (anytype.Rpc.Object.ShareByLink.Response);
      */
     objectShareByLink(input: Rpc_Object_ShareByLink_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ShareByLink_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ShareByLink_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ShareByLink_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[80];
+        const method = ClientCommands.methods[90];
         return this.makeUnaryRequest<Rpc_Object_ShareByLink_Request, Rpc_Object_ShareByLink_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ShareByLink_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ShareByLink_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectUndo(anytype.Rpc.Object.Undo.Request) returns (anytype.Rpc.Object.Undo.Response);
      */
     objectUndo(input: Rpc_Object_Undo_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Undo_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Undo_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_Undo_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[81];
+        const method = ClientCommands.methods[91];
         return this.makeUnaryRequest<Rpc_Object_Undo_Request, Rpc_Object_Undo_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_Undo_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_Undo_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectRedo(anytype.Rpc.Object.Redo.Request) returns (anytype.Rpc.Object.Redo.Response);
      */
     objectRedo(input: Rpc_Object_Redo_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Redo_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Redo_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_Redo_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[82];
+        const method = ClientCommands.methods[92];
         return this.makeUnaryRequest<Rpc_Object_Redo_Request, Rpc_Object_Redo_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_Redo_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_Redo_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectListExport(anytype.Rpc.Object.ListExport.Request) returns (anytype.Rpc.Object.ListExport.Response);
      */
     objectListExport(input: Rpc_Object_ListExport_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListExport_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ListExport_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ListExport_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[83];
+        const method = ClientCommands.methods[93];
         return this.makeUnaryRequest<Rpc_Object_ListExport_Request, Rpc_Object_ListExport_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ListExport_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ListExport_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectBookmarkFetch(anytype.Rpc.Object.BookmarkFetch.Request) returns (anytype.Rpc.Object.BookmarkFetch.Response);
      */
     objectBookmarkFetch(input: Rpc_Object_BookmarkFetch_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_BookmarkFetch_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_BookmarkFetch_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_BookmarkFetch_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[84];
+        const method = ClientCommands.methods[94];
         return this.makeUnaryRequest<Rpc_Object_BookmarkFetch_Request, Rpc_Object_BookmarkFetch_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_BookmarkFetch_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_BookmarkFetch_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectToBookmark(anytype.Rpc.Object.ToBookmark.Request) returns (anytype.Rpc.Object.ToBookmark.Response);
      */
     objectToBookmark(input: Rpc_Object_ToBookmark_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ToBookmark_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ToBookmark_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ToBookmark_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[85];
+        const method = ClientCommands.methods[95];
         return this.makeUnaryRequest<Rpc_Object_ToBookmark_Request, Rpc_Object_ToBookmark_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ToBookmark_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ToBookmark_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectImport(anytype.Rpc.Object.Import.Request) returns (anytype.Rpc.Object.Import.Response);
      */
     objectImport(input: Rpc_Object_Import_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Import_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Import_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_Import_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[86];
+        const method = ClientCommands.methods[96];
         return this.makeUnaryRequest<Rpc_Object_Import_Request, Rpc_Object_Import_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_Import_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_Import_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectImportList(anytype.Rpc.Object.ImportList.Request) returns (anytype.Rpc.Object.ImportList.Response);
      */
     objectImportList(input: Rpc_Object_ImportList_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ImportList_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ImportList_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ImportList_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[87];
+        const method = ClientCommands.methods[97];
         return this.makeUnaryRequest<Rpc_Object_ImportList_Request, Rpc_Object_ImportList_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ImportList_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ImportList_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectImportNotionValidateToken(anytype.Rpc.Object.Import.Notion.ValidateToken.Request) returns (anytype.Rpc.Object.Import.Notion.ValidateToken.Response);
      */
     objectImportNotionValidateToken(input: Rpc_Object_Import_Notion_ValidateToken_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Import_Notion_ValidateToken_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_Import_Notion_ValidateToken_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_Import_Notion_ValidateToken_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[88];
+        const method = ClientCommands.methods[98];
         return this.makeUnaryRequest<Rpc_Object_Import_Notion_ValidateToken_Request, Rpc_Object_Import_Notion_ValidateToken_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_Import_Notion_ValidateToken_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_Import_Notion_ValidateToken_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectImportUseCase(anytype.Rpc.Object.ImportUseCase.Request) returns (anytype.Rpc.Object.ImportUseCase.Response);
      */
     objectImportUseCase(input: Rpc_Object_ImportUseCase_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ImportUseCase_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ImportUseCase_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ImportUseCase_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[89];
+        const method = ClientCommands.methods[99];
         return this.makeUnaryRequest<Rpc_Object_ImportUseCase_Request, Rpc_Object_ImportUseCase_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ImportUseCase_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ImportUseCase_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectImportExperience(anytype.Rpc.Object.ImportExperience.Request) returns (anytype.Rpc.Object.ImportExperience.Response);
      */
     objectImportExperience(input: Rpc_Object_ImportExperience_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ImportExperience_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ImportExperience_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ImportExperience_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[90];
+        const method = ClientCommands.methods[100];
         return this.makeUnaryRequest<Rpc_Object_ImportExperience_Request, Rpc_Object_ImportExperience_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ImportExperience_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ImportExperience_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+    }
+    /**
+     * @generated from protobuf rpc: ObjectDateByTimestamp(anytype.Rpc.Object.DateByTimestamp.Request) returns (anytype.Rpc.Object.DateByTimestamp.Response);
+     */
+    objectDateByTimestamp(input: Rpc_Object_DateByTimestamp_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_DateByTimestamp_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_DateByTimestamp_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_DateByTimestamp_Response) => void)): grpc.ClientUnaryCall {
+        const method = ClientCommands.methods[101];
+        return this.makeUnaryRequest<Rpc_Object_DateByTimestamp_Request, Rpc_Object_DateByTimestamp_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_DateByTimestamp_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_DateByTimestamp_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * Collections
@@ -3173,21 +3373,21 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: ObjectCollectionAdd(anytype.Rpc.ObjectCollection.Add.Request) returns (anytype.Rpc.ObjectCollection.Add.Response);
      */
     objectCollectionAdd(input: Rpc_ObjectCollection_Add_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectCollection_Add_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectCollection_Add_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_ObjectCollection_Add_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[91];
+        const method = ClientCommands.methods[102];
         return this.makeUnaryRequest<Rpc_ObjectCollection_Add_Request, Rpc_ObjectCollection_Add_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_ObjectCollection_Add_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_ObjectCollection_Add_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectCollectionRemove(anytype.Rpc.ObjectCollection.Remove.Request) returns (anytype.Rpc.ObjectCollection.Remove.Response);
      */
     objectCollectionRemove(input: Rpc_ObjectCollection_Remove_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectCollection_Remove_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectCollection_Remove_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_ObjectCollection_Remove_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[92];
+        const method = ClientCommands.methods[103];
         return this.makeUnaryRequest<Rpc_ObjectCollection_Remove_Request, Rpc_ObjectCollection_Remove_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_ObjectCollection_Remove_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_ObjectCollection_Remove_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectCollectionSort(anytype.Rpc.ObjectCollection.Sort.Request) returns (anytype.Rpc.ObjectCollection.Sort.Response);
      */
     objectCollectionSort(input: Rpc_ObjectCollection_Sort_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectCollection_Sort_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectCollection_Sort_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_ObjectCollection_Sort_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[93];
+        const method = ClientCommands.methods[104];
         return this.makeUnaryRequest<Rpc_ObjectCollection_Sort_Request, Rpc_ObjectCollection_Sort_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_ObjectCollection_Sort_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_ObjectCollection_Sort_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -3197,35 +3397,35 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: ObjectCreateRelation(anytype.Rpc.Object.CreateRelation.Request) returns (anytype.Rpc.Object.CreateRelation.Response);
      */
     objectCreateRelation(input: Rpc_Object_CreateRelation_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateRelation_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateRelation_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateRelation_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[94];
+        const method = ClientCommands.methods[105];
         return this.makeUnaryRequest<Rpc_Object_CreateRelation_Request, Rpc_Object_CreateRelation_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_CreateRelation_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_CreateRelation_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectCreateRelationOption(anytype.Rpc.Object.CreateRelationOption.Request) returns (anytype.Rpc.Object.CreateRelationOption.Response);
      */
     objectCreateRelationOption(input: Rpc_Object_CreateRelationOption_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateRelationOption_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateRelationOption_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateRelationOption_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[95];
+        const method = ClientCommands.methods[106];
         return this.makeUnaryRequest<Rpc_Object_CreateRelationOption_Request, Rpc_Object_CreateRelationOption_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_CreateRelationOption_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_CreateRelationOption_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: RelationListRemoveOption(anytype.Rpc.Relation.ListRemoveOption.Request) returns (anytype.Rpc.Relation.ListRemoveOption.Response);
      */
     relationListRemoveOption(input: Rpc_Relation_ListRemoveOption_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Relation_ListRemoveOption_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Relation_ListRemoveOption_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Relation_ListRemoveOption_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[96];
+        const method = ClientCommands.methods[107];
         return this.makeUnaryRequest<Rpc_Relation_ListRemoveOption_Request, Rpc_Relation_ListRemoveOption_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Relation_ListRemoveOption_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Relation_ListRemoveOption_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: RelationOptions(anytype.Rpc.Relation.Options.Request) returns (anytype.Rpc.Relation.Options.Response);
      */
     relationOptions(input: Rpc_Relation_Options_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Relation_Options_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Relation_Options_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Relation_Options_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[97];
+        const method = ClientCommands.methods[108];
         return this.makeUnaryRequest<Rpc_Relation_Options_Request, Rpc_Relation_Options_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Relation_Options_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Relation_Options_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: RelationListWithValue(anytype.Rpc.Relation.ListWithValue.Request) returns (anytype.Rpc.Relation.ListWithValue.Response);
      */
     relationListWithValue(input: Rpc_Relation_ListWithValue_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Relation_ListWithValue_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Relation_ListWithValue_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Relation_ListWithValue_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[98];
+        const method = ClientCommands.methods[109];
         return this.makeUnaryRequest<Rpc_Relation_ListWithValue_Request, Rpc_Relation_ListWithValue_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Relation_ListWithValue_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Relation_ListWithValue_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -3235,35 +3435,35 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: ObjectRelationAdd(anytype.Rpc.ObjectRelation.Add.Request) returns (anytype.Rpc.ObjectRelation.Add.Response);
      */
     objectRelationAdd(input: Rpc_ObjectRelation_Add_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectRelation_Add_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectRelation_Add_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_ObjectRelation_Add_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[99];
+        const method = ClientCommands.methods[110];
         return this.makeUnaryRequest<Rpc_ObjectRelation_Add_Request, Rpc_ObjectRelation_Add_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_ObjectRelation_Add_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_ObjectRelation_Add_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectRelationDelete(anytype.Rpc.ObjectRelation.Delete.Request) returns (anytype.Rpc.ObjectRelation.Delete.Response);
      */
     objectRelationDelete(input: Rpc_ObjectRelation_Delete_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectRelation_Delete_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectRelation_Delete_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_ObjectRelation_Delete_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[100];
+        const method = ClientCommands.methods[111];
         return this.makeUnaryRequest<Rpc_ObjectRelation_Delete_Request, Rpc_ObjectRelation_Delete_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_ObjectRelation_Delete_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_ObjectRelation_Delete_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectRelationAddFeatured(anytype.Rpc.ObjectRelation.AddFeatured.Request) returns (anytype.Rpc.ObjectRelation.AddFeatured.Response);
      */
     objectRelationAddFeatured(input: Rpc_ObjectRelation_AddFeatured_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectRelation_AddFeatured_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectRelation_AddFeatured_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_ObjectRelation_AddFeatured_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[101];
+        const method = ClientCommands.methods[112];
         return this.makeUnaryRequest<Rpc_ObjectRelation_AddFeatured_Request, Rpc_ObjectRelation_AddFeatured_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_ObjectRelation_AddFeatured_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_ObjectRelation_AddFeatured_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectRelationRemoveFeatured(anytype.Rpc.ObjectRelation.RemoveFeatured.Request) returns (anytype.Rpc.ObjectRelation.RemoveFeatured.Response);
      */
     objectRelationRemoveFeatured(input: Rpc_ObjectRelation_RemoveFeatured_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectRelation_RemoveFeatured_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectRelation_RemoveFeatured_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_ObjectRelation_RemoveFeatured_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[102];
+        const method = ClientCommands.methods[113];
         return this.makeUnaryRequest<Rpc_ObjectRelation_RemoveFeatured_Request, Rpc_ObjectRelation_RemoveFeatured_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_ObjectRelation_RemoveFeatured_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_ObjectRelation_RemoveFeatured_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectRelationListAvailable(anytype.Rpc.ObjectRelation.ListAvailable.Request) returns (anytype.Rpc.ObjectRelation.ListAvailable.Response);
      */
     objectRelationListAvailable(input: Rpc_ObjectRelation_ListAvailable_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectRelation_ListAvailable_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectRelation_ListAvailable_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_ObjectRelation_ListAvailable_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[103];
+        const method = ClientCommands.methods[114];
         return this.makeUnaryRequest<Rpc_ObjectRelation_ListAvailable_Request, Rpc_ObjectRelation_ListAvailable_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_ObjectRelation_ListAvailable_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_ObjectRelation_ListAvailable_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -3273,49 +3473,49 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: ObjectCreateObjectType(anytype.Rpc.Object.CreateObjectType.Request) returns (anytype.Rpc.Object.CreateObjectType.Response);
      */
     objectCreateObjectType(input: Rpc_Object_CreateObjectType_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateObjectType_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateObjectType_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_CreateObjectType_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[104];
+        const method = ClientCommands.methods[115];
         return this.makeUnaryRequest<Rpc_Object_CreateObjectType_Request, Rpc_Object_CreateObjectType_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_CreateObjectType_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_CreateObjectType_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectTypeRelationAdd(anytype.Rpc.ObjectType.Relation.Add.Request) returns (anytype.Rpc.ObjectType.Relation.Add.Response);
      */
     objectTypeRelationAdd(input: Rpc_ObjectType_Relation_Add_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectType_Relation_Add_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectType_Relation_Add_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_ObjectType_Relation_Add_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[105];
+        const method = ClientCommands.methods[116];
         return this.makeUnaryRequest<Rpc_ObjectType_Relation_Add_Request, Rpc_ObjectType_Relation_Add_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_ObjectType_Relation_Add_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_ObjectType_Relation_Add_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectTypeRelationRemove(anytype.Rpc.ObjectType.Relation.Remove.Request) returns (anytype.Rpc.ObjectType.Relation.Remove.Response);
      */
     objectTypeRelationRemove(input: Rpc_ObjectType_Relation_Remove_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectType_Relation_Remove_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_ObjectType_Relation_Remove_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_ObjectType_Relation_Remove_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[106];
+        const method = ClientCommands.methods[117];
         return this.makeUnaryRequest<Rpc_ObjectType_Relation_Remove_Request, Rpc_ObjectType_Relation_Remove_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_ObjectType_Relation_Remove_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_ObjectType_Relation_Remove_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: HistoryShowVersion(anytype.Rpc.History.ShowVersion.Request) returns (anytype.Rpc.History.ShowVersion.Response);
      */
     historyShowVersion(input: Rpc_History_ShowVersion_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_History_ShowVersion_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_History_ShowVersion_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_History_ShowVersion_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[107];
+        const method = ClientCommands.methods[118];
         return this.makeUnaryRequest<Rpc_History_ShowVersion_Request, Rpc_History_ShowVersion_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_History_ShowVersion_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_History_ShowVersion_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: HistoryGetVersions(anytype.Rpc.History.GetVersions.Request) returns (anytype.Rpc.History.GetVersions.Response);
      */
     historyGetVersions(input: Rpc_History_GetVersions_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_History_GetVersions_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_History_GetVersions_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_History_GetVersions_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[108];
+        const method = ClientCommands.methods[119];
         return this.makeUnaryRequest<Rpc_History_GetVersions_Request, Rpc_History_GetVersions_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_History_GetVersions_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_History_GetVersions_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: HistorySetVersion(anytype.Rpc.History.SetVersion.Request) returns (anytype.Rpc.History.SetVersion.Response);
      */
     historySetVersion(input: Rpc_History_SetVersion_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_History_SetVersion_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_History_SetVersion_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_History_SetVersion_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[109];
+        const method = ClientCommands.methods[120];
         return this.makeUnaryRequest<Rpc_History_SetVersion_Request, Rpc_History_SetVersion_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_History_SetVersion_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_History_SetVersion_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: HistoryDiffVersions(anytype.Rpc.History.DiffVersions.Request) returns (anytype.Rpc.History.DiffVersions.Response);
      */
     historyDiffVersions(input: Rpc_History_DiffVersions_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_History_DiffVersions_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_History_DiffVersions_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_History_DiffVersions_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[110];
+        const method = ClientCommands.methods[121];
         return this.makeUnaryRequest<Rpc_History_DiffVersions_Request, Rpc_History_DiffVersions_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_History_DiffVersions_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_History_DiffVersions_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -3325,105 +3525,105 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: FileSpaceOffload(anytype.Rpc.File.SpaceOffload.Request) returns (anytype.Rpc.File.SpaceOffload.Response);
      */
     fileSpaceOffload(input: Rpc_File_SpaceOffload_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_SpaceOffload_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_SpaceOffload_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_File_SpaceOffload_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[111];
+        const method = ClientCommands.methods[122];
         return this.makeUnaryRequest<Rpc_File_SpaceOffload_Request, Rpc_File_SpaceOffload_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_File_SpaceOffload_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_File_SpaceOffload_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: FileReconcile(anytype.Rpc.File.Reconcile.Request) returns (anytype.Rpc.File.Reconcile.Response);
      */
     fileReconcile(input: Rpc_File_Reconcile_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_Reconcile_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_Reconcile_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_File_Reconcile_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[112];
+        const method = ClientCommands.methods[123];
         return this.makeUnaryRequest<Rpc_File_Reconcile_Request, Rpc_File_Reconcile_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_File_Reconcile_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_File_Reconcile_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: FileListOffload(anytype.Rpc.File.ListOffload.Request) returns (anytype.Rpc.File.ListOffload.Response);
      */
     fileListOffload(input: Rpc_File_ListOffload_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_ListOffload_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_ListOffload_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_File_ListOffload_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[113];
+        const method = ClientCommands.methods[124];
         return this.makeUnaryRequest<Rpc_File_ListOffload_Request, Rpc_File_ListOffload_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_File_ListOffload_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_File_ListOffload_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: FileUpload(anytype.Rpc.File.Upload.Request) returns (anytype.Rpc.File.Upload.Response);
      */
     fileUpload(input: Rpc_File_Upload_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_Upload_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_Upload_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_File_Upload_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[114];
+        const method = ClientCommands.methods[125];
         return this.makeUnaryRequest<Rpc_File_Upload_Request, Rpc_File_Upload_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_File_Upload_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_File_Upload_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: FileDownload(anytype.Rpc.File.Download.Request) returns (anytype.Rpc.File.Download.Response);
      */
     fileDownload(input: Rpc_File_Download_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_Download_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_Download_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_File_Download_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[115];
+        const method = ClientCommands.methods[126];
         return this.makeUnaryRequest<Rpc_File_Download_Request, Rpc_File_Download_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_File_Download_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_File_Download_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: FileDrop(anytype.Rpc.File.Drop.Request) returns (anytype.Rpc.File.Drop.Response);
      */
     fileDrop(input: Rpc_File_Drop_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_Drop_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_Drop_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_File_Drop_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[116];
+        const method = ClientCommands.methods[127];
         return this.makeUnaryRequest<Rpc_File_Drop_Request, Rpc_File_Drop_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_File_Drop_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_File_Drop_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: FileSpaceUsage(anytype.Rpc.File.SpaceUsage.Request) returns (anytype.Rpc.File.SpaceUsage.Response);
      */
     fileSpaceUsage(input: Rpc_File_SpaceUsage_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_SpaceUsage_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_SpaceUsage_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_File_SpaceUsage_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[117];
+        const method = ClientCommands.methods[128];
         return this.makeUnaryRequest<Rpc_File_SpaceUsage_Request, Rpc_File_SpaceUsage_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_File_SpaceUsage_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_File_SpaceUsage_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: FileNodeUsage(anytype.Rpc.File.NodeUsage.Request) returns (anytype.Rpc.File.NodeUsage.Response);
      */
     fileNodeUsage(input: Rpc_File_NodeUsage_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_NodeUsage_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_File_NodeUsage_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_File_NodeUsage_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[118];
+        const method = ClientCommands.methods[129];
         return this.makeUnaryRequest<Rpc_File_NodeUsage_Request, Rpc_File_NodeUsage_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_File_NodeUsage_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_File_NodeUsage_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: NavigationListObjects(anytype.Rpc.Navigation.ListObjects.Request) returns (anytype.Rpc.Navigation.ListObjects.Response);
      */
     navigationListObjects(input: Rpc_Navigation_ListObjects_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Navigation_ListObjects_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Navigation_ListObjects_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Navigation_ListObjects_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[119];
+        const method = ClientCommands.methods[130];
         return this.makeUnaryRequest<Rpc_Navigation_ListObjects_Request, Rpc_Navigation_ListObjects_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Navigation_ListObjects_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Navigation_ListObjects_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: NavigationGetObjectInfoWithLinks(anytype.Rpc.Navigation.GetObjectInfoWithLinks.Request) returns (anytype.Rpc.Navigation.GetObjectInfoWithLinks.Response);
      */
     navigationGetObjectInfoWithLinks(input: Rpc_Navigation_GetObjectInfoWithLinks_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Navigation_GetObjectInfoWithLinks_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Navigation_GetObjectInfoWithLinks_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Navigation_GetObjectInfoWithLinks_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[120];
+        const method = ClientCommands.methods[131];
         return this.makeUnaryRequest<Rpc_Navigation_GetObjectInfoWithLinks_Request, Rpc_Navigation_GetObjectInfoWithLinks_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Navigation_GetObjectInfoWithLinks_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Navigation_GetObjectInfoWithLinks_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: TemplateCreateFromObject(anytype.Rpc.Template.CreateFromObject.Request) returns (anytype.Rpc.Template.CreateFromObject.Response);
      */
     templateCreateFromObject(input: Rpc_Template_CreateFromObject_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Template_CreateFromObject_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Template_CreateFromObject_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Template_CreateFromObject_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[121];
+        const method = ClientCommands.methods[132];
         return this.makeUnaryRequest<Rpc_Template_CreateFromObject_Request, Rpc_Template_CreateFromObject_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Template_CreateFromObject_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Template_CreateFromObject_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: TemplateClone(anytype.Rpc.Template.Clone.Request) returns (anytype.Rpc.Template.Clone.Response);
      */
     templateClone(input: Rpc_Template_Clone_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Template_Clone_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Template_Clone_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Template_Clone_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[122];
+        const method = ClientCommands.methods[133];
         return this.makeUnaryRequest<Rpc_Template_Clone_Request, Rpc_Template_Clone_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Template_Clone_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Template_Clone_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: TemplateExportAll(anytype.Rpc.Template.ExportAll.Request) returns (anytype.Rpc.Template.ExportAll.Response);
      */
     templateExportAll(input: Rpc_Template_ExportAll_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Template_ExportAll_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Template_ExportAll_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Template_ExportAll_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[123];
+        const method = ClientCommands.methods[134];
         return this.makeUnaryRequest<Rpc_Template_ExportAll_Request, Rpc_Template_ExportAll_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Template_ExportAll_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Template_ExportAll_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: LinkPreview(anytype.Rpc.LinkPreview.Request) returns (anytype.Rpc.LinkPreview.Response);
      */
     linkPreview(input: Rpc_LinkPreview_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_LinkPreview_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_LinkPreview_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_LinkPreview_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[124];
+        const method = ClientCommands.methods[135];
         return this.makeUnaryRequest<Rpc_LinkPreview_Request, Rpc_LinkPreview_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_LinkPreview_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_LinkPreview_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: UnsplashSearch(anytype.Rpc.Unsplash.Search.Request) returns (anytype.Rpc.Unsplash.Search.Response);
      */
     unsplashSearch(input: Rpc_Unsplash_Search_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Unsplash_Search_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Unsplash_Search_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Unsplash_Search_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[125];
+        const method = ClientCommands.methods[136];
         return this.makeUnaryRequest<Rpc_Unsplash_Search_Request, Rpc_Unsplash_Search_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Unsplash_Search_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Unsplash_Search_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -3433,21 +3633,21 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: UnsplashDownload(anytype.Rpc.Unsplash.Download.Request) returns (anytype.Rpc.Unsplash.Download.Response);
      */
     unsplashDownload(input: Rpc_Unsplash_Download_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Unsplash_Download_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Unsplash_Download_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Unsplash_Download_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[126];
+        const method = ClientCommands.methods[137];
         return this.makeUnaryRequest<Rpc_Unsplash_Download_Request, Rpc_Unsplash_Download_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Unsplash_Download_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Unsplash_Download_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: GalleryDownloadManifest(anytype.Rpc.Gallery.DownloadManifest.Request) returns (anytype.Rpc.Gallery.DownloadManifest.Response);
      */
     galleryDownloadManifest(input: Rpc_Gallery_DownloadManifest_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Gallery_DownloadManifest_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Gallery_DownloadManifest_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Gallery_DownloadManifest_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[127];
+        const method = ClientCommands.methods[138];
         return this.makeUnaryRequest<Rpc_Gallery_DownloadManifest_Request, Rpc_Gallery_DownloadManifest_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Gallery_DownloadManifest_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Gallery_DownloadManifest_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: GalleryDownloadIndex(anytype.Rpc.Gallery.DownloadIndex.Request) returns (anytype.Rpc.Gallery.DownloadIndex.Response);
      */
     galleryDownloadIndex(input: Rpc_Gallery_DownloadIndex_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Gallery_DownloadIndex_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Gallery_DownloadIndex_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Gallery_DownloadIndex_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[128];
+        const method = ClientCommands.methods[139];
         return this.makeUnaryRequest<Rpc_Gallery_DownloadIndex_Request, Rpc_Gallery_DownloadIndex_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Gallery_DownloadIndex_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Gallery_DownloadIndex_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -3457,154 +3657,154 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: BlockUpload(anytype.Rpc.Block.Upload.Request) returns (anytype.Rpc.Block.Upload.Response);
      */
     blockUpload(input: Rpc_Block_Upload_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Upload_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Upload_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_Upload_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[129];
+        const method = ClientCommands.methods[140];
         return this.makeUnaryRequest<Rpc_Block_Upload_Request, Rpc_Block_Upload_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_Upload_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_Upload_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockReplace(anytype.Rpc.Block.Replace.Request) returns (anytype.Rpc.Block.Replace.Response);
      */
     blockReplace(input: Rpc_Block_Replace_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Replace_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Replace_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_Replace_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[130];
+        const method = ClientCommands.methods[141];
         return this.makeUnaryRequest<Rpc_Block_Replace_Request, Rpc_Block_Replace_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_Replace_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_Replace_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockCreate(anytype.Rpc.Block.Create.Request) returns (anytype.Rpc.Block.Create.Response);
      */
     blockCreate(input: Rpc_Block_Create_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Create_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Create_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_Create_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[131];
+        const method = ClientCommands.methods[142];
         return this.makeUnaryRequest<Rpc_Block_Create_Request, Rpc_Block_Create_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_Create_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_Create_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockSplit(anytype.Rpc.Block.Split.Request) returns (anytype.Rpc.Block.Split.Response);
      */
     blockSplit(input: Rpc_Block_Split_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Split_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Split_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_Split_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[132];
+        const method = ClientCommands.methods[143];
         return this.makeUnaryRequest<Rpc_Block_Split_Request, Rpc_Block_Split_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_Split_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_Split_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockMerge(anytype.Rpc.Block.Merge.Request) returns (anytype.Rpc.Block.Merge.Response);
      */
     blockMerge(input: Rpc_Block_Merge_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Merge_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Merge_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_Merge_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[133];
+        const method = ClientCommands.methods[144];
         return this.makeUnaryRequest<Rpc_Block_Merge_Request, Rpc_Block_Merge_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_Merge_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_Merge_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockCopy(anytype.Rpc.Block.Copy.Request) returns (anytype.Rpc.Block.Copy.Response);
      */
     blockCopy(input: Rpc_Block_Copy_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Copy_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Copy_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_Copy_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[134];
+        const method = ClientCommands.methods[145];
         return this.makeUnaryRequest<Rpc_Block_Copy_Request, Rpc_Block_Copy_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_Copy_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_Copy_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockPaste(anytype.Rpc.Block.Paste.Request) returns (anytype.Rpc.Block.Paste.Response);
      */
     blockPaste(input: Rpc_Block_Paste_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Paste_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Paste_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_Paste_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[135];
+        const method = ClientCommands.methods[146];
         return this.makeUnaryRequest<Rpc_Block_Paste_Request, Rpc_Block_Paste_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_Paste_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_Paste_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockCut(anytype.Rpc.Block.Cut.Request) returns (anytype.Rpc.Block.Cut.Response);
      */
     blockCut(input: Rpc_Block_Cut_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Cut_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Cut_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_Cut_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[136];
+        const method = ClientCommands.methods[147];
         return this.makeUnaryRequest<Rpc_Block_Cut_Request, Rpc_Block_Cut_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_Cut_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_Cut_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockSetFields(anytype.Rpc.Block.SetFields.Request) returns (anytype.Rpc.Block.SetFields.Response);
      */
     blockSetFields(input: Rpc_Block_SetFields_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_SetFields_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_SetFields_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_SetFields_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[137];
+        const method = ClientCommands.methods[148];
         return this.makeUnaryRequest<Rpc_Block_SetFields_Request, Rpc_Block_SetFields_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_SetFields_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_SetFields_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockExport(anytype.Rpc.Block.Export.Request) returns (anytype.Rpc.Block.Export.Response);
      */
     blockExport(input: Rpc_Block_Export_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Export_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Export_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_Export_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[138];
+        const method = ClientCommands.methods[149];
         return this.makeUnaryRequest<Rpc_Block_Export_Request, Rpc_Block_Export_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_Export_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_Export_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockSetCarriage(anytype.Rpc.Block.SetCarriage.Request) returns (anytype.Rpc.Block.SetCarriage.Response);
      */
     blockSetCarriage(input: Rpc_Block_SetCarriage_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_SetCarriage_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_SetCarriage_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_SetCarriage_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[139];
+        const method = ClientCommands.methods[150];
         return this.makeUnaryRequest<Rpc_Block_SetCarriage_Request, Rpc_Block_SetCarriage_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_SetCarriage_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_SetCarriage_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockPreview(anytype.Rpc.Block.Preview.Request) returns (anytype.Rpc.Block.Preview.Response);
      */
     blockPreview(input: Rpc_Block_Preview_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Preview_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_Preview_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_Preview_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[140];
+        const method = ClientCommands.methods[151];
         return this.makeUnaryRequest<Rpc_Block_Preview_Request, Rpc_Block_Preview_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_Preview_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_Preview_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockListDelete(anytype.Rpc.Block.ListDelete.Request) returns (anytype.Rpc.Block.ListDelete.Response);
      */
     blockListDelete(input: Rpc_Block_ListDelete_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListDelete_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListDelete_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_ListDelete_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[141];
+        const method = ClientCommands.methods[152];
         return this.makeUnaryRequest<Rpc_Block_ListDelete_Request, Rpc_Block_ListDelete_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_ListDelete_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_ListDelete_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockListMoveToExistingObject(anytype.Rpc.Block.ListMoveToExistingObject.Request) returns (anytype.Rpc.Block.ListMoveToExistingObject.Response);
      */
     blockListMoveToExistingObject(input: Rpc_Block_ListMoveToExistingObject_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListMoveToExistingObject_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListMoveToExistingObject_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_ListMoveToExistingObject_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[142];
+        const method = ClientCommands.methods[153];
         return this.makeUnaryRequest<Rpc_Block_ListMoveToExistingObject_Request, Rpc_Block_ListMoveToExistingObject_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_ListMoveToExistingObject_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_ListMoveToExistingObject_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockListMoveToNewObject(anytype.Rpc.Block.ListMoveToNewObject.Request) returns (anytype.Rpc.Block.ListMoveToNewObject.Response);
      */
     blockListMoveToNewObject(input: Rpc_Block_ListMoveToNewObject_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListMoveToNewObject_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListMoveToNewObject_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_ListMoveToNewObject_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[143];
+        const method = ClientCommands.methods[154];
         return this.makeUnaryRequest<Rpc_Block_ListMoveToNewObject_Request, Rpc_Block_ListMoveToNewObject_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_ListMoveToNewObject_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_ListMoveToNewObject_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockListConvertToObjects(anytype.Rpc.Block.ListConvertToObjects.Request) returns (anytype.Rpc.Block.ListConvertToObjects.Response);
      */
     blockListConvertToObjects(input: Rpc_Block_ListConvertToObjects_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListConvertToObjects_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListConvertToObjects_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_ListConvertToObjects_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[144];
+        const method = ClientCommands.methods[155];
         return this.makeUnaryRequest<Rpc_Block_ListConvertToObjects_Request, Rpc_Block_ListConvertToObjects_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_ListConvertToObjects_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_ListConvertToObjects_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockListSetFields(anytype.Rpc.Block.ListSetFields.Request) returns (anytype.Rpc.Block.ListSetFields.Response);
      */
     blockListSetFields(input: Rpc_Block_ListSetFields_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListSetFields_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListSetFields_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_ListSetFields_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[145];
+        const method = ClientCommands.methods[156];
         return this.makeUnaryRequest<Rpc_Block_ListSetFields_Request, Rpc_Block_ListSetFields_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_ListSetFields_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_ListSetFields_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockListDuplicate(anytype.Rpc.Block.ListDuplicate.Request) returns (anytype.Rpc.Block.ListDuplicate.Response);
      */
     blockListDuplicate(input: Rpc_Block_ListDuplicate_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListDuplicate_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListDuplicate_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_ListDuplicate_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[146];
+        const method = ClientCommands.methods[157];
         return this.makeUnaryRequest<Rpc_Block_ListDuplicate_Request, Rpc_Block_ListDuplicate_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_ListDuplicate_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_ListDuplicate_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockListSetBackgroundColor(anytype.Rpc.Block.ListSetBackgroundColor.Request) returns (anytype.Rpc.Block.ListSetBackgroundColor.Response);
      */
     blockListSetBackgroundColor(input: Rpc_Block_ListSetBackgroundColor_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListSetBackgroundColor_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListSetBackgroundColor_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_ListSetBackgroundColor_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[147];
+        const method = ClientCommands.methods[158];
         return this.makeUnaryRequest<Rpc_Block_ListSetBackgroundColor_Request, Rpc_Block_ListSetBackgroundColor_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_ListSetBackgroundColor_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_ListSetBackgroundColor_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockListSetAlign(anytype.Rpc.Block.ListSetAlign.Request) returns (anytype.Rpc.Block.ListSetAlign.Response);
      */
     blockListSetAlign(input: Rpc_Block_ListSetAlign_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListSetAlign_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListSetAlign_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_ListSetAlign_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[148];
+        const method = ClientCommands.methods[159];
         return this.makeUnaryRequest<Rpc_Block_ListSetAlign_Request, Rpc_Block_ListSetAlign_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_ListSetAlign_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_ListSetAlign_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockListSetVerticalAlign(anytype.Rpc.Block.ListSetVerticalAlign.Request) returns (anytype.Rpc.Block.ListSetVerticalAlign.Response);
      */
     blockListSetVerticalAlign(input: Rpc_Block_ListSetVerticalAlign_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListSetVerticalAlign_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListSetVerticalAlign_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_ListSetVerticalAlign_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[149];
+        const method = ClientCommands.methods[160];
         return this.makeUnaryRequest<Rpc_Block_ListSetVerticalAlign_Request, Rpc_Block_ListSetVerticalAlign_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_ListSetVerticalAlign_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_ListSetVerticalAlign_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockListTurnInto(anytype.Rpc.Block.ListTurnInto.Request) returns (anytype.Rpc.Block.ListTurnInto.Response);
      */
     blockListTurnInto(input: Rpc_Block_ListTurnInto_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListTurnInto_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_ListTurnInto_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_ListTurnInto_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[150];
+        const method = ClientCommands.methods[161];
         return this.makeUnaryRequest<Rpc_Block_ListTurnInto_Request, Rpc_Block_ListTurnInto_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_ListTurnInto_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_ListTurnInto_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -3614,70 +3814,70 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: BlockTextSetText(anytype.Rpc.BlockText.SetText.Request) returns (anytype.Rpc.BlockText.SetText.Response);
      */
     blockTextSetText(input: Rpc_BlockText_SetText_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_SetText_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_SetText_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockText_SetText_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[151];
+        const method = ClientCommands.methods[162];
         return this.makeUnaryRequest<Rpc_BlockText_SetText_Request, Rpc_BlockText_SetText_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockText_SetText_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockText_SetText_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTextSetColor(anytype.Rpc.BlockText.SetColor.Request) returns (anytype.Rpc.BlockText.SetColor.Response);
      */
     blockTextSetColor(input: Rpc_BlockText_SetColor_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_SetColor_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_SetColor_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockText_SetColor_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[152];
+        const method = ClientCommands.methods[163];
         return this.makeUnaryRequest<Rpc_BlockText_SetColor_Request, Rpc_BlockText_SetColor_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockText_SetColor_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockText_SetColor_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTextSetStyle(anytype.Rpc.BlockText.SetStyle.Request) returns (anytype.Rpc.BlockText.SetStyle.Response);
      */
     blockTextSetStyle(input: Rpc_BlockText_SetStyle_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_SetStyle_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_SetStyle_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockText_SetStyle_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[153];
+        const method = ClientCommands.methods[164];
         return this.makeUnaryRequest<Rpc_BlockText_SetStyle_Request, Rpc_BlockText_SetStyle_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockText_SetStyle_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockText_SetStyle_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTextSetChecked(anytype.Rpc.BlockText.SetChecked.Request) returns (anytype.Rpc.BlockText.SetChecked.Response);
      */
     blockTextSetChecked(input: Rpc_BlockText_SetChecked_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_SetChecked_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_SetChecked_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockText_SetChecked_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[154];
+        const method = ClientCommands.methods[165];
         return this.makeUnaryRequest<Rpc_BlockText_SetChecked_Request, Rpc_BlockText_SetChecked_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockText_SetChecked_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockText_SetChecked_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTextSetIcon(anytype.Rpc.BlockText.SetIcon.Request) returns (anytype.Rpc.BlockText.SetIcon.Response);
      */
     blockTextSetIcon(input: Rpc_BlockText_SetIcon_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_SetIcon_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_SetIcon_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockText_SetIcon_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[155];
+        const method = ClientCommands.methods[166];
         return this.makeUnaryRequest<Rpc_BlockText_SetIcon_Request, Rpc_BlockText_SetIcon_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockText_SetIcon_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockText_SetIcon_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTextListSetColor(anytype.Rpc.BlockText.ListSetColor.Request) returns (anytype.Rpc.BlockText.ListSetColor.Response);
      */
     blockTextListSetColor(input: Rpc_BlockText_ListSetColor_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_ListSetColor_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_ListSetColor_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockText_ListSetColor_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[156];
+        const method = ClientCommands.methods[167];
         return this.makeUnaryRequest<Rpc_BlockText_ListSetColor_Request, Rpc_BlockText_ListSetColor_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockText_ListSetColor_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockText_ListSetColor_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTextListSetMark(anytype.Rpc.BlockText.ListSetMark.Request) returns (anytype.Rpc.BlockText.ListSetMark.Response);
      */
     blockTextListSetMark(input: Rpc_BlockText_ListSetMark_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_ListSetMark_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_ListSetMark_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockText_ListSetMark_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[157];
+        const method = ClientCommands.methods[168];
         return this.makeUnaryRequest<Rpc_BlockText_ListSetMark_Request, Rpc_BlockText_ListSetMark_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockText_ListSetMark_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockText_ListSetMark_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTextListSetStyle(anytype.Rpc.BlockText.ListSetStyle.Request) returns (anytype.Rpc.BlockText.ListSetStyle.Response);
      */
     blockTextListSetStyle(input: Rpc_BlockText_ListSetStyle_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_ListSetStyle_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_ListSetStyle_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockText_ListSetStyle_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[158];
+        const method = ClientCommands.methods[169];
         return this.makeUnaryRequest<Rpc_BlockText_ListSetStyle_Request, Rpc_BlockText_ListSetStyle_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockText_ListSetStyle_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockText_ListSetStyle_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTextListClearStyle(anytype.Rpc.BlockText.ListClearStyle.Request) returns (anytype.Rpc.BlockText.ListClearStyle.Response);
      */
     blockTextListClearStyle(input: Rpc_BlockText_ListClearStyle_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_ListClearStyle_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_ListClearStyle_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockText_ListClearStyle_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[159];
+        const method = ClientCommands.methods[170];
         return this.makeUnaryRequest<Rpc_BlockText_ListClearStyle_Request, Rpc_BlockText_ListClearStyle_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockText_ListClearStyle_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockText_ListClearStyle_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTextListClearContent(anytype.Rpc.BlockText.ListClearContent.Request) returns (anytype.Rpc.BlockText.ListClearContent.Response);
      */
     blockTextListClearContent(input: Rpc_BlockText_ListClearContent_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_ListClearContent_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockText_ListClearContent_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockText_ListClearContent_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[160];
+        const method = ClientCommands.methods[171];
         return this.makeUnaryRequest<Rpc_BlockText_ListClearContent_Request, Rpc_BlockText_ListClearContent_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockText_ListClearContent_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockText_ListClearContent_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -3687,42 +3887,42 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: BlockFileSetName(anytype.Rpc.BlockFile.SetName.Request) returns (anytype.Rpc.BlockFile.SetName.Response);
      */
     blockFileSetName(input: Rpc_BlockFile_SetName_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockFile_SetName_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockFile_SetName_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockFile_SetName_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[161];
+        const method = ClientCommands.methods[172];
         return this.makeUnaryRequest<Rpc_BlockFile_SetName_Request, Rpc_BlockFile_SetName_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockFile_SetName_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockFile_SetName_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockFileSetTargetObjectId(anytype.Rpc.BlockFile.SetTargetObjectId.Request) returns (anytype.Rpc.BlockFile.SetTargetObjectId.Response);
      */
     blockFileSetTargetObjectId(input: Rpc_BlockFile_SetTargetObjectId_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockFile_SetTargetObjectId_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockFile_SetTargetObjectId_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockFile_SetTargetObjectId_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[162];
+        const method = ClientCommands.methods[173];
         return this.makeUnaryRequest<Rpc_BlockFile_SetTargetObjectId_Request, Rpc_BlockFile_SetTargetObjectId_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockFile_SetTargetObjectId_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockFile_SetTargetObjectId_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockImageSetName(anytype.Rpc.BlockImage.SetName.Request) returns (anytype.Rpc.BlockImage.SetName.Response);
      */
     blockImageSetName(input: Rpc_BlockImage_SetName_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockImage_SetName_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockImage_SetName_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockImage_SetName_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[163];
+        const method = ClientCommands.methods[174];
         return this.makeUnaryRequest<Rpc_BlockImage_SetName_Request, Rpc_BlockImage_SetName_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockImage_SetName_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockImage_SetName_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockVideoSetName(anytype.Rpc.BlockVideo.SetName.Request) returns (anytype.Rpc.BlockVideo.SetName.Response);
      */
     blockVideoSetName(input: Rpc_BlockVideo_SetName_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockVideo_SetName_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockVideo_SetName_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockVideo_SetName_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[164];
+        const method = ClientCommands.methods[175];
         return this.makeUnaryRequest<Rpc_BlockVideo_SetName_Request, Rpc_BlockVideo_SetName_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockVideo_SetName_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockVideo_SetName_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockFileCreateAndUpload(anytype.Rpc.BlockFile.CreateAndUpload.Request) returns (anytype.Rpc.BlockFile.CreateAndUpload.Response);
      */
     blockFileCreateAndUpload(input: Rpc_BlockFile_CreateAndUpload_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockFile_CreateAndUpload_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockFile_CreateAndUpload_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockFile_CreateAndUpload_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[165];
+        const method = ClientCommands.methods[176];
         return this.makeUnaryRequest<Rpc_BlockFile_CreateAndUpload_Request, Rpc_BlockFile_CreateAndUpload_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockFile_CreateAndUpload_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockFile_CreateAndUpload_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockFileListSetStyle(anytype.Rpc.BlockFile.ListSetStyle.Request) returns (anytype.Rpc.BlockFile.ListSetStyle.Response);
      */
     blockFileListSetStyle(input: Rpc_BlockFile_ListSetStyle_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockFile_ListSetStyle_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockFile_ListSetStyle_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockFile_ListSetStyle_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[166];
+        const method = ClientCommands.methods[177];
         return this.makeUnaryRequest<Rpc_BlockFile_ListSetStyle_Request, Rpc_BlockFile_ListSetStyle_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockFile_ListSetStyle_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockFile_ListSetStyle_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -3732,168 +3932,168 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: BlockDataviewViewCreate(anytype.Rpc.BlockDataview.View.Create.Request) returns (anytype.Rpc.BlockDataview.View.Create.Response);
      */
     blockDataviewViewCreate(input: Rpc_BlockDataview_View_Create_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_View_Create_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_View_Create_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_View_Create_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[167];
+        const method = ClientCommands.methods[178];
         return this.makeUnaryRequest<Rpc_BlockDataview_View_Create_Request, Rpc_BlockDataview_View_Create_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_View_Create_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_View_Create_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewViewDelete(anytype.Rpc.BlockDataview.View.Delete.Request) returns (anytype.Rpc.BlockDataview.View.Delete.Response);
      */
     blockDataviewViewDelete(input: Rpc_BlockDataview_View_Delete_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_View_Delete_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_View_Delete_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_View_Delete_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[168];
+        const method = ClientCommands.methods[179];
         return this.makeUnaryRequest<Rpc_BlockDataview_View_Delete_Request, Rpc_BlockDataview_View_Delete_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_View_Delete_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_View_Delete_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewViewUpdate(anytype.Rpc.BlockDataview.View.Update.Request) returns (anytype.Rpc.BlockDataview.View.Update.Response);
      */
     blockDataviewViewUpdate(input: Rpc_BlockDataview_View_Update_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_View_Update_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_View_Update_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_View_Update_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[169];
+        const method = ClientCommands.methods[180];
         return this.makeUnaryRequest<Rpc_BlockDataview_View_Update_Request, Rpc_BlockDataview_View_Update_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_View_Update_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_View_Update_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewViewSetActive(anytype.Rpc.BlockDataview.View.SetActive.Request) returns (anytype.Rpc.BlockDataview.View.SetActive.Response);
      */
     blockDataviewViewSetActive(input: Rpc_BlockDataview_View_SetActive_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_View_SetActive_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_View_SetActive_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_View_SetActive_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[170];
+        const method = ClientCommands.methods[181];
         return this.makeUnaryRequest<Rpc_BlockDataview_View_SetActive_Request, Rpc_BlockDataview_View_SetActive_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_View_SetActive_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_View_SetActive_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewViewSetPosition(anytype.Rpc.BlockDataview.View.SetPosition.Request) returns (anytype.Rpc.BlockDataview.View.SetPosition.Response);
      */
     blockDataviewViewSetPosition(input: Rpc_BlockDataview_View_SetPosition_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_View_SetPosition_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_View_SetPosition_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_View_SetPosition_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[171];
+        const method = ClientCommands.methods[182];
         return this.makeUnaryRequest<Rpc_BlockDataview_View_SetPosition_Request, Rpc_BlockDataview_View_SetPosition_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_View_SetPosition_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_View_SetPosition_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewSetSource(anytype.Rpc.BlockDataview.SetSource.Request) returns (anytype.Rpc.BlockDataview.SetSource.Response);
      */
     blockDataviewSetSource(input: Rpc_BlockDataview_SetSource_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_SetSource_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_SetSource_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_SetSource_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[172];
+        const method = ClientCommands.methods[183];
         return this.makeUnaryRequest<Rpc_BlockDataview_SetSource_Request, Rpc_BlockDataview_SetSource_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_SetSource_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_SetSource_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewRelationAdd(anytype.Rpc.BlockDataview.Relation.Add.Request) returns (anytype.Rpc.BlockDataview.Relation.Add.Response);
      */
     blockDataviewRelationAdd(input: Rpc_BlockDataview_Relation_Add_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Relation_Add_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Relation_Add_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Relation_Add_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[173];
+        const method = ClientCommands.methods[184];
         return this.makeUnaryRequest<Rpc_BlockDataview_Relation_Add_Request, Rpc_BlockDataview_Relation_Add_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_Relation_Add_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_Relation_Add_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewRelationDelete(anytype.Rpc.BlockDataview.Relation.Delete.Request) returns (anytype.Rpc.BlockDataview.Relation.Delete.Response);
      */
     blockDataviewRelationDelete(input: Rpc_BlockDataview_Relation_Delete_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Relation_Delete_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Relation_Delete_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Relation_Delete_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[174];
+        const method = ClientCommands.methods[185];
         return this.makeUnaryRequest<Rpc_BlockDataview_Relation_Delete_Request, Rpc_BlockDataview_Relation_Delete_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_Relation_Delete_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_Relation_Delete_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewGroupOrderUpdate(anytype.Rpc.BlockDataview.GroupOrder.Update.Request) returns (anytype.Rpc.BlockDataview.GroupOrder.Update.Response);
      */
     blockDataviewGroupOrderUpdate(input: Rpc_BlockDataview_GroupOrder_Update_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_GroupOrder_Update_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_GroupOrder_Update_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_GroupOrder_Update_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[175];
+        const method = ClientCommands.methods[186];
         return this.makeUnaryRequest<Rpc_BlockDataview_GroupOrder_Update_Request, Rpc_BlockDataview_GroupOrder_Update_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_GroupOrder_Update_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_GroupOrder_Update_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewObjectOrderUpdate(anytype.Rpc.BlockDataview.ObjectOrder.Update.Request) returns (anytype.Rpc.BlockDataview.ObjectOrder.Update.Response);
      */
     blockDataviewObjectOrderUpdate(input: Rpc_BlockDataview_ObjectOrder_Update_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ObjectOrder_Update_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ObjectOrder_Update_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ObjectOrder_Update_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[176];
+        const method = ClientCommands.methods[187];
         return this.makeUnaryRequest<Rpc_BlockDataview_ObjectOrder_Update_Request, Rpc_BlockDataview_ObjectOrder_Update_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_ObjectOrder_Update_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_ObjectOrder_Update_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewObjectOrderMove(anytype.Rpc.BlockDataview.ObjectOrder.Move.Request) returns (anytype.Rpc.BlockDataview.ObjectOrder.Move.Response);
      */
     blockDataviewObjectOrderMove(input: Rpc_BlockDataview_ObjectOrder_Move_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ObjectOrder_Move_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ObjectOrder_Move_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ObjectOrder_Move_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[177];
+        const method = ClientCommands.methods[188];
         return this.makeUnaryRequest<Rpc_BlockDataview_ObjectOrder_Move_Request, Rpc_BlockDataview_ObjectOrder_Move_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_ObjectOrder_Move_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_ObjectOrder_Move_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewCreateFromExistingObject(anytype.Rpc.BlockDataview.CreateFromExistingObject.Request) returns (anytype.Rpc.BlockDataview.CreateFromExistingObject.Response);
      */
     blockDataviewCreateFromExistingObject(input: Rpc_BlockDataview_CreateFromExistingObject_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_CreateFromExistingObject_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_CreateFromExistingObject_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_CreateFromExistingObject_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[178];
+        const method = ClientCommands.methods[189];
         return this.makeUnaryRequest<Rpc_BlockDataview_CreateFromExistingObject_Request, Rpc_BlockDataview_CreateFromExistingObject_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_CreateFromExistingObject_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_CreateFromExistingObject_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewFilterAdd(anytype.Rpc.BlockDataview.Filter.Add.Request) returns (anytype.Rpc.BlockDataview.Filter.Add.Response);
      */
     blockDataviewFilterAdd(input: Rpc_BlockDataview_Filter_Add_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Filter_Add_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Filter_Add_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Filter_Add_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[179];
+        const method = ClientCommands.methods[190];
         return this.makeUnaryRequest<Rpc_BlockDataview_Filter_Add_Request, Rpc_BlockDataview_Filter_Add_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_Filter_Add_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_Filter_Add_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewFilterRemove(anytype.Rpc.BlockDataview.Filter.Remove.Request) returns (anytype.Rpc.BlockDataview.Filter.Remove.Response);
      */
     blockDataviewFilterRemove(input: Rpc_BlockDataview_Filter_Remove_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Filter_Remove_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Filter_Remove_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Filter_Remove_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[180];
+        const method = ClientCommands.methods[191];
         return this.makeUnaryRequest<Rpc_BlockDataview_Filter_Remove_Request, Rpc_BlockDataview_Filter_Remove_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_Filter_Remove_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_Filter_Remove_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewFilterReplace(anytype.Rpc.BlockDataview.Filter.Replace.Request) returns (anytype.Rpc.BlockDataview.Filter.Replace.Response);
      */
     blockDataviewFilterReplace(input: Rpc_BlockDataview_Filter_Replace_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Filter_Replace_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Filter_Replace_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Filter_Replace_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[181];
+        const method = ClientCommands.methods[192];
         return this.makeUnaryRequest<Rpc_BlockDataview_Filter_Replace_Request, Rpc_BlockDataview_Filter_Replace_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_Filter_Replace_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_Filter_Replace_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewFilterSort(anytype.Rpc.BlockDataview.Filter.Sort.Request) returns (anytype.Rpc.BlockDataview.Filter.Sort.Response);
      */
     blockDataviewFilterSort(input: Rpc_BlockDataview_Filter_Sort_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Filter_Sort_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Filter_Sort_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Filter_Sort_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[182];
+        const method = ClientCommands.methods[193];
         return this.makeUnaryRequest<Rpc_BlockDataview_Filter_Sort_Request, Rpc_BlockDataview_Filter_Sort_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_Filter_Sort_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_Filter_Sort_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewSortAdd(anytype.Rpc.BlockDataview.Sort.Add.Request) returns (anytype.Rpc.BlockDataview.Sort.Add.Response);
      */
     blockDataviewSortAdd(input: Rpc_BlockDataview_Sort_Add_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Sort_Add_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Sort_Add_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Sort_Add_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[183];
+        const method = ClientCommands.methods[194];
         return this.makeUnaryRequest<Rpc_BlockDataview_Sort_Add_Request, Rpc_BlockDataview_Sort_Add_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_Sort_Add_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_Sort_Add_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewSortRemove(anytype.Rpc.BlockDataview.Sort.Remove.Request) returns (anytype.Rpc.BlockDataview.Sort.Remove.Response);
      */
     blockDataviewSortRemove(input: Rpc_BlockDataview_Sort_Remove_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Sort_Remove_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Sort_Remove_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Sort_Remove_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[184];
+        const method = ClientCommands.methods[195];
         return this.makeUnaryRequest<Rpc_BlockDataview_Sort_Remove_Request, Rpc_BlockDataview_Sort_Remove_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_Sort_Remove_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_Sort_Remove_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewSortReplace(anytype.Rpc.BlockDataview.Sort.Replace.Request) returns (anytype.Rpc.BlockDataview.Sort.Replace.Response);
      */
     blockDataviewSortReplace(input: Rpc_BlockDataview_Sort_Replace_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Sort_Replace_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Sort_Replace_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Sort_Replace_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[185];
+        const method = ClientCommands.methods[196];
         return this.makeUnaryRequest<Rpc_BlockDataview_Sort_Replace_Request, Rpc_BlockDataview_Sort_Replace_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_Sort_Replace_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_Sort_Replace_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewSortSort(anytype.Rpc.BlockDataview.Sort.SSort.Request) returns (anytype.Rpc.BlockDataview.Sort.SSort.Response);
      */
     blockDataviewSortSort(input: Rpc_BlockDataview_Sort_SSort_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Sort_SSort_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Sort_SSort_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_Sort_SSort_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[186];
+        const method = ClientCommands.methods[197];
         return this.makeUnaryRequest<Rpc_BlockDataview_Sort_SSort_Request, Rpc_BlockDataview_Sort_SSort_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_Sort_SSort_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_Sort_SSort_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewViewRelationAdd(anytype.Rpc.BlockDataview.ViewRelation.Add.Request) returns (anytype.Rpc.BlockDataview.ViewRelation.Add.Response);
      */
     blockDataviewViewRelationAdd(input: Rpc_BlockDataview_ViewRelation_Add_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ViewRelation_Add_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ViewRelation_Add_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ViewRelation_Add_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[187];
+        const method = ClientCommands.methods[198];
         return this.makeUnaryRequest<Rpc_BlockDataview_ViewRelation_Add_Request, Rpc_BlockDataview_ViewRelation_Add_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_ViewRelation_Add_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_ViewRelation_Add_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewViewRelationRemove(anytype.Rpc.BlockDataview.ViewRelation.Remove.Request) returns (anytype.Rpc.BlockDataview.ViewRelation.Remove.Response);
      */
     blockDataviewViewRelationRemove(input: Rpc_BlockDataview_ViewRelation_Remove_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ViewRelation_Remove_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ViewRelation_Remove_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ViewRelation_Remove_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[188];
+        const method = ClientCommands.methods[199];
         return this.makeUnaryRequest<Rpc_BlockDataview_ViewRelation_Remove_Request, Rpc_BlockDataview_ViewRelation_Remove_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_ViewRelation_Remove_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_ViewRelation_Remove_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewViewRelationReplace(anytype.Rpc.BlockDataview.ViewRelation.Replace.Request) returns (anytype.Rpc.BlockDataview.ViewRelation.Replace.Response);
      */
     blockDataviewViewRelationReplace(input: Rpc_BlockDataview_ViewRelation_Replace_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ViewRelation_Replace_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ViewRelation_Replace_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ViewRelation_Replace_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[189];
+        const method = ClientCommands.methods[200];
         return this.makeUnaryRequest<Rpc_BlockDataview_ViewRelation_Replace_Request, Rpc_BlockDataview_ViewRelation_Replace_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_ViewRelation_Replace_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_ViewRelation_Replace_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDataviewViewRelationSort(anytype.Rpc.BlockDataview.ViewRelation.Sort.Request) returns (anytype.Rpc.BlockDataview.ViewRelation.Sort.Response);
      */
     blockDataviewViewRelationSort(input: Rpc_BlockDataview_ViewRelation_Sort_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ViewRelation_Sort_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ViewRelation_Sort_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDataview_ViewRelation_Sort_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[190];
+        const method = ClientCommands.methods[201];
         return this.makeUnaryRequest<Rpc_BlockDataview_ViewRelation_Sort_Request, Rpc_BlockDataview_ViewRelation_Sort_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDataview_ViewRelation_Sort_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDataview_ViewRelation_Sort_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -3903,98 +4103,98 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: BlockTableCreate(anytype.Rpc.BlockTable.Create.Request) returns (anytype.Rpc.BlockTable.Create.Response);
      */
     blockTableCreate(input: Rpc_BlockTable_Create_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_Create_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_Create_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_Create_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[191];
+        const method = ClientCommands.methods[202];
         return this.makeUnaryRequest<Rpc_BlockTable_Create_Request, Rpc_BlockTable_Create_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockTable_Create_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockTable_Create_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTableExpand(anytype.Rpc.BlockTable.Expand.Request) returns (anytype.Rpc.BlockTable.Expand.Response);
      */
     blockTableExpand(input: Rpc_BlockTable_Expand_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_Expand_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_Expand_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_Expand_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[192];
+        const method = ClientCommands.methods[203];
         return this.makeUnaryRequest<Rpc_BlockTable_Expand_Request, Rpc_BlockTable_Expand_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockTable_Expand_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockTable_Expand_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTableRowCreate(anytype.Rpc.BlockTable.RowCreate.Request) returns (anytype.Rpc.BlockTable.RowCreate.Response);
      */
     blockTableRowCreate(input: Rpc_BlockTable_RowCreate_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowCreate_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowCreate_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowCreate_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[193];
+        const method = ClientCommands.methods[204];
         return this.makeUnaryRequest<Rpc_BlockTable_RowCreate_Request, Rpc_BlockTable_RowCreate_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockTable_RowCreate_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockTable_RowCreate_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTableRowDelete(anytype.Rpc.BlockTable.RowDelete.Request) returns (anytype.Rpc.BlockTable.RowDelete.Response);
      */
     blockTableRowDelete(input: Rpc_BlockTable_RowDelete_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowDelete_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowDelete_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowDelete_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[194];
+        const method = ClientCommands.methods[205];
         return this.makeUnaryRequest<Rpc_BlockTable_RowDelete_Request, Rpc_BlockTable_RowDelete_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockTable_RowDelete_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockTable_RowDelete_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTableRowDuplicate(anytype.Rpc.BlockTable.RowDuplicate.Request) returns (anytype.Rpc.BlockTable.RowDuplicate.Response);
      */
     blockTableRowDuplicate(input: Rpc_BlockTable_RowDuplicate_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowDuplicate_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowDuplicate_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowDuplicate_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[195];
+        const method = ClientCommands.methods[206];
         return this.makeUnaryRequest<Rpc_BlockTable_RowDuplicate_Request, Rpc_BlockTable_RowDuplicate_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockTable_RowDuplicate_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockTable_RowDuplicate_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTableRowSetHeader(anytype.Rpc.BlockTable.RowSetHeader.Request) returns (anytype.Rpc.BlockTable.RowSetHeader.Response);
      */
     blockTableRowSetHeader(input: Rpc_BlockTable_RowSetHeader_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowSetHeader_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowSetHeader_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowSetHeader_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[196];
+        const method = ClientCommands.methods[207];
         return this.makeUnaryRequest<Rpc_BlockTable_RowSetHeader_Request, Rpc_BlockTable_RowSetHeader_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockTable_RowSetHeader_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockTable_RowSetHeader_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTableColumnCreate(anytype.Rpc.BlockTable.ColumnCreate.Request) returns (anytype.Rpc.BlockTable.ColumnCreate.Response);
      */
     blockTableColumnCreate(input: Rpc_BlockTable_ColumnCreate_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_ColumnCreate_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_ColumnCreate_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_ColumnCreate_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[197];
+        const method = ClientCommands.methods[208];
         return this.makeUnaryRequest<Rpc_BlockTable_ColumnCreate_Request, Rpc_BlockTable_ColumnCreate_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockTable_ColumnCreate_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockTable_ColumnCreate_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTableColumnMove(anytype.Rpc.BlockTable.ColumnMove.Request) returns (anytype.Rpc.BlockTable.ColumnMove.Response);
      */
     blockTableColumnMove(input: Rpc_BlockTable_ColumnMove_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_ColumnMove_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_ColumnMove_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_ColumnMove_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[198];
+        const method = ClientCommands.methods[209];
         return this.makeUnaryRequest<Rpc_BlockTable_ColumnMove_Request, Rpc_BlockTable_ColumnMove_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockTable_ColumnMove_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockTable_ColumnMove_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTableColumnDelete(anytype.Rpc.BlockTable.ColumnDelete.Request) returns (anytype.Rpc.BlockTable.ColumnDelete.Response);
      */
     blockTableColumnDelete(input: Rpc_BlockTable_ColumnDelete_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_ColumnDelete_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_ColumnDelete_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_ColumnDelete_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[199];
+        const method = ClientCommands.methods[210];
         return this.makeUnaryRequest<Rpc_BlockTable_ColumnDelete_Request, Rpc_BlockTable_ColumnDelete_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockTable_ColumnDelete_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockTable_ColumnDelete_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTableColumnDuplicate(anytype.Rpc.BlockTable.ColumnDuplicate.Request) returns (anytype.Rpc.BlockTable.ColumnDuplicate.Response);
      */
     blockTableColumnDuplicate(input: Rpc_BlockTable_ColumnDuplicate_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_ColumnDuplicate_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_ColumnDuplicate_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_ColumnDuplicate_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[200];
+        const method = ClientCommands.methods[211];
         return this.makeUnaryRequest<Rpc_BlockTable_ColumnDuplicate_Request, Rpc_BlockTable_ColumnDuplicate_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockTable_ColumnDuplicate_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockTable_ColumnDuplicate_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTableRowListFill(anytype.Rpc.BlockTable.RowListFill.Request) returns (anytype.Rpc.BlockTable.RowListFill.Response);
      */
     blockTableRowListFill(input: Rpc_BlockTable_RowListFill_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowListFill_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowListFill_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowListFill_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[201];
+        const method = ClientCommands.methods[212];
         return this.makeUnaryRequest<Rpc_BlockTable_RowListFill_Request, Rpc_BlockTable_RowListFill_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockTable_RowListFill_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockTable_RowListFill_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTableRowListClean(anytype.Rpc.BlockTable.RowListClean.Request) returns (anytype.Rpc.BlockTable.RowListClean.Response);
      */
     blockTableRowListClean(input: Rpc_BlockTable_RowListClean_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowListClean_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowListClean_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_RowListClean_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[202];
+        const method = ClientCommands.methods[213];
         return this.makeUnaryRequest<Rpc_BlockTable_RowListClean_Request, Rpc_BlockTable_RowListClean_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockTable_RowListClean_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockTable_RowListClean_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTableColumnListFill(anytype.Rpc.BlockTable.ColumnListFill.Request) returns (anytype.Rpc.BlockTable.ColumnListFill.Response);
      */
     blockTableColumnListFill(input: Rpc_BlockTable_ColumnListFill_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_ColumnListFill_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_ColumnListFill_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_ColumnListFill_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[203];
+        const method = ClientCommands.methods[214];
         return this.makeUnaryRequest<Rpc_BlockTable_ColumnListFill_Request, Rpc_BlockTable_ColumnListFill_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockTable_ColumnListFill_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockTable_ColumnListFill_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockTableSort(anytype.Rpc.BlockTable.Sort.Request) returns (anytype.Rpc.BlockTable.Sort.Response);
      */
     blockTableSort(input: Rpc_BlockTable_Sort_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_Sort_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_Sort_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockTable_Sort_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[204];
+        const method = ClientCommands.methods[215];
         return this.makeUnaryRequest<Rpc_BlockTable_Sort_Request, Rpc_BlockTable_Sort_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockTable_Sort_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockTable_Sort_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -4004,35 +4204,35 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: BlockCreateWidget(anytype.Rpc.Block.CreateWidget.Request) returns (anytype.Rpc.Block.CreateWidget.Response);
      */
     blockCreateWidget(input: Rpc_Block_CreateWidget_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_CreateWidget_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Block_CreateWidget_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Block_CreateWidget_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[205];
+        const method = ClientCommands.methods[216];
         return this.makeUnaryRequest<Rpc_Block_CreateWidget_Request, Rpc_Block_CreateWidget_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Block_CreateWidget_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Block_CreateWidget_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockWidgetSetTargetId(anytype.Rpc.BlockWidget.SetTargetId.Request) returns (anytype.Rpc.BlockWidget.SetTargetId.Response);
      */
     blockWidgetSetTargetId(input: Rpc_BlockWidget_SetTargetId_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockWidget_SetTargetId_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockWidget_SetTargetId_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockWidget_SetTargetId_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[206];
+        const method = ClientCommands.methods[217];
         return this.makeUnaryRequest<Rpc_BlockWidget_SetTargetId_Request, Rpc_BlockWidget_SetTargetId_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockWidget_SetTargetId_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockWidget_SetTargetId_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockWidgetSetLayout(anytype.Rpc.BlockWidget.SetLayout.Request) returns (anytype.Rpc.BlockWidget.SetLayout.Response);
      */
     blockWidgetSetLayout(input: Rpc_BlockWidget_SetLayout_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockWidget_SetLayout_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockWidget_SetLayout_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockWidget_SetLayout_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[207];
+        const method = ClientCommands.methods[218];
         return this.makeUnaryRequest<Rpc_BlockWidget_SetLayout_Request, Rpc_BlockWidget_SetLayout_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockWidget_SetLayout_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockWidget_SetLayout_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockWidgetSetLimit(anytype.Rpc.BlockWidget.SetLimit.Request) returns (anytype.Rpc.BlockWidget.SetLimit.Response);
      */
     blockWidgetSetLimit(input: Rpc_BlockWidget_SetLimit_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockWidget_SetLimit_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockWidget_SetLimit_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockWidget_SetLimit_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[208];
+        const method = ClientCommands.methods[219];
         return this.makeUnaryRequest<Rpc_BlockWidget_SetLimit_Request, Rpc_BlockWidget_SetLimit_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockWidget_SetLimit_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockWidget_SetLimit_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockWidgetSetViewId(anytype.Rpc.BlockWidget.SetViewId.Request) returns (anytype.Rpc.BlockWidget.SetViewId.Response);
      */
     blockWidgetSetViewId(input: Rpc_BlockWidget_SetViewId_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockWidget_SetViewId_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockWidget_SetViewId_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockWidget_SetViewId_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[209];
+        const method = ClientCommands.methods[220];
         return this.makeUnaryRequest<Rpc_BlockWidget_SetViewId_Request, Rpc_BlockWidget_SetViewId_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockWidget_SetViewId_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockWidget_SetViewId_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -4042,183 +4242,197 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: BlockLinkCreateWithObject(anytype.Rpc.BlockLink.CreateWithObject.Request) returns (anytype.Rpc.BlockLink.CreateWithObject.Response);
      */
     blockLinkCreateWithObject(input: Rpc_BlockLink_CreateWithObject_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockLink_CreateWithObject_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockLink_CreateWithObject_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockLink_CreateWithObject_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[210];
+        const method = ClientCommands.methods[221];
         return this.makeUnaryRequest<Rpc_BlockLink_CreateWithObject_Request, Rpc_BlockLink_CreateWithObject_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockLink_CreateWithObject_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockLink_CreateWithObject_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockLinkListSetAppearance(anytype.Rpc.BlockLink.ListSetAppearance.Request) returns (anytype.Rpc.BlockLink.ListSetAppearance.Response);
      */
     blockLinkListSetAppearance(input: Rpc_BlockLink_ListSetAppearance_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockLink_ListSetAppearance_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockLink_ListSetAppearance_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockLink_ListSetAppearance_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[211];
+        const method = ClientCommands.methods[222];
         return this.makeUnaryRequest<Rpc_BlockLink_ListSetAppearance_Request, Rpc_BlockLink_ListSetAppearance_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockLink_ListSetAppearance_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockLink_ListSetAppearance_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockBookmarkFetch(anytype.Rpc.BlockBookmark.Fetch.Request) returns (anytype.Rpc.BlockBookmark.Fetch.Response);
      */
     blockBookmarkFetch(input: Rpc_BlockBookmark_Fetch_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockBookmark_Fetch_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockBookmark_Fetch_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockBookmark_Fetch_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[212];
+        const method = ClientCommands.methods[223];
         return this.makeUnaryRequest<Rpc_BlockBookmark_Fetch_Request, Rpc_BlockBookmark_Fetch_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockBookmark_Fetch_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockBookmark_Fetch_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockBookmarkCreateAndFetch(anytype.Rpc.BlockBookmark.CreateAndFetch.Request) returns (anytype.Rpc.BlockBookmark.CreateAndFetch.Response);
      */
     blockBookmarkCreateAndFetch(input: Rpc_BlockBookmark_CreateAndFetch_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockBookmark_CreateAndFetch_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockBookmark_CreateAndFetch_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockBookmark_CreateAndFetch_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[213];
+        const method = ClientCommands.methods[224];
         return this.makeUnaryRequest<Rpc_BlockBookmark_CreateAndFetch_Request, Rpc_BlockBookmark_CreateAndFetch_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockBookmark_CreateAndFetch_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockBookmark_CreateAndFetch_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockRelationSetKey(anytype.Rpc.BlockRelation.SetKey.Request) returns (anytype.Rpc.BlockRelation.SetKey.Response);
      */
     blockRelationSetKey(input: Rpc_BlockRelation_SetKey_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockRelation_SetKey_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockRelation_SetKey_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockRelation_SetKey_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[214];
+        const method = ClientCommands.methods[225];
         return this.makeUnaryRequest<Rpc_BlockRelation_SetKey_Request, Rpc_BlockRelation_SetKey_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockRelation_SetKey_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockRelation_SetKey_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockRelationAdd(anytype.Rpc.BlockRelation.Add.Request) returns (anytype.Rpc.BlockRelation.Add.Response);
      */
     blockRelationAdd(input: Rpc_BlockRelation_Add_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockRelation_Add_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockRelation_Add_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockRelation_Add_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[215];
+        const method = ClientCommands.methods[226];
         return this.makeUnaryRequest<Rpc_BlockRelation_Add_Request, Rpc_BlockRelation_Add_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockRelation_Add_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockRelation_Add_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockDivListSetStyle(anytype.Rpc.BlockDiv.ListSetStyle.Request) returns (anytype.Rpc.BlockDiv.ListSetStyle.Response);
      */
     blockDivListSetStyle(input: Rpc_BlockDiv_ListSetStyle_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDiv_ListSetStyle_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockDiv_ListSetStyle_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockDiv_ListSetStyle_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[216];
+        const method = ClientCommands.methods[227];
         return this.makeUnaryRequest<Rpc_BlockDiv_ListSetStyle_Request, Rpc_BlockDiv_ListSetStyle_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockDiv_ListSetStyle_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockDiv_ListSetStyle_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BlockLatexSetText(anytype.Rpc.BlockLatex.SetText.Request) returns (anytype.Rpc.BlockLatex.SetText.Response);
      */
     blockLatexSetText(input: Rpc_BlockLatex_SetText_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockLatex_SetText_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_BlockLatex_SetText_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_BlockLatex_SetText_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[217];
+        const method = ClientCommands.methods[228];
         return this.makeUnaryRequest<Rpc_BlockLatex_SetText_Request, Rpc_BlockLatex_SetText_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_BlockLatex_SetText_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_BlockLatex_SetText_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ProcessCancel(anytype.Rpc.Process.Cancel.Request) returns (anytype.Rpc.Process.Cancel.Response);
      */
     processCancel(input: Rpc_Process_Cancel_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Process_Cancel_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Process_Cancel_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Process_Cancel_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[218];
+        const method = ClientCommands.methods[229];
         return this.makeUnaryRequest<Rpc_Process_Cancel_Request, Rpc_Process_Cancel_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Process_Cancel_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Process_Cancel_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+    }
+    /**
+     * @generated from protobuf rpc: ProcessSubscribe(anytype.Rpc.Process.Subscribe.Request) returns (anytype.Rpc.Process.Subscribe.Response);
+     */
+    processSubscribe(input: Rpc_Process_Subscribe_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Process_Subscribe_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Process_Subscribe_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Process_Subscribe_Response) => void)): grpc.ClientUnaryCall {
+        const method = ClientCommands.methods[230];
+        return this.makeUnaryRequest<Rpc_Process_Subscribe_Request, Rpc_Process_Subscribe_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Process_Subscribe_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Process_Subscribe_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+    }
+    /**
+     * @generated from protobuf rpc: ProcessUnsubscribe(anytype.Rpc.Process.Unsubscribe.Request) returns (anytype.Rpc.Process.Unsubscribe.Response);
+     */
+    processUnsubscribe(input: Rpc_Process_Unsubscribe_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Process_Unsubscribe_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Process_Unsubscribe_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Process_Unsubscribe_Response) => void)): grpc.ClientUnaryCall {
+        const method = ClientCommands.methods[231];
+        return this.makeUnaryRequest<Rpc_Process_Unsubscribe_Request, Rpc_Process_Unsubscribe_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Process_Unsubscribe_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Process_Unsubscribe_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: LogSend(anytype.Rpc.Log.Send.Request) returns (anytype.Rpc.Log.Send.Response);
      */
     logSend(input: Rpc_Log_Send_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Log_Send_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Log_Send_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Log_Send_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[219];
+        const method = ClientCommands.methods[232];
         return this.makeUnaryRequest<Rpc_Log_Send_Request, Rpc_Log_Send_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Log_Send_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Log_Send_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DebugStat(anytype.Rpc.Debug.Stat.Request) returns (anytype.Rpc.Debug.Stat.Response);
      */
     debugStat(input: Rpc_Debug_Stat_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_Stat_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_Stat_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Debug_Stat_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[220];
+        const method = ClientCommands.methods[233];
         return this.makeUnaryRequest<Rpc_Debug_Stat_Request, Rpc_Debug_Stat_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Debug_Stat_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Debug_Stat_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DebugTree(anytype.Rpc.Debug.Tree.Request) returns (anytype.Rpc.Debug.Tree.Response);
      */
     debugTree(input: Rpc_Debug_Tree_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_Tree_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_Tree_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Debug_Tree_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[221];
+        const method = ClientCommands.methods[234];
         return this.makeUnaryRequest<Rpc_Debug_Tree_Request, Rpc_Debug_Tree_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Debug_Tree_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Debug_Tree_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DebugTreeHeads(anytype.Rpc.Debug.TreeHeads.Request) returns (anytype.Rpc.Debug.TreeHeads.Response);
      */
     debugTreeHeads(input: Rpc_Debug_TreeHeads_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_TreeHeads_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_TreeHeads_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Debug_TreeHeads_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[222];
+        const method = ClientCommands.methods[235];
         return this.makeUnaryRequest<Rpc_Debug_TreeHeads_Request, Rpc_Debug_TreeHeads_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Debug_TreeHeads_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Debug_TreeHeads_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DebugSpaceSummary(anytype.Rpc.Debug.SpaceSummary.Request) returns (anytype.Rpc.Debug.SpaceSummary.Response);
      */
     debugSpaceSummary(input: Rpc_Debug_SpaceSummary_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_SpaceSummary_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_SpaceSummary_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Debug_SpaceSummary_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[223];
+        const method = ClientCommands.methods[236];
         return this.makeUnaryRequest<Rpc_Debug_SpaceSummary_Request, Rpc_Debug_SpaceSummary_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Debug_SpaceSummary_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Debug_SpaceSummary_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DebugStackGoroutines(anytype.Rpc.Debug.StackGoroutines.Request) returns (anytype.Rpc.Debug.StackGoroutines.Response);
      */
     debugStackGoroutines(input: Rpc_Debug_StackGoroutines_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_StackGoroutines_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_StackGoroutines_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Debug_StackGoroutines_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[224];
+        const method = ClientCommands.methods[237];
         return this.makeUnaryRequest<Rpc_Debug_StackGoroutines_Request, Rpc_Debug_StackGoroutines_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Debug_StackGoroutines_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Debug_StackGoroutines_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DebugExportLocalstore(anytype.Rpc.Debug.ExportLocalstore.Request) returns (anytype.Rpc.Debug.ExportLocalstore.Response);
      */
     debugExportLocalstore(input: Rpc_Debug_ExportLocalstore_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_ExportLocalstore_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_ExportLocalstore_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Debug_ExportLocalstore_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[225];
+        const method = ClientCommands.methods[238];
         return this.makeUnaryRequest<Rpc_Debug_ExportLocalstore_Request, Rpc_Debug_ExportLocalstore_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Debug_ExportLocalstore_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Debug_ExportLocalstore_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DebugPing(anytype.Rpc.Debug.Ping.Request) returns (anytype.Rpc.Debug.Ping.Response);
      */
     debugPing(input: Rpc_Debug_Ping_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_Ping_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_Ping_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Debug_Ping_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[226];
+        const method = ClientCommands.methods[239];
         return this.makeUnaryRequest<Rpc_Debug_Ping_Request, Rpc_Debug_Ping_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Debug_Ping_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Debug_Ping_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DebugSubscriptions(anytype.Rpc.Debug.Subscriptions.Request) returns (anytype.Rpc.Debug.Subscriptions.Response);
      */
     debugSubscriptions(input: Rpc_Debug_Subscriptions_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_Subscriptions_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_Subscriptions_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Debug_Subscriptions_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[227];
+        const method = ClientCommands.methods[240];
         return this.makeUnaryRequest<Rpc_Debug_Subscriptions_Request, Rpc_Debug_Subscriptions_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Debug_Subscriptions_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Debug_Subscriptions_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DebugOpenedObjects(anytype.Rpc.Debug.OpenedObjects.Request) returns (anytype.Rpc.Debug.OpenedObjects.Response);
      */
     debugOpenedObjects(input: Rpc_Debug_OpenedObjects_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_OpenedObjects_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_OpenedObjects_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Debug_OpenedObjects_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[228];
+        const method = ClientCommands.methods[241];
         return this.makeUnaryRequest<Rpc_Debug_OpenedObjects_Request, Rpc_Debug_OpenedObjects_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Debug_OpenedObjects_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Debug_OpenedObjects_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DebugRunProfiler(anytype.Rpc.Debug.RunProfiler.Request) returns (anytype.Rpc.Debug.RunProfiler.Response);
      */
     debugRunProfiler(input: Rpc_Debug_RunProfiler_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_RunProfiler_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_RunProfiler_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Debug_RunProfiler_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[229];
+        const method = ClientCommands.methods[242];
         return this.makeUnaryRequest<Rpc_Debug_RunProfiler_Request, Rpc_Debug_RunProfiler_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Debug_RunProfiler_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Debug_RunProfiler_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DebugAccountSelectTrace(anytype.Rpc.Debug.AccountSelectTrace.Request) returns (anytype.Rpc.Debug.AccountSelectTrace.Response);
      */
     debugAccountSelectTrace(input: Rpc_Debug_AccountSelectTrace_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_AccountSelectTrace_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_AccountSelectTrace_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Debug_AccountSelectTrace_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[230];
+        const method = ClientCommands.methods[243];
         return this.makeUnaryRequest<Rpc_Debug_AccountSelectTrace_Request, Rpc_Debug_AccountSelectTrace_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Debug_AccountSelectTrace_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Debug_AccountSelectTrace_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DebugAnystoreObjectChanges(anytype.Rpc.Debug.AnystoreObjectChanges.Request) returns (anytype.Rpc.Debug.AnystoreObjectChanges.Response);
      */
     debugAnystoreObjectChanges(input: Rpc_Debug_AnystoreObjectChanges_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_AnystoreObjectChanges_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_AnystoreObjectChanges_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Debug_AnystoreObjectChanges_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[231];
+        const method = ClientCommands.methods[244];
         return this.makeUnaryRequest<Rpc_Debug_AnystoreObjectChanges_Request, Rpc_Debug_AnystoreObjectChanges_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Debug_AnystoreObjectChanges_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Debug_AnystoreObjectChanges_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DebugNetCheck(anytype.Rpc.Debug.NetCheck.Request) returns (anytype.Rpc.Debug.NetCheck.Response);
      */
     debugNetCheck(input: Rpc_Debug_NetCheck_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_NetCheck_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_NetCheck_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Debug_NetCheck_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[232];
+        const method = ClientCommands.methods[245];
         return this.makeUnaryRequest<Rpc_Debug_NetCheck_Request, Rpc_Debug_NetCheck_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Debug_NetCheck_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Debug_NetCheck_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DebugExportLog(anytype.Rpc.Debug.ExportLog.Request) returns (anytype.Rpc.Debug.ExportLog.Response);
      */
     debugExportLog(input: Rpc_Debug_ExportLog_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_ExportLog_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Debug_ExportLog_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Debug_ExportLog_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[233];
+        const method = ClientCommands.methods[246];
         return this.makeUnaryRequest<Rpc_Debug_ExportLog_Request, Rpc_Debug_ExportLog_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Debug_ExportLog_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Debug_ExportLog_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
-    }
-    /**
-     * @generated from protobuf rpc: InitialSetParameters(anytype.Rpc.Initial.SetParameters.Request) returns (anytype.Rpc.Initial.SetParameters.Response);
-     */
-    initialSetParameters(input: Rpc_Initial_SetParameters_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Initial_SetParameters_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Initial_SetParameters_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Initial_SetParameters_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[234];
-        return this.makeUnaryRequest<Rpc_Initial_SetParameters_Request, Rpc_Initial_SetParameters_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Initial_SetParameters_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Initial_SetParameters_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: MetricsSetParameters(anytype.Rpc.Metrics.SetParameters.Request) returns (anytype.Rpc.Metrics.SetParameters.Response);
      */
     metricsSetParameters(input: Rpc_Metrics_SetParameters_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Metrics_SetParameters_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Metrics_SetParameters_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Metrics_SetParameters_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[235];
+        const method = ClientCommands.methods[247];
         return this.makeUnaryRequest<Rpc_Metrics_SetParameters_Request, Rpc_Metrics_SetParameters_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Metrics_SetParameters_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Metrics_SetParameters_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+    }
+    /**
+     * @generated from protobuf rpc: InitialSetParameters(anytype.Rpc.Initial.SetParameters.Request) returns (anytype.Rpc.Initial.SetParameters.Response);
+     */
+    initialSetParameters(input: Rpc_Initial_SetParameters_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Initial_SetParameters_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Initial_SetParameters_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Initial_SetParameters_Response) => void)): grpc.ClientUnaryCall {
+        const method = ClientCommands.methods[248];
+        return this.makeUnaryRequest<Rpc_Initial_SetParameters_Request, Rpc_Initial_SetParameters_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Initial_SetParameters_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Initial_SetParameters_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * used only for lib-server via grpc
@@ -4226,28 +4440,28 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: ListenSessionEvents(anytype.StreamRequest) returns (stream anytype.Event);
      */
     listenSessionEvents(input: StreamRequest, metadata?: grpc.Metadata | grpc.CallOptions, options?: grpc.CallOptions): grpc.ClientReadableStream<Event> {
-        const method = ClientCommands.methods[236];
+        const method = ClientCommands.methods[249];
         return this.makeServerStreamRequest<StreamRequest, Event>(`/${ClientCommands.typeName}/${method.name}`, (value: StreamRequest): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Event => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), options);
     }
     /**
      * @generated from protobuf rpc: NotificationList(anytype.Rpc.Notification.List.Request) returns (anytype.Rpc.Notification.List.Response);
      */
     notificationList(input: Rpc_Notification_List_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Notification_List_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Notification_List_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Notification_List_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[237];
+        const method = ClientCommands.methods[250];
         return this.makeUnaryRequest<Rpc_Notification_List_Request, Rpc_Notification_List_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Notification_List_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Notification_List_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: NotificationReply(anytype.Rpc.Notification.Reply.Request) returns (anytype.Rpc.Notification.Reply.Response);
      */
     notificationReply(input: Rpc_Notification_Reply_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Notification_Reply_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Notification_Reply_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Notification_Reply_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[238];
+        const method = ClientCommands.methods[251];
         return this.makeUnaryRequest<Rpc_Notification_Reply_Request, Rpc_Notification_Reply_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Notification_Reply_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Notification_Reply_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: NotificationTest(anytype.Rpc.Notification.Test.Request) returns (anytype.Rpc.Notification.Test.Response);
      */
     notificationTest(input: Rpc_Notification_Test_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Notification_Test_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Notification_Test_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Notification_Test_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[239];
+        const method = ClientCommands.methods[252];
         return this.makeUnaryRequest<Rpc_Notification_Test_Request, Rpc_Notification_Test_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Notification_Test_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Notification_Test_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -4259,7 +4473,7 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: MembershipGetStatus(anytype.Rpc.Membership.GetStatus.Request) returns (anytype.Rpc.Membership.GetStatus.Response);
      */
     membershipGetStatus(input: Rpc_Membership_GetStatus_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_GetStatus_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_GetStatus_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Membership_GetStatus_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[240];
+        const method = ClientCommands.methods[253];
         return this.makeUnaryRequest<Rpc_Membership_GetStatus_Request, Rpc_Membership_GetStatus_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Membership_GetStatus_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Membership_GetStatus_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -4268,7 +4482,7 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: MembershipIsNameValid(anytype.Rpc.Membership.IsNameValid.Request) returns (anytype.Rpc.Membership.IsNameValid.Response);
      */
     membershipIsNameValid(input: Rpc_Membership_IsNameValid_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_IsNameValid_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_IsNameValid_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Membership_IsNameValid_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[241];
+        const method = ClientCommands.methods[254];
         return this.makeUnaryRequest<Rpc_Membership_IsNameValid_Request, Rpc_Membership_IsNameValid_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Membership_IsNameValid_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Membership_IsNameValid_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -4277,7 +4491,7 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: MembershipRegisterPaymentRequest(anytype.Rpc.Membership.RegisterPaymentRequest.Request) returns (anytype.Rpc.Membership.RegisterPaymentRequest.Response);
      */
     membershipRegisterPaymentRequest(input: Rpc_Membership_RegisterPaymentRequest_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_RegisterPaymentRequest_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_RegisterPaymentRequest_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Membership_RegisterPaymentRequest_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[242];
+        const method = ClientCommands.methods[255];
         return this.makeUnaryRequest<Rpc_Membership_RegisterPaymentRequest_Request, Rpc_Membership_RegisterPaymentRequest_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Membership_RegisterPaymentRequest_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Membership_RegisterPaymentRequest_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -4289,7 +4503,7 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: MembershipGetPortalLinkUrl(anytype.Rpc.Membership.GetPortalLinkUrl.Request) returns (anytype.Rpc.Membership.GetPortalLinkUrl.Response);
      */
     membershipGetPortalLinkUrl(input: Rpc_Membership_GetPortalLinkUrl_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_GetPortalLinkUrl_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_GetPortalLinkUrl_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Membership_GetPortalLinkUrl_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[243];
+        const method = ClientCommands.methods[256];
         return this.makeUnaryRequest<Rpc_Membership_GetPortalLinkUrl_Request, Rpc_Membership_GetPortalLinkUrl_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Membership_GetPortalLinkUrl_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Membership_GetPortalLinkUrl_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -4298,7 +4512,7 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: MembershipGetVerificationEmailStatus(anytype.Rpc.Membership.GetVerificationEmailStatus.Request) returns (anytype.Rpc.Membership.GetVerificationEmailStatus.Response);
      */
     membershipGetVerificationEmailStatus(input: Rpc_Membership_GetVerificationEmailStatus_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_GetVerificationEmailStatus_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_GetVerificationEmailStatus_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Membership_GetVerificationEmailStatus_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[244];
+        const method = ClientCommands.methods[257];
         return this.makeUnaryRequest<Rpc_Membership_GetVerificationEmailStatus_Request, Rpc_Membership_GetVerificationEmailStatus_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Membership_GetVerificationEmailStatus_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Membership_GetVerificationEmailStatus_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -4307,7 +4521,7 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: MembershipGetVerificationEmail(anytype.Rpc.Membership.GetVerificationEmail.Request) returns (anytype.Rpc.Membership.GetVerificationEmail.Response);
      */
     membershipGetVerificationEmail(input: Rpc_Membership_GetVerificationEmail_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_GetVerificationEmail_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_GetVerificationEmail_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Membership_GetVerificationEmail_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[245];
+        const method = ClientCommands.methods[258];
         return this.makeUnaryRequest<Rpc_Membership_GetVerificationEmail_Request, Rpc_Membership_GetVerificationEmail_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Membership_GetVerificationEmail_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Membership_GetVerificationEmail_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -4316,7 +4530,7 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: MembershipVerifyEmailCode(anytype.Rpc.Membership.VerifyEmailCode.Request) returns (anytype.Rpc.Membership.VerifyEmailCode.Response);
      */
     membershipVerifyEmailCode(input: Rpc_Membership_VerifyEmailCode_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_VerifyEmailCode_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_VerifyEmailCode_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Membership_VerifyEmailCode_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[246];
+        const method = ClientCommands.methods[259];
         return this.makeUnaryRequest<Rpc_Membership_VerifyEmailCode_Request, Rpc_Membership_VerifyEmailCode_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Membership_VerifyEmailCode_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Membership_VerifyEmailCode_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -4326,21 +4540,21 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: MembershipFinalize(anytype.Rpc.Membership.Finalize.Request) returns (anytype.Rpc.Membership.Finalize.Response);
      */
     membershipFinalize(input: Rpc_Membership_Finalize_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_Finalize_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_Finalize_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Membership_Finalize_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[247];
+        const method = ClientCommands.methods[260];
         return this.makeUnaryRequest<Rpc_Membership_Finalize_Request, Rpc_Membership_Finalize_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Membership_Finalize_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Membership_Finalize_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: MembershipGetTiers(anytype.Rpc.Membership.GetTiers.Request) returns (anytype.Rpc.Membership.GetTiers.Response);
      */
     membershipGetTiers(input: Rpc_Membership_GetTiers_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_GetTiers_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_GetTiers_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Membership_GetTiers_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[248];
+        const method = ClientCommands.methods[261];
         return this.makeUnaryRequest<Rpc_Membership_GetTiers_Request, Rpc_Membership_GetTiers_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Membership_GetTiers_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Membership_GetTiers_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: MembershipVerifyAppStoreReceipt(anytype.Rpc.Membership.VerifyAppStoreReceipt.Request) returns (anytype.Rpc.Membership.VerifyAppStoreReceipt.Response);
      */
     membershipVerifyAppStoreReceipt(input: Rpc_Membership_VerifyAppStoreReceipt_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_VerifyAppStoreReceipt_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Membership_VerifyAppStoreReceipt_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Membership_VerifyAppStoreReceipt_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[249];
+        const method = ClientCommands.methods[262];
         return this.makeUnaryRequest<Rpc_Membership_VerifyAppStoreReceipt_Request, Rpc_Membership_VerifyAppStoreReceipt_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Membership_VerifyAppStoreReceipt_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Membership_VerifyAppStoreReceipt_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -4351,14 +4565,14 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: NameServiceUserAccountGet(anytype.Rpc.NameService.UserAccount.Get.Request) returns (anytype.Rpc.NameService.UserAccount.Get.Response);
      */
     nameServiceUserAccountGet(input: Rpc_NameService_UserAccount_Get_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_NameService_UserAccount_Get_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_NameService_UserAccount_Get_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_NameService_UserAccount_Get_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[250];
+        const method = ClientCommands.methods[263];
         return this.makeUnaryRequest<Rpc_NameService_UserAccount_Get_Request, Rpc_NameService_UserAccount_Get_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_NameService_UserAccount_Get_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_NameService_UserAccount_Get_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: NameServiceResolveName(anytype.Rpc.NameService.ResolveName.Request) returns (anytype.Rpc.NameService.ResolveName.Response);
      */
     nameServiceResolveName(input: Rpc_NameService_ResolveName_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_NameService_ResolveName_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_NameService_ResolveName_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_NameService_ResolveName_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[251];
+        const method = ClientCommands.methods[264];
         return this.makeUnaryRequest<Rpc_NameService_ResolveName_Request, Rpc_NameService_ResolveName_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_NameService_ResolveName_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_NameService_ResolveName_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -4367,35 +4581,35 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: NameServiceResolveAnyId(anytype.Rpc.NameService.ResolveAnyId.Request) returns (anytype.Rpc.NameService.ResolveAnyId.Response);
      */
     nameServiceResolveAnyId(input: Rpc_NameService_ResolveAnyId_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_NameService_ResolveAnyId_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_NameService_ResolveAnyId_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_NameService_ResolveAnyId_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[252];
+        const method = ClientCommands.methods[265];
         return this.makeUnaryRequest<Rpc_NameService_ResolveAnyId_Request, Rpc_NameService_ResolveAnyId_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_NameService_ResolveAnyId_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_NameService_ResolveAnyId_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: BroadcastPayloadEvent(anytype.Rpc.Broadcast.PayloadEvent.Request) returns (anytype.Rpc.Broadcast.PayloadEvent.Response);
      */
     broadcastPayloadEvent(input: Rpc_Broadcast_PayloadEvent_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Broadcast_PayloadEvent_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Broadcast_PayloadEvent_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Broadcast_PayloadEvent_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[253];
+        const method = ClientCommands.methods[266];
         return this.makeUnaryRequest<Rpc_Broadcast_PayloadEvent_Request, Rpc_Broadcast_PayloadEvent_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Broadcast_PayloadEvent_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Broadcast_PayloadEvent_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DeviceSetName(anytype.Rpc.Device.SetName.Request) returns (anytype.Rpc.Device.SetName.Response);
      */
     deviceSetName(input: Rpc_Device_SetName_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Device_SetName_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Device_SetName_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Device_SetName_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[254];
+        const method = ClientCommands.methods[267];
         return this.makeUnaryRequest<Rpc_Device_SetName_Request, Rpc_Device_SetName_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Device_SetName_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Device_SetName_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DeviceList(anytype.Rpc.Device.List.Request) returns (anytype.Rpc.Device.List.Response);
      */
     deviceList(input: Rpc_Device_List_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Device_List_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Device_List_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Device_List_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[255];
+        const method = ClientCommands.methods[268];
         return this.makeUnaryRequest<Rpc_Device_List_Request, Rpc_Device_List_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Device_List_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Device_List_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: DeviceNetworkStateSet(anytype.Rpc.Device.NetworkState.Set.Request) returns (anytype.Rpc.Device.NetworkState.Set.Response);
      */
     deviceNetworkStateSet(input: Rpc_Device_NetworkState_Set_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Device_NetworkState_Set_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Device_NetworkState_Set_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Device_NetworkState_Set_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[256];
+        const method = ClientCommands.methods[269];
         return this.makeUnaryRequest<Rpc_Device_NetworkState_Set_Request, Rpc_Device_NetworkState_Set_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Device_NetworkState_Set_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Device_NetworkState_Set_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
@@ -4404,63 +4618,63 @@ export class ClientCommandsClient extends grpc.Client implements IClientCommands
      * @generated from protobuf rpc: ChatAddMessage(anytype.Rpc.Chat.AddMessage.Request) returns (anytype.Rpc.Chat.AddMessage.Response);
      */
     chatAddMessage(input: Rpc_Chat_AddMessage_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_AddMessage_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_AddMessage_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Chat_AddMessage_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[257];
+        const method = ClientCommands.methods[270];
         return this.makeUnaryRequest<Rpc_Chat_AddMessage_Request, Rpc_Chat_AddMessage_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Chat_AddMessage_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Chat_AddMessage_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ChatEditMessageContent(anytype.Rpc.Chat.EditMessageContent.Request) returns (anytype.Rpc.Chat.EditMessageContent.Response);
      */
     chatEditMessageContent(input: Rpc_Chat_EditMessageContent_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_EditMessageContent_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_EditMessageContent_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Chat_EditMessageContent_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[258];
+        const method = ClientCommands.methods[271];
         return this.makeUnaryRequest<Rpc_Chat_EditMessageContent_Request, Rpc_Chat_EditMessageContent_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Chat_EditMessageContent_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Chat_EditMessageContent_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ChatToggleMessageReaction(anytype.Rpc.Chat.ToggleMessageReaction.Request) returns (anytype.Rpc.Chat.ToggleMessageReaction.Response);
      */
     chatToggleMessageReaction(input: Rpc_Chat_ToggleMessageReaction_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_ToggleMessageReaction_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_ToggleMessageReaction_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Chat_ToggleMessageReaction_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[259];
+        const method = ClientCommands.methods[272];
         return this.makeUnaryRequest<Rpc_Chat_ToggleMessageReaction_Request, Rpc_Chat_ToggleMessageReaction_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Chat_ToggleMessageReaction_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Chat_ToggleMessageReaction_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ChatDeleteMessage(anytype.Rpc.Chat.DeleteMessage.Request) returns (anytype.Rpc.Chat.DeleteMessage.Response);
      */
     chatDeleteMessage(input: Rpc_Chat_DeleteMessage_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_DeleteMessage_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_DeleteMessage_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Chat_DeleteMessage_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[260];
+        const method = ClientCommands.methods[273];
         return this.makeUnaryRequest<Rpc_Chat_DeleteMessage_Request, Rpc_Chat_DeleteMessage_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Chat_DeleteMessage_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Chat_DeleteMessage_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ChatGetMessages(anytype.Rpc.Chat.GetMessages.Request) returns (anytype.Rpc.Chat.GetMessages.Response);
      */
     chatGetMessages(input: Rpc_Chat_GetMessages_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_GetMessages_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_GetMessages_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Chat_GetMessages_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[261];
+        const method = ClientCommands.methods[274];
         return this.makeUnaryRequest<Rpc_Chat_GetMessages_Request, Rpc_Chat_GetMessages_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Chat_GetMessages_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Chat_GetMessages_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ChatGetMessagesByIds(anytype.Rpc.Chat.GetMessagesByIds.Request) returns (anytype.Rpc.Chat.GetMessagesByIds.Response);
      */
     chatGetMessagesByIds(input: Rpc_Chat_GetMessagesByIds_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_GetMessagesByIds_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_GetMessagesByIds_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Chat_GetMessagesByIds_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[262];
+        const method = ClientCommands.methods[275];
         return this.makeUnaryRequest<Rpc_Chat_GetMessagesByIds_Request, Rpc_Chat_GetMessagesByIds_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Chat_GetMessagesByIds_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Chat_GetMessagesByIds_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ChatSubscribeLastMessages(anytype.Rpc.Chat.SubscribeLastMessages.Request) returns (anytype.Rpc.Chat.SubscribeLastMessages.Response);
      */
     chatSubscribeLastMessages(input: Rpc_Chat_SubscribeLastMessages_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_SubscribeLastMessages_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_SubscribeLastMessages_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Chat_SubscribeLastMessages_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[263];
+        const method = ClientCommands.methods[276];
         return this.makeUnaryRequest<Rpc_Chat_SubscribeLastMessages_Request, Rpc_Chat_SubscribeLastMessages_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Chat_SubscribeLastMessages_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Chat_SubscribeLastMessages_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ChatUnsubscribe(anytype.Rpc.Chat.Unsubscribe.Request) returns (anytype.Rpc.Chat.Unsubscribe.Response);
      */
     chatUnsubscribe(input: Rpc_Chat_Unsubscribe_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_Unsubscribe_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Chat_Unsubscribe_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Chat_Unsubscribe_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[264];
+        const method = ClientCommands.methods[277];
         return this.makeUnaryRequest<Rpc_Chat_Unsubscribe_Request, Rpc_Chat_Unsubscribe_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Chat_Unsubscribe_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Chat_Unsubscribe_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
     /**
      * @generated from protobuf rpc: ObjectChatAdd(anytype.Rpc.Object.ChatAdd.Request) returns (anytype.Rpc.Object.ChatAdd.Response);
      */
     objectChatAdd(input: Rpc_Object_ChatAdd_Request, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ChatAdd_Response) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: Rpc_Object_ChatAdd_Response) => void), callback?: ((err: grpc.ServiceError | null, value?: Rpc_Object_ChatAdd_Response) => void)): grpc.ClientUnaryCall {
-        const method = ClientCommands.methods[265];
+        const method = ClientCommands.methods[278];
         return this.makeUnaryRequest<Rpc_Object_ChatAdd_Request, Rpc_Object_ChatAdd_Response>(`/${ClientCommands.typeName}/${method.name}`, (value: Rpc_Object_ChatAdd_Request): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): Rpc_Object_ChatAdd_Response => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
     }
 }

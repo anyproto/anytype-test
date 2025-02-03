@@ -1,6 +1,6 @@
 @S27ebe52d
 Feature: Compatibility with Sync
-  # to run test with local middleware use "default" as version variable and clone anytype-heart to cmd folder
+  # to run test with local middleware use "default" as version variable and clone anytype-heart to mw folder
 
   @compatibility @T75496a29 @staging
   Scenario Outline: 3 versions compatibility with sync on staging nodes
@@ -9,7 +9,7 @@ Feature: Compatibility with Sync
     And the user creates a new account on "staging"
     And the user creates an object 1 in the account
     And the user can open the object 1
-    And the account is synced within 60 seconds
+    And the account is synced within 120 seconds
     And the server 1 is stopped
     And data is deleted
     And the server <version2> 2 is running

@@ -1,6 +1,5 @@
 node_modules
 heart
-cmd
 heartsFolder
 config.yml
 myDocker.yml
@@ -12,8 +11,8 @@ tmp/*
 !tmp/
 screenshots/*
 !screenshots/
-cmd/*
-!cmd/
+mw/*
+!mw/
 # Log files
 *.log
 # Operating system files

@@ -155,10 +155,10 @@ export async function callListenSessionEvents(
                 { user: "stream" },
                 message.value.spaceSyncStatusUpdate
               );
-              store.spaceSyncStatusReceived = true; // Set the flag to true
+              store.spaceSyncStatusReceived = true;
             } else {
               logger.info(
-                `Received spaceSyncStatusUpdate for client ${clientNumber} with id ${id} and status ${status}, but conditions not met.`,
+                `Received spaceSyncStatusUpdate for client ${clientNumber} with id ${id} and status ${Event_Space_Status[status]} (${status}), but conditions not met.`,
                 { user: "stream" }
               );
             }

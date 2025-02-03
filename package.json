@@ -9,6 +9,7 @@
     "test:e2e": "cucumber-js -p api --tags @e2e",
     "test:comp": "cucumber-js -p api --tags @compatibility",
     "test:invite": "cucumber-js -p api --tags @invite",
+    "test:sync": "cucumber-js -p api --tags @sync",
     "test:comp:testomatio": "cucumber-js -p api --tags @compatibility --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
     "test:ios": "wdio run ./config/ios.conf.ts",
     "test:ios:smoke": "wdio run ./config/ios.conf.ts -- --tags @smoke"

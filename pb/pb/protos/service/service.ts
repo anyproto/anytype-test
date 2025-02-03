@@ -61,10 +61,10 @@ import { Rpc_Notification_List_Response } from "../commands";
 import { Rpc_Notification_List_Request } from "../commands";
 import { Event } from "../events";
 import { StreamRequest } from "../commands";
-import { Rpc_Metrics_SetParameters_Response } from "../commands";
-import { Rpc_Metrics_SetParameters_Request } from "../commands";
 import { Rpc_Initial_SetParameters_Response } from "../commands";
 import { Rpc_Initial_SetParameters_Request } from "../commands";
+import { Rpc_Metrics_SetParameters_Response } from "../commands";
+import { Rpc_Metrics_SetParameters_Request } from "../commands";
 import { Rpc_Debug_ExportLog_Response } from "../commands";
 import { Rpc_Debug_ExportLog_Request } from "../commands";
 import { Rpc_Debug_NetCheck_Response } from "../commands";
@@ -95,6 +95,10 @@ import { Rpc_Debug_Stat_Response } from "../commands";
 import { Rpc_Debug_Stat_Request } from "../commands";
 import { Rpc_Log_Send_Response } from "../commands";
 import { Rpc_Log_Send_Request } from "../commands";
+import { Rpc_Process_Unsubscribe_Response } from "../commands";
+import { Rpc_Process_Unsubscribe_Request } from "../commands";
+import { Rpc_Process_Subscribe_Response } from "../commands";
+import { Rpc_Process_Subscribe_Request } from "../commands";
 import { Rpc_Process_Cancel_Response } from "../commands";
 import { Rpc_Process_Cancel_Request } from "../commands";
 import { Rpc_BlockLatex_SetText_Response } from "../commands";
@@ -351,6 +355,8 @@ import { Rpc_ObjectCollection_Remove_Response } from "../commands";
 import { Rpc_ObjectCollection_Remove_Request } from "../commands";
 import { Rpc_ObjectCollection_Add_Response } from "../commands";
 import { Rpc_ObjectCollection_Add_Request } from "../commands";
+import { Rpc_Object_DateByTimestamp_Response } from "../commands";
+import { Rpc_Object_DateByTimestamp_Request } from "../commands";
 import { Rpc_Object_ImportExperience_Response } from "../commands";
 import { Rpc_Object_ImportExperience_Request } from "../commands";
 import { Rpc_Object_ImportUseCase_Response } from "../commands";
@@ -443,6 +449,20 @@ import { Rpc_Object_Close_Response } from "../commands";
 import { Rpc_Object_Close_Request } from "../commands";
 import { Rpc_Object_Open_Response } from "../commands";
 import { Rpc_Object_Open_Request } from "../commands";
+import { Rpc_Publishing_GetStatus_Response } from "../commands";
+import { Rpc_Publishing_GetStatus_Request } from "../commands";
+import { Rpc_Publishing_ResolveUri_Response } from "../commands";
+import { Rpc_Publishing_ResolveUri_Request } from "../commands";
+import { Rpc_Publishing_List_Response } from "../commands";
+import { Rpc_Publishing_List_Request } from "../commands";
+import { Rpc_Publishing_Remove_Response } from "../commands";
+import { Rpc_Publishing_Remove_Request } from "../commands";
+import { Rpc_Publishing_Create_Response } from "../commands";
+import { Rpc_Publishing_Create_Request } from "../commands";
+import { Rpc_Space_UnsetOrder_Response } from "../commands";
+import { Rpc_Space_UnsetOrder_Request } from "../commands";
+import { Rpc_Space_SetOrder_Response } from "../commands";
+import { Rpc_Space_SetOrder_Request } from "../commands";
 import { Rpc_Space_ParticipantPermissionsChange_Response } from "../commands";
 import { Rpc_Space_ParticipantPermissionsChange_Request } from "../commands";
 import { Rpc_Space_ParticipantRemove_Response } from "../commands";
@@ -481,6 +501,8 @@ import { Rpc_Account_Move_Response } from "../commands";
 import { Rpc_Account_Move_Request } from "../commands";
 import { Rpc_Account_Stop_Response } from "../commands";
 import { Rpc_Account_Stop_Request } from "../commands";
+import { Rpc_Account_ChangeJsonApiAddr_Response } from "../commands";
+import { Rpc_Account_ChangeJsonApiAddr_Request } from "../commands";
 import { Rpc_Account_EnableLocalNetworkSync_Response } from "../commands";
 import { Rpc_Account_EnableLocalNetworkSync_Request } from "../commands";
 import { Rpc_Account_Select_Response } from "../commands";
@@ -491,6 +513,10 @@ import { Rpc_Account_Delete_Response } from "../commands";
 import { Rpc_Account_Delete_Request } from "../commands";
 import { Rpc_Account_Create_Response } from "../commands";
 import { Rpc_Account_Create_Request } from "../commands";
+import { Rpc_Account_MigrateCancel_Response } from "../commands";
+import { Rpc_Account_MigrateCancel_Request } from "../commands";
+import { Rpc_Account_Migrate_Response } from "../commands";
+import { Rpc_Account_Migrate_Request } from "../commands";
 import { Rpc_Account_Recover_Response } from "../commands";
 import { Rpc_Account_Recover_Request } from "../commands";
 import { Rpc_Workspace_Export_Response } from "../commands";
@@ -559,11 +585,14 @@ export const ClientCommands = new ServiceType("anytype.ClientCommands", [
     { name: "WorkspaceSetInfo", options: {}, I: Rpc_Workspace_SetInfo_Request, O: Rpc_Workspace_SetInfo_Response },
     { name: "WorkspaceExport", options: {}, I: Rpc_Workspace_Export_Request, O: Rpc_Workspace_Export_Response },
     { name: "AccountRecover", options: {}, I: Rpc_Account_Recover_Request, O: Rpc_Account_Recover_Response },
+    { name: "AccountMigrate", options: {}, I: Rpc_Account_Migrate_Request, O: Rpc_Account_Migrate_Response },
+    { name: "AccountMigrateCancel", options: {}, I: Rpc_Account_MigrateCancel_Request, O: Rpc_Account_MigrateCancel_Response },
     { name: "AccountCreate", options: {}, I: Rpc_Account_Create_Request, O: Rpc_Account_Create_Response },
     { name: "AccountDelete", options: {}, I: Rpc_Account_Delete_Request, O: Rpc_Account_Delete_Response },
     { name: "AccountRevertDeletion", options: {}, I: Rpc_Account_RevertDeletion_Request, O: Rpc_Account_RevertDeletion_Response },
     { name: "AccountSelect", options: {}, I: Rpc_Account_Select_Request, O: Rpc_Account_Select_Response },
     { name: "AccountEnableLocalNetworkSync", options: {}, I: Rpc_Account_EnableLocalNetworkSync_Request, O: Rpc_Account_EnableLocalNetworkSync_Response },
+    { name: "AccountChangeJsonApiAddr", options: {}, I: Rpc_Account_ChangeJsonApiAddr_Request, O: Rpc_Account_ChangeJsonApiAddr_Response },
     { name: "AccountStop", options: {}, I: Rpc_Account_Stop_Request, O: Rpc_Account_Stop_Response },
     { name: "AccountMove", options: {}, I: Rpc_Account_Move_Request, O: Rpc_Account_Move_Response },
     { name: "AccountConfigUpdate", options: {}, I: Rpc_Account_ConfigUpdate_Request, O: Rpc_Account_ConfigUpdate_Response },
@@ -583,6 +612,13 @@ export const ClientCommands = new ServiceType("anytype.ClientCommands", [
     { name: "SpaceMakeShareable", options: {}, I: Rpc_Space_MakeShareable_Request, O: Rpc_Space_MakeShareable_Response },
     { name: "SpaceParticipantRemove", options: {}, I: Rpc_Space_ParticipantRemove_Request, O: Rpc_Space_ParticipantRemove_Response },
     { name: "SpaceParticipantPermissionsChange", options: {}, I: Rpc_Space_ParticipantPermissionsChange_Request, O: Rpc_Space_ParticipantPermissionsChange_Response },
+    { name: "SpaceSetOrder", options: {}, I: Rpc_Space_SetOrder_Request, O: Rpc_Space_SetOrder_Response },
+    { name: "SpaceUnsetOrder", options: {}, I: Rpc_Space_UnsetOrder_Request, O: Rpc_Space_UnsetOrder_Response },
+    { name: "PublishingCreate", options: {}, I: Rpc_Publishing_Create_Request, O: Rpc_Publishing_Create_Response },
+    { name: "PublishingRemove", options: {}, I: Rpc_Publishing_Remove_Request, O: Rpc_Publishing_Remove_Response },
+    { name: "PublishingList", options: {}, I: Rpc_Publishing_List_Request, O: Rpc_Publishing_List_Response },
+    { name: "PublishingResolveUri", options: {}, I: Rpc_Publishing_ResolveUri_Request, O: Rpc_Publishing_ResolveUri_Response },
+    { name: "PublishingGetStatus", options: {}, I: Rpc_Publishing_GetStatus_Request, O: Rpc_Publishing_GetStatus_Response },
     { name: "ObjectOpen", options: {}, I: Rpc_Object_Open_Request, O: Rpc_Object_Open_Response },
     { name: "ObjectClose", options: {}, I: Rpc_Object_Close_Request, O: Rpc_Object_Close_Response },
     { name: "ObjectShow", options: {}, I: Rpc_Object_Show_Request, O: Rpc_Object_Show_Response },
@@ -629,6 +665,7 @@ export const ClientCommands = new ServiceType("anytype.ClientCommands", [
     { name: "ObjectImportNotionValidateToken", options: {}, I: Rpc_Object_Import_Notion_ValidateToken_Request, O: Rpc_Object_Import_Notion_ValidateToken_Response },
     { name: "ObjectImportUseCase", options: {}, I: Rpc_Object_ImportUseCase_Request, O: Rpc_Object_ImportUseCase_Response },
     { name: "ObjectImportExperience", options: {}, I: Rpc_Object_ImportExperience_Request, O: Rpc_Object_ImportExperience_Response },
+    { name: "ObjectDateByTimestamp", options: {}, I: Rpc_Object_DateByTimestamp_Request, O: Rpc_Object_DateByTimestamp_Response },
     { name: "ObjectCollectionAdd", options: {}, I: Rpc_ObjectCollection_Add_Request, O: Rpc_ObjectCollection_Add_Response },
     { name: "ObjectCollectionRemove", options: {}, I: Rpc_ObjectCollection_Remove_Request, O: Rpc_ObjectCollection_Remove_Response },
     { name: "ObjectCollectionSort", options: {}, I: Rpc_ObjectCollection_Sort_Request, O: Rpc_ObjectCollection_Sort_Response },
@@ -757,6 +794,8 @@ export const ClientCommands = new ServiceType("anytype.ClientCommands", [
     { name: "BlockDivListSetStyle", options: {}, I: Rpc_BlockDiv_ListSetStyle_Request, O: Rpc_BlockDiv_ListSetStyle_Response },
     { name: "BlockLatexSetText", options: {}, I: Rpc_BlockLatex_SetText_Request, O: Rpc_BlockLatex_SetText_Response },
     { name: "ProcessCancel", options: {}, I: Rpc_Process_Cancel_Request, O: Rpc_Process_Cancel_Response },
+    { name: "ProcessSubscribe", options: {}, I: Rpc_Process_Subscribe_Request, O: Rpc_Process_Subscribe_Response },
+    { name: "ProcessUnsubscribe", options: {}, I: Rpc_Process_Unsubscribe_Request, O: Rpc_Process_Unsubscribe_Response },
     { name: "LogSend", options: {}, I: Rpc_Log_Send_Request, O: Rpc_Log_Send_Response },
     { name: "DebugStat", options: {}, I: Rpc_Debug_Stat_Request, O: Rpc_Debug_Stat_Response },
     { name: "DebugTree", options: {}, I: Rpc_Debug_Tree_Request, O: Rpc_Debug_Tree_Response },
@@ -772,8 +811,8 @@ export const ClientCommands = new ServiceType("anytype.ClientCommands", [
     { name: "DebugAnystoreObjectChanges", options: {}, I: Rpc_Debug_AnystoreObjectChanges_Request, O: Rpc_Debug_AnystoreObjectChanges_Response },
     { name: "DebugNetCheck", options: {}, I: Rpc_Debug_NetCheck_Request, O: Rpc_Debug_NetCheck_Response },
     { name: "DebugExportLog", options: {}, I: Rpc_Debug_ExportLog_Request, O: Rpc_Debug_ExportLog_Response },
-    { name: "InitialSetParameters", options: {}, I: Rpc_Initial_SetParameters_Request, O: Rpc_Initial_SetParameters_Response },
     { name: "MetricsSetParameters", options: {}, I: Rpc_Metrics_SetParameters_Request, O: Rpc_Metrics_SetParameters_Response },
+    { name: "InitialSetParameters", options: {}, I: Rpc_Initial_SetParameters_Request, O: Rpc_Initial_SetParameters_Response },
     { name: "ListenSessionEvents", serverStreaming: true, options: {}, I: StreamRequest, O: Event },
     { name: "NotificationList", options: {}, I: Rpc_Notification_List_Request, O: Rpc_Notification_List_Response },
     { name: "NotificationReply", options: {}, I: Rpc_Notification_Reply_Request, O: Rpc_Notification_Reply_Response },

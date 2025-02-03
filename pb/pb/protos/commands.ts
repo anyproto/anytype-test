@@ -57,6 +57,7 @@ import { InternalFlag } from "../../pkg/lib/pb/model/protos/models";
 import { ObjectView } from "../../pkg/lib/pb/model/protos/models";
 import { ResponseEvent } from "./events";
 import { Account_Info } from "../../pkg/lib/pb/model/protos/models";
+import { Account_Auth_LocalApiScope } from "../../pkg/lib/pb/model/protos/models";
 import { Account_Status } from "../../pkg/lib/pb/model/protos/models";
 import { Account } from "../../pkg/lib/pb/model/protos/models";
 import { Struct } from "../../google/protobuf/struct";
@@ -1366,6 +1367,116 @@ export enum Rpc_Space_Delete_Response_Error_Code {
     NOT_SHAREABLE = 105
 }
 /**
+ * @generated from protobuf message anytype.Rpc.Space.SetOrder
+ */
+export interface Rpc_Space_SetOrder {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Space.SetOrder.Request
+ */
+export interface Rpc_Space_SetOrder_Request {
+    /**
+     * @generated from protobuf field: string spaceViewId = 1;
+     */
+    spaceViewId: string;
+    /**
+     * @generated from protobuf field: repeated string spaceViewOrder = 2;
+     */
+    spaceViewOrder: string[]; // result order of space view ids
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Space.SetOrder.Response
+ */
+export interface Rpc_Space_SetOrder_Response {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Space.SetOrder.Response.Error error = 1;
+     */
+    error?: Rpc_Space_SetOrder_Response_Error;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Space.SetOrder.Response.Error
+ */
+export interface Rpc_Space_SetOrder_Response_Error {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Space.SetOrder.Response.Error.Code code = 1;
+     */
+    code: Rpc_Space_SetOrder_Response_Error_Code;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+}
+/**
+ * @generated from protobuf enum anytype.Rpc.Space.SetOrder.Response.Error.Code
+ */
+export enum Rpc_Space_SetOrder_Response_Error_Code {
+    /**
+     * @generated from protobuf enum value: NULL = 0;
+     */
+    NULL = 0,
+    /**
+     * @generated from protobuf enum value: UNKNOWN_ERROR = 1;
+     */
+    UNKNOWN_ERROR = 1,
+    /**
+     * @generated from protobuf enum value: BAD_INPUT = 2;
+     */
+    BAD_INPUT = 2
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Space.UnsetOrder
+ */
+export interface Rpc_Space_UnsetOrder {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Space.UnsetOrder.Request
+ */
+export interface Rpc_Space_UnsetOrder_Request {
+    /**
+     * @generated from protobuf field: string spaceViewId = 1;
+     */
+    spaceViewId: string;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Space.UnsetOrder.Response
+ */
+export interface Rpc_Space_UnsetOrder_Response {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Space.UnsetOrder.Response.Error error = 1;
+     */
+    error?: Rpc_Space_UnsetOrder_Response_Error;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Space.UnsetOrder.Response.Error
+ */
+export interface Rpc_Space_UnsetOrder_Response_Error {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Space.UnsetOrder.Response.Error.Code code = 1;
+     */
+    code: Rpc_Space_UnsetOrder_Response_Error_Code;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+}
+/**
+ * @generated from protobuf enum anytype.Rpc.Space.UnsetOrder.Response.Error.Code
+ */
+export enum Rpc_Space_UnsetOrder_Response_Error_Code {
+    /**
+     * @generated from protobuf enum value: NULL = 0;
+     */
+    NULL = 0,
+    /**
+     * @generated from protobuf enum value: UNKNOWN_ERROR = 1;
+     */
+    UNKNOWN_ERROR = 1,
+    /**
+     * @generated from protobuf enum value: BAD_INPUT = 2;
+     */
+    BAD_INPUT = 2
+}
+/**
  * @generated from protobuf message anytype.Rpc.Wallet
  */
 export interface Rpc_Wallet {
@@ -1809,6 +1920,10 @@ export interface Rpc_Account_Create_Request {
      * @generated from protobuf field: bool preferYamuxTransport = 8;
      */
     preferYamuxTransport: boolean; // optional, default is false, recommended in case of problems with QUIC transport
+    /**
+     * @generated from protobuf field: string jsonApiListenAddr = 9;
+     */
+    jsonApiListenAddr: string; // optional, if empty json api will not be started; 127.0.0.1:31009 should be the default one
 }
 /**
  * *
@@ -2097,6 +2212,142 @@ export enum Rpc_Account_RevertDeletion_Response_Error_Code {
     UNABLE_TO_CONNECT = 102
 }
 /**
+ * @generated from protobuf message anytype.Rpc.Account.Migrate
+ */
+export interface Rpc_Account_Migrate {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Account.Migrate.Request
+ */
+export interface Rpc_Account_Migrate_Request {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string; // Id of a selected account
+    /**
+     * @generated from protobuf field: string rootPath = 2;
+     */
+    rootPath: string;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Account.Migrate.Response
+ */
+export interface Rpc_Account_Migrate_Response {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Account.Migrate.Response.Error error = 1;
+     */
+    error?: Rpc_Account_Migrate_Response_Error;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Account.Migrate.Response.Error
+ */
+export interface Rpc_Account_Migrate_Response_Error {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Account.Migrate.Response.Error.Code code = 1;
+     */
+    code: Rpc_Account_Migrate_Response_Error_Code;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+}
+/**
+ * @generated from protobuf enum anytype.Rpc.Account.Migrate.Response.Error.Code
+ */
+export enum Rpc_Account_Migrate_Response_Error_Code {
+    /**
+     * No error
+     *
+     * @generated from protobuf enum value: NULL = 0;
+     */
+    NULL = 0,
+    /**
+     * Any other errors
+     *
+     * @generated from protobuf enum value: UNKNOWN_ERROR = 1;
+     */
+    UNKNOWN_ERROR = 1,
+    /**
+     * Id or root path is wrong
+     *
+     * @generated from protobuf enum value: BAD_INPUT = 2;
+     */
+    BAD_INPUT = 2,
+    /**
+     * @generated from protobuf enum value: ACCOUNT_NOT_FOUND = 101;
+     */
+    ACCOUNT_NOT_FOUND = 101,
+    /**
+     * @generated from protobuf enum value: CANCELED = 102;
+     */
+    CANCELED = 102,
+    /**
+     * TODO: [storage] Add specific error codes for migration problems
+     *
+     * @generated from protobuf enum value: NOT_ENOUGH_FREE_SPACE = 103;
+     */
+    NOT_ENOUGH_FREE_SPACE = 103
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Account.MigrateCancel
+ */
+export interface Rpc_Account_MigrateCancel {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Account.MigrateCancel.Request
+ */
+export interface Rpc_Account_MigrateCancel_Request {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string; // Id of a selected account
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Account.MigrateCancel.Response
+ */
+export interface Rpc_Account_MigrateCancel_Response {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Account.MigrateCancel.Response.Error error = 1;
+     */
+    error?: Rpc_Account_MigrateCancel_Response_Error;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Account.MigrateCancel.Response.Error
+ */
+export interface Rpc_Account_MigrateCancel_Response_Error {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Account.MigrateCancel.Response.Error.Code code = 1;
+     */
+    code: Rpc_Account_MigrateCancel_Response_Error_Code;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+}
+/**
+ * @generated from protobuf enum anytype.Rpc.Account.MigrateCancel.Response.Error.Code
+ */
+export enum Rpc_Account_MigrateCancel_Response_Error_Code {
+    /**
+     * No error
+     *
+     * @generated from protobuf enum value: NULL = 0;
+     */
+    NULL = 0,
+    /**
+     * Any other errors
+     *
+     * @generated from protobuf enum value: UNKNOWN_ERROR = 1;
+     */
+    UNKNOWN_ERROR = 1,
+    /**
+     * Id or root path is wrong
+     *
+     * @generated from protobuf enum value: BAD_INPUT = 2;
+     */
+    BAD_INPUT = 2
+}
+/**
  * @generated from protobuf message anytype.Rpc.Account.Select
  */
 export interface Rpc_Account_Select {
@@ -2133,6 +2384,10 @@ export interface Rpc_Account_Select_Request {
      * @generated from protobuf field: bool preferYamuxTransport = 6;
      */
     preferYamuxTransport: boolean; // optional, default is false, recommended in case of problems with QUIC transport
+    /**
+     * @generated from protobuf field: string jsonApiListenAddr = 7;
+     */
+    jsonApiListenAddr: string; // optional, if empty json api will not be started; 127.0.0.1:31009 should be the default one
 }
 /**
  * *
@@ -2229,6 +2484,10 @@ export enum Rpc_Account_Select_Response_Error_Code {
      * @generated from protobuf enum value: ACCOUNT_LOAD_IS_CANCELED = 112;
      */
     ACCOUNT_LOAD_IS_CANCELED = 112,
+    /**
+     * @generated from protobuf enum value: ACCOUNT_STORE_NOT_MIGRATED = 113;
+     */
+    ACCOUNT_STORE_NOT_MIGRATED = 113,
     /**
      * @generated from protobuf enum value: CONFIG_FILE_NOT_FOUND = 200;
      */
@@ -2721,6 +2980,63 @@ export enum Rpc_Account_EnableLocalNetworkSync_Response_Error_Code {
     ACCOUNT_IS_NOT_RUNNING = 4
 }
 /**
+ * @generated from protobuf message anytype.Rpc.Account.ChangeJsonApiAddr
+ */
+export interface Rpc_Account_ChangeJsonApiAddr {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Account.ChangeJsonApiAddr.Request
+ */
+export interface Rpc_Account_ChangeJsonApiAddr_Request {
+    /**
+     * @generated from protobuf field: string listenAddr = 1;
+     */
+    listenAddr: string; // make sure to use 127.0.0.1:x to not listen on all interfaces; recommended value is 127.0.0.1:31009
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Account.ChangeJsonApiAddr.Response
+ */
+export interface Rpc_Account_ChangeJsonApiAddr_Response {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Account.ChangeJsonApiAddr.Response.Error error = 2;
+     */
+    error?: Rpc_Account_ChangeJsonApiAddr_Response_Error;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Account.ChangeJsonApiAddr.Response.Error
+ */
+export interface Rpc_Account_ChangeJsonApiAddr_Response_Error {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Account.ChangeJsonApiAddr.Response.Error.Code code = 1;
+     */
+    code: Rpc_Account_ChangeJsonApiAddr_Response_Error_Code;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+}
+/**
+ * @generated from protobuf enum anytype.Rpc.Account.ChangeJsonApiAddr.Response.Error.Code
+ */
+export enum Rpc_Account_ChangeJsonApiAddr_Response_Error_Code {
+    /**
+     * @generated from protobuf enum value: NULL = 0;
+     */
+    NULL = 0,
+    /**
+     * @generated from protobuf enum value: UNKNOWN_ERROR = 1;
+     */
+    UNKNOWN_ERROR = 1,
+    /**
+     * @generated from protobuf enum value: BAD_INPUT = 2;
+     */
+    BAD_INPUT = 2,
+    /**
+     * @generated from protobuf enum value: ACCOUNT_IS_NOT_RUNNING = 4;
+     */
+    ACCOUNT_IS_NOT_RUNNING = 4
+}
+/**
  * @generated from protobuf message anytype.Rpc.Account.ChangeNetworkConfigAndRestart
  */
 export interface Rpc_Account_ChangeNetworkConfigAndRestart {
@@ -2815,6 +3131,10 @@ export interface Rpc_Account_LocalLink_NewChallenge_Request {
      * @generated from protobuf field: string appName = 1;
      */
     appName: string; // just for info, not secure to rely on
+    /**
+     * @generated from protobuf field: anytype.model.Account.Auth.LocalApiScope scope = 2;
+     */
+    scope: Account_Auth_LocalApiScope;
 }
 /**
  * @generated from protobuf message anytype.Rpc.Account.LocalLink.NewChallenge.Response
@@ -3592,6 +3912,402 @@ export enum Rpc_Workspace_Export_Response_Error_Code {
      * @generated from protobuf enum value: BAD_INPUT = 2;
      */
     BAD_INPUT = 2
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing
+ */
+export interface Rpc_Publishing {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.PublishState
+ */
+export interface Rpc_Publishing_PublishState {
+    /**
+     * @generated from protobuf field: string spaceId = 1;
+     */
+    spaceId: string;
+    /**
+     * @generated from protobuf field: string objectId = 2;
+     */
+    objectId: string;
+    /**
+     * @generated from protobuf field: string uri = 3;
+     */
+    uri: string;
+    /**
+     * @generated from protobuf field: anytype.Rpc.Publishing.PublishStatus status = 4;
+     */
+    status: Rpc_Publishing_PublishStatus;
+    /**
+     * @generated from protobuf field: string version = 5;
+     */
+    version: string;
+    /**
+     * @generated from protobuf field: int64 timestamp = 6;
+     */
+    timestamp: bigint;
+    /**
+     * @generated from protobuf field: int64 size = 7;
+     */
+    size: bigint;
+    /**
+     * @generated from protobuf field: bool joinSpace = 8;
+     */
+    joinSpace: boolean;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.Create
+ */
+export interface Rpc_Publishing_Create {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.Create.Request
+ */
+export interface Rpc_Publishing_Create_Request {
+    /**
+     * @generated from protobuf field: string spaceId = 1;
+     */
+    spaceId: string;
+    /**
+     * @generated from protobuf field: string objectId = 2;
+     */
+    objectId: string;
+    /**
+     * @generated from protobuf field: string uri = 3;
+     */
+    uri: string;
+    /**
+     * @generated from protobuf field: bool joinSpace = 4;
+     */
+    joinSpace: boolean;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.Create.Response
+ */
+export interface Rpc_Publishing_Create_Response {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Publishing.Create.Response.Error error = 1;
+     */
+    error?: Rpc_Publishing_Create_Response_Error;
+    /**
+     * @generated from protobuf field: string uri = 2;
+     */
+    uri: string;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.Create.Response.Error
+ */
+export interface Rpc_Publishing_Create_Response_Error {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Publishing.Create.Response.Error.Code code = 1;
+     */
+    code: Rpc_Publishing_Create_Response_Error_Code;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+}
+/**
+ * @generated from protobuf enum anytype.Rpc.Publishing.Create.Response.Error.Code
+ */
+export enum Rpc_Publishing_Create_Response_Error_Code {
+    /**
+     * @generated from protobuf enum value: NULL = 0;
+     */
+    NULL = 0,
+    /**
+     * @generated from protobuf enum value: UNKNOWN_ERROR = 1;
+     */
+    UNKNOWN_ERROR = 1,
+    /**
+     * @generated from protobuf enum value: BAD_INPUT = 2;
+     */
+    BAD_INPUT = 2,
+    /**
+     * @generated from protobuf enum value: NO_SUCH_OBJECT = 101;
+     */
+    NO_SUCH_OBJECT = 101,
+    /**
+     * @generated from protobuf enum value: NO_SUCH_SPACE = 102;
+     */
+    NO_SUCH_SPACE = 102,
+    /**
+     * @generated from protobuf enum value: LIMIT_EXCEEDED = 103;
+     */
+    LIMIT_EXCEEDED = 103
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.Remove
+ */
+export interface Rpc_Publishing_Remove {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.Remove.Request
+ */
+export interface Rpc_Publishing_Remove_Request {
+    /**
+     * @generated from protobuf field: string spaceId = 1;
+     */
+    spaceId: string;
+    /**
+     * @generated from protobuf field: string objectId = 2;
+     */
+    objectId: string;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.Remove.Response
+ */
+export interface Rpc_Publishing_Remove_Response {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Publishing.Remove.Response.Error error = 1;
+     */
+    error?: Rpc_Publishing_Remove_Response_Error;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.Remove.Response.Error
+ */
+export interface Rpc_Publishing_Remove_Response_Error {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Publishing.Remove.Response.Error.Code code = 1;
+     */
+    code: Rpc_Publishing_Remove_Response_Error_Code;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+}
+/**
+ * @generated from protobuf enum anytype.Rpc.Publishing.Remove.Response.Error.Code
+ */
+export enum Rpc_Publishing_Remove_Response_Error_Code {
+    /**
+     * @generated from protobuf enum value: NULL = 0;
+     */
+    NULL = 0,
+    /**
+     * @generated from protobuf enum value: UNKNOWN_ERROR = 1;
+     */
+    UNKNOWN_ERROR = 1,
+    /**
+     * @generated from protobuf enum value: BAD_INPUT = 2;
+     */
+    BAD_INPUT = 2,
+    /**
+     * @generated from protobuf enum value: NO_SUCH_OBJECT = 101;
+     */
+    NO_SUCH_OBJECT = 101,
+    /**
+     * @generated from protobuf enum value: NO_SUCH_SPACE = 102;
+     */
+    NO_SUCH_SPACE = 102
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.List
+ */
+export interface Rpc_Publishing_List {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.List.Request
+ */
+export interface Rpc_Publishing_List_Request {
+    /**
+     * @generated from protobuf field: string spaceId = 1;
+     */
+    spaceId: string;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.List.Response
+ */
+export interface Rpc_Publishing_List_Response {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Publishing.List.Response.Error error = 1;
+     */
+    error?: Rpc_Publishing_List_Response_Error;
+    /**
+     * @generated from protobuf field: repeated anytype.Rpc.Publishing.PublishState publishes = 2;
+     */
+    publishes: Rpc_Publishing_PublishState[];
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.List.Response.Error
+ */
+export interface Rpc_Publishing_List_Response_Error {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Publishing.List.Response.Error.Code code = 1;
+     */
+    code: Rpc_Publishing_List_Response_Error_Code;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+}
+/**
+ * @generated from protobuf enum anytype.Rpc.Publishing.List.Response.Error.Code
+ */
+export enum Rpc_Publishing_List_Response_Error_Code {
+    /**
+     * @generated from protobuf enum value: NULL = 0;
+     */
+    NULL = 0,
+    /**
+     * @generated from protobuf enum value: UNKNOWN_ERROR = 1;
+     */
+    UNKNOWN_ERROR = 1,
+    /**
+     * @generated from protobuf enum value: BAD_INPUT = 2;
+     */
+    BAD_INPUT = 2,
+    /**
+     * @generated from protobuf enum value: NO_SUCH_SPACE = 102;
+     */
+    NO_SUCH_SPACE = 102
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.ResolveUri
+ */
+export interface Rpc_Publishing_ResolveUri {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.ResolveUri.Request
+ */
+export interface Rpc_Publishing_ResolveUri_Request {
+    /**
+     * @generated from protobuf field: string uri = 1;
+     */
+    uri: string;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.ResolveUri.Response
+ */
+export interface Rpc_Publishing_ResolveUri_Response {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Publishing.ResolveUri.Response.Error error = 1;
+     */
+    error?: Rpc_Publishing_ResolveUri_Response_Error;
+    /**
+     * @generated from protobuf field: anytype.Rpc.Publishing.PublishState publish = 2;
+     */
+    publish?: Rpc_Publishing_PublishState;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.ResolveUri.Response.Error
+ */
+export interface Rpc_Publishing_ResolveUri_Response_Error {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Publishing.ResolveUri.Response.Error.Code code = 1;
+     */
+    code: Rpc_Publishing_ResolveUri_Response_Error_Code;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+}
+/**
+ * @generated from protobuf enum anytype.Rpc.Publishing.ResolveUri.Response.Error.Code
+ */
+export enum Rpc_Publishing_ResolveUri_Response_Error_Code {
+    /**
+     * @generated from protobuf enum value: NULL = 0;
+     */
+    NULL = 0,
+    /**
+     * @generated from protobuf enum value: UNKNOWN_ERROR = 1;
+     */
+    UNKNOWN_ERROR = 1,
+    /**
+     * @generated from protobuf enum value: BAD_INPUT = 2;
+     */
+    BAD_INPUT = 2,
+    /**
+     * @generated from protobuf enum value: NO_SUCH_URI = 101;
+     */
+    NO_SUCH_URI = 101
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.GetStatus
+ */
+export interface Rpc_Publishing_GetStatus {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.GetStatus.Request
+ */
+export interface Rpc_Publishing_GetStatus_Request {
+    /**
+     * @generated from protobuf field: string spaceId = 1;
+     */
+    spaceId: string;
+    /**
+     * @generated from protobuf field: string objectId = 2;
+     */
+    objectId: string;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.GetStatus.Response
+ */
+export interface Rpc_Publishing_GetStatus_Response {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Publishing.GetStatus.Response.Error error = 1;
+     */
+    error?: Rpc_Publishing_GetStatus_Response_Error;
+    /**
+     * @generated from protobuf field: anytype.Rpc.Publishing.PublishState publish = 2;
+     */
+    publish?: Rpc_Publishing_PublishState;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Publishing.GetStatus.Response.Error
+ */
+export interface Rpc_Publishing_GetStatus_Response_Error {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Publishing.GetStatus.Response.Error.Code code = 1;
+     */
+    code: Rpc_Publishing_GetStatus_Response_Error_Code;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+}
+/**
+ * @generated from protobuf enum anytype.Rpc.Publishing.GetStatus.Response.Error.Code
+ */
+export enum Rpc_Publishing_GetStatus_Response_Error_Code {
+    /**
+     * @generated from protobuf enum value: NULL = 0;
+     */
+    NULL = 0,
+    /**
+     * @generated from protobuf enum value: UNKNOWN_ERROR = 1;
+     */
+    UNKNOWN_ERROR = 1,
+    /**
+     * @generated from protobuf enum value: BAD_INPUT = 2;
+     */
+    BAD_INPUT = 2,
+    /**
+     * @generated from protobuf enum value: NO_SUCH_OBJECT = 101;
+     */
+    NO_SUCH_OBJECT = 101,
+    /**
+     * @generated from protobuf enum value: NO_SUCH_SPACE = 102;
+     */
+    NO_SUCH_SPACE = 102
+}
+/**
+ * @generated from protobuf enum anytype.Rpc.Publishing.PublishStatus
+ */
+export enum Rpc_Publishing_PublishStatus {
+    /**
+     * PublishStatusCreated means publish is created but not uploaded yet
+     *
+     * @generated from protobuf enum value: PublishStatusCreated = 0;
+     */
+    PublishStatusCreated = 0,
+    /**
+     * PublishStatusCreated means publish is active
+     *
+     * @generated from protobuf enum value: PublishStatusPublished = 1;
+     */
+    PublishStatusPublished = 1
 }
 /**
  * @generated from protobuf message anytype.Rpc.Object
@@ -4960,7 +5676,7 @@ export interface Rpc_Object_SearchWithMeta_Request {
     /**
      * @generated from protobuf field: bool returnHTMLHighlightsInsteadOfRanges = 10;
      */
-    returnHTMLHighlightsInsteadOfRanges: boolean;
+    returnHTMLHighlightsInsteadOfRanges: boolean; // DEPRECATED
 }
 /**
  * @generated from protobuf message anytype.Rpc.Object.SearchWithMeta.Response
@@ -7008,6 +7724,12 @@ export interface Rpc_Object_ListExport_Request {
      * @generated from protobuf field: bool includeArchived = 9;
      */
     includeArchived: boolean;
+    /**
+     * for integrations like raycast and web publishing
+     *
+     * @generated from protobuf field: bool noProgress = 11;
+     */
+    noProgress: boolean;
 }
 /**
  * @generated from protobuf message anytype.Rpc.Object.ListExport.Response
@@ -7562,25 +8284,9 @@ export enum Rpc_Object_ImportUseCase_Request_UseCase {
      */
     GET_STARTED = 1,
     /**
-     * @generated from protobuf enum value: PERSONAL_PROJECTS = 2;
+     * @generated from protobuf enum value: EMPTY = 2;
      */
-    PERSONAL_PROJECTS = 2,
-    /**
-     * @generated from protobuf enum value: KNOWLEDGE_BASE = 3;
-     */
-    KNOWLEDGE_BASE = 3,
-    /**
-     * @generated from protobuf enum value: NOTES_DIARY = 4;
-     */
-    NOTES_DIARY = 4,
-    /**
-     * @generated from protobuf enum value: STRATEGIC_WRITING = 5;
-     */
-    STRATEGIC_WRITING = 5,
-    /**
-     * @generated from protobuf enum value: EMPTY = 6;
-     */
-    EMPTY = 6
+    EMPTY = 2
 }
 /**
  * @generated from protobuf message anytype.Rpc.Object.ImportUseCase.Response
@@ -7697,6 +8403,67 @@ export enum Rpc_Object_ImportExperience_Response_Error_Code {
      * @generated from protobuf enum value: INSUFFICIENT_PERMISSION = 3;
      */
     INSUFFICIENT_PERMISSION = 3
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Object.DateByTimestamp
+ */
+export interface Rpc_Object_DateByTimestamp {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Object.DateByTimestamp.Request
+ */
+export interface Rpc_Object_DateByTimestamp_Request {
+    /**
+     * @generated from protobuf field: string spaceId = 1;
+     */
+    spaceId: string;
+    /**
+     * @generated from protobuf field: int64 timestamp = 2;
+     */
+    timestamp: bigint;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Object.DateByTimestamp.Response
+ */
+export interface Rpc_Object_DateByTimestamp_Response {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Object.DateByTimestamp.Response.Error error = 1;
+     */
+    error?: Rpc_Object_DateByTimestamp_Response_Error;
+    /**
+     * @generated from protobuf field: google.protobuf.Struct details = 2;
+     */
+    details?: Struct;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Object.DateByTimestamp.Response.Error
+ */
+export interface Rpc_Object_DateByTimestamp_Response_Error {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Object.DateByTimestamp.Response.Error.Code code = 1;
+     */
+    code: Rpc_Object_DateByTimestamp_Response_Error_Code;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+}
+/**
+ * @generated from protobuf enum anytype.Rpc.Object.DateByTimestamp.Response.Error.Code
+ */
+export enum Rpc_Object_DateByTimestamp_Response_Error_Code {
+    /**
+     * @generated from protobuf enum value: NULL = 0;
+     */
+    NULL = 0,
+    /**
+     * @generated from protobuf enum value: UNKNOWN_ERROR = 1;
+     */
+    UNKNOWN_ERROR = 1,
+    /**
+     * @generated from protobuf enum value: BAD_INPUT = 2;
+     */
+    BAD_INPUT = 2
 }
 /**
  * @generated from protobuf message anytype.Rpc.ObjectCollection
@@ -8492,13 +9259,22 @@ export interface Rpc_Relation_ListWithValue_Response {
      */
     error?: Rpc_Relation_ListWithValue_Response_Error;
     /**
-     * @generated from protobuf field: repeated string relationKeys = 2;
+     * @generated from protobuf field: repeated anytype.Rpc.Relation.ListWithValue.Response.ResponseItem list = 2;
      */
-    relationKeys: string[];
+    list: Rpc_Relation_ListWithValue_Response_ResponseItem[];
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Relation.ListWithValue.Response.ResponseItem
+ */
+export interface Rpc_Relation_ListWithValue_Response_ResponseItem {
     /**
-     * @generated from protobuf field: repeated int64 counters = 3;
+     * @generated from protobuf field: string relationKey = 1;
      */
-    counters: bigint[];
+    relationKey: string;
+    /**
+     * @generated from protobuf field: int64 counter = 2;
+     */
+    counter: bigint;
 }
 /**
  * @generated from protobuf message anytype.Rpc.Relation.ListWithValue.Response.Error
@@ -18078,6 +18854,70 @@ export enum Rpc_Debug_NetCheck_Response_Error_Code {
     BAD_INPUT = 2
 }
 /**
+ * @generated from protobuf message anytype.Rpc.Metrics
+ */
+export interface Rpc_Metrics {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Metrics.SetParameters
+ */
+export interface Rpc_Metrics_SetParameters {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Metrics.SetParameters.Request
+ */
+export interface Rpc_Metrics_SetParameters_Request {
+    /**
+     * @generated from protobuf field: string platform = 1;
+     */
+    platform: string;
+    /**
+     * @generated from protobuf field: string version = 2;
+     */
+    version: string;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Metrics.SetParameters.Response
+ */
+export interface Rpc_Metrics_SetParameters_Response {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Metrics.SetParameters.Response.Error error = 1;
+     */
+    error?: Rpc_Metrics_SetParameters_Response_Error;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Metrics.SetParameters.Response.Error
+ */
+export interface Rpc_Metrics_SetParameters_Response_Error {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Metrics.SetParameters.Response.Error.Code code = 1;
+     */
+    code: Rpc_Metrics_SetParameters_Response_Error_Code;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+}
+/**
+ * @generated from protobuf enum anytype.Rpc.Metrics.SetParameters.Response.Error.Code
+ */
+export enum Rpc_Metrics_SetParameters_Response_Error_Code {
+    /**
+     * @generated from protobuf enum value: NULL = 0;
+     */
+    NULL = 0,
+    /**
+     * @generated from protobuf enum value: UNKNOWN_ERROR = 1;
+     */
+    UNKNOWN_ERROR = 1,
+    /**
+     * ...
+     *
+     * @generated from protobuf enum value: BAD_INPUT = 2;
+     */
+    BAD_INPUT = 2
+}
+/**
  * @generated from protobuf message anytype.Rpc.Initial
  */
 export interface Rpc_Initial {
@@ -18146,70 +18986,6 @@ export interface Rpc_Initial_SetParameters_Response_Error {
  * @generated from protobuf enum anytype.Rpc.Initial.SetParameters.Response.Error.Code
  */
 export enum Rpc_Initial_SetParameters_Response_Error_Code {
-    /**
-     * @generated from protobuf enum value: NULL = 0;
-     */
-    NULL = 0,
-    /**
-     * @generated from protobuf enum value: UNKNOWN_ERROR = 1;
-     */
-    UNKNOWN_ERROR = 1,
-    /**
-     * ...
-     *
-     * @generated from protobuf enum value: BAD_INPUT = 2;
-     */
-    BAD_INPUT = 2
-}
-/**
- * @generated from protobuf message anytype.Rpc.Metrics
- */
-export interface Rpc_Metrics {
-}
-/**
- * @generated from protobuf message anytype.Rpc.Metrics.SetParameters
- */
-export interface Rpc_Metrics_SetParameters {
-}
-/**
- * @generated from protobuf message anytype.Rpc.Metrics.SetParameters.Request
- */
-export interface Rpc_Metrics_SetParameters_Request {
-    /**
-     * @generated from protobuf field: string platform = 1;
-     */
-    platform: string;
-    /**
-     * @generated from protobuf field: string version = 2;
-     */
-    version: string;
-}
-/**
- * @generated from protobuf message anytype.Rpc.Metrics.SetParameters.Response
- */
-export interface Rpc_Metrics_SetParameters_Response {
-    /**
-     * @generated from protobuf field: anytype.Rpc.Metrics.SetParameters.Response.Error error = 1;
-     */
-    error?: Rpc_Metrics_SetParameters_Response_Error;
-}
-/**
- * @generated from protobuf message anytype.Rpc.Metrics.SetParameters.Response.Error
- */
-export interface Rpc_Metrics_SetParameters_Response_Error {
-    /**
-     * @generated from protobuf field: anytype.Rpc.Metrics.SetParameters.Response.Error.Code code = 1;
-     */
-    code: Rpc_Metrics_SetParameters_Response_Error_Code;
-    /**
-     * @generated from protobuf field: string description = 2;
-     */
-    description: string;
-}
-/**
- * @generated from protobuf enum anytype.Rpc.Metrics.SetParameters.Response.Error.Code
- */
-export enum Rpc_Metrics_SetParameters_Response_Error_Code {
     /**
      * @generated from protobuf enum value: NULL = 0;
      */
@@ -18361,6 +19137,104 @@ export interface Rpc_Process_Cancel_Response_Error {
  * @generated from protobuf enum anytype.Rpc.Process.Cancel.Response.Error.Code
  */
 export enum Rpc_Process_Cancel_Response_Error_Code {
+    /**
+     * @generated from protobuf enum value: NULL = 0;
+     */
+    NULL = 0,
+    /**
+     * @generated from protobuf enum value: UNKNOWN_ERROR = 1;
+     */
+    UNKNOWN_ERROR = 1,
+    /**
+     * @generated from protobuf enum value: BAD_INPUT = 2;
+     */
+    BAD_INPUT = 2
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Process.Subscribe
+ */
+export interface Rpc_Process_Subscribe {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Process.Subscribe.Request
+ */
+export interface Rpc_Process_Subscribe_Request {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Process.Subscribe.Response
+ */
+export interface Rpc_Process_Subscribe_Response {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Process.Subscribe.Response.Error error = 1;
+     */
+    error?: Rpc_Process_Subscribe_Response_Error;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Process.Subscribe.Response.Error
+ */
+export interface Rpc_Process_Subscribe_Response_Error {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Process.Subscribe.Response.Error.Code code = 1;
+     */
+    code: Rpc_Process_Subscribe_Response_Error_Code;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+}
+/**
+ * @generated from protobuf enum anytype.Rpc.Process.Subscribe.Response.Error.Code
+ */
+export enum Rpc_Process_Subscribe_Response_Error_Code {
+    /**
+     * @generated from protobuf enum value: NULL = 0;
+     */
+    NULL = 0,
+    /**
+     * @generated from protobuf enum value: UNKNOWN_ERROR = 1;
+     */
+    UNKNOWN_ERROR = 1,
+    /**
+     * @generated from protobuf enum value: BAD_INPUT = 2;
+     */
+    BAD_INPUT = 2
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Process.Unsubscribe
+ */
+export interface Rpc_Process_Unsubscribe {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Process.Unsubscribe.Request
+ */
+export interface Rpc_Process_Unsubscribe_Request {
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Process.Unsubscribe.Response
+ */
+export interface Rpc_Process_Unsubscribe_Response {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Process.Unsubscribe.Response.Error error = 1;
+     */
+    error?: Rpc_Process_Unsubscribe_Response_Error;
+}
+/**
+ * @generated from protobuf message anytype.Rpc.Process.Unsubscribe.Response.Error
+ */
+export interface Rpc_Process_Unsubscribe_Response_Error {
+    /**
+     * @generated from protobuf field: anytype.Rpc.Process.Unsubscribe.Response.Error.Code code = 1;
+     */
+    code: Rpc_Process_Unsubscribe_Response_Error_Code;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+}
+/**
+ * @generated from protobuf enum anytype.Rpc.Process.Unsubscribe.Response.Error.Code
+ */
+export enum Rpc_Process_Unsubscribe_Response_Error_Code {
     /**
      * @generated from protobuf enum value: NULL = 0;
      */
@@ -20401,6 +21275,10 @@ export interface Rpc_Chat_GetMessages_Request {
      */
     chatObjectId: string;
     /**
+     * @generated from protobuf field: string afterOrderId = 4;
+     */
+    afterOrderId: string; // OrderId of the message after which to get messages
+    /**
      * @generated from protobuf field: string beforeOrderId = 2;
      */
     beforeOrderId: string; // OrderId of the message before which to get messages
@@ -21500,6 +22378,101 @@ class Rpc_Space_Delete_Response_Error$Type extends MessageType<Rpc_Space_Delete_
  */
 export const Rpc_Space_Delete_Response_Error = new Rpc_Space_Delete_Response_Error$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Space_SetOrder$Type extends MessageType<Rpc_Space_SetOrder> {
+    constructor() {
+        super("anytype.Rpc.Space.SetOrder", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Space.SetOrder
+ */
+export const Rpc_Space_SetOrder = new Rpc_Space_SetOrder$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Space_SetOrder_Request$Type extends MessageType<Rpc_Space_SetOrder_Request> {
+    constructor() {
+        super("anytype.Rpc.Space.SetOrder.Request", [
+            { no: 1, name: "spaceViewId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "spaceViewOrder", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Space.SetOrder.Request
+ */
+export const Rpc_Space_SetOrder_Request = new Rpc_Space_SetOrder_Request$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Space_SetOrder_Response$Type extends MessageType<Rpc_Space_SetOrder_Response> {
+    constructor() {
+        super("anytype.Rpc.Space.SetOrder.Response", [
+            { no: 1, name: "error", kind: "message", T: () => Rpc_Space_SetOrder_Response_Error }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Space.SetOrder.Response
+ */
+export const Rpc_Space_SetOrder_Response = new Rpc_Space_SetOrder_Response$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Space_SetOrder_Response_Error$Type extends MessageType<Rpc_Space_SetOrder_Response_Error> {
+    constructor() {
+        super("anytype.Rpc.Space.SetOrder.Response.Error", [
+            { no: 1, name: "code", kind: "enum", T: () => ["anytype.Rpc.Space.SetOrder.Response.Error.Code", Rpc_Space_SetOrder_Response_Error_Code] },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Space.SetOrder.Response.Error
+ */
+export const Rpc_Space_SetOrder_Response_Error = new Rpc_Space_SetOrder_Response_Error$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Space_UnsetOrder$Type extends MessageType<Rpc_Space_UnsetOrder> {
+    constructor() {
+        super("anytype.Rpc.Space.UnsetOrder", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Space.UnsetOrder
+ */
+export const Rpc_Space_UnsetOrder = new Rpc_Space_UnsetOrder$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Space_UnsetOrder_Request$Type extends MessageType<Rpc_Space_UnsetOrder_Request> {
+    constructor() {
+        super("anytype.Rpc.Space.UnsetOrder.Request", [
+            { no: 1, name: "spaceViewId", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Space.UnsetOrder.Request
+ */
+export const Rpc_Space_UnsetOrder_Request = new Rpc_Space_UnsetOrder_Request$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Space_UnsetOrder_Response$Type extends MessageType<Rpc_Space_UnsetOrder_Response> {
+    constructor() {
+        super("anytype.Rpc.Space.UnsetOrder.Response", [
+            { no: 1, name: "error", kind: "message", T: () => Rpc_Space_UnsetOrder_Response_Error }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Space.UnsetOrder.Response
+ */
+export const Rpc_Space_UnsetOrder_Response = new Rpc_Space_UnsetOrder_Response$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Space_UnsetOrder_Response_Error$Type extends MessageType<Rpc_Space_UnsetOrder_Response_Error> {
+    constructor() {
+        super("anytype.Rpc.Space.UnsetOrder.Response.Error", [
+            { no: 1, name: "code", kind: "enum", T: () => ["anytype.Rpc.Space.UnsetOrder.Response.Error.Code", Rpc_Space_UnsetOrder_Response_Error_Code] },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Space.UnsetOrder.Response.Error
+ */
+export const Rpc_Space_UnsetOrder_Response_Error = new Rpc_Space_UnsetOrder_Response_Error$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class Rpc_Wallet$Type extends MessageType<Rpc_Wallet> {
     constructor() {
         super("anytype.Rpc.Wallet", []);
@@ -21800,7 +22773,8 @@ class Rpc_Account_Create_Request$Type extends MessageType<Rpc_Account_Create_Req
             { no: 5, name: "disableLocalNetworkSync", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 6, name: "networkMode", kind: "enum", T: () => ["anytype.Rpc.Account.NetworkMode", Rpc_Account_NetworkMode] },
             { no: 7, name: "networkCustomConfigFilePath", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "preferYamuxTransport", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 8, name: "preferYamuxTransport", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 9, name: "jsonApiListenAddr", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ], { "anytype.no_auth": true });
     }
 }
@@ -21973,6 +22947,101 @@ class Rpc_Account_RevertDeletion_Response_Error$Type extends MessageType<Rpc_Acc
  */
 export const Rpc_Account_RevertDeletion_Response_Error = new Rpc_Account_RevertDeletion_Response_Error$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Account_Migrate$Type extends MessageType<Rpc_Account_Migrate> {
+    constructor() {
+        super("anytype.Rpc.Account.Migrate", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Account.Migrate
+ */
+export const Rpc_Account_Migrate = new Rpc_Account_Migrate$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Account_Migrate_Request$Type extends MessageType<Rpc_Account_Migrate_Request> {
+    constructor() {
+        super("anytype.Rpc.Account.Migrate.Request", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "rootPath", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ], { "anytype.no_auth": true });
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Account.Migrate.Request
+ */
+export const Rpc_Account_Migrate_Request = new Rpc_Account_Migrate_Request$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Account_Migrate_Response$Type extends MessageType<Rpc_Account_Migrate_Response> {
+    constructor() {
+        super("anytype.Rpc.Account.Migrate.Response", [
+            { no: 1, name: "error", kind: "message", T: () => Rpc_Account_Migrate_Response_Error }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Account.Migrate.Response
+ */
+export const Rpc_Account_Migrate_Response = new Rpc_Account_Migrate_Response$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Account_Migrate_Response_Error$Type extends MessageType<Rpc_Account_Migrate_Response_Error> {
+    constructor() {
+        super("anytype.Rpc.Account.Migrate.Response.Error", [
+            { no: 1, name: "code", kind: "enum", T: () => ["anytype.Rpc.Account.Migrate.Response.Error.Code", Rpc_Account_Migrate_Response_Error_Code] },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Account.Migrate.Response.Error
+ */
+export const Rpc_Account_Migrate_Response_Error = new Rpc_Account_Migrate_Response_Error$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Account_MigrateCancel$Type extends MessageType<Rpc_Account_MigrateCancel> {
+    constructor() {
+        super("anytype.Rpc.Account.MigrateCancel", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Account.MigrateCancel
+ */
+export const Rpc_Account_MigrateCancel = new Rpc_Account_MigrateCancel$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Account_MigrateCancel_Request$Type extends MessageType<Rpc_Account_MigrateCancel_Request> {
+    constructor() {
+        super("anytype.Rpc.Account.MigrateCancel.Request", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ], { "anytype.no_auth": true });
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Account.MigrateCancel.Request
+ */
+export const Rpc_Account_MigrateCancel_Request = new Rpc_Account_MigrateCancel_Request$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Account_MigrateCancel_Response$Type extends MessageType<Rpc_Account_MigrateCancel_Response> {
+    constructor() {
+        super("anytype.Rpc.Account.MigrateCancel.Response", [
+            { no: 1, name: "error", kind: "message", T: () => Rpc_Account_MigrateCancel_Response_Error }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Account.MigrateCancel.Response
+ */
+export const Rpc_Account_MigrateCancel_Response = new Rpc_Account_MigrateCancel_Response$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Account_MigrateCancel_Response_Error$Type extends MessageType<Rpc_Account_MigrateCancel_Response_Error> {
+    constructor() {
+        super("anytype.Rpc.Account.MigrateCancel.Response.Error", [
+            { no: 1, name: "code", kind: "enum", T: () => ["anytype.Rpc.Account.MigrateCancel.Response.Error.Code", Rpc_Account_MigrateCancel_Response_Error_Code] },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Account.MigrateCancel.Response.Error
+ */
+export const Rpc_Account_MigrateCancel_Response_Error = new Rpc_Account_MigrateCancel_Response_Error$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class Rpc_Account_Select$Type extends MessageType<Rpc_Account_Select> {
     constructor() {
         super("anytype.Rpc.Account.Select", []);
@@ -21991,7 +23060,8 @@ class Rpc_Account_Select_Request$Type extends MessageType<Rpc_Account_Select_Req
             { no: 3, name: "disableLocalNetworkSync", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 4, name: "networkMode", kind: "enum", T: () => ["anytype.Rpc.Account.NetworkMode", Rpc_Account_NetworkMode] },
             { no: 5, name: "networkCustomConfigFilePath", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "preferYamuxTransport", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 6, name: "preferYamuxTransport", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 7, name: "jsonApiListenAddr", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ], { "anytype.no_auth": true });
     }
 }
@@ -22294,6 +23364,53 @@ class Rpc_Account_EnableLocalNetworkSync_Response_Error$Type extends MessageType
  */
 export const Rpc_Account_EnableLocalNetworkSync_Response_Error = new Rpc_Account_EnableLocalNetworkSync_Response_Error$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Account_ChangeJsonApiAddr$Type extends MessageType<Rpc_Account_ChangeJsonApiAddr> {
+    constructor() {
+        super("anytype.Rpc.Account.ChangeJsonApiAddr", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Account.ChangeJsonApiAddr
+ */
+export const Rpc_Account_ChangeJsonApiAddr = new Rpc_Account_ChangeJsonApiAddr$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Account_ChangeJsonApiAddr_Request$Type extends MessageType<Rpc_Account_ChangeJsonApiAddr_Request> {
+    constructor() {
+        super("anytype.Rpc.Account.ChangeJsonApiAddr.Request", [
+            { no: 1, name: "listenAddr", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Account.ChangeJsonApiAddr.Request
+ */
+export const Rpc_Account_ChangeJsonApiAddr_Request = new Rpc_Account_ChangeJsonApiAddr_Request$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Account_ChangeJsonApiAddr_Response$Type extends MessageType<Rpc_Account_ChangeJsonApiAddr_Response> {
+    constructor() {
+        super("anytype.Rpc.Account.ChangeJsonApiAddr.Response", [
+            { no: 2, name: "error", kind: "message", T: () => Rpc_Account_ChangeJsonApiAddr_Response_Error }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Account.ChangeJsonApiAddr.Response
+ */
+export const Rpc_Account_ChangeJsonApiAddr_Response = new Rpc_Account_ChangeJsonApiAddr_Response$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Account_ChangeJsonApiAddr_Response_Error$Type extends MessageType<Rpc_Account_ChangeJsonApiAddr_Response_Error> {
+    constructor() {
+        super("anytype.Rpc.Account.ChangeJsonApiAddr.Response.Error", [
+            { no: 1, name: "code", kind: "enum", T: () => ["anytype.Rpc.Account.ChangeJsonApiAddr.Response.Error.Code", Rpc_Account_ChangeJsonApiAddr_Response_Error_Code] },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Account.ChangeJsonApiAddr.Response.Error
+ */
+export const Rpc_Account_ChangeJsonApiAddr_Response_Error = new Rpc_Account_ChangeJsonApiAddr_Response_Error$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class Rpc_Account_ChangeNetworkConfigAndRestart$Type extends MessageType<Rpc_Account_ChangeNetworkConfigAndRestart> {
     constructor() {
         super("anytype.Rpc.Account.ChangeNetworkConfigAndRestart", []);
@@ -22365,7 +23482,8 @@ export const Rpc_Account_LocalLink_NewChallenge = new Rpc_Account_LocalLink_NewC
 class Rpc_Account_LocalLink_NewChallenge_Request$Type extends MessageType<Rpc_Account_LocalLink_NewChallenge_Request> {
     constructor() {
         super("anytype.Rpc.Account.LocalLink.NewChallenge.Request", [
-            { no: 1, name: "appName", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "appName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "scope", kind: "enum", T: () => ["anytype.model.Account.Auth.LocalApiScope", Account_Auth_LocalApiScope] }
         ], { "anytype.no_auth": true });
     }
 }
@@ -22952,6 +24070,279 @@ class Rpc_Workspace_Export_Response_Error$Type extends MessageType<Rpc_Workspace
  * @generated MessageType for protobuf message anytype.Rpc.Workspace.Export.Response.Error
  */
 export const Rpc_Workspace_Export_Response_Error = new Rpc_Workspace_Export_Response_Error$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing$Type extends MessageType<Rpc_Publishing> {
+    constructor() {
+        super("anytype.Rpc.Publishing", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing
+ */
+export const Rpc_Publishing = new Rpc_Publishing$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_PublishState$Type extends MessageType<Rpc_Publishing_PublishState> {
+    constructor() {
+        super("anytype.Rpc.Publishing.PublishState", [
+            { no: 1, name: "spaceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "objectId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "uri", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "status", kind: "enum", T: () => ["anytype.Rpc.Publishing.PublishStatus", Rpc_Publishing_PublishStatus] },
+            { no: 5, name: "version", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 0 /*LongType.BIGINT*/ },
+            { no: 7, name: "size", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 0 /*LongType.BIGINT*/ },
+            { no: 8, name: "joinSpace", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.PublishState
+ */
+export const Rpc_Publishing_PublishState = new Rpc_Publishing_PublishState$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_Create$Type extends MessageType<Rpc_Publishing_Create> {
+    constructor() {
+        super("anytype.Rpc.Publishing.Create", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.Create
+ */
+export const Rpc_Publishing_Create = new Rpc_Publishing_Create$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_Create_Request$Type extends MessageType<Rpc_Publishing_Create_Request> {
+    constructor() {
+        super("anytype.Rpc.Publishing.Create.Request", [
+            { no: 1, name: "spaceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "objectId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "uri", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "joinSpace", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.Create.Request
+ */
+export const Rpc_Publishing_Create_Request = new Rpc_Publishing_Create_Request$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_Create_Response$Type extends MessageType<Rpc_Publishing_Create_Response> {
+    constructor() {
+        super("anytype.Rpc.Publishing.Create.Response", [
+            { no: 1, name: "error", kind: "message", T: () => Rpc_Publishing_Create_Response_Error },
+            { no: 2, name: "uri", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.Create.Response
+ */
+export const Rpc_Publishing_Create_Response = new Rpc_Publishing_Create_Response$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_Create_Response_Error$Type extends MessageType<Rpc_Publishing_Create_Response_Error> {
+    constructor() {
+        super("anytype.Rpc.Publishing.Create.Response.Error", [
+            { no: 1, name: "code", kind: "enum", T: () => ["anytype.Rpc.Publishing.Create.Response.Error.Code", Rpc_Publishing_Create_Response_Error_Code] },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.Create.Response.Error
+ */
+export const Rpc_Publishing_Create_Response_Error = new Rpc_Publishing_Create_Response_Error$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_Remove$Type extends MessageType<Rpc_Publishing_Remove> {
+    constructor() {
+        super("anytype.Rpc.Publishing.Remove", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.Remove
+ */
+export const Rpc_Publishing_Remove = new Rpc_Publishing_Remove$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_Remove_Request$Type extends MessageType<Rpc_Publishing_Remove_Request> {
+    constructor() {
+        super("anytype.Rpc.Publishing.Remove.Request", [
+            { no: 1, name: "spaceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "objectId", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.Remove.Request
+ */
+export const Rpc_Publishing_Remove_Request = new Rpc_Publishing_Remove_Request$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_Remove_Response$Type extends MessageType<Rpc_Publishing_Remove_Response> {
+    constructor() {
+        super("anytype.Rpc.Publishing.Remove.Response", [
+            { no: 1, name: "error", kind: "message", T: () => Rpc_Publishing_Remove_Response_Error }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.Remove.Response
+ */
+export const Rpc_Publishing_Remove_Response = new Rpc_Publishing_Remove_Response$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_Remove_Response_Error$Type extends MessageType<Rpc_Publishing_Remove_Response_Error> {
+    constructor() {
+        super("anytype.Rpc.Publishing.Remove.Response.Error", [
+            { no: 1, name: "code", kind: "enum", T: () => ["anytype.Rpc.Publishing.Remove.Response.Error.Code", Rpc_Publishing_Remove_Response_Error_Code] },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.Remove.Response.Error
+ */
+export const Rpc_Publishing_Remove_Response_Error = new Rpc_Publishing_Remove_Response_Error$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_List$Type extends MessageType<Rpc_Publishing_List> {
+    constructor() {
+        super("anytype.Rpc.Publishing.List", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.List
+ */
+export const Rpc_Publishing_List = new Rpc_Publishing_List$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_List_Request$Type extends MessageType<Rpc_Publishing_List_Request> {
+    constructor() {
+        super("anytype.Rpc.Publishing.List.Request", [
+            { no: 1, name: "spaceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.List.Request
+ */
+export const Rpc_Publishing_List_Request = new Rpc_Publishing_List_Request$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_List_Response$Type extends MessageType<Rpc_Publishing_List_Response> {
+    constructor() {
+        super("anytype.Rpc.Publishing.List.Response", [
+            { no: 1, name: "error", kind: "message", T: () => Rpc_Publishing_List_Response_Error },
+            { no: 2, name: "publishes", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Rpc_Publishing_PublishState }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.List.Response
+ */
+export const Rpc_Publishing_List_Response = new Rpc_Publishing_List_Response$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_List_Response_Error$Type extends MessageType<Rpc_Publishing_List_Response_Error> {
+    constructor() {
+        super("anytype.Rpc.Publishing.List.Response.Error", [
+            { no: 1, name: "code", kind: "enum", T: () => ["anytype.Rpc.Publishing.List.Response.Error.Code", Rpc_Publishing_List_Response_Error_Code] },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.List.Response.Error
+ */
+export const Rpc_Publishing_List_Response_Error = new Rpc_Publishing_List_Response_Error$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_ResolveUri$Type extends MessageType<Rpc_Publishing_ResolveUri> {
+    constructor() {
+        super("anytype.Rpc.Publishing.ResolveUri", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.ResolveUri
+ */
+export const Rpc_Publishing_ResolveUri = new Rpc_Publishing_ResolveUri$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_ResolveUri_Request$Type extends MessageType<Rpc_Publishing_ResolveUri_Request> {
+    constructor() {
+        super("anytype.Rpc.Publishing.ResolveUri.Request", [
+            { no: 1, name: "uri", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.ResolveUri.Request
+ */
+export const Rpc_Publishing_ResolveUri_Request = new Rpc_Publishing_ResolveUri_Request$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_ResolveUri_Response$Type extends MessageType<Rpc_Publishing_ResolveUri_Response> {
+    constructor() {
+        super("anytype.Rpc.Publishing.ResolveUri.Response", [
+            { no: 1, name: "error", kind: "message", T: () => Rpc_Publishing_ResolveUri_Response_Error },
+            { no: 2, name: "publish", kind: "message", T: () => Rpc_Publishing_PublishState }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.ResolveUri.Response
+ */
+export const Rpc_Publishing_ResolveUri_Response = new Rpc_Publishing_ResolveUri_Response$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_ResolveUri_Response_Error$Type extends MessageType<Rpc_Publishing_ResolveUri_Response_Error> {
+    constructor() {
+        super("anytype.Rpc.Publishing.ResolveUri.Response.Error", [
+            { no: 1, name: "code", kind: "enum", T: () => ["anytype.Rpc.Publishing.ResolveUri.Response.Error.Code", Rpc_Publishing_ResolveUri_Response_Error_Code] },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.ResolveUri.Response.Error
+ */
+export const Rpc_Publishing_ResolveUri_Response_Error = new Rpc_Publishing_ResolveUri_Response_Error$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_GetStatus$Type extends MessageType<Rpc_Publishing_GetStatus> {
+    constructor() {
+        super("anytype.Rpc.Publishing.GetStatus", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.GetStatus
+ */
+export const Rpc_Publishing_GetStatus = new Rpc_Publishing_GetStatus$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_GetStatus_Request$Type extends MessageType<Rpc_Publishing_GetStatus_Request> {
+    constructor() {
+        super("anytype.Rpc.Publishing.GetStatus.Request", [
+            { no: 1, name: "spaceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "objectId", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.GetStatus.Request
+ */
+export const Rpc_Publishing_GetStatus_Request = new Rpc_Publishing_GetStatus_Request$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_GetStatus_Response$Type extends MessageType<Rpc_Publishing_GetStatus_Response> {
+    constructor() {
+        super("anytype.Rpc.Publishing.GetStatus.Response", [
+            { no: 1, name: "error", kind: "message", T: () => Rpc_Publishing_GetStatus_Response_Error },
+            { no: 2, name: "publish", kind: "message", T: () => Rpc_Publishing_PublishState }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.GetStatus.Response
+ */
+export const Rpc_Publishing_GetStatus_Response = new Rpc_Publishing_GetStatus_Response$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Publishing_GetStatus_Response_Error$Type extends MessageType<Rpc_Publishing_GetStatus_Response_Error> {
+    constructor() {
+        super("anytype.Rpc.Publishing.GetStatus.Response.Error", [
+            { no: 1, name: "code", kind: "enum", T: () => ["anytype.Rpc.Publishing.GetStatus.Response.Error.Code", Rpc_Publishing_GetStatus_Response_Error_Code] },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Publishing.GetStatus.Response.Error
+ */
+export const Rpc_Publishing_GetStatus_Response_Error = new Rpc_Publishing_GetStatus_Response_Error$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Rpc_Object$Type extends MessageType<Rpc_Object> {
     constructor() {
@@ -25357,7 +26748,8 @@ class Rpc_Object_ListExport_Request$Type extends MessageType<Rpc_Object_ListExpo
             { no: 5, name: "includeNested", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 6, name: "includeFiles", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 7, name: "isJson", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 9, name: "includeArchived", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 9, name: "includeArchived", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 11, name: "noProgress", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
@@ -25775,6 +27167,55 @@ class Rpc_Object_ImportExperience_Response_Error$Type extends MessageType<Rpc_Ob
  * @generated MessageType for protobuf message anytype.Rpc.Object.ImportExperience.Response.Error
  */
 export const Rpc_Object_ImportExperience_Response_Error = new Rpc_Object_ImportExperience_Response_Error$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Object_DateByTimestamp$Type extends MessageType<Rpc_Object_DateByTimestamp> {
+    constructor() {
+        super("anytype.Rpc.Object.DateByTimestamp", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Object.DateByTimestamp
+ */
+export const Rpc_Object_DateByTimestamp = new Rpc_Object_DateByTimestamp$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Object_DateByTimestamp_Request$Type extends MessageType<Rpc_Object_DateByTimestamp_Request> {
+    constructor() {
+        super("anytype.Rpc.Object.DateByTimestamp.Request", [
+            { no: 1, name: "spaceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "timestamp", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 0 /*LongType.BIGINT*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Object.DateByTimestamp.Request
+ */
+export const Rpc_Object_DateByTimestamp_Request = new Rpc_Object_DateByTimestamp_Request$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Object_DateByTimestamp_Response$Type extends MessageType<Rpc_Object_DateByTimestamp_Response> {
+    constructor() {
+        super("anytype.Rpc.Object.DateByTimestamp.Response", [
+            { no: 1, name: "error", kind: "message", T: () => Rpc_Object_DateByTimestamp_Response_Error },
+            { no: 2, name: "details", kind: "message", T: () => Struct }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Object.DateByTimestamp.Response
+ */
+export const Rpc_Object_DateByTimestamp_Response = new Rpc_Object_DateByTimestamp_Response$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Object_DateByTimestamp_Response_Error$Type extends MessageType<Rpc_Object_DateByTimestamp_Response_Error> {
+    constructor() {
+        super("anytype.Rpc.Object.DateByTimestamp.Response.Error", [
+            { no: 1, name: "code", kind: "enum", T: () => ["anytype.Rpc.Object.DateByTimestamp.Response.Error.Code", Rpc_Object_DateByTimestamp_Response_Error_Code] },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Object.DateByTimestamp.Response.Error
+ */
+export const Rpc_Object_DateByTimestamp_Response_Error = new Rpc_Object_DateByTimestamp_Response_Error$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Rpc_ObjectCollection$Type extends MessageType<Rpc_ObjectCollection> {
     constructor() {
@@ -26438,8 +27879,7 @@ class Rpc_Relation_ListWithValue_Response$Type extends MessageType<Rpc_Relation_
     constructor() {
         super("anytype.Rpc.Relation.ListWithValue.Response", [
             { no: 1, name: "error", kind: "message", T: () => Rpc_Relation_ListWithValue_Response_Error },
-            { no: 2, name: "relationKeys", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "counters", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/, L: 0 /*LongType.BIGINT*/ }
+            { no: 2, name: "list", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Rpc_Relation_ListWithValue_Response_ResponseItem }
         ]);
     }
 }
@@ -26447,6 +27887,19 @@ class Rpc_Relation_ListWithValue_Response$Type extends MessageType<Rpc_Relation_
  * @generated MessageType for protobuf message anytype.Rpc.Relation.ListWithValue.Response
  */
 export const Rpc_Relation_ListWithValue_Response = new Rpc_Relation_ListWithValue_Response$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Relation_ListWithValue_Response_ResponseItem$Type extends MessageType<Rpc_Relation_ListWithValue_Response_ResponseItem> {
+    constructor() {
+        super("anytype.Rpc.Relation.ListWithValue.Response.ResponseItem", [
+            { no: 1, name: "relationKey", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "counter", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 0 /*LongType.BIGINT*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Relation.ListWithValue.Response.ResponseItem
+ */
+export const Rpc_Relation_ListWithValue_Response_ResponseItem = new Rpc_Relation_ListWithValue_Response_ResponseItem$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Rpc_Relation_ListWithValue_Response_Error$Type extends MessageType<Rpc_Relation_ListWithValue_Response_Error> {
     constructor() {
@@ -33578,6 +35031,64 @@ class Rpc_Debug_NetCheck_Response_Error$Type extends MessageType<Rpc_Debug_NetCh
  */
 export const Rpc_Debug_NetCheck_Response_Error = new Rpc_Debug_NetCheck_Response_Error$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Metrics$Type extends MessageType<Rpc_Metrics> {
+    constructor() {
+        super("anytype.Rpc.Metrics", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Metrics
+ */
+export const Rpc_Metrics = new Rpc_Metrics$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Metrics_SetParameters$Type extends MessageType<Rpc_Metrics_SetParameters> {
+    constructor() {
+        super("anytype.Rpc.Metrics.SetParameters", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Metrics.SetParameters
+ */
+export const Rpc_Metrics_SetParameters = new Rpc_Metrics_SetParameters$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Metrics_SetParameters_Request$Type extends MessageType<Rpc_Metrics_SetParameters_Request> {
+    constructor() {
+        super("anytype.Rpc.Metrics.SetParameters.Request", [
+            { no: 1, name: "platform", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "version", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ], { "anytype.no_auth": true });
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Metrics.SetParameters.Request
+ */
+export const Rpc_Metrics_SetParameters_Request = new Rpc_Metrics_SetParameters_Request$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Metrics_SetParameters_Response$Type extends MessageType<Rpc_Metrics_SetParameters_Response> {
+    constructor() {
+        super("anytype.Rpc.Metrics.SetParameters.Response", [
+            { no: 1, name: "error", kind: "message", T: () => Rpc_Metrics_SetParameters_Response_Error }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Metrics.SetParameters.Response
+ */
+export const Rpc_Metrics_SetParameters_Response = new Rpc_Metrics_SetParameters_Response$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Metrics_SetParameters_Response_Error$Type extends MessageType<Rpc_Metrics_SetParameters_Response_Error> {
+    constructor() {
+        super("anytype.Rpc.Metrics.SetParameters.Response.Error", [
+            { no: 1, name: "code", kind: "enum", T: () => ["anytype.Rpc.Metrics.SetParameters.Response.Error.Code", Rpc_Metrics_SetParameters_Response_Error_Code] },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Metrics.SetParameters.Response.Error
+ */
+export const Rpc_Metrics_SetParameters_Response_Error = new Rpc_Metrics_SetParameters_Response_Error$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class Rpc_Initial$Type extends MessageType<Rpc_Initial> {
     constructor() {
         super("anytype.Rpc.Initial", []);
@@ -33640,64 +35151,6 @@ class Rpc_Initial_SetParameters_Response_Error$Type extends MessageType<Rpc_Init
  * @generated MessageType for protobuf message anytype.Rpc.Initial.SetParameters.Response.Error
  */
 export const Rpc_Initial_SetParameters_Response_Error = new Rpc_Initial_SetParameters_Response_Error$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class Rpc_Metrics$Type extends MessageType<Rpc_Metrics> {
-    constructor() {
-        super("anytype.Rpc.Metrics", []);
-    }
-}
-/**
- * @generated MessageType for protobuf message anytype.Rpc.Metrics
- */
-export const Rpc_Metrics = new Rpc_Metrics$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class Rpc_Metrics_SetParameters$Type extends MessageType<Rpc_Metrics_SetParameters> {
-    constructor() {
-        super("anytype.Rpc.Metrics.SetParameters", []);
-    }
-}
-/**
- * @generated MessageType for protobuf message anytype.Rpc.Metrics.SetParameters
- */
-export const Rpc_Metrics_SetParameters = new Rpc_Metrics_SetParameters$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class Rpc_Metrics_SetParameters_Request$Type extends MessageType<Rpc_Metrics_SetParameters_Request> {
-    constructor() {
-        super("anytype.Rpc.Metrics.SetParameters.Request", [
-            { no: 1, name: "platform", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "version", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ], { "anytype.no_auth": true });
-    }
-}
-/**
- * @generated MessageType for protobuf message anytype.Rpc.Metrics.SetParameters.Request
- */
-export const Rpc_Metrics_SetParameters_Request = new Rpc_Metrics_SetParameters_Request$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class Rpc_Metrics_SetParameters_Response$Type extends MessageType<Rpc_Metrics_SetParameters_Response> {
-    constructor() {
-        super("anytype.Rpc.Metrics.SetParameters.Response", [
-            { no: 1, name: "error", kind: "message", T: () => Rpc_Metrics_SetParameters_Response_Error }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message anytype.Rpc.Metrics.SetParameters.Response
- */
-export const Rpc_Metrics_SetParameters_Response = new Rpc_Metrics_SetParameters_Response$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class Rpc_Metrics_SetParameters_Response_Error$Type extends MessageType<Rpc_Metrics_SetParameters_Response_Error> {
-    constructor() {
-        super("anytype.Rpc.Metrics.SetParameters.Response.Error", [
-            { no: 1, name: "code", kind: "enum", T: () => ["anytype.Rpc.Metrics.SetParameters.Response.Error.Code", Rpc_Metrics_SetParameters_Response_Error_Code] },
-            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message anytype.Rpc.Metrics.SetParameters.Response.Error
- */
-export const Rpc_Metrics_SetParameters_Response_Error = new Rpc_Metrics_SetParameters_Response_Error$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Rpc_Log$Type extends MessageType<Rpc_Log> {
     constructor() {
@@ -33813,6 +35266,96 @@ class Rpc_Process_Cancel_Response_Error$Type extends MessageType<Rpc_Process_Can
  * @generated MessageType for protobuf message anytype.Rpc.Process.Cancel.Response.Error
  */
 export const Rpc_Process_Cancel_Response_Error = new Rpc_Process_Cancel_Response_Error$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Process_Subscribe$Type extends MessageType<Rpc_Process_Subscribe> {
+    constructor() {
+        super("anytype.Rpc.Process.Subscribe", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Process.Subscribe
+ */
+export const Rpc_Process_Subscribe = new Rpc_Process_Subscribe$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Process_Subscribe_Request$Type extends MessageType<Rpc_Process_Subscribe_Request> {
+    constructor() {
+        super("anytype.Rpc.Process.Subscribe.Request", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Process.Subscribe.Request
+ */
+export const Rpc_Process_Subscribe_Request = new Rpc_Process_Subscribe_Request$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Process_Subscribe_Response$Type extends MessageType<Rpc_Process_Subscribe_Response> {
+    constructor() {
+        super("anytype.Rpc.Process.Subscribe.Response", [
+            { no: 1, name: "error", kind: "message", T: () => Rpc_Process_Subscribe_Response_Error }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Process.Subscribe.Response
+ */
+export const Rpc_Process_Subscribe_Response = new Rpc_Process_Subscribe_Response$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Process_Subscribe_Response_Error$Type extends MessageType<Rpc_Process_Subscribe_Response_Error> {
+    constructor() {
+        super("anytype.Rpc.Process.Subscribe.Response.Error", [
+            { no: 1, name: "code", kind: "enum", T: () => ["anytype.Rpc.Process.Subscribe.Response.Error.Code", Rpc_Process_Subscribe_Response_Error_Code] },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Process.Subscribe.Response.Error
+ */
+export const Rpc_Process_Subscribe_Response_Error = new Rpc_Process_Subscribe_Response_Error$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Process_Unsubscribe$Type extends MessageType<Rpc_Process_Unsubscribe> {
+    constructor() {
+        super("anytype.Rpc.Process.Unsubscribe", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Process.Unsubscribe
+ */
+export const Rpc_Process_Unsubscribe = new Rpc_Process_Unsubscribe$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Process_Unsubscribe_Request$Type extends MessageType<Rpc_Process_Unsubscribe_Request> {
+    constructor() {
+        super("anytype.Rpc.Process.Unsubscribe.Request", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Process.Unsubscribe.Request
+ */
+export const Rpc_Process_Unsubscribe_Request = new Rpc_Process_Unsubscribe_Request$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Process_Unsubscribe_Response$Type extends MessageType<Rpc_Process_Unsubscribe_Response> {
+    constructor() {
+        super("anytype.Rpc.Process.Unsubscribe.Response", [
+            { no: 1, name: "error", kind: "message", T: () => Rpc_Process_Unsubscribe_Response_Error }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Process.Unsubscribe.Response
+ */
+export const Rpc_Process_Unsubscribe_Response = new Rpc_Process_Unsubscribe_Response$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Rpc_Process_Unsubscribe_Response_Error$Type extends MessageType<Rpc_Process_Unsubscribe_Response_Error> {
+    constructor() {
+        super("anytype.Rpc.Process.Unsubscribe.Response.Error", [
+            { no: 1, name: "code", kind: "enum", T: () => ["anytype.Rpc.Process.Unsubscribe.Response.Error.Code", Rpc_Process_Unsubscribe_Response_Error_Code] },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message anytype.Rpc.Process.Unsubscribe.Response.Error
+ */
+export const Rpc_Process_Unsubscribe_Response_Error = new Rpc_Process_Unsubscribe_Response_Error$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Rpc_GenericErrorResponse$Type extends MessageType<Rpc_GenericErrorResponse> {
     constructor() {
@@ -35147,6 +36690,7 @@ class Rpc_Chat_GetMessages_Request$Type extends MessageType<Rpc_Chat_GetMessages
     constructor() {
         super("anytype.Rpc.Chat.GetMessages.Request", [
             { no: 1, name: "chatObjectId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "afterOrderId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "beforeOrderId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "limit", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
