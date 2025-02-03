@@ -12,7 +12,7 @@ tmp/*
 screenshots/*
 !screenshots/
 mw/*
-!mw/
+!mw/.gitkeep
 # Log files
 *.log
 # Operating system files
