@@ -25,12 +25,17 @@ jobs:
         run: |
           echo "$CONFIG_YML_CONTENT" > config.yml
 
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
       - name: Clone anytype-heart with specified branch
         run: |
           mkdir -p mw
           git clone -b ${{ github.event.inputs.heart_branch }} https://github.com/anyproto/anytype-heart.git mw/anytype-heart
           cd mw/anytype-heart
-          make download-tantivy-all-force
+          make setup
 
       - name: Cache node_modules
         uses: actions/cache@v3
@@ -44,11 +49,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '22'
-
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: '1.21'
 
       - name: Install dependencies
         run: npm install
