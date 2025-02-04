@@ -27,4 +27,8 @@ cd "$TARGET_DIR"
 echo "Checking out main branch..."
 git checkout main
 
-echo "Successfully cloned anytype-heart repository to $TARGET_DIR" 
+# Download Tantivy dependencies
+echo "Downloading Tantivy dependencies..."
+make download-tantivy-all-force
+
+echo "Successfully cloned anytype-heart repository to $TARGET_DIR and downloaded Tantivy dependencies" 

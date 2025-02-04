@@ -29,6 +29,8 @@ jobs:
         run: |
           mkdir -p mw
           git clone -b ${{ github.event.inputs.heart_branch }} https://github.com/anyproto/anytype-heart.git mw/anytype-heart
+          cd mw/anytype-heart
+          make download-tantivy-all-force
 
       - name: Cache node_modules
         uses: actions/cache@v3
