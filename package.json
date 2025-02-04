@@ -11,6 +11,7 @@
     "test:invite": "cucumber-js -p api --tags @invite",
     "test:sync": "cucumber-js -p api --tags @sync",
     "test:smoke": "cucumber-js -p api --tags @smoke",
+    "test:smoke:testomatio": "cucumber-js -p api --tags @smoke --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
     "test:comp:testomatio": "cucumber-js -p api --tags @compatibility --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
     "test:ios": "wdio run ./config/ios.conf.ts",
     "test:ios:smoke": "wdio run ./config/ios.conf.ts -- --tags @smoke"

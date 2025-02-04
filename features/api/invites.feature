@@ -2,7 +2,7 @@
 Feature: Invites
 
   Background:
-    Given the server "v0.38.8" 1 is running
+    Given the server "default" 1 is running
     And the user 1 is using client 1
     And the user creates a new account on "staging"
     And the account is synced within 60 seconds
@@ -28,7 +28,7 @@ Feature: Invites
     And the user can open the object 1
     And the user has shared his space and generated an invite link
     And the account is synced within 60 seconds
-    And the server "v0.38.8" 2 is running
+    And the server "default" 2 is running
     And the user 2 is using client 2
     And the user creates a new account on "staging"
     And the user sends requests to join the space
@@ -44,7 +44,7 @@ Feature: Invites
     And the user can open the object 1
     And the user has shared his space and generated an invite link
     And the account is synced within 60 seconds
-    And the server "v0.38.8" 2 is running
+    And the server "default" 2 is running
     And the user 2 is using client 2
     And the user creates a new account on "staging"
     And the user sends requests to join the space
@@ -62,7 +62,7 @@ Feature: Invites
     And the user can open the object 1
     And the user has shared his space and generated an invite link
     And the account is synced within 60 seconds
-    And the server "v0.38.8" 2 is running
+    And the server "default" 2 is running
     And the user 2 is using client 2
     And the user creates a new account on "staging"
     And the user sends requests to join the space
@@ -79,7 +79,7 @@ Feature: Invites
     And the user can open the object 1
     And the user has shared his space and generated an invite link
     And the account is synced within 60 seconds
-    And the server "v0.38.8" 2 is running
+    And the server "default" 2 is running
     And the user 2 is using client 2
     And the user creates a new account on "staging"
     And the user sends requests to join the space
@@ -97,7 +97,7 @@ Feature: Invites
     And the user can open the object 1
     And the user has shared his space and generated an invite link
     And the account is synced within 60 seconds
-    And the server "v0.38.8" 2 is running
+    And the server "default" 2 is running
     And the user 2 is using client 2
     And the user creates a new account on "staging"
     And the user sends requests to join the space
@@ -114,7 +114,7 @@ Feature: Invites
     And the user can open the object 1
     And the user has shared his space and generated an invite link
     And the account is synced within 60 seconds
-    And the server "v0.38.8" 2 is running
+    And the server "default" 2 is running
     And the user 2 is using client 2
     And the user creates a new account on "staging"
     And the user sends requests to join the space
@@ -130,7 +130,7 @@ Feature: Invites
     And the user can open the object 1
     And the user has shared his space and generated an invite link
     And the account is synced within 60 seconds
-    And the server "v0.38.8" 2 is running
+    And the server "default" 2 is running
     And the user 2 is using client 2
     And the user creates a new account on "staging"
     And the user sends requests to join the space
@@ -147,7 +147,7 @@ Feature: Invites
     And the user can open the object 1
     And the user has shared his space and generated an invite link
     And the account is synced within 60 seconds
-    And the server "v0.38.8" 2 is running
+    And the server "default" 2 is running
     And the user 2 is using client 2
     And the user creates a new account on "staging"
     And the user sends requests to join the space
@@ -164,7 +164,7 @@ Feature: Invites
     And the user can open the object 1
     And the user has shared his space and generated an invite link
     And the account is synced within 60 seconds
-    And the server "v0.38.8" 2 is running
+    And the server "default" 2 is running
     And the user 2 is using client 2
     And the user creates a new account on "staging"
     And the user sends requests to join the space

@@ -54,7 +54,10 @@ jobs:
         run: npm install
 
       - name: Run smoke tests
-        run: npm run test:smoke
+        run: npm run test:smoke:testomatio
         env:
           TESTOMATIO: ${{ secrets.TESTOMATIO }}
-          GH_PAT: ${{ github.token }} 
+          GH_PAT: ${{ github.token }}
+          GH_KEEP_OUTDATED_REPORTS: 1
+          SLACK_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: 'C07NFB0H5RN'  #test-debugging channel id
