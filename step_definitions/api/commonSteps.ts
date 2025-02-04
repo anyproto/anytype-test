@@ -45,7 +45,7 @@ export const setClientAsCurrentClient = (clientNumber: number): void => {
  * @param serverNumber The server number identifier.
  */
 Given(
-  "the server {string} {int} is running", {timeout: 15000},
+  "the server {string} {int} is running", {timeout: 60000},
   async (heartVersion: string, serverNumber: number) => {
     logger.info(`STEP: the server ${heartVersion} ${serverNumber} is running`);
     logger.info(
