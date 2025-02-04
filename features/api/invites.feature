@@ -1,4 +1,4 @@
-@invite @S0cea2fd6
+@invite @S0cea2fd6 @smoke
 Feature: Invites
 
   Background:

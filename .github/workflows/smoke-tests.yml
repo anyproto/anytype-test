@@ -1,0 +1,58 @@
+name: Run Smoke Tests with Selected Heart Branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      heart_branch:
+        description: 'Branch from anytype-heart to test'
+        required: true
+        default: 'main'
+        type: 'string'
+
+jobs:
+  test:
+    name: Run Smoke Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+      - name: Checkout Test Repository
+        uses: actions/checkout@v3
+
+      - name: Create config.yml file from secret
+        env:
+          CONFIG_YML_CONTENT: ${{ secrets.CONFIG_YML_CONTENT }}
+        run: |
+          echo "$CONFIG_YML_CONTENT" > config.yml
+
+      - name: Clone anytype-heart with specified branch
+        run: |
+          mkdir -p mw
+          git clone -b ${{ github.event.inputs.heart_branch }} https://github.com/anyproto/anytype-heart.git mw/anytype-heart
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ubuntu-latest-npm-cache-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ubuntu-latest-npm-cache-
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run smoke tests
+        run: npm run test:smoke
+        env:
+          TESTOMATIO: ${{ secrets.TESTOMATIO }}
+          GH_PAT: ${{ github.token }} 
