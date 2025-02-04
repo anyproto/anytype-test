@@ -37,18 +37,12 @@ jobs:
           cd mw/anytype-heart
           make setup
 
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ubuntu-latest-npm-cache-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ubuntu-latest-npm-cache-
-
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: './package-lock.json'
 
       - name: Install dependencies
         run: npm install
