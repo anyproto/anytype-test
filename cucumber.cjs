@@ -36,7 +36,7 @@ const iosConfig = [
 
 // Common configurations for retry mechanism
 const commonRetry = [
-  "--retry 2",
+  "--retry 1",
 ].join(" ");
 
 module.exports = {
