@@ -11,6 +11,7 @@
     "test:invite": "cucumber-js -p api --tags @invite",
     "test:sync": "cucumber-js -p api --tags @sync",
     "test:smoke": "cucumber-js -p api --tags @smoke",
+    "test:local:testomatio": "cucumber-js -p api --tags @local --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
     "test:smoke:testomatio": "cucumber-js -p api --tags @smoke --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
     "test:comp:testomatio": "cucumber-js -p api --tags @compatibility --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
     "test:ios": "wdio run ./config/ios.conf.ts",
@@ -27,6 +28,7 @@
   },
   "homepage": "https://github.com/anyproto/anytype-test#readme",
   "devDependencies": {
+    "@testomatio/reporter": "github:anshamray/reporter#fix-slack",
     "@appium/images-plugin": "^3.0.21",
     "@cucumber/cucumber": "^10.8.0",
     "@cucumber/pretty-formatter": "^1.0.1",
@@ -35,7 +37,6 @@
     "@origranot/ts-logger": "^1.12.0",
     "@playwright/test": "^1.47.2",
     "@testing-library/webdriverio": "^3.2.1",
-    "@testomatio/reporter": "github:anshamray/reporter#b67ef7b",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.8.1",
     "@types/unzipper": "^0.10.10",
