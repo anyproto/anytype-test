@@ -46,7 +46,7 @@ jobs:
           ./getHearts.sh ubuntu-latest amd64
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --dev
 
       - name: Run compatibility tests
         run: npm run test:comp:testomatio
