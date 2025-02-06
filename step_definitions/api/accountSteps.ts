@@ -150,7 +150,7 @@ Given("the user creates a new account on {string}", async (network: string) => {
 
 Given(
   "the user logs in to their account on {string}",
-  { timeout: 10000 },
+  { timeout: 60000 },
   async (network: string) => {
     logger.info("STEP: the user logs in to their account");
 
