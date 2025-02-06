@@ -14,8 +14,6 @@ import { Given, Then } from "@cucumber/cucumber";
 import { callListenSessionEvents } from "../../support/api/services/streamRequest";
 import {
   getCurrentUserNumber,
-  isVersion034OrLess,
-  isVersion037OrMore,
   setUserAsCurrentUser,
   waitForCondition,
 } from "../../support/api/services/utils";
