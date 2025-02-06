@@ -1,4 +1,4 @@
-import { setWorldConstructor, IWorldOptions, World } from "@cucumber/cucumber";
+import { setWorldConstructor, IWorldOptions, World, ITestCaseHookParameter } from "@cucumber/cucumber";
 import { store, storeType } from "./api/helpers/store";
 import { setDefaultTimeout } from "@cucumber/cucumber";
 
@@ -6,6 +6,7 @@ import { setDefaultTimeout } from "@cucumber/cucumber";
 setDefaultTimeout(120 * 1000);
 
 export class CustomWorld extends World {
+  public scenario?: ITestCaseHookParameter;
   inviteContentId?: string;
   inviteFileKey?: string;
   scenarioStore: storeType;
@@ -16,7 +17,6 @@ export class CustomWorld extends World {
     // Initialize scenario-specific properties
     this.inviteContentId = undefined;
     this.inviteFileKey = undefined;
-
     // Create a new instance of the store for each scenario.
     // This ensures that no state leaks between scenarios.
     this.scenarioStore = {

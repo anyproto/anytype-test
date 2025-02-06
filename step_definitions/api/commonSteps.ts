@@ -19,6 +19,7 @@ import {
 import { exec } from "child_process";
 import { logger } from "../../support/api/helpers/loggerConfig";
 import { callObjectSubscribeIds } from "../../support/api/clients/objectApi";
+import { CustomWorld } from "../../support/world";
 
 interface Paths {
   binPath: string;
@@ -46,7 +47,8 @@ export const setClientAsCurrentClient = (clientNumber: number): void => {
  */
 Given(
   "the server {string} {int} is running", {timeout: 180 * 1000},
-  async (heartVersion: string, serverNumber: number) => {
+  async function (this: CustomWorld, heartVersion: string, serverNumber: number) {
+    const scenarioName = this.scenario?.pickle.name || 'UnknownScenario';
     logger.info(`STEP: the server ${heartVersion} ${serverNumber} is running`);
     logger.info(
       `Starting server for version: ${heartVersion}, server number: ${serverNumber}`,
@@ -71,7 +73,8 @@ Given(
       const grpcServerManager = new GRPCServerManager(
         paths.binPath,
         paths.workingDir,
-        heartVersion
+        heartVersion,
+        scenarioName
       );
       logger.debug(`Attempting to start server with binPath: ${paths.binPath}`);
 

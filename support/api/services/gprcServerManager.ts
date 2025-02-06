@@ -5,7 +5,8 @@ class GRPCServerManager {
   constructor(
     private binPath: string,
     private workingDir: string,
-    private version: string
+    private version: string,
+    private scenarioName: string,
   ) {}
 
   public async startServer(serverNumber: number): Promise<string> {
@@ -49,7 +50,9 @@ class GRPCServerManager {
       let output = "";
 
       const onData = (data: Buffer) => {
-        output += data.toString();
+        const text = data.toString();
+        console.log(`[${this.scenarioName}] stdout: ${text}`);
+        output += text;
         const match = output.match(
           /gRPC server started at: (\d+\.\d+\.\d+\.\d+:\d+)/
         );
@@ -70,10 +73,10 @@ class GRPCServerManager {
 
       serverProcess.stdout?.on("data", onData);
       serverProcess.stderr?.on("data", (data) => {
-        const logMessage = data.toString();
+        const text = data.toString();
         // Only log stderr messages that don't come from anytype-doc-indexer
-        if (!logMessage.includes('"logger":"anytype-doc-indexer"')) {
-          console.error(`stderr: ${logMessage}`);
+        if (!text.includes('"logger":"anytype-doc-indexer"')) {
+          console.error(`[${this.scenarioName }] stderr: ${text}`);
         }
       });
 
