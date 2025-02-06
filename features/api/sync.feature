@@ -1,7 +1,7 @@
 @sync @smoke
 Feature: Syncing
 
-  Scenario: 3 versions compatibility with sync on staging nodes
+  Scenario: Sync on staging nodes
     Given the server "default" 1 is running
     And the user is using client 1
     And the user creates a new account on "staging"
