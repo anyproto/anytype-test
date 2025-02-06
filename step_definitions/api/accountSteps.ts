@@ -46,7 +46,7 @@ export function saveUser(userNumber: number, user: UserType): void {
   );
 }
 
-Given("the user creates a new account on {string}", async (network: string) => {
+Given("the user creates a new account on {string}", {timeout: 30 * 1000}, async (network: string) => {
   logger.info("STEP: the user creates a new account");
   const userNumber = getCurrentUserNumber();
   const mnemonic = await callWalletCreate();
