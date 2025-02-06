@@ -27,7 +27,7 @@ Then(
 
 Then(
   "the user can open the object {int}",
-  { timeout: 120 * 1000 },
+  { timeout: 60 * 1000 },
   async (objectNumber: number) => {
     console.log(
       "\x1b[36m%s\x1b[0m",
@@ -38,6 +38,8 @@ Then(
     if (!object) {
       throw new Error(`Object with number ${objectNumber} not found in store.`);
     }
+    //wait for 10 seconds to make sure that the object is synced
+    await new Promise((resolve) => setTimeout(resolve, 10000));
     await callOpenObject(object.objectId, object.spaceId);
   }
 );
