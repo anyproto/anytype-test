@@ -24,6 +24,7 @@ class GRPCServerManager {
         console.log("Executing default version command: go run -tags noauth");
         serverProcess = spawn("go", ["run", "-tags", "noauth", this.binPath], {
           cwd: this.workingDir,
+          detached: true,
           env: {
             ...process.env,
             // ANYTYPE_GRPC_LOG: "3",
@@ -76,7 +77,7 @@ class GRPCServerManager {
         const text = data.toString();
         // Only log stderr messages that don't come from anytype-doc-indexer
         if (!text.includes('"logger":"anytype-doc-indexer"')) {
-          console.error(`[${this.scenarioName }] stderr: ${text}`);
+          console.error(`[${this.scenarioName}, Server ${serverNumber}] stderr: ${text}`);
         }
       });
 
@@ -98,9 +99,30 @@ export function stopServer(serverNumber: number): void {
   const server = store.servers.get(serverNumber);
 
   if (server && server.process) {
-    server.process.kill();
-    console.log(`Server process at ${server.address} killed`);
-    store.servers.delete(serverNumber);
+    try {
+      // Attempt to gracefully terminate the process
+      console.log(`Attempting to stop server process at ${server.address}`);
+      if (server.process.pid) {
+        console.log("Killing server process with PID:", server.process.pid);
+        process.kill(-server.process.pid, "SIGTERM");
+      } else {
+        console.warn("Server process PID is undefined");
+      }
+
+      // Wait for a short period to allow graceful shutdown
+      setTimeout(() => {
+        if (!server.process.killed) {
+          console.warn(`Server process at ${server.address} did not terminate gracefully, forcing shutdown`);
+          // Forcefully kill the process if it's still running
+          server.process.kill("SIGKILL");
+        }
+      }, 5000); // Wait 5 seconds before forcing shutdown
+
+      console.log(`Server process at ${server.address} killed`);
+      store.servers.delete(serverNumber);
+    } catch (error) {
+      console.error(`Failed to stop server process at ${server.address}:`, error);
+    }
   } else {
     console.warn(`No server process found for server number ${serverNumber}`);
   }

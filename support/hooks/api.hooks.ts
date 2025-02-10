@@ -25,13 +25,3 @@ After(async function () {
   stopServer(2);
   console.log("After hook finished");
 });
-
-AfterAll(() => {
-  // Force kill leftover “go run” or “grpc-server” processes if needed
-  try {
-    execSync("pkill -f 'go run'"); // or 'grpc-server'
-    console.log("Cleaned up leftover go-run processes");
-  } catch (error) {
-    console.error("Error cleaning up leftover go-run processes:", error);
-  }
-});
