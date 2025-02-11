@@ -243,7 +243,7 @@ export async function getObjectSyncStatus(objectNumber: number): Promise<number>
   const object = store.objects.get(objectNumber);
   
   if (!object) {
-    throw new Error(`Object with number ${objectNumber} not found in store.`);
+    throw new Error(`Object with number ${objectNumber} not found in store. Check you scenario.`);
   }
   const response = await callObjectSubscribeIds([object.objectId], object.spaceId, "objectSync");
   const syncStatus = response[0]?.fields?.syncStatus?.kind?.oneofKind === "numberValue" 

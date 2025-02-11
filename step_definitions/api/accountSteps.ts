@@ -191,14 +191,17 @@ Then(
         user: store.currentUserNumber,
       });
     } catch (error) {
-      // Check object sync status
-      logger.info("Checking object 1 sync status");
-      const syncStatus = await getObjectSyncStatus(1);
-      
-      if (syncStatus === 0) {
-        logger.error("Object 1 was synced, but not the whole account");
+      if (store.objects.has(1)) {
+        logger.info("Checking object 1 sync status");
+        const syncStatus = await getObjectSyncStatus(1);
+        
+        if (syncStatus === 0) {
+          logger.error("Object 1 was synced, but not the whole account");
+        } else {
+          logger.error("Object 1 was not synced, too");
+        }
       } else {
-        logger.error("Object 1 was not synced, too");
+        logger.info("Object 1 does not exist in store, skipping sync status check");
       }
       // Generate stack trace by sending SIGABRT to grpc-server
       logger.info("Generating stack trace by sending SIGABRT to grpc-server");
@@ -223,13 +226,12 @@ Then(
       logger.error(
         "The account is not synced. SpaceSyncStatusUpdate event not received in time.",
         {
-          error: error instanceof Error ? error.stack : undefined,
-          syncStatus
+          error: error instanceof Error ? error.stack : undefined
         }
       );
 
       throw new Error(
-        `Test failed: The account did not sync within the expected time. Sync status: ${syncStatus}. Stack trace: ${
+        `Test failed: The account did not sync within the expected time. Stack trace: ${
           error instanceof Error ? error.stack : "No stack trace available"
         }`
       );
