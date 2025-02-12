@@ -1,4 +1,4 @@
-@invite @S0cea2fd6 @smoke
+@invite @S0cea2fd6
 Feature: Invites
 
   Background:
@@ -14,7 +14,7 @@ Feature: Invites
     And the account is deleted
     And the server 1 is stopped
 
-  @T2d184d47
+  @T2d184d47 @smoke
   Scenario: Revoking an invite link
     Given the user has shared his space and generated an invite link
     When the user revokes the invite link
@@ -22,7 +22,7 @@ Feature: Invites
     And the account is deleted
     And the server 1 is stopped
 
-  @Td4806591
+  @Td4806591 @smoke
   Scenario: User cancels their join request
     Given the user creates an object 1 in the account
     And the user can open the object 1
@@ -38,7 +38,7 @@ Feature: Invites
     And both accounts are deleted
     And both servers are stopped
 
-  @T131f1ad1
+  @T131f1ad1 @smoke
   Scenario: User deletes the space and rejoins later
     Given the user creates an object 1 in the account
     And the user can open the object 1
@@ -73,7 +73,7 @@ Feature: Invites
     And both accounts are deleted
     And both servers are stopped
 
-  @Tb83f3025
+  @Tb83f3025 @smoke
   Scenario: Owner changes the rights of a user from Viewer to Editor
     Given the user creates an object 1 in the account
     And the user can open the object 1
@@ -91,7 +91,7 @@ Feature: Invites
     And both accounts are deleted
     And both servers are stopped
 
-  @T25be283b
+  @T25be283b @smoke
   Scenario: Owner approves a join request with Editor permissions
     Given the user creates an object 1 in the account
     And the user can open the object 1
@@ -108,7 +108,7 @@ Feature: Invites
     And both accounts are deleted
     And both servers are stopped
 
-  @Tfc45a1ca
+  @Tfc45a1ca @smoke
   Scenario: Owner declines a join request
     Given the user creates an object 1 in the account
     And the user can open the object 1
@@ -124,7 +124,7 @@ Feature: Invites
     And both accounts are deleted
     And both servers are stopped
 
-  @T37ee5567
+  @T37ee5567 @smoke
   Scenario: Owner removes a participant from the space
     Given the user creates an object 1 in the account
     And the user can open the object 1
