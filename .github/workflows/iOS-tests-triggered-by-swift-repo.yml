@@ -44,6 +44,11 @@ jobs:
           # 3) Unzip the artifact into the current workspace
           unzip artifact.zip
 
+          # Print the location and contents
+          echo "Current working directory: $(pwd)"
+          echo "Listing unzipped contents:"
+          ls -la
+
       - name: Run Tests
         run: |
           echo "Artifact downloaded & unzipped. Now run your tests!"

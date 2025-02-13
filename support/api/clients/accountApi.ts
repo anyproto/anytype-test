@@ -44,6 +44,16 @@ function getNetworkConfig(networkType: string): NetworkConfig {
   if (networkType === "staging") {
     const configPath = path.resolve(__dirname, `../../../config.yml`);
     logger.info(`Staging config path: ${configPath}`);
+    
+    // Check if file exists and content is not empty
+    if (!fs.existsSync(configPath)) {
+      throw new Error(`Staging config file not found: ${configPath}`);
+    }
+    const content = fs.readFileSync(configPath, 'utf8').trim();
+    if (!content) {
+      throw new Error(`Staging config file is empty: ${configPath}`);
+    }
+
     return {
       mode: Rpc_Account_NetworkMode.CustomConfig,
       configPath: configPath,

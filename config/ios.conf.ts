@@ -195,7 +195,7 @@ export const config: WebdriverIO.Config = {
         logPath: "./",
       },
     ],
-    [TimelineService],
+    // [TimelineService],
   ],
 
   // Framework you want to run your specs with.
