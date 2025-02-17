@@ -21,16 +21,16 @@ jobs:
         id: create-simulators
         run: |
           # Create iPhone 14 with iOS 16.4
-          IPHONE_14_UDID=$(xcrun simctl create "iPhone 14" "iPhone 14" "16.4")
+          IPHONE_15_PRO_UDID=$(xcrun simctl create "iPhone 15 Pro" "iPhone 15 Pro" "18.0")
           # Create iPhone 14 Pro with iOS 16.4
-          IPHONE_14_PRO_UDID=$(xcrun simctl create "iPhone 14 Pro" "iPhone 14 Pro" "16.4")
+          IPHONE_15_PRO_MAX_UDID=$(xcrun simctl create "iPhone 15 Pro Max" "iPhone 15 Pro Max" "18.0")
           
-          echo "IPHONE_14_UDID=$IPHONE_14_UDID" >> $GITHUB_ENV
-          echo "IPHONE_14_PRO_UDID=$IPHONE_14_PRO_UDID" >> $GITHUB_ENV
+          echo "IPHONE_15_PRO_UDID=$IPHONE_15_PRO_UDID" >> $GITHUB_ENV
+          echo "IPHONE_15_PRO_MAX_UDID=$IPHONE_15_PRO_MAX_UDID" >> $GITHUB_ENV
           
           # Boot the simulators
-          xcrun simctl boot $IPHONE_14_UDID
-          xcrun simctl boot $IPHONE_14_PRO_UDID
+          xcrun simctl boot $IPHONE_15_PRO_UDID
+          xcrun simctl boot $IPHONE_15_PRO_MAX_UDID
 
       - name: Download artifact from anytype-swift
         run: |
@@ -83,6 +83,6 @@ jobs:
 
       - name: Run Tests
         env:
-          IPHONE_A_UDID: ${{ env.IPHONE_14_UDID }}
-          IPHONE_B_UDID: ${{ env.IPHONE_14_PRO_UDID }}
+          IPHONE_A_UDID: ${{ env.IPHONE_15_PRO_UDID }}
+          IPHONE_B_UDID: ${{ env.IPHONE_15_PRO_MAX_UDID }}
         run: npm run test:ios
