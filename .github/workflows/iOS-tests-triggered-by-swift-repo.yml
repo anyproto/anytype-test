@@ -6,11 +6,25 @@ on:
 
 jobs:
   run-tests:
-    runs-on: macos-latest  # Changed to macos-latest since we need iOS simulators
+    runs-on: macos-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      # 1) Select an Xcode version that includes iOS 18.1 simulator
+      - name: Set Xcode version
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          # Adjust if your environment uses a different stable/beta version that has iOS 18.1
+          xcode-version: '16.1'
+
+      - name: Show Xcode version and available runtimes
+        run: |
+          echo "Xcode info:"
+          xcodebuild -version
+          echo "Available iOS runtimes:"
+          xcrun simctl list runtimes
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -20,28 +34,34 @@ jobs:
       - name: Create iOS Simulators
         id: create-simulators
         run: |
-          # Create iPhone 15 with iOS 18.4
-          IPHONE_15_PRO_UDID=$(xcrun simctl create "iPhone 15 Pro" "iPhone 15 Pro" "18.0")
-          # Create iPhone 14 Pro Max with iOS 18.4
-          IPHONE_15_PRO_MAX_UDID=$(xcrun simctl create "iPhone 15 Pro Max" "iPhone 15 Pro Max" "18.0")
-          
+          # Create iPhone 15 Pro (iOS 18.1)
+          IPHONE_15_PRO_UDID=$(xcrun simctl create \
+            "iPhone 15 Pro" \
+            "com.apple.CoreSimulator.SimDeviceType.iPhone-15-Pro" \
+            "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
+
+          # Create iPhone 15 Pro Max (iOS 18.1)
+          IPHONE_15_PRO_MAX_UDID=$(xcrun simctl create \
+            "iPhone 15 Pro Max" \
+            "com.apple.CoreSimulator.SimDeviceType.iPhone-15-Pro-Max" \
+            "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
+
           echo "IPHONE_15_PRO_UDID=$IPHONE_15_PRO_UDID" >> $GITHUB_ENV
           echo "IPHONE_15_PRO_MAX_UDID=$IPHONE_15_PRO_MAX_UDID" >> $GITHUB_ENV
           
           # Boot the simulators
-          xcrun simctl boot $IPHONE_15_PRO_UDID
-          xcrun simctl boot $IPHONE_15_PRO_MAX_UDID
+          xcrun simctl boot "$IPHONE_15_PRO_UDID"
+          xcrun simctl boot "$IPHONE_15_PRO_MAX_UDID"
+
+          # Print UDIDs for debugging
+          echo "iPhone 15 Pro UDID: $IPHONE_15_PRO_UDID"
+          echo "iPhone 15 Pro Max UDID: $IPHONE_15_PRO_MAX_UDID"
 
       - name: Download artifact from anytype-swift
         run: |
           # We retrieve the run_id from the "client_payload" that was sent.
           RUN_ID="${{ github.event.client_payload.run_id }}"
           echo "Run ID is: $RUN_ID"
-
-          # We'll need a token that can READ artifacts in anytype-swift.
-          # You can re-use the same personal access token (PAT_DISPATCH_TOKEN)
-          # if it has "public_repo" permissions (for public repos).
-          # Or "repo" if they are private.
           
           # 1) List artifacts in that run to find the artifact ID
           curl -sS \
