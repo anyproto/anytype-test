@@ -20,9 +20,9 @@ jobs:
       - name: Create iOS Simulators
         id: create-simulators
         run: |
-          # Create iPhone 14 with iOS 16.4
+          # Create iPhone 15 with iOS 18.4
           IPHONE_15_PRO_UDID=$(xcrun simctl create "iPhone 15 Pro" "iPhone 15 Pro" "18.0")
-          # Create iPhone 14 Pro with iOS 16.4
+          # Create iPhone 14 Pro Max with iOS 18.4
           IPHONE_15_PRO_MAX_UDID=$(xcrun simctl create "iPhone 15 Pro Max" "iPhone 15 Pro Max" "18.0")
           
           echo "IPHONE_15_PRO_UDID=$IPHONE_15_PRO_UDID" >> $GITHUB_ENV
