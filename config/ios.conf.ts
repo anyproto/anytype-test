@@ -35,10 +35,10 @@ export const config: WebdriverIO.Config = {
   // The path of the spec files will be resolved relative from the directory of
   // of the config file unless it's absolute.
   //
-  specs: ["../features/ios/**/*.feature"],
+  specs: ["../features/ios/*.feature"],
   // Patterns to exclude.
   exclude: [
-    // 'path/to/excluded/files'
+    "../features/api/*.feature"
   ],
   //
   // ============
@@ -56,7 +56,7 @@ export const config: WebdriverIO.Config = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
-  maxInstances: 10,
+  maxInstances: 1,
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -81,12 +81,12 @@ export const config: WebdriverIO.Config = {
       capabilities: {
         platformName: "iOS",
         "appium:automationName": "XCUITest",
-        "appium:deviceName": "iPhone 14",
-        "appium:platformVersion": "16.4",
-        "appium:app": join(process.cwd(), 'Anytype.app'),
+        "appium:deviceName": "iPhone 16",
+        "appium:platformVersion": "18.0",
+        "appium:app": join(process.cwd(), 'Anytype Dev.app'),
         "appium:autoAcceptAlerts": true,
         "appium:language": process.env.IOS_LANGUAGE || "en",
-        "appium:udid": process.env.IPHONE_A_UDID,
+        "appium:udid": process.env.IPHONE_A_UDID || "E448B4C9-48F4-467B-AE1D-5D440A6760C5",
         "appium:wdaLocalPort": 8100,
         "appium:realDeviceScreenshotter": true,
         "appium:simpleIsVisibleCheck": true,
@@ -96,12 +96,12 @@ export const config: WebdriverIO.Config = {
       capabilities: {
         platformName: "iOS",
         "appium:automationName": "XCUITest",
-        "appium:deviceName": "iPhone 14 Pro",
-        "appium:platformVersion": "16.4",
-        "appium:app": join(process.cwd(), 'Anytype.app'),
+        "appium:deviceName": "iPhone 16 Pro",
+        "appium:platformVersion": "18.0",
+        "appium:app": join(process.cwd(), 'Anytype Dev.app'),
         "appium:autoAcceptAlerts": true,
         "appium:language": process.env.IOS_LANGUAGE || "en",
-        "appium:udid": process.env.IPHONE_B_UDID,
+        "appium:udid": process.env.IPHONE_B_UDID || "CF76C796-DB3A-4A51-B52F-340201F8D980",
         "appium:wdaLocalPort": 8101,
         "appium:realDeviceScreenshotter": true,
         "appium:simpleIsVisibleCheck": true,
@@ -313,8 +313,16 @@ export const config: WebdriverIO.Config = {
    * @param {ITestCaseHookParameter} world    world object containing information on pickle and test step
    * @param {object}                 context  Cucumber World object
    */
-  // beforeScenario: function (world, context) {
-  // },
+  beforeScenario: async function (world, context) {
+    await driver.reloadSession();
+    // Log the scenario name and any tags
+    console.log('\n' + '='.repeat(80));
+    console.log(`RUNNING SCENARIO: ${world.pickle.name}`);
+    if (world.pickle.tags && world.pickle.tags.length > 0) {
+      console.log(`TAGS: ${world.pickle.tags.map(tag => tag.name).join(', ')}`);
+    }
+    console.log('='.repeat(80) + '\n');
+  },
   // beforeScenario: async function (scenario) {
   //   await driver.reloadSession();
 
@@ -379,9 +387,9 @@ export const config: WebdriverIO.Config = {
   /**
    *
    * Runs before a Cucumber Step.
-   * @param {Pickle.IPickleStep} step     step data
-   * @param {IPickle}            scenario scenario pickle
-   * @param {object}             context  Cucumber World object
+   * @param {Pickle.IPickleStep} step             step data
+   * @param {IPickle}            scenario         scenario pickle
+   * @param {object}             context          Cucumber World object
    */
   // beforeStep: function (step, scenario, context) {
   // },
