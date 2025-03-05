@@ -34,17 +34,17 @@ jobs:
       - name: Create iOS Simulators
         id: create-simulators
         run: |
-          # Create iPhone 15 Pro (iOS 18.0)
+          # Create iPhone 15 Pro (iOS 18.1)
           IPHONE_15_PRO_UDID=$(xcrun simctl create \
             "iPhone 16" \
             "com.apple.CoreSimulator.SimDeviceType.iPhone-16" \
-            "com.apple.CoreSimulator.SimRuntime.iOS-18-0")
+            "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
 
-          # Create iPhone 15 Pro Max (iOS 18.0)
+          # Create iPhone 15 Pro Max (iOS 18.1)
           IPHONE_15_PRO_MAX_UDID=$(xcrun simctl create \
             "iPhone 16 Pro" \
             "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro" \
-            "com.apple.CoreSimulator.SimRuntime.iOS-18-0")
+            "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
 
           echo "IPHONE_15_PRO_UDID=$IPHONE_15_PRO_UDID" >> $GITHUB_ENV
           echo "IPHONE_15_PRO_MAX_UDID=$IPHONE_15_PRO_MAX_UDID" >> $GITHUB_ENV
