@@ -96,8 +96,6 @@ jobs:
         run: |
           # Install Appium CLI globally
           npm install -g appium
-          # Install iOS-specific driver
-          appium driver install xcuitest
           # Start Appium server in background
           appium &
 
