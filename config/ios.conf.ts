@@ -91,6 +91,8 @@ export const config: WebdriverIO.Config = {
         "appium:realDeviceScreenshotter": true,
         "appium:simpleIsVisibleCheck": true,
         "appium:showXcodeLog": true,
+        'appium:newCommandTimeout': 300,
+        'appium:connectionTimeout': 60000
       },
     },
     UserB: {
@@ -107,6 +109,8 @@ export const config: WebdriverIO.Config = {
         "appium:realDeviceScreenshotter": true,
         "appium:simpleIsVisibleCheck": true,
         "appium:showXcodeLog": true,
+        'appium:newCommandTimeout': 300,
+        'appium:connectionTimeout': 60000
       },
     },
   },
