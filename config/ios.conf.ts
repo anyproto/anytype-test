@@ -82,7 +82,7 @@ export const config: WebdriverIO.Config = {
         platformName: "iOS",
         "appium:automationName": "XCUITest",
         "appium:deviceName": "iPhone 16",
-        "appium:platformVersion": "18.0",
+        "appium:platformVersion": "18.1",
         "appium:app": join(process.cwd(), 'Anytype Dev.app'),
         "appium:autoAcceptAlerts": true,
         "appium:language": process.env.IOS_LANGUAGE || "en",
@@ -90,6 +90,7 @@ export const config: WebdriverIO.Config = {
         "appium:wdaLocalPort": 8100,
         "appium:realDeviceScreenshotter": true,
         "appium:simpleIsVisibleCheck": true,
+        "appium:showXcodeLog": true,
       },
     },
     UserB: {
@@ -97,7 +98,7 @@ export const config: WebdriverIO.Config = {
         platformName: "iOS",
         "appium:automationName": "XCUITest",
         "appium:deviceName": "iPhone 16 Pro",
-        "appium:platformVersion": "18.0",
+        "appium:platformVersion": "18.1",
         "appium:app": join(process.cwd(), 'Anytype Dev.app'),
         "appium:autoAcceptAlerts": true,
         "appium:language": process.env.IOS_LANGUAGE || "en",
@@ -105,6 +106,7 @@ export const config: WebdriverIO.Config = {
         "appium:wdaLocalPort": 8101,
         "appium:realDeviceScreenshotter": true,
         "appium:simpleIsVisibleCheck": true,
+        "appium:showXcodeLog": true,
       },
     },
   },
@@ -117,14 +119,14 @@ export const config: WebdriverIO.Config = {
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
   logLevels: {
-    webdriver: "warn",
-    webdriverio: "warn",
-    "@wdio/local-runner": "warn",
-    "@wdio/cli": "warn",
-    appium: "warn",
+    webdriver: "debug",
+    webdriverio: "debug",
+    "@wdio/local-runner": "debug",
+    "@wdio/cli": "debug",
+    appium: "debug",
     custom: "info",
-    "@wdio/cucumber-framework": "warn",
-    "@wdio/appium-service": "warn",
+    "@wdio/cucumber-framework": "debug",
+    "@wdio/appium-service": "debug",
   },
   //
   // Set specific log levels per logger
@@ -234,7 +236,7 @@ export const config: WebdriverIO.Config = {
     timeout: 60000,
     // <boolean> Enable this config to treat undefined definitions as warnings.
     ignoreUndefinedDefinitions: true,
-    retry: 1,
+    retry: 0,
   },
 
   //
