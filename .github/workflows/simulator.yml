@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set Xcode version
         uses: maxim-lobanov/setup-xcode@v1
@@ -28,43 +28,33 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Create iOS Simulators
-        id: create-simulators
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Appium & Run Appium Doctor
         run: |
-          # Create iPhone 16 (iOS 18.1)
-          IPHONE_16_UDID=$(xcrun simctl create \
-            "iPhone 16" \
-            "com.apple.CoreSimulator.SimDeviceType.iPhone-16" \
-            "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
+          # Install the Appium CLI globally (includes appium-doctor)
+          npm install -g appium
+          # OR, if you prefer, you can explicitly install appium-doctor:
+          # npm install -g appium-doctor
 
-          # Create iPhone 16 Pro (iOS 18.1)
-          IPHONE_16_PRO_UDID=$(xcrun simctl create \
-            "iPhone 16 Pro" \
-            "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro" \
-            "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
+          # Check environment status for iOS, Android, etc.
+          appium-doctor --ios
 
-          echo "IPHONE_16_UDID=$IPHONE_16_UDID" >> $GITHUB_ENV
-          echo "IPHONE_16_PRO_UDID=$IPHONE_16_PRO_UDID" >> $GITHUB_ENV
-          
-          # Boot the simulators
-          xcrun simctl boot "$IPHONE_16_UDID"
-          xcrun simctl boot "$IPHONE_16_PRO_UDID"
+      - name: Create iOS Simulator
+        id: create-simulator
+        run: |
+          # Example: iPhone 15 (iOS 17.2) -- pick an actual device+runtime from 'simctl list devicetypes'
+          IPHONE_UDID=$(xcrun simctl create \
+            "iPhone 15" \
+            "com.apple.CoreSimulator.SimDeviceType.iPhone-15" \
+            "com.apple.CoreSimulator.SimRuntime.iOS-17-2")
 
-          # Print UDIDs for debugging
-          echo "iPhone 16 UDID: $IPHONE_16_UDID"
-          echo "iPhone 16 Pro UDID: $IPHONE_16_PRO_UDID"
+          echo "IPHONE_UDID=$IPHONE_UDID" >> $GITHUB_ENV
 
-          # Wait a moment for them to finish booting
+          xcrun simctl boot "$IPHONE_UDID"
           sleep 5
-
-          echo "===== Simulators after booting ====="
           xcrun simctl list devices
-
-          echo "Checking the boot state of iPhone 16:"
-          xcrun simctl list devices | grep "$IPHONE_16_UDID" || true
-
-          echo "Checking the boot state of iPhone 16 Pro:"
-          xcrun simctl list devices | grep "$IPHONE_16_PRO_UDID" || true
 
       - name: Download artifact from direct link (debug)
         run: |
@@ -79,24 +69,19 @@ jobs:
           echo "Unzipped artifact contents:"
           ls -la
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Setup Appium
+      - name: Setup Appium Service
         run: |
-          npm install -g appium
+          # Start Appium server in background
           appium &
 
       - name: Run Tests
         env:
-          IPHONE_A_UDID: ${{ env.IPHONE_16_UDID }}
-          IPHONE_B_UDID: ${{ env.IPHONE_16_PRO_UDID }}
-        run: |
-          npm run test:ios
+          IPHONE_UDID: ${{ env.IPHONE_UDID }}
+        run: npm run test:ios
 
-      # 1) Print out the Appium/WDI0 logs so you can see them in the job console
+      # Print or upload your appium log after test
       - name: Show wdio-appium.log
-        if: always()            # ensure this step runs even on failure
+        if: always()
         run: |
           echo "=== wdio-appium.log content ==="
           if [ -f wdio-appium.log ]; then
@@ -104,11 +89,3 @@ jobs:
           else
             echo "No wdio-appium.log found"
           fi
-
-      # 2) Upload logs as an artifact you can download
-      - name: Upload logs artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: appium-logs
-          path: wdio-appium.log
