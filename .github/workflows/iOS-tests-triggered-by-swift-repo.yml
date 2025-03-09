@@ -16,7 +16,6 @@ jobs:
       - name: Set Xcode version
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          # Adjust if your environment uses a different stable/beta version that has iOS 18.1
           xcode-version: '16.1'
 
       - name: Show Xcode version and available runtimes
@@ -41,7 +40,7 @@ jobs:
             "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
 
           # Create iPhone 15 Pro Max (iOS 18.1)
-          IPHONE_15_PRO_MAX_UDID=$(xcrun simctl create \
+          IPHONE_15_PRO_MAX_UDID=$(xcrun simctl.create \
             "iPhone 16 Pro" \
             "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro" \
             "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
@@ -56,6 +55,18 @@ jobs:
           # Print UDIDs for debugging
           echo "iPhone 15 Pro UDID: $IPHONE_15_PRO_UDID"
           echo "iPhone 15 Pro Max UDID: $IPHONE_15_PRO_MAX_UDID"
+
+          # Wait a moment for them to finish booting
+          sleep 5
+
+          echo "===== Simulators after booting ====="
+          xcrun simctl list devices
+
+          echo "Checking the boot state of iPhone 15 Pro:"
+          xcrun simctl list devices | grep "$IPHONE_15_PRO_UDID" || true
+
+          echo "Checking the boot state of iPhone 15 Pro Max:"
+          xcrun simctl list devices | grep "$IPHONE_15_PRO_MAX_UDID" || true
 
       - name: Download artifact from anytype-swift
         run: |
