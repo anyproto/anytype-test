@@ -32,27 +32,27 @@ jobs:
         id: create-simulators
         run: |
           # Create iPhone 16 (iOS 18.1)
-          IPHONE_15_PRO_UDID=$(xcrun simctl create \
+          IPHONE_16_UDID=$(xcrun simctl create \
             "iPhone 16" \
             "com.apple.CoreSimulator.SimDeviceType.iPhone-16" \
             "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
 
           # Create iPhone 16 Pro (iOS 18.1)
-          IPHONE_15_PRO_MAX_UDID=$(xcrun simctl create \
+          IPHONE_16_PRO_UDID=$(xcrun simctl create \
             "iPhone 16 Pro" \
             "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro" \
             "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
 
-          echo "IPHONE_15_PRO_UDID=$IPHONE_16" >> $GITHUB_ENV
-          echo "IPHONE_15_PRO_MAX_UDID=$IPHONE_16_PRO" >> $GITHUB_ENV
+          echo "IPHONE_16_UDID=$IPHONE_16_UDID" >> $GITHUB_ENV
+          echo "IPHONE_16_PRO_UDID=$IPHONE_16_PRO_UDID" >> $GITHUB_ENV
           
           # Boot the simulators
-          xcrun simctl boot "$IPHONE_16"
-          xcrun simctl boot "$IPHONE_16_PRO"
+          xcrun simctl boot "$IPHONE_16_UDID"
+          xcrun simctl boot "$IPHONE_16_PRO_UDID"
 
           # Print UDIDs for debugging
           echo "iPhone 16 UDID: $IPHONE_16_UDID"
-          echo "iPhone 15 Pro Max UDID: $IPHONE_16_PRO_UDID"
+          echo "iPhone 16 Pro UDID: $IPHONE_16_PRO_UDID"
 
           # Wait a moment for them to finish booting
           sleep 5
@@ -68,8 +68,6 @@ jobs:
 
       - name: Download artifact from direct link (debug)
         run: |
-          # This is a hardcoded artifact link from a prior workflow run
-          # Note: Artifacts typically expire after ~90 days, so it won't last forever.
           echo "Downloading artifact from direct link..."
           curl -sS -L \
                -H "Authorization: token ${{ secrets.ANYTYPE_PAT }}" \
@@ -95,3 +93,22 @@ jobs:
           IPHONE_B_UDID: ${{ env.IPHONE_16_PRO_UDID }}
         run: |
           npm run test:ios
+
+      # 1) Print out the Appium/WDI0 logs so you can see them in the job console
+      - name: Show wdio-appium.log
+        if: always()            # ensure this step runs even on failure
+        run: |
+          echo "=== wdio-appium.log content ==="
+          if [ -f wdio-appium.log ]; then
+            cat wdio-appium.log
+          else
+            echo "No wdio-appium.log found"
+          fi
+
+      # 2) Upload logs as an artifact you can download
+      - name: Upload logs artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: appium-logs
+          path: wdio-appium.log
