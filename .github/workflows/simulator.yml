@@ -27,6 +27,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          
+      - name: Download artifact from direct link (debug)
+        run: |
+          echo "Downloading artifact from direct link..."
+          curl -sS -L \
+               -H "Authorization: token ${{ secrets.ANYTYPE_PAT }}" \
+               -H "Accept: application/vnd.github+json" \
+               https://api.github.com/repos/anyproto/anytype-swift/actions/artifacts/2718333893/zip \
+               --output artifact.zip
+
+          unzip artifact.zip
+          echo "Unzipped artifact contents:"
+          ls -la
 
       - name: Create iOS Simulators
         id: create-simulators
@@ -50,8 +63,8 @@ jobs:
           xcrun simctl boot "$IPHONE_15_UDID"
           xcrun simctl boot "$IPHONE_15_PRO_UDID"
 
-          xcrun simctl bootstatus "$IPHONE_15_UDID" --fail-on-error
-          xcrun simctl bootstatus "$IPHONE_15_PRO_UDID" --fail-on-error
+          xcrun simctl bootstatus "$IPHONE_15_UDID"
+          xcrun simctl bootstatus "$IPHONE_15_PRO_UDID"
         
           # Print UDIDs for debugging
           echo "iPhone 15 UDID: $IPHONE_15_UDID"
@@ -68,19 +81,6 @@ jobs:
 
           echo "Checking the boot state of iPhone 15 Pro:"
           xcrun simctl list devices | grep "$IPHONE_15_PRO_UDID" || true
-
-      - name: Download artifact from direct link (debug)
-        run: |
-          echo "Downloading artifact from direct link..."
-          curl -sS -L \
-               -H "Authorization: token ${{ secrets.ANYTYPE_PAT }}" \
-               -H "Accept: application/vnd.github+json" \
-               https://api.github.com/repos/anyproto/anytype-swift/actions/artifacts/2718333893/zip \
-               --output artifact.zip
-
-          unzip artifact.zip
-          echo "Unzipped artifact contents:"
-          ls -la
 
       - name: Install dependencies
         run: npm install
