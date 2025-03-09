@@ -81,8 +81,8 @@ export const config: WebdriverIO.Config = {
       capabilities: {
         platformName: "iOS",
         "appium:automationName": "XCUITest",
-        "appium:deviceName": "iPhone 16",
-        "appium:platformVersion": "18.1",
+        "appium:deviceName": "iPhone 15",
+        "appium:platformVersion": "17.4",
         "appium:app": join(process.cwd(), 'Anytype Dev.app'),
         "appium:autoAcceptAlerts": true,
         "appium:language": process.env.IOS_LANGUAGE || "en",
@@ -99,8 +99,8 @@ export const config: WebdriverIO.Config = {
       capabilities: {
         platformName: "iOS",
         "appium:automationName": "XCUITest",
-        "appium:deviceName": "iPhone 16 Pro",
-        "appium:platformVersion": "18.1",
+        "appium:deviceName": "iPhone 15 Pro",
+        "appium:platformVersion": "17.4",
         "appium:app": join(process.cwd(), 'Anytype Dev.app'),
         "appium:autoAcceptAlerts": true,
         "appium:language": process.env.IOS_LANGUAGE || "en",
