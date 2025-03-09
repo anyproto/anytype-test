@@ -50,6 +50,9 @@ jobs:
           xcrun simctl boot "$IPHONE_15_UDID"
           xcrun simctl boot "$IPHONE_15_PRO_UDID"
 
+          xcrun simctl bootstatus "$IPHONE_15_UDID" --fail-on-error
+          xcrun simctl bootstatus "$IPHONE_15_PRO_UDID" --fail-on-error
+        
           # Print UDIDs for debugging
           echo "iPhone 15 UDID: $IPHONE_15_UDID"
           echo "iPhone 15 Pro UDID: $IPHONE_15_PRO_UDID"
@@ -84,11 +87,12 @@ jobs:
 
       - name: Install and launch the .app on simulator
         run: |
+          set -x
           echo "Installing the .app on the simulator..."
           xcrun simctl install "$IPHONE_15_UDID" "./Anytype Dev.app"
 
           echo "Launching the .app on simulator..."
-          xcrun simctl launch "$IPHONE_UDID" "com.anyproto.Anytype-Dev"
+          xcrun simctl launch "$IPHONE_15_UDID" "com.anyproto.Anytype-Dev"
 
           echo "App launched successfully (if you see no errors above)."
 
