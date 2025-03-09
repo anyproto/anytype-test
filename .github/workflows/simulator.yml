@@ -82,6 +82,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install and launch the .app on simulator
+        run: |
+          echo "Installing the .app on the simulator..."
+          xcrun simctl install "$IPHONE_15_UDID" "./Anytype Dev.app"
+
+          echo "Launching the .app on simulator..."
+          xcrun simctl launch "$IPHONE_UDID" "com.anyproto.Anytype-Dev"
+
+          echo "App launched successfully (if you see no errors above)."
+
       - name: Setup Appium
         run: |
           npm install -g appium
