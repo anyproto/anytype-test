@@ -30,31 +30,29 @@ jobs:
 
       - name: Create iOS Simulators
         id: create-simulators
-
-
         run: |
-          # Create iPhone 16 (iOS 18.1)
-          IPHONE_16_UDID=$(xcrun simctl create \
-            "iPhone 16" \
-            "com.apple.CoreSimulator.SimDeviceType.iPhone-16" \
-            "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
+          # Create iPhone 15 (iOS 17.4)
+          IPHONE_15_UDID=$(xcrun simctl create \
+            "iPhone 15" \
+            "com.apple.CoreSimulator.SimDeviceType.iPhone-15" \
+            "com.apple.CoreSimulator.SimRuntime.iOS-17-4")
 
-          # Create iPhone 16 Pro (iOS 18.1)
-          IPHONE_16_PRO_UDID=$(xcrun simctl create \
-            "iPhone 16 Pro" \
-            "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro" \
-            "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
+          # Create iPhone 15 Pro (iOS 17.4)
+          IPHONE_15_PRO_UDID=$(xcrun simctl create \
+            "iPhone 15 Pro" \
+            "com.apple.CoreSimulator.SimDeviceType.iPhone-15-Pro" \
+            "com.apple.CoreSimulator.SimRuntime.iOS-17-4")
 
-          echo "IPHONE_16_UDID=$IPHONE_16_UDID" >> $GITHUB_ENV
-          echo "IPHONE_16_PRO_UDID=$IPHONE_16_PRO_UDID" >> $GITHUB_ENV
+          echo "IPHONE_15_UDID=$IPHONE_15_UDID" >> $GITHUB_ENV
+          echo "IPHONE_15_PRO_UDID=$IPHONE_15_PRO_UDID" >> $GITHUB_ENV
           
           # Boot the simulators
-          xcrun simctl boot "$IPHONE_16_UDID"
-          xcrun simctl boot "$IPHONE_16_PRO_UDID"
+          xcrun simctl boot "$IPHONE_15_UDID"
+          xcrun simctl boot "$IPHONE_15_PRO_UDID"
 
           # Print UDIDs for debugging
-          echo "iPhone 16 UDID: $IPHONE_16_UDID"
-          echo "iPhone 16 Pro UDID: $IPHONE_16_PRO_UDID"
+          echo "iPhone 15 UDID: $IPHONE_15_UDID"
+          echo "iPhone 15 Pro UDID: $IPHONE_15_PRO_UDID"
 
           # Wait a moment for them to finish booting
           sleep 5
@@ -62,12 +60,11 @@ jobs:
           echo "===== Simulators after booting ====="
           xcrun simctl list devices
 
-          echo "Checking the boot state of iPhone 16:"
-          xcrun simctl list devices | grep "$IPHONE_16_UDID" || true
+          echo "Checking the boot state of iPhone 15:"
+          xcrun simctl list devices | grep "$IPHONE_15_UDID" || true
 
-          echo "Checking the boot state of iPhone 16 Pro:"
-          xcrun simctl list devices | grep "$IPHONE_16_PRO_UDID" || true
-
+          echo "Checking the boot state of iPhone 15 Pro:"
+          xcrun simctl list devices | grep "$IPHONE_15_PRO_UDID" || true
 
       - name: Download artifact from direct link (debug)
         run: |
@@ -92,14 +89,13 @@ jobs:
 
       - name: Run Tests
         env:
-          IPHONE_A_UDID: ${{ env.IPHONE_16_UDID }}
-          IPHONE_B_UDID: ${{ env.IPHONE_16_PRO_UDID }}
+          IPHONE_A_UDID: ${{ env.IPHONE_15_UDID }}
+          IPHONE_B_UDID: ${{ env.IPHONE_15_PRO_UDID }}
         run: |
           npm run test:ios
 
-      # 1) Print out the Appium/WDI0 logs so you can see them in the job console
       - name: Show wdio-appium.log
-        if: always()            # ensure this step runs even on failure
+        if: always()
         run: |
           echo "=== wdio-appium.log content ==="
           if [ -f wdio-appium.log ]; then
@@ -108,7 +104,6 @@ jobs:
             echo "No wdio-appium.log found"
           fi
 
-      # 2) Upload logs as an artifact you can download
       - name: Upload logs artifact
         if: always()
         uses: actions/upload-artifact@v4
