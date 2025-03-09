@@ -1,42 +1,98 @@
-name: Create iOS 18.1 Simulators
+name: Test iOS Artifact (Debug)
 
 on:
+  # Use workflow_dispatch so you can manually trigger
   workflow_dispatch:
 
 jobs:
-  create-simulators:
+  run-tests:
     runs-on: macos-latest
 
     steps:
-      - name: Check out repository
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set Xcode version to one that has iOS 18.1
+      - name: Set Xcode version
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          # Adjust if your environment uses a different stable/beta version
           xcode-version: '16.1'
 
-      - name: Print Xcode version
-        run: xcodebuild -version
-
-      - name: List available iOS runtimes and device types
+      - name: Show Xcode version and available runtimes
         run: |
-          echo "===== Available Runtimes ====="
+          echo "Xcode info:"
+          xcodebuild -version
+          echo "Available iOS runtimes:"
           xcrun simctl list runtimes
-          echo "===== Available Device Types ====="
-          xcrun simctl list devicetypes
 
-      - name: Create and boot iOS 18.1 simulators
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Create iOS Simulators
+        id: create-simulators
         run: |
-          # Make sure the device-type IDs match what's actually listed in your environment
-          IPHONE_15_UDID=$(xcrun simctl create "My iPhone 15" "com.apple.CoreSimulator.SimDeviceType.iPhone-15" "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
-          IPHONE_15_PRO_UDID=$(xcrun simctl create "My iPhone 15 Pro" "com.apple.CoreSimulator.SimDeviceType.iPhone-15-Pro" "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
+          # Create iPhone 15 Pro (iOS 18.1)
+          IPHONE_15_PRO_UDID=$(xcrun simctl create \
+            "iPhone 16" \
+            "com.apple.CoreSimulator.SimDeviceType.iPhone-16" \
+            "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
 
-          echo "iPhone 15 UDID: $IPHONE_15_UDID"
-          echo "iPhone 15 Pro UDID: $IPHONE_15_PRO_UDID"
+          # Create iPhone 15 Pro Max (iOS 18.1)
+          IPHONE_15_PRO_MAX_UDID=$(xcrun simctl create \
+            "iPhone 16 Pro" \
+            "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro" \
+            "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
 
-          xcrun simctl boot "$IPHONE_15_UDID"
+          echo "IPHONE_15_PRO_UDID=$IPHONE_15_PRO_UDID" >> $GITHUB_ENV
+          echo "IPHONE_15_PRO_MAX_UDID=$IPHONE_15_PRO_MAX_UDID" >> $GITHUB_ENV
+          
+          # Boot the simulators
           xcrun simctl boot "$IPHONE_15_PRO_UDID"
+          xcrun simctl boot "$IPHONE_15_PRO_MAX_UDID"
 
-          echo "Simulators started successfully."
+          # Print UDIDs for debugging
+          echo "iPhone 15 Pro UDID: $IPHONE_15_PRO_UDID"
+          echo "iPhone 15 Pro Max UDID: $IPHONE_15_PRO_MAX_UDID"
+
+          # Wait a moment for them to finish booting
+          sleep 5
+
+          echo "===== Simulators after booting ====="
+          xcrun simctl list devices
+
+          echo "Checking the boot state of iPhone 15 Pro:"
+          xcrun simctl list devices | grep "$IPHONE_15_PRO_UDID" || true
+
+          echo "Checking the boot state of iPhone 15 Pro Max:"
+          xcrun simctl list devices | grep "$IPHONE_15_PRO_MAX_UDID" || true
+
+      - name: Download artifact from direct link (debug)
+        run: |
+          # This is a hardcoded artifact link from a prior workflow run
+          # Note: Artifacts typically expire after ~90 days, so it won't last forever.
+          echo "Downloading artifact from direct link..."
+          curl -sS -L \
+               -H "Authorization: token ${{ secrets.ANYTYPE_PAT }}" \
+               -H "Accept: application/vnd.github+json" \
+               https://api.github.com/repos/anyproto/anytype-swift/actions/artifacts/2718333893/zip \
+               --output artifact.zip
+
+          unzip artifact.zip
+          echo "Unzipped artifact contents:"
+          ls -la
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Setup Appium
+        run: |
+          npm install -g appium
+          appium &
+
+      - name: Run Tests
+        env:
+          IPHONE_A_UDID: ${{ env.IPHONE_15_PRO_UDID }}
+          IPHONE_B_UDID: ${{ env.IPHONE_15_PRO_MAX_UDID }}
+        run: |
+          npm run test:ios
