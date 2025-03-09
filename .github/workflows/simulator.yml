@@ -30,16 +30,17 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
+        
       - name: Install Appium & Run Appium Doctor
         run: |
-          # Install the Appium CLI globally (includes appium-doctor)
           npm install -g appium
-          # OR, if you prefer, you can explicitly install appium-doctor:
-          # npm install -g appium-doctor
-
+    
+          # Also install appium-doctor explicitly (not automatically included in Appium 2.x)
+          npm install -g appium-doctor
+    
           # Check environment status for iOS, Android, etc.
           appium-doctor --ios
+
 
       - name: Create iOS Simulator
         id: create-simulator
