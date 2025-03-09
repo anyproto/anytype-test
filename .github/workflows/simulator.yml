@@ -1,7 +1,6 @@
 name: Test iOS Artifact (Debug)
 
 on:
-  # Use workflow_dispatch so you can manually trigger
   workflow_dispatch:
 
 jobs:
@@ -32,28 +31,28 @@ jobs:
       - name: Create iOS Simulators
         id: create-simulators
         run: |
-          # Create iPhone 15 Pro (iOS 18.1)
+          # Create iPhone 16 (iOS 18.1)
           IPHONE_15_PRO_UDID=$(xcrun simctl create \
             "iPhone 16" \
             "com.apple.CoreSimulator.SimDeviceType.iPhone-16" \
             "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
 
-          # Create iPhone 15 Pro Max (iOS 18.1)
+          # Create iPhone 16 Pro (iOS 18.1)
           IPHONE_15_PRO_MAX_UDID=$(xcrun simctl create \
             "iPhone 16 Pro" \
             "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro" \
             "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
 
-          echo "IPHONE_15_PRO_UDID=$IPHONE_15_PRO_UDID" >> $GITHUB_ENV
-          echo "IPHONE_15_PRO_MAX_UDID=$IPHONE_15_PRO_MAX_UDID" >> $GITHUB_ENV
+          echo "IPHONE_15_PRO_UDID=$IPHONE_16" >> $GITHUB_ENV
+          echo "IPHONE_15_PRO_MAX_UDID=$IPHONE_16_PRO" >> $GITHUB_ENV
           
           # Boot the simulators
-          xcrun simctl boot "$IPHONE_15_PRO_UDID"
-          xcrun simctl boot "$IPHONE_15_PRO_MAX_UDID"
+          xcrun simctl boot "$IPHONE_16"
+          xcrun simctl boot "$IPHONE_16_PRO"
 
           # Print UDIDs for debugging
-          echo "iPhone 15 Pro UDID: $IPHONE_15_PRO_UDID"
-          echo "iPhone 15 Pro Max UDID: $IPHONE_15_PRO_MAX_UDID"
+          echo "iPhone 16 UDID: $IPHONE_16_UDID"
+          echo "iPhone 15 Pro Max UDID: $IPHONE_16_PRO_UDID"
 
           # Wait a moment for them to finish booting
           sleep 5
@@ -61,11 +60,11 @@ jobs:
           echo "===== Simulators after booting ====="
           xcrun simctl list devices
 
-          echo "Checking the boot state of iPhone 15 Pro:"
-          xcrun simctl list devices | grep "$IPHONE_15_PRO_UDID" || true
+          echo "Checking the boot state of iPhone 16:"
+          xcrun simctl list devices | grep "$IPHONE_16_UDID" || true
 
-          echo "Checking the boot state of iPhone 15 Pro Max:"
-          xcrun simctl list devices | grep "$IPHONE_15_PRO_MAX_UDID" || true
+          echo "Checking the boot state of iPhone 16 Pro:"
+          xcrun simctl list devices | grep "$IPHONE_16_PRO_UDID" || true
 
       - name: Download artifact from direct link (debug)
         run: |
@@ -92,7 +91,7 @@ jobs:
 
       - name: Run Tests
         env:
-          IPHONE_A_UDID: ${{ env.IPHONE_15_PRO_UDID }}
-          IPHONE_B_UDID: ${{ env.IPHONE_15_PRO_MAX_UDID }}
+          IPHONE_A_UDID: ${{ env.IPHONE_16_UDID }}
+          IPHONE_B_UDID: ${{ env.IPHONE_16_PRO_UDID }}
         run: |
           npm run test:ios
