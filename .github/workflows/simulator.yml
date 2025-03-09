@@ -92,7 +92,7 @@ jobs:
           xcrun simctl install "$IPHONE_15_UDID" "./Anytype Dev.app"
 
           echo "Launching the .app on simulator..."
-          xcrun simctl launch "$IPHONE_15_UDID" "com.anyproto.Anytype-Dev"
+          xcrun simctl launch "$IPHONE_15_UDID" "io.anytype.app.dev"
 
           echo "App launched successfully (if you see no errors above)."
 
