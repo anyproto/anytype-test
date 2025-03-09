@@ -40,7 +40,7 @@ jobs:
             "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
 
           # Create iPhone 15 Pro Max (iOS 18.1)
-          IPHONE_15_PRO_MAX_UDID=$(xcrun simctl.create \
+          IPHONE_15_PRO_MAX_UDID=$(xcrun simctl create \
             "iPhone 16 Pro" \
             "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro" \
             "com.apple.CoreSimulator.SimRuntime.iOS-18-1")
