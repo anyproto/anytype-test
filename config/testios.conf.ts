@@ -40,7 +40,7 @@ export const config = {
     // ===========
     // WebdriverIO
     // ===========
-    logLevel: 'info',
+    logLevel: 'debug',
     baseUrl: 'http://localhost',
     waitforTimeout: 10000,
   

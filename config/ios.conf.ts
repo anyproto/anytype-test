@@ -6,6 +6,7 @@ import { spawn } from "child_process";
 import { promisify } from "util";
 import { exec as exec } from "child_process";
 import { TimelineService } from "wdio-timeline-reporter";
+import { remote } from "webdriverio";
 
 // Add this at the top of the file to store FFmpeg processes
 const ffmpegProcesses: { [key: string]: any } = {};
@@ -83,7 +84,7 @@ export const config: WebdriverIO.Config = {
         "appium:automationName": "XCUITest",
         "appium:deviceName": "iPhone 15",
         "appium:platformVersion": "17.4",
-        "appium:app": join(process.cwd(), 'Anytype Dev.app'),
+        "appium:app": './Anytype Dev.app',
         "appium:autoAcceptAlerts": true,
         "appium:language": process.env.IOS_LANGUAGE || "en",
         "appium:udid": process.env.IPHONE_A_UDID || "E448B4C9-48F4-467B-AE1D-5D440A6760C5",
@@ -92,7 +93,7 @@ export const config: WebdriverIO.Config = {
         "appium:simpleIsVisibleCheck": true,
         "appium:showXcodeLog": true,
         'appium:newCommandTimeout': 300,
-        'appium:connectionTimeout': 60000
+        'appium:connectionTimeout': 180000
       },
     },
     UserB: {
@@ -101,7 +102,7 @@ export const config: WebdriverIO.Config = {
         "appium:automationName": "XCUITest",
         "appium:deviceName": "iPhone 15 Pro",
         "appium:platformVersion": "17.4",
-        "appium:app": join(process.cwd(), 'Anytype Dev.app'),
+        "appium:app": './Anytype Dev.app',
         "appium:autoAcceptAlerts": true,
         "appium:language": process.env.IOS_LANGUAGE || "en",
         "appium:udid": process.env.IPHONE_B_UDID || "CF76C796-DB3A-4A51-B52F-340201F8D980",
@@ -110,7 +111,7 @@ export const config: WebdriverIO.Config = {
         "appium:simpleIsVisibleCheck": true,
         "appium:showXcodeLog": true,
         'appium:newCommandTimeout': 300,
-        'appium:connectionTimeout': 60000
+        'appium:connectionTimeout': 180000
       },
     },
   },
@@ -162,7 +163,7 @@ export const config: WebdriverIO.Config = {
   //
   // Default timeout in milliseconds for request
   // if browser driver or grid doesn't send response
-  connectionRetryTimeout: 120000,
+  connectionRetryTimeout: 200000,
   //
   // Default request retries count
   connectionRetryCount: 3,
