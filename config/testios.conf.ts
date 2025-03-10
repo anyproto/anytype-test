@@ -66,7 +66,24 @@ export const config = {
     //     },
     //   ],
     // ],
-  
+    services: [
+        [
+          "appium",
+          {
+            args: {
+              address: "localhost",
+              port: 4723,
+              relaxedSecurity: true,
+              "base-path": "",
+              "allow-insecure": ["adb_shell"],
+              "session-override": true,
+            },
+            command: "appium",
+            logPath: "./",
+          },
+        ],
+        // [TimelineService],
+      ],
     //
     // ============
     // Test Framework
