@@ -106,7 +106,7 @@ jobs:
           IPHONE_A_UDID: ${{ env.IPHONE_15_UDID }}
           IPHONE_B_UDID: ${{ env.IPHONE_15_PRO_UDID }}
         run: |
-          wdio run ./config/testios.conf.ts --tags @smoke
+          npm run test:testios:smoke
 
       - name: Show wdio-appium.log
         if: always()
