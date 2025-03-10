@@ -99,7 +99,7 @@ jobs:
       - name: Setup Appium
         run: |
           npm install -g appium
-          # appium &
+          appium &
 
       - name: Run Tests
         env:
