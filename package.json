@@ -15,7 +15,8 @@
     "test:smoke:testomatio": "cucumber-js -p api --tags @smoke --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
     "test:comp:testomatio": "cucumber-js -p api --tags @compatibility --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
     "test:ios": "wdio run ./config/ios.conf.ts",
-    "test:ios:smoke": "wdio run ./config/ios.conf.ts -- --tags @smoke"
+    "test:ios:smoke": "wdio run ./config/ios.conf.ts --tags @smoke",
+    "test:testios:smoke": "wdio run ./config/testios.conf.ts --tags @smoke"
   },
   "repository": {
     "type": "git",
