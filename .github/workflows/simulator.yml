@@ -98,7 +98,7 @@ jobs:
 
       - name: Setup Appium
         run: |
-          npm install -g appium
+          npm install -g appium@2.12.0
           appium &
 
       - name: Run Tests
