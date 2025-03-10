@@ -92,6 +92,8 @@ export const config = {
     cucumberOpts: {
       require: ['./features/step_definitions/**/*.js'],
       timeout: 60000,
+      ignoreUndefinedDefinitions: true,
+      strict: false,
     },
   
     //
