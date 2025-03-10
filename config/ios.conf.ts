@@ -124,14 +124,14 @@ export const config: WebdriverIO.Config = {
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
   logLevels: {
-    webdriver: "debug",
-    webdriverio: "debug",
-    "@wdio/local-runner": "debug",
+    webdriver: "trace",
+    webdriverio: "trace",
+    "@wdio/local-runner": "trace",
     "@wdio/cli": "debug",
-    appium: "debug",
+    appium: "trace",
     custom: "info",
     "@wdio/cucumber-framework": "debug",
-    "@wdio/appium-service": "debug",
+    "@wdio/appium-service": "trace",
   },
   //
   // Set specific log levels per logger
