@@ -8,6 +8,7 @@ import { exec as exec } from "child_process";
 import { TimelineService } from "wdio-timeline-reporter";
 import { remote } from "webdriverio";
 
+
 // Add this at the top of the file to store FFmpeg processes
 const ffmpegProcesses: { [key: string]: any } = {};
 
@@ -17,10 +18,10 @@ export const config: WebdriverIO.Config = {
   // Runner Configuration
   // ====================
   // WebdriverIO supports running e2e tests as well as unit and component tests.
-  runner: "local",
-  tsConfigPath: "./tsconfig.json",
-  port: 4723,
-  path: "/",
+  // runner: "local",
+  // tsConfigPath: "./tsconfig.json",
+  // port: 4723,
+  // path: "/",
   //
   // ==================
   // Specify Test Files
@@ -89,12 +90,10 @@ export const config: WebdriverIO.Config = {
         "appium:language": process.env.IOS_LANGUAGE || "en",
         "appium:udid": process.env.IPHONE_A_UDID || "E448B4C9-48F4-467B-AE1D-5D440A6760C5",
         "appium:wdaLocalPort": 8100,
-        "appium:realDeviceScreenshotter": true,
         "appium:simpleIsVisibleCheck": true,
         "appium:showXcodeLog": true,
         'appium:newCommandTimeout': 300,
-        'appium:connectionTimeout': 180000
-      },
+      }
     },
     UserB: {
       capabilities: {
@@ -112,8 +111,8 @@ export const config: WebdriverIO.Config = {
         "appium:showXcodeLog": true,
         'appium:newCommandTimeout': 300,
         'appium:connectionTimeout': 180000
-      },
-    },
+      }
+    }
   },
 
   //
