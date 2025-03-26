@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test:api": "cucumber-js -p api",
-    "test:desktop": "cucumber-js -p desktop",
+    "test:desktop": "npx playwright test --config config/desktop.config.ts",
     "test:e2e": "cucumber-js -p api --tags @e2e",
     "test:comp": "cucumber-js -p api --tags @compatibility",
     "test:invite": "cucumber-js -p api --tags @invite",
@@ -14,8 +14,7 @@
     "test:local:testomatio": "cucumber-js -p api --tags @local --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
     "test:smoke:testomatio": "cucumber-js -p api --tags @smoke --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
     "test:comp:testomatio": "cucumber-js -p api --tags @compatibility --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
-    "test:ios": "wdio run ./config/ios.conf.ts",
-    "test:ios:smoke": "wdio run ./config/ios.conf.ts --tags @smoke",
+    "test:ios": "wdio run ./config/ios.conf.ts --cucumberOpts.tagExpression",
     "test:testios:smoke": "wdio run ./config/testios.conf.ts --tags @smoke"
   },
   "repository": {
@@ -35,7 +34,7 @@
     "@faker-js/faker": "^8.4.1",
     "@grpc/grpc-js": "^1.10.10",
     "@origranot/ts-logger": "^1.12.0",
-    "@playwright/test": "^1.47.2",
+    "@playwright/test": "^1.51.1",
     "@testing-library/webdriverio": "^3.2.1",
     "@testomatio/reporter": "github:anshamray/reporter#fix-slack",
     "@types/jest": "^29.5.12",
@@ -52,7 +51,7 @@
     "axios": "^1.7.4",
     "bip39": "^3.1.0",
     "electron-playwright-helpers": "^1.7.1",
-    "playwright": "^1.46.1",
+    "playwright": "^1.51.1",
     "ts-jest": "^29.2.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3",

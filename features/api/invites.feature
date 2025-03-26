@@ -141,7 +141,7 @@ Feature: Invites
     And both accounts are deleted
     And both servers are stopped
 
-  @Td75a5aab
+  @Td75a5aab @smoke
   Scenario: Owner deletes a space
     Given the user creates an object 1 in the account
     And the user can open the object 1
@@ -158,7 +158,7 @@ Feature: Invites
     And both accounts are deleted
     And both servers are stopped
 
-  @Tea501913
+  @Tae501913 @smoke
   Scenario: Owner approves leave request
     Given the user creates an object 1 in the account
     And the user can open the object 1
