@@ -1,6 +1,5 @@
 import { test } from "@playwright/test";
-import { ElectronApplication, Page, _electron as electron } from "playwright";
-import { launchElectronApp, loadTranslations, delay, setupTestContext } from './setup/helpers';
+import { delay, setupTestContext } from './setup/helpers';
 import { page, storage, translations } from './globals';
 
 

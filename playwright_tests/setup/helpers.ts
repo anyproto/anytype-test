@@ -26,7 +26,10 @@ export function loadTranslations() {
 }
 
 export async function launchElectronApp(): Promise<ElectronApplication> {
-	const electronAppPath = process.env.ELECTRON_APP_PATH || "/your/path/Anytype.app";
+	const electronAppPath = process.env.ELECTRON_APP_PATH;
+	if (!electronAppPath) {
+		throw new Error('ELECTRON_APP_PATH environment variable is not defined. This is required for running e2e tests.');
+	}
 	const appInfo = parseElectronApp(electronAppPath);
 	process.env.CI = "e2e";
 
@@ -59,12 +62,38 @@ export async function launchElectronApp(): Promise<ElectronApplication> {
 }
 
 export async function setupTestContext() {
-	const app = await launchElectronApp();
-	setElectronApp(app);
-	setTranslations(loadTranslations());
-	const win = await app.firstWindow();
-	setPage(win);
-	return { app, win };
+	console.log('Starting test context setup...');
+	try {
+		// Launch the Electron application and get the app instance
+		console.log('Launching Electron app...');
+		const app = await launchElectronApp();
+		console.log('Electron app launched successfully');
+
+		// Store the app instance in a global variable for access across tests
+		console.log('Setting up global app instance...');
+		setElectronApp(app);
+
+		// Load and set translations from the specified language file
+		console.log('Loading translations...');
+		const translations = loadTranslations();
+		console.log('Translations loaded:', Object.keys(translations).length, 'keys found');
+		setTranslations(translations);
+
+		// Get the first/main window of the application
+		console.log('Waiting for first window...');
+		const win = await app.firstWindow();
+		console.log('First window acquired');
+
+		// Store the main window's page object in a global variable for access across tests
+		console.log('Setting up global page instance...');
+		setPage(win);
+
+		console.log('Test context setup completed successfully');
+		return { app, win };
+	} catch (error) {
+		console.error('Error during test context setup:', error);
+		throw error;
+	}
 }
 
 export async function createAccount(name: string = "Friedolin") {
