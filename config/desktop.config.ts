@@ -1,14 +1,15 @@
 import { PlaywrightTestConfig } from '@playwright/test';
 import path from 'path';
-import fs from 'fs';
-import crypto from 'crypto';
 
 /**
  * TODO: remove `defaultAppPath` and rely fully on an environment variable in the future.
  */
-const DEFAULT_APP_PATH = '/Users/shamray/workspace/anytype/anytype-ts';
-const APP_DIRECTORY = process.env.ANYTYPE_APP_DIR || DEFAULT_APP_PATH;
-const CONFIG_PATH = process.env.CONFIG_PATH || './config.yml';
+const APP_DIRECTORY = process.env.ANYTYPE_APP_DIR;
+const CONFIG_PATH = process.env.CONFIG_PATH || './myDocker.yml';
+
+if (!APP_DIRECTORY) {
+  throw new Error('ANYTYPE_APP_DIR environment variable is not defined. This is required for running e2e tests.');
+}
 
 function getSystemSpecificPath(): string {
   const system = process.env.SYSTEM_TYPE?.toUpperCase() || 'MAC-ARM';
@@ -23,24 +24,6 @@ function getSystemSpecificPath(): string {
 
   return paths[system] || paths['MAC-ARM'];
 }
-
-// Create a temporary directory in the project root
-const TMP_DIR = path.join(__dirname, '..', 'tmp');
-console.log('Checking if TMP_DIR exists:', TMP_DIR);
-if (!fs.existsSync(TMP_DIR)) {
-  console.log('Creating TMP_DIR...');
-  fs.mkdirSync(TMP_DIR);
-}
-
-const randomDirName = crypto.randomBytes(8).toString('hex');
-console.log('Generated random directory name:', randomDirName);
-const testDataPath = path.join(TMP_DIR, randomDirName);
-console.log('Attempting to create directory at:', testDataPath);
-fs.mkdirSync(testDataPath);
-console.log('Successfully created test data directory');
-
-// Store the new test data path in an environment variable
-process.env.DATA_PATH = testDataPath;
 
 /**
  * Centralized path configurations used throughout the tests.
