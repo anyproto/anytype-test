@@ -124,7 +124,10 @@ export async function setupTestContext() {
 		// Store the main window's page object in a global variable for access across tests
 		console.log('Setting up global page instance...');
 		setPage(win);
-
+		
+		// Ensure we're logged out before starting tests
+		console.log('Checking login state... and logging out if needed');
+		await logOutIfNeeded();
 		console.log('Test context setup completed successfully');
 		return { app, win };
 	} catch (error) {
@@ -133,11 +136,16 @@ export async function setupTestContext() {
 	}
 }
 
-export async function createAccount(name: string = "Friedolin") {
+export async function logOutIfNeeded() {
+
     if (!isOnLoginScreen()) {
+        console.log('We are not on the login screen, logging out...');
         await delay(2000);
         await logOut();
      }
+}
+
+export async function createAccount(name: string = "Friedolin") {
     await page.getByText(translations.authSelectSignup).click();
     await page.getByText(translations.authOnboardPhraseSubmit).click();
     await delay(2000);
@@ -156,18 +164,36 @@ export async function logOut() {
 
 export async function isOnLoginScreen(): Promise<boolean> {
     try {
-        // Check for the presence of login-specific elements
-        const loginElements = await Promise.all([
-            page.locator('div.label.disclaimer[data-content="' + translations.authDisclaimer + '"]').count(),
-            page.locator(`div.txt:has-text("${translations.authSelectLogin}")`).count(),
-            page.locator(`div.txt:has-text("${translations.authSelectSignup}")`).count()
+        console.log('\n=== Login Screen Check ===');
+        
+        // Use simpler, more robust selectors
+        const disclaimerSelector = 'div.label.disclaimer';
+        const loginSelector = `div.txt:has-text("${translations.authSelectLogin}")`;
+        const signupSelector = `div.txt:has-text("${translations.authSelectSignup}")`;
+        
+        console.log('Checking selectors:');
+        console.log('Disclaimer:', disclaimerSelector);
+        console.log('Login:', loginSelector);
+        console.log('Signup:', signupSelector);
+
+        await delay(1000);
+
+        const [disclaimerCount, loginCount, signupCount] = await Promise.all([
+            page.locator(disclaimerSelector).count(),
+            page.locator(loginSelector).count(),
+            page.locator(signupSelector).count()
         ]);
-        // All elements should be present (count > 0 for each)
-        return loginElements.every(count => count > 0);
+
+        console.log(`Results:
+        Disclaimer count: ${disclaimerCount}
+        Login count: ${loginCount}
+        Signup count: ${signupCount}`);
+
+        const isLoginScreen = disclaimerCount > 0 && loginCount > 0 && signupCount > 0;
+        console.log(`Is on login screen: ${isLoginScreen}`);
+        return isLoginScreen;
     } catch (error) {
         console.error('Error checking login screen:', error);
         return false;
     }
 }
-
-
