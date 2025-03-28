@@ -2,7 +2,8 @@ import { ElectronApplication, _electron as electron } from 'playwright';
 import * as fs from 'fs';
 import * as path from 'path';
 import { parseElectronApp } from 'electron-playwright-helpers';
-import { setElectronApp, setPage, setTranslations } from '../globals';
+import { page, setElectronApp, setPage, setTranslations, translations } from '../globals';
+import crypto from 'crypto';
 
 export const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -31,6 +32,7 @@ export async function launchElectronApp(): Promise<ElectronApplication> {
 		throw new Error('ELECTRON_APP_PATH environment variable is not defined. This is required for running e2e tests.');
 	}
 	const appInfo = parseElectronApp(electronAppPath);
+    console.log(appInfo);
 	process.env.CI = "e2e";
 
 	// Debug logging for language files
@@ -54,16 +56,51 @@ export async function launchElectronApp(): Promise<ElectronApplication> {
 			console.error(error);
 		});
 		page.on("console", (msg) => {
-			console.log('\x1b[34m%s\x1b[0m', msg.text());
+			try {
+				const text = msg.text();
+				// Try to parse any potential JSON in the message
+				const parsed = text.replace(/%c/g, '').split(' ').map(part => {
+					try {
+						return JSON.parse(part);
+					} catch {
+						return part;
+					}
+				}).join(' ');
+				console.log('\x1b[34m%s\x1b[0m', parsed);
+			} catch (error) {
+				// Fallback to original message if parsing fails
+				console.log('\x1b[34m%s\x1b[0m', msg.text());
+			}
 		});
 	});
 
 	return app;
 }
 
+export function createTestDataDir(): string {
+	const TMP_DIR = path.join(process.cwd(), 'tmp');
+	if (!fs.existsSync(TMP_DIR)) {
+		console.log('Creating TMP_DIR...');
+		fs.mkdirSync(TMP_DIR);
+	}
+
+	const randomDirName = crypto.randomBytes(8).toString('hex');
+	console.log('Generated random directory name:', randomDirName);
+	const testDataPath = path.join(TMP_DIR, randomDirName);
+	console.log('Attempting to create directory at:', testDataPath);
+	fs.mkdirSync(testDataPath);
+	console.log('Successfully created test data directory');
+
+	process.env.DATA_PATH = testDataPath;
+	return testDataPath;
+}
+
 export async function setupTestContext() {
 	console.log('Starting test context setup...');
 	try {
+		// Create a new test data directory for this test run
+		createTestDataDir();
+
 		// Launch the Electron application and get the app instance
 		console.log('Launching Electron app...');
 		const app = await launchElectronApp();
@@ -97,8 +134,10 @@ export async function setupTestContext() {
 }
 
 export async function createAccount(name: string = "Friedolin") {
-    const { page, translations } = await import('../globals');
-    
+    if (!isOnLoginScreen()) {
+        await delay(2000);
+        await logOut();
+     }
     await page.getByText(translations.authSelectSignup).click();
     await page.getByText(translations.authOnboardPhraseSubmit).click();
     await delay(2000);
@@ -108,3 +147,27 @@ export async function createAccount(name: string = "Friedolin") {
     await delay(2000);
     await page.getByText(translations.commonDone).click();
 }
+
+export async function logOut() {
+    await page.locator('div#item-settings.item.isButton.settings').click();
+	await page.click(`div.logout`);
+	await page.getByText(translations.popupLogoutLogoutButton).click();
+}
+
+export async function isOnLoginScreen(): Promise<boolean> {
+    try {
+        // Check for the presence of login-specific elements
+        const loginElements = await Promise.all([
+            page.locator('div.label.disclaimer[data-content="' + translations.authDisclaimer + '"]').count(),
+            page.locator(`div.txt:has-text("${translations.authSelectLogin}")`).count(),
+            page.locator(`div.txt:has-text("${translations.authSelectSignup}")`).count()
+        ]);
+        // All elements should be present (count > 0 for each)
+        return loginElements.every(count => count > 0);
+    } catch (error) {
+        console.error('Error checking login screen:', error);
+        return false;
+    }
+}
+
+
