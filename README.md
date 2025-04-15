@@ -109,20 +109,8 @@ This repository contains tests for three main platforms, each with its own techn
 API tests use Cucumber and communicate with the Anytype-heart middleware via gRPC. Run them with:
 
 ```bash
-# Run all API tests
-npm run test:api
-
-# Run end-to-end tests
-npm run test:e2e
-
 # Run compatibility tests
 npm run test:comp
-
-# Run invite tests
-npm run test:invite
-
-# Run sync tests
-npm run test:sync
 
 # Run smoke tests
 npm run test:smoke
