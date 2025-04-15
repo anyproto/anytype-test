@@ -13,9 +13,13 @@ Welcome to the **Test Repository for Anytype**. This repository is used to manag
   - [Run tests](#run-tests)
     - [API Tests](#api-tests)
     - [Desktop Tests](#desktop-tests)
+    - [iOS Tests](#ios-tests)
     - [Anytype-heart compatibility tests](#anytype-heart-compatibility-tests)
       - [Running Tests with Local Middleware](#running-tests-with-local-middleware)
-    - [iOS Tests](#ios-tests)
+  - [iOS Test Setup](#ios-test-setup)
+    - [Prerequisites](#prerequisites-1)
+    - [Environment Configuration](#environment-configuration)
+    - [Running on Physical Devices](#running-on-physical-devices)
   - [Writing New Tests](#writing-new-tests)
     - [API Tests with Cucumber](#api-tests-with-cucumber)
       - [API Feature Files](#api-feature-files)
@@ -125,7 +129,33 @@ Desktop tests use Playwright to test the Electron app. Run them with:
 npm run test:desktop
 ```
 
+### iOS Tests
+
+iOS tests use WebdriverIO with Appium to test the iOS application. Before running, make sure you've set up the required environment variables:
+
+```bash
+# Set the path to your iOS app
+export IOS_APP_PATH="/path/to/your/Anytype Dev.app"
+
+# Set the UDIDs for your test devices
+export IPHONE_A_UDID="your-first-device-udid"
+export IPHONE_B_UDID="your-second-device-udid"
+```
+
+Then run the tests with:
+
+```bash
+# Run all iOS tests
+npm run test:ios
+
+# Run iOS smoke tests
+npm run test:testios:smoke
+```
+
+For detailed iOS setup instructions, see the [iOS Test Setup](#ios-test-setup) section.
+
 ### Anytype-heart compatibility tests
+
 To test the compatibility of the latest 3 Anytype-heart versions, run the bash script first to populate the test scripts with versions and download them:
 ```bash
 ./getHearts.sh <macos|ubuntu|windows> <arm64|amd64>
@@ -168,54 +198,59 @@ To run tests using the local middleware, follow these steps:
 
    When using the "default" version, navigate to the anytype-heart repository and follow the setup and build instructions provided in its README file.
 
-### iOS Tests
+## iOS Test Setup
 
-To run tests for iOS applications, follow these steps:
+### Prerequisites
 
-1. **Prerequisites for iOS Testing:**
-   - macOS operating system
-   - Xcode installed with iOS simulators
-   - Valid Apple Developer account (for testing on real devices)
+For running iOS tests, you need:
 
-2. **Environment Setup:**
-   - If you encounter "simctl is not in path" error, add Xcode developer tools to your PATH:
-     ```bash
-     # Add this to your ~/.zshrc or ~/.bash_profile
-     export PATH=$PATH:/Applications/Xcode.app/Contents/Developer/usr/bin
-     
-     # Then reload your shell configuration
-     source ~/.zshrc  # or source ~/.bash_profile
-     ```
-   - Set up the required environment variables for device identification:
-     ```bash
-     # For simulator testing, set the UDIDs of your test devices
-     export IPHONE_A_UDID="your-first-device-udid"  # e.g., "CF76C796-DB3A-4A51-B52F-340201F8D980"
-     export IPHONE_B_UDID="your-second-device-udid" # e.g., "556B179D-A81B-4367-91F4-FD1361A45935"
-     ```
-   - To get the UDID of your simulators, run:
-     ```bash
-     xcrun simctl list devices
-     ```
+- macOS operating system
+- Xcode installed with iOS simulators
+- Valid Apple Developer account (for testing on real devices)
 
-3. **Setup iOS Test Environment:**
+### Environment Configuration
+
+1. **Add Xcode tools to your PATH**:
+   If you encounter "simctl is not in path" error, add Xcode developer tools to your PATH:
+   ```bash
+   # Add this to your ~/.zshrc or ~/.bash_profile
+   export PATH=$PATH:/Applications/Xcode.app/Contents/Developer/usr/bin
+   
+   # Then reload your shell configuration
+   source ~/.zshrc  # or source ~/.bash_profile
+   ```
+
+2. **Set up the required environment variables**:
+   ```bash
+   # Specify the path to your iOS app
+   export IOS_APP_PATH="/path/to/your/Anytype Dev.app"
+   
+   # For simulator testing, set the UDIDs of your test devices
+   export IPHONE_A_UDID="your-first-device-udid"  # e.g., "CF76C796-DB3A-4A51-B52F-340201F8D980"
+   export IPHONE_B_UDID="your-second-device-udid" # e.g., "556B179D-A81B-4367-91F4-FD1361A45935"
+   
+   # Optionally, set the language for testing
+   export IOS_LANGUAGE="en"
+   ```
+
+3. **Get the UDID of your simulators**:
    ```bash
    xcrun simctl list devices
    ```
 
-4. **Run iOS Tests:**
+4. **Prepare your test environment**:
    ```bash
-   npm run test:ios
+   xcrun simctl list devices
    ```
 
-   This will execute the test suite on the default iOS simulator. To specify a particular device or iOS version:
-   ```bash
-   npm run test:ios -- --device="iPhone 14"
-   ```
+### Running on Physical Devices
 
-5. **Running Tests on Physical Devices:**
-   - Connect your iOS device via USB
-   - Trust the development computer on your iOS device
-   - Ensure your device is listed in Xcode
+To run tests on physical iOS devices:
+
+1. Connect your iOS device via USB
+2. Trust the development computer on your iOS device
+3. Ensure your device is listed in Xcode
+4. Run with the physical device parameter:
    ```bash
    npm run test:ios -- --device=physical
    ```
