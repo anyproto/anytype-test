@@ -16,9 +16,12 @@ Welcome to the **Test Repository for Anytype**. This repository is used to manag
     - [iOS Tests](#ios-tests)
     - [Anytype-heart compatibility tests](#anytype-heart-compatibility-tests)
       - [Running Tests with Local Middleware](#running-tests-with-local-middleware)
+  - [Desktop Test Setup](#desktop-test-setup)
+    - [Environment Configuration](#environment-configuration)
+    - [Test Process](#test-process)
   - [iOS Test Setup](#ios-test-setup)
     - [Prerequisites](#prerequisites-1)
-    - [Environment Configuration](#environment-configuration)
+    - [Environment Configuration](#environment-configuration-1)
     - [Running on Physical Devices](#running-on-physical-devices)
   - [Writing New Tests](#writing-new-tests)
     - [API Tests with Cucumber](#api-tests-with-cucumber)
@@ -122,12 +125,24 @@ npm run test:smoke
 
 ### Desktop Tests
 
-Desktop tests use Playwright to test the Electron app. Run them with:
+Desktop tests use Playwright to test the Electron app. Before running, make sure you've set up the required environment variables:
+
+```bash
+# Set the path to your Electron app
+export ELECTRON_APP_PATH="/path/to/your/Anytype.app"
+
+# Set the path to language files for translations
+export LANG_FILES_PATH="/path/to/your/translations.json"
+```
+
+Then run the tests with:
 
 ```bash
 # Run desktop tests
 npm run test:desktop
 ```
+
+For detailed desktop setup instructions, see the [Desktop Test Setup](#desktop-test-setup) section.
 
 ### iOS Tests
 
@@ -197,6 +212,34 @@ To run tests using the local middleware, follow these steps:
 3. **Follow the Instructions for `anytype-heart` (for "default" version only):**
 
    When using the "default" version, navigate to the anytype-heart repository and follow the setup and build instructions provided in its README file.
+
+## Desktop Test Setup
+
+### Environment Configuration
+
+Desktop tests require the following environment variables to be set:
+
+```bash
+# Path to the Electron app to test
+export ELECTRON_APP_PATH="/path/to/your/Anytype.app"
+
+# Path to the language files for translations
+export LANG_FILES_PATH="/path/to/your/translations.json"
+```
+
+These environment variables are essential for the Playwright tests to locate and launch the Electron application correctly, and to load the necessary translations for test assertions.
+
+### Test Process
+
+When running desktop tests, the test framework:
+
+1. Creates a temporary directory for test data in the `tmp/` folder
+2. Launches the Electron application specified in `ELECTRON_APP_PATH`
+3. Loads translations from the file specified in `LANG_FILES_PATH`
+4. Logs out if already logged in (to ensure a clean state)
+5. Runs the specified tests
+
+Each test run uses a unique data directory to maintain isolation between test runs. This helps prevent test interference and ensures reproducible results.
 
 ## iOS Test Setup
 
