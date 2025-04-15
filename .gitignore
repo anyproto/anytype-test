@@ -4,13 +4,13 @@ heartsFolder
 config.yml
 myDocker.yml
 results/*
+!results/
+!results/screenshots/
 test-results/*
 # Ignore everything in the tmp folder
 tmp/*
 # Except for the tmp directory itself
 !tmp/
-screenshots/*
-!screenshots/
 mw/*
 !mw/.gitkeep
 # Log files
@@ -20,7 +20,5 @@ mw/*
 # IDE files
 .vscode/
 .idea/
-screenshots/*
-!screenshots/
 test-results/*
 !test-results/
