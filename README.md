@@ -11,14 +11,18 @@ Welcome to the **Test Repository for Anytype**. This repository is used to manag
   - [Project Structure](#project-structure)
   - [Testing Platforms and Tech Stack](#testing-platforms-and-tech-stack)
   - [Run tests](#run-tests)
-    - [API and Desktop Tests](#api-and-desktop-tests)
+    - [API Tests](#api-tests)
+    - [Desktop Tests](#desktop-tests)
     - [Anytype-heart compatibility tests](#anytype-heart-compatibility-tests)
       - [Running Tests with Local Middleware](#running-tests-with-local-middleware)
     - [iOS Tests](#ios-tests)
   - [Writing New Tests](#writing-new-tests)
-    - [API and iOS Tests with Cucumber](#api-and-ios-tests-with-cucumber)
-      - [Cucumber Feature Files](#cucumber-feature-files)
-      - [Step Definitions](#step-definitions)
+    - [API Tests with Cucumber](#api-tests-with-cucumber)
+      - [API Feature Files](#api-feature-files)
+      - [API Step Definitions](#api-step-definitions)
+    - [iOS Tests with Cucumber and Appium](#ios-tests-with-cucumber-and-appium)
+      - [iOS Feature Files](#ios-feature-files)
+      - [iOS Step Definitions](#ios-step-definitions)
     - [Desktop Tests with Playwright](#desktop-tests-with-playwright)
   - [Maintenance](#maintenance)
     - [Adding New Heart Versions](#adding-new-heart-versions)
@@ -100,25 +104,37 @@ This repository contains tests for three main platforms, each with its own techn
 
 ## Run tests
 
-### API and Desktop Tests
+### API Tests
 
-The project offers several test commands:
+API tests use Cucumber and communicate with the Anytype-heart middleware via gRPC. Run them with:
 
 ```bash
-# Run API tests
+# Run all API tests
 npm run test:api
-
-# Run desktop tests with Playwright
-npm run test:desktop
 
 # Run end-to-end tests
 npm run test:e2e
 
-# Run smoke tests
-npm run test:smoke
+# Run compatibility tests
+npm run test:comp
+
+# Run invite tests
+npm run test:invite
 
 # Run sync tests
 npm run test:sync
+
+# Run smoke tests
+npm run test:smoke
+```
+
+### Desktop Tests
+
+Desktop tests use Playwright to test the Electron app. Run them with:
+
+```bash
+# Run desktop tests
+npm run test:desktop
 ```
 
 ### Anytype-heart compatibility tests
@@ -137,10 +153,10 @@ To run tests using the local middleware, follow these steps:
 
 1. **Set the Version in the .feature File:**
 
-  In the .feature file, you can set the version variable in the Scenario Outline or Server Test Step:
+   In the .feature file, you can set the version variable in the Scenario Outline or Server Test Step:
   
-  - Use `"default"` to use the local middleware built with Go
-  - Use a specific version like `"v0.38.0"` to use that particular version of the heart middleware
+   - Use `"default"` to use the local middleware built with Go
+   - Use a specific version like `"v0.38.0"` to use that particular version of the heart middleware
 
    For example, you can set the versions like this:
    ```bash
@@ -152,14 +168,15 @@ To run tests using the local middleware, follow these steps:
    ```bash
    Given the server "v0.38.0" 1 is running
    ```
-   2. **Clone the `anytype-heart` Repository (for "default" version only):**
+
+2. **Clone the `anytype-heart` Repository (for "default" version only):**
 
    If using the "default" version, clone the anytype-heart repository into the anytype-test/mw folder:
    ```bash
    git clone https://github.com/anyproto/anytype-heart.git anytype-test/mw/anytype-heart
    ```
    
-1. **Follow the Instructions for `anytype-heart` (for "default" version only):**
+3. **Follow the Instructions for `anytype-heart` (for "default" version only):**
 
    When using the "default" version, navigate to the anytype-heart repository and follow the setup and build instructions provided in its README file.
 
@@ -221,77 +238,101 @@ Note: Make sure your iOS app is properly configured with the correct provisionin
 
 The approach to writing tests varies depending on the platform you're targeting:
 
-### API and iOS Tests with Cucumber
+### API Tests with Cucumber
 
-API and iOS tests use Cucumber's Behavior-Driven Development (BDD) approach:
+API tests use Cucumber's Behavior-Driven Development (BDD) approach and communicate with the Anytype-heart middleware via gRPC:
 
-#### Cucumber Feature Files
+#### API Feature Files
 
-New tests are written using Cucumber's Gherkin syntax in `.feature` files. These files should be placed in the appropriate subdirectory:
+API tests are written using Cucumber's Gherkin syntax in `.feature` files located in the `features/api/` directory.
 
-- API tests: `features/api/`
-- iOS tests: `features/ios/`
-
-Example feature file structure:
+Example API feature file:
 
 ```gherkin
-@tag
-Feature: Feature name
+@compatibility
+Feature: Different middleware versions compatibility
 
-  Background:
-    Given common setup steps
-
-  Scenario: Test specific functionality
-    When a user does something
-    Then a certain result should happen
+  Scenario Outline: Data created in newer middleware version should be readable in older version
+    Given the server <version1> 1 is running
+    And I create a new account with id 1
+    # Test steps...
+    
+  Examples:
+    | version1 | version2 |
+    | "v0.38.0" | "v0.37.0" |
 ```
 
-#### Step Definitions
+#### API Step Definitions
 
-Implement the step definitions for your feature tests in the corresponding step_definitions directory:
+Implement the step definitions for API tests in the `step_definitions/api/` directory:
 
-- API steps: `step_definitions/api/`
-- iOS steps: `step_definitions/ios/`
+```typescript
+import { Given, When, Then } from '@cucumber/cucumber';
+import { callAccountCreate } from '../../support/api/account';
+
+Given('I create a new account with id {int}', async function(userNumber) {
+  // Implementation that uses gRPC to communicate with middleware
+  await callAccountCreate(userNumber);
+});
+```
+
+### iOS Tests with Cucumber and Appium
+
+iOS tests use Cucumber with WebdriverIO and Appium:
+
+#### iOS Feature Files
+
+iOS tests are written in `.feature` files located in the `features/ios/` directory.
+
+Example iOS feature file:
+
+```gherkin
+@smoke
+Feature: Login
+
+  Scenario: Create a new account
+    Given the app is running on device "A"
+    When I tap "Create new account" on device "A"
+    # More test steps...
+```
+
+#### iOS Step Definitions
+
+Implement the step definitions for iOS tests in the `step_definitions/ios/` directory:
 
 ```typescript
 import { Given, When, Then } from '@cucumber/cucumber';
 
-Given('common setup steps', async function() {
-  // Implementation
-});
-
-When('a user does something', async function() {
-  // Implementation
-});
-
-Then('a certain result should happen', async function() {
-  // Implementation
+Given('the app is running on device {string}', async function(device) {
+  // Implementation using Appium/WebdriverIO
 });
 ```
 
 ### Desktop Tests with Playwright
 
-Desktop tests use Playwright directly without Cucumber:
+Desktop tests use Playwright directly to test the Electron application:
 
 1. Create a new spec file in the `playwright_tests/` directory
 2. Use the Page Object Model pattern for better maintainability
-3. Run with `npm run test:desktop`
+3. Utilize electron-playwright-helpers for Electron-specific functionality
 
-Example:
+Example desktop test:
 
 ```typescript
 import { test, expect } from '@playwright/test';
-import { electronApp } from 'electron-playwright-helpers';
+import { electronApp, firstWindow } from 'electron-playwright-helpers';
 
-test('basic desktop test', async ({ page }) => {
-  // Setup application window
-  const electronWindow = await electronApp.firstWindow();
+test('can create a new object', async () => {
+  // Get the main Electron window
+  const window = await firstWindow();
   
   // Interact with the application
-  await electronWindow.locator('button.action').click();
+  await window.locator('button.add-object').click();
+  await window.locator('input.object-name').fill('New Object');
+  await window.locator('button.save').click();
   
-  // Perform assertions
-  await expect(electronWindow.locator('h1')).toHaveText('Expected Text');
+  // Assert the object was created
+  await expect(window.locator('div.object-card')).toContainText('New Object');
 });
 ```
 
