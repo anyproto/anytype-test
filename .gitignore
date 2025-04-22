@@ -22,3 +22,4 @@ mw/*
 .idea/
 test-results/*
 !test-results/
+test-temp-translations.json

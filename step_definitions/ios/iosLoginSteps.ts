@@ -4,6 +4,8 @@ import MySpacesPage from "../../support/page_objects/ios/mySpacesPage";
 import { Logger } from "@origranot/ts-logger";
 import LoginPage from "../../support/page_objects/ios/loginPage";
 import { getUserDriver } from "../../support/ios/iosUtils";
+import fs from 'fs';
+import path from 'path';
 
 const logger = new Logger({ name: "custom" });
 
@@ -42,7 +44,17 @@ When(
 
     try {
       await userDriver.pause(1000);
-      await this.vaultSetupPage.copyKeyToClipboardAndValidate();
+      const recoveryKey = await this.vaultSetupPage.copyKeyToClipboardAndValidate();
+      
+      // Save recovery key to cleanup.json
+      const cleanupPath = path.join(__dirname, '../../cleanup.json');
+      let keys: string[] = [];
+      if (fs.existsSync(cleanupPath)) {
+        keys = JSON.parse(fs.readFileSync(cleanupPath, 'utf8'));
+      }
+      keys.push(recoveryKey);
+      fs.writeFileSync(cleanupPath, JSON.stringify(keys, null, 2));
+      
       await this.vaultSetupPage.proceedToNextStep();
     } catch (error: unknown) {
       logger.error(
@@ -58,7 +70,10 @@ Then("{string} can enter his vault", async function (user: string) {
   const userDriver = getUserDriver(user);
   this.vaultSetupPage = new VaultSetupPage(userDriver);
   await this.vaultSetupPage.enterVaultWithRetry();
-  await this.vaultSetupPage.performSwipe(196, 87, 195, 655);
+  // await this.vaultSetupPage.performSwipe(196, 87, 195, 655);
+  await this.vaultSetupPage.proceedToNextStep();
+  await this.vaultSetupPage.proceedToNextStep();
+  await this.vaultSetupPage.letsGo();
 });
 
 Given(
@@ -80,7 +95,9 @@ Given("{string} creates a new vault", async function (user: string) {
   await this.vaultSetupPage.skipMyKey();
   await this.vaultSetupPage.enterName(user);
   await this.vaultSetupPage.enterVaultWithRetry();
-  await this.vaultSetupPage.performSwipe(196, 87, 195, 655);
+  await this.vaultSetupPage.proceedToNextStep();
+  await this.vaultSetupPage.proceedToNextStep();
+  await this.vaultSetupPage.letsGo();
 });
 
 Given("{string} goes to home screen", async function (user: string) {

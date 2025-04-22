@@ -29,6 +29,10 @@ export class VaultSetupPage extends BasePage {
     await this.tap("accessibility id:Skip");
   }
 
+  async letsGo() {
+    await this.tap("accessibility id:Let’s Go");
+  }
+
   async copyKeyToClipboardAndValidate() {
     // Get the mnemonic displayed in the UI
     const mnemonicElement = this.userDriver.$("XCUIElementTypeTextView");

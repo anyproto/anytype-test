@@ -13,7 +13,7 @@ const logger = new Logger({ name: "custom" });
 AfterStep(async function (stepResult: { result: { status: string } }) {
   if (stepResult.result.status === "failed") {
     const timestamp = new Date().toISOString().replace(/[^0-9]/g, "");
-    const screenshotPath = `./screenshots/failed-${timestamp}.png`;
+    const screenshotPath = `./results/screenshots/failed-${timestamp}.png`;
     await browser.saveScreenshot(screenshotPath);
     console.log(`Screenshot saved: ${screenshotPath}`);
   }

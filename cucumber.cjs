@@ -20,13 +20,6 @@ const apiConfig = [
   "features/api/**/*.feature",
 ].join(" ");
 
-const desktopConfig = [
-  "--require support/hooks/desktop.hooks.ts",
-  "--require support/api/**/*.ts", // API is shared with desktop tests
-  "--require step_definitions/desktop/**/*.ts",
-  "features/desktop/**/*.feature",
-].join(" ");
-
 const iosConfig = [
   "--require support/hooks/ios.hooks.ts",
   "--require support/api/**/*.ts", // API is shared with iOS tests
@@ -42,6 +35,5 @@ const commonRetry = [
 module.exports = {
   default: `${commonRequire} ${apiConfig} ${commonFormats} ${commonRetry}`,
   api: `${commonRequire} ${apiConfig} ${commonFormats} ${commonRetry}`,
-  desktop: `${commonRequire} ${desktopConfig} ${commonFormats} ${commonRetry}`,
   ios: `${commonRequire} ${iosConfig} ${commonFormats} ${commonRetry}`,
 };

@@ -1,15 +1,17 @@
 import { PlaywrightTestConfig } from '@playwright/test';
 import path from 'path';
+import fs from 'fs';
 
-/**
- * TODO: remove `defaultAppPath` and rely fully on an environment variable in the future.
- */
 const APP_DIRECTORY = process.env.ANYTYPE_APP_DIR;
 const CONFIG_PATH = process.env.CONFIG_PATH || './myDocker.yml';
 
 if (!APP_DIRECTORY) {
   throw new Error('ANYTYPE_APP_DIR environment variable is not defined. This is required for running e2e tests.');
 }
+if (!CONFIG_PATH) {
+  throw new Error('CONFIG_PATH environment variable is not defined. This is required for running e2e tests.');
+}
+
 
 function getSystemSpecificPath(): string {
   const system = process.env.SYSTEM_TYPE?.toUpperCase() || 'MAC-ARM';
@@ -34,6 +36,11 @@ export const PATHS = {
   STAGING_CONFIG: CONFIG_PATH,
 } as const;
 
+// Verify that language files exist
+if (!fs.existsSync(PATHS.LANG_FILES)) {
+  throw new Error(`Language files not found at path: ${PATHS.LANG_FILES}. Please ensure the path is correct and the files are available.`);
+}
+
 /**
  * Log debug information for sanity checks.
  */
@@ -43,7 +50,6 @@ function logDebugInfo(): void {
   console.log('System Type:', process.env.SYSTEM_TYPE);
   console.log('Electron App Path:', PATHS.ELECTRON_APP);
   console.log('Language Files Path:', PATHS.LANG_FILES);
-  console.log('Test Data Path:', process.env.DATA_PATH);
   console.log('================');
 }
 
@@ -68,7 +74,9 @@ const config: PlaywrightTestConfig = {
     ['list'],
   ],
   use: {
-    trace: 'on-first-retry',
+    trace: 'retain-on-failure',
+    // Capture screenshot only for failing tests
+    screenshot: 'only-on-failure',
   },
 };
 

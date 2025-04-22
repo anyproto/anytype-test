@@ -128,12 +128,19 @@ npm run test:smoke
 Desktop tests use Playwright to test the Electron app. Before running, make sure you've set up the required environment variables:
 
 ```bash
-# Set the path to your Electron app
-export ELECTRON_APP_PATH="/path/to/your/Anytype.app"
+# Required: Path to your Anytype source directory
+export ANYTYPE_APP_DIR="/Users/shamray/workspace/anytype/anytype-ts"
 
-# Set the path to language files for translations
-export LANG_FILES_PATH="/path/to/your/translations.json"
+# Optional: System type for desktop tests (defaults to MAC-ARM if not specified)
+export SYSTEM_TYPE="MAC-ARM"  # Options: MAC-ARM, MAC, MAC-INTEL, LINUX, WINDOWS
+
+# Optional: Path to .yml config file for staging or other network
+export CONFIG_PATH="/path/to/your/config.yml"
 ```
+
+**Important:** Close any running instances of Anytype before running the tests or they will fail.
+
+**<span style="color:red">Note for debugging:</span> For development and debugging, it's recommended to run your own Docker environment instead of using staging to avoid creating multiple test accounts on the staging environment.**
 
 Then run the tests with:
 
@@ -220,14 +227,19 @@ To run tests using the local middleware, follow these steps:
 Desktop tests require the following environment variables to be set:
 
 ```bash
-# Path to the Electron app to test
-export ELECTRON_APP_PATH="/path/to/your/Anytype.app"
+# Required: Path to your Anytype source directory
+export ANYTYPE_APP_DIR="/Users/shamray/workspace/anytype/anytype-ts"
 
-# Path to the language files for translations
-export LANG_FILES_PATH="/path/to/your/translations.json"
+# Optional: Path to .yml config file for staging or other network
+export CONFIG_PATH="/path/to/your/config.yml"
+
+# Optional: System type for desktop tests (defaults to MAC-ARM if not specified)
+export SYSTEM_TYPE="MAC-ARM"  # Options: MAC-ARM, MAC, MAC-INTEL, LINUX, WINDOWS
 ```
 
-These environment variables are essential for the Playwright tests to locate and launch the Electron application correctly, and to load the necessary translations for test assertions.
+These environment variables are essential for the Playwright tests to locate and launch the Electron application correctly.
+
+**<span style="color:red">Debugging tip:</span> When debugging tests, run your own local Docker environment and configure it in the .yml file to avoid creating numerous test accounts on the staging servers.**
 
 ### Test Process
 
@@ -238,6 +250,8 @@ When running desktop tests, the test framework:
 3. Loads translations from the file specified in `LANG_FILES_PATH`
 4. Logs out if already logged in (to ensure a clean state)
 5. Runs the specified tests
+
+**Note:** Make sure to close any running Anytype instances before starting the tests to prevent port conflicts and unexpected behavior.
 
 Each test run uses a unique data directory to maintain isolation between test runs. This helps prevent test interference and ensures reproducible results.
 

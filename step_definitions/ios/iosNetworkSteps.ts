@@ -19,29 +19,11 @@ When(
     this.loginPage = new LoginPage(userDriver);
     await this.loginPage.changeNetworkSettings();
     if (networkName === "staging") {
-      logger.info("Network is set to staging");
-      //   const configPath = path.resolve(process.cwd(), "config.yml");
-      //   const deviceUdid = getDeviceUdidForUser(user);
-      //   const appGroupId = "group.io.anytype.app";
-      //   const appBundleId = "io.anytype.app.dev";
-
-      //   try {
-      //     const sharedContainerPath = execSync(
-      //       `xcrun simctl get_app_container ${deviceUdid} ${appBundleId} ${appGroupId}`
-      //     )
-      //       .toString()
-      //       .trim();
-      //     console.log(`Config Path: ${configPath}`);
-      //     const fileContent = fs.readFileSync(configPath, { encoding: "base64" });
-      //     // Desired location on the simulator
-      //     const remotePath = `${sharedContainerPath}/Documents/config.yml`;
-      //     await userDriver.pushFile(remotePath, fileContent);
-      try {
-        await this.loginPage.chooseSelfHostedNetwork();
-        await this.loginPage.uploadConfigFile();
-      } catch (error) {
-        logger.error(`Failed to set network: ${error}`);
-      }
+      logger.info("Reading newtwork config for staging");
+      const configPath = path.resolve(process.cwd(), "config.yml");
+      const baseConfig = ("anytype://networkConfig?config=") + fs.readFileSync(configPath, { encoding: "base64" });
+      logger.info("Using deeplink");
+      await userDriver.url(baseConfig);
     } else {
       logger.info(
         "Only staging network is availiable for this step. Other options are not implemented yet"

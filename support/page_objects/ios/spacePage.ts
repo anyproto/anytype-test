@@ -64,7 +64,7 @@ class SpacePage extends BasePage {
         `Failed to generate invite link: ${(error as Error).message}`
       );
       await this.userDriver.saveScreenshot(
-        `./screenshots/invite-link-not-generated-${new Date().getTime()}.png`
+        `./results/screenshots/invite-link-not-generated-${new Date().getTime()}.png`
       );
       throw error;
     }
