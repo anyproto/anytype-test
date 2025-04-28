@@ -14,10 +14,9 @@ export function loadTranslations() {
 	if (!process.env.LANG_FILES_PATH) {
 		throw new Error('LANG_FILES_PATH environment variable is not defined. This is required for running e2e tests.');
 	}
-
 	// Always copy the translation file from LANG_FILES_PATH
 	fs.copyFileSync(process.env.LANG_FILES_PATH, translationPath);
-
+	
 	if (!fs.existsSync(translationPath)) {
 		console.warn('Translation file not found at:', translationPath);
 		return {};  // Empty object instead of default translations
@@ -100,7 +99,7 @@ export async function setupTestContext() {
 	try {
 		// Create a new test data directory for this test run
 		createTestDataDir();
-
+		
 		// Launch the Electron application and get the app instance
 		console.log('Launching Electron app...');
 		const app = await launchElectronApp();
@@ -137,10 +136,11 @@ export async function setupTestContext() {
 }
 
 export async function logOutIfNeeded() {
-
-    if (!isOnLoginScreen()) {
+	console.log('Log out if needed function called');
+	const loginScreenStatus = await isOnLoginScreen();
+    if (!loginScreenStatus) {
         console.log('We are not on the login screen, logging out...');
-        await delay(2000);
+        await delay(1000);
         await logOut();
      }
 }
@@ -148,18 +148,27 @@ export async function logOutIfNeeded() {
 export async function createAccount(name: string = "Friedolin") {
     await page.getByText(translations.authSelectSignup).click();
     await page.getByText(translations.authOnboardPhraseSubmit).click();
-    await delay(2000);
+    await delay(1000);
     // Skip copying and checking the vault key
     await page.getByText(translations.commonNext).click();
-    await page.getByPlaceholder(translations.defaultNamePage).fill(name);
-    await delay(2000);
+    await page.getByPlaceholder(translations.commonYourName).fill(name);
+    await delay(1000);
     await page.getByText(translations.commonDone).click();
 }
 
 export async function logOut() {
-    await page.locator('div#item-settings.item.isButton.settings').click();
-	await page.click(`div.logout`);
-	await page.getByText(translations.popupLogoutLogoutButton).click();
+    // Check if we're on the auth setup screen
+    const stuckOnLogginIn = await page.getByText(translations.pageAuthSetupEntering).count() > 0;
+
+    if (stuckOnLogginIn) {
+		console.log('Stuck on logging in, clicking back button');
+        await page.locator('div.button.black.c28').getByText(translations.commonBack).click();
+    } else {
+		console.log('Not stuck on logging in, logging out...');
+        await page.locator('div#item-settings.item.isButton.settings').click();
+        await page.click(`div.logout`);
+        await page.getByText(translations.popupLogoutLogoutButton).click();
+    }
 }
 
 export async function isOnLoginScreen(): Promise<boolean> {
