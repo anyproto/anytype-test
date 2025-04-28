@@ -2,7 +2,7 @@ import { ElectronApplication, _electron as electron } from 'playwright';
 import * as fs from 'fs';
 import * as path from 'path';
 import { parseElectronApp } from 'electron-playwright-helpers';
-import { page, setElectronApp, setPage, setTranslations, translations } from '../globals';
+import { page, setElectronApp, setPage, setTranslations, translations } from './globals';
 import crypto from 'crypto';
 
 export const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -126,7 +126,7 @@ export async function setupTestContext() {
 		
 		// Ensure we're logged out before starting tests
 		console.log('Checking login state... and logging out if needed');
-		await logOutIfNeeded();
+		//await logOutIfNeeded();
 		console.log('Test context setup completed successfully');
 		return { app, win };
 	} catch (error) {
