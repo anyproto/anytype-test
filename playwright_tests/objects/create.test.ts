@@ -1,164 +1,17 @@
 import { test, expect } from "@playwright/test";
-import { delay, setupTestContext } from '../../setup/helpers';
-import { page, storage, translations, electronApp } from '../../setup/globals';
-import { widget } from "../../utils/widgets";
+import { delay } from '../setup/helpers';
+import { page } from '../setup/globals';
 import { 
 	deleteObjectByName, 
-	UI_TEST_SPACE_NAME, 
-	openSpace, 
 	createPage,
 	createTitleWithSelectionTarget, 
 	createTitleWithEditorTitle 
-} from "../../utils/spaceUtils";
-// Импортируем функцию с тестом поиска
-import { searchObjectByTitleAndText } from './search';
+} from "../utils/spaceUtils";
+import { setupTest } from '../setup/testSetup';
 
-test.beforeAll(async () => {
-	console.log('🧪 Setting up test context...');
-	await setupTestContext();
-});
+// Setup test environment once
+setupTest();
 
-test.afterAll(async() => {
-	if (electronApp) {
-		console.log('Closing Electron app...');
-		await electronApp.close();
-	} else {
-		console.warn('No Electron app instance found to close');
-	}
-});
-
-
-test("Enter my Vault", async () => {
-	await page.getByText(translations.authSelectSignup).click();
-	await page.getByText(translations.authOnboardPhraseSubmit).click();
-	await delay(2000);
-	await page.click(".icon.copy");
-
-	const copiedText = await page.evaluate(() => navigator.clipboard.readText());
-	storage["vaultKey"] = copiedText;
-	console.log("Copied vault key:", copiedText);
-
-	await delay(2000);
-	await page.getByText(translations.commonNext).click();
-	await page.getByPlaceholder(translations.defaultNamePage).fill("Friedolin");
-	await delay(2000);
-	await page.getByText(translations.commonDone).click();
-});
-
-test("Log out", async () => {
-	await delay(2000);
-	await page.locator('div#item-settings.item.isButton.settings').click();
-	await page.click(`div.logout`);
-	await page.getByText(translations.popupLogoutLogoutButton).click();
-});
-
-test("Log in as existing user", async () => {
-	await delay(2000);
-	await page.getByText(translations.authSelectLogin).click();
-	await page.locator(".phraseInnerWrapper").click();
-	await page.locator("#entry").type(storage["vaultKey"]);
-	await page.keyboard.press("Space");
-	await page.getByText(translations.authLoginSubmit).click();
-	page.locator("#path").getByText("Homepage");
-});
-
-test("Create a new space", async () => {
-	await delay(2000);
-	await page.locator('div#item-add').click();
-	await page.locator('input[placeholder="Untitled"]').fill("Cool Space");	
-	
-	// Add debug logging for all console messages
-	page.on('console', msg => {
-		console.log('Console message:', msg.text());
-	});
-
-	// Create a promise with a more generous timeout
-	const consolePromise = page.waitForEvent('console', {
-		predicate: msg => {
-			const text = msg.text();
-			console.log('Checking console message:', text);
-			return text.includes('Response.WorkspaceCreate');  // Simplified condition
-		},
-		timeout: 20000  // Increase timeout to 20 seconds
-	});
-
-	await page.getByText(translations.popupSpaceCreateCreate).click();
-	
-	try {
-		const consoleMessage = await consolePromise;
-		console.log('Successfully received console message:', consoleMessage.text());
-	} catch (error) {
-		console.error('Failed to receive expected console message:', error);
-	}
-
-	// Wait for visual confirmation instead of relying on console
-	await expect(page.locator('span').filter({ hasText: 'Cool Space' })).toBeVisible();
-});
-
-
-test("Search page by exact match in title", async () => {
-	const text='One good name';
-	console.log('Starting search test...');
-	
-	console.log('Creating a new page object...');
-	await widget(page, 'Pages').createObject();
-	console.log('Created a new page object');
-	
-	//I should be focused on the title input
-	console.log('Waiting for title input...');
-	const pageName = page.locator('#value.ctitle');
-	await pageName.waitFor();
-	await expect(pageName).toBeFocused();
-	console.log('Title input is focused');
-	
-	console.log(`Filling title with text: ${text}...`);
-	await pageName.click(); // First click to focus
-	await page.keyboard.type(text); // Enter text character-by-character like a user would do
-	await page.keyboard.press("Enter"); // Press enter after typing the text
-	console.log(`Filled title with text: ${text}`);
-	
-	console.log('Verifying title text...');
-	await expect(pageName).toHaveText(text);
-	console.log('Title text verified');
-
-	console.log('Clicking on search icon...');
-	await page.locator('.icon.search.withBackground').click();
-	console.log('Clicked on search icon');
-	
-	console.log('Waiting for search input...');
-	const searchInput = page.locator('#input');
-	await searchInput.waitFor();
-	console.log('Search input is ready');
-	
-	console.log(`Searching for: ${text}...`);
-	await searchInput.click(); // First click to focus
-	await page.keyboard.type(text); // Enter text character-by-character like a user would do
-	// Don't press Enter here because we want to see if it's working without pressing Enter
-	console.log(`Entered search query: ${text}`);
-	
-	console.log('Verifying search results...');
-	await expect(page.locator('div.name > markuphighlight').filter({ hasText: text})).toBeVisible();
-	console.log('Search result found and verified');
-	
-	// Clearing search input
-	console.log('Clearing search input...');
-	const searchInputField = page.locator('#input');
-	await searchInputField.click();
-	await page.keyboard.press('Control+A'); // Highlight everything
-	await page.keyboard.press('Backspace'); // Clear highlighted content
-	console.log('Search input cleared');
-	
-	// Close search window
-	console.log('Closing search window...');
-	await page.keyboard.press('Escape'); // Press Escape to close the search window
-	await delay(5000); // Pause for 5 seconds before closing the search window
-	console.log('Search window closed');
-	
-	// Cleaning up: deleting the created page
-	console.log(`Cleaning up: Deleting the test object "${text}"...`);
-	await deleteObjectByName(page, text);
-	console.log('Test cleanup completed');
-});
 
 test("Create and delete various object types", async () => {
 	
@@ -427,6 +280,3 @@ test("Create object and publish it", async () => {
 		throw e; // Re-throw the error so the test runner can record it
 	}
 });
-
-// Add imported test for Search here
-test("Search object by title and text", searchObjectByTitleAndText);

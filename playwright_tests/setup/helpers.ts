@@ -126,7 +126,7 @@ export async function setupTestContext() {
 		
 		// Ensure we're logged out before starting tests
 		console.log('Checking login state... and logging out if needed');
-		await logOutIfNeeded();
+		//await logOutIfNeeded();
 		console.log('Test context setup completed successfully');
 		return { app, win };
 	} catch (error) {
