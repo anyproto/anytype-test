@@ -16,39 +16,66 @@ export const config = {
     // Where your spec files are located
     specs: ["../features/ios/*.feature"],
     exclude: [],
-  
+    reporters: ['spec'],
     // ==================
     // Capabilities
     // ==================
     maxInstances: 1, // Just one device
-    capabilities: [
-      {
-        // iOS-only
-        platformName: 'iOS',
-        'appium:automationName': 'XCUITest',
-  
-        // Name + version should match what you created with `xcrun simctl create`
-        'appium:deviceName': process.env.IPHONE_MODEL_A,
-        'appium:platformVersion': process.env.IOS_VERSION,
-  
-        // UDID of the simulator you created and booted
-        'appium:udid': process.env.USER_A_IOS_UUID,
-  
-        // Path to the .app you unzipped (for example `./Anytype Dev.app`)
-        'appium:app': process.env.IOS_APP_PATH,
-  
-        // Misc. extras
-        'appium:autoAcceptAlerts': true,
-        'appium:showXcodeLog': true,
-        'appium:newCommandTimeout': 300,
+
+    capabilities: {
+      UserA: {
+        capabilities: {
+          platformName: "iOS",
+          "appium:automationName": "XCUITest",
+          "appium:deviceName": process.env.IPHONE_MODEL_A,
+          "appium:platformVersion": process.env.IOS_VERSION,
+          "appium:app": process.env.IOS_APP_PATH,
+          "appium:autoAcceptAlerts": true,
+          "appium:language": process.env.IOS_LANGUAGE,
+          "appium:udid": process.env.USER_A_IOS_UUID,
+          "appium:wdaLocalPort": 8100,
+          "appium:simpleIsVisibleCheck": true,
+          'appium:useNewWDA': true,
+          "appium:showXcodeLog": true,
+          'appium:newCommandTimeout': 300,
+        }
       },
-    ],
+      UserB: {
+        capabilities: {
+          platformName: "iOS",
+          "appium:automationName": "XCUITest",
+          "appium:deviceName": process.env.IPHONE_MODEL_B,
+          "appium:platformVersion": process.env.IOS_VERSION,
+          "appium:app": process.env.IOS_APP_PATH,
+          "appium:autoAcceptAlerts": true,
+          "appium:language": process.env.IOS_LANGUAGE,
+          "appium:udid": process.env.USER_B_IOS_UUID,
+          "appium:wdaLocalPort": 8101,
+          "appium:realDeviceScreenshotter": true,
+          "appium:simpleIsVisibleCheck": true,
+          'appium:useNewWDA': true,
+          "appium:showXcodeLog": true,
+          'appium:newCommandTimeout': 300,
+          'appium:connectionTimeout': 180000
+        }
+      }
+    },
   
     //
     // ===========
     // WebdriverIO
     // ===========
-    logLevel: 'debug',
+    // logLevel: 'debug',
+    // logLevels: {
+    //   webdriver: "trace",
+    //   webdriverio: "trace",
+    //   "@wdio/local-runner": "trace",
+    //   "@wdio/cli": "debug",
+    //   appium: "trace",
+    //   custom: "info",
+    //   "@wdio/cucumber-framework": "debug",
+    //   "@wdio/appium-service": "trace",
+    // },
     baseUrl: 'http://localhost',
     waitforTimeout: 10000,
   
@@ -74,7 +101,7 @@ export const config = {
     // ============
     framework: 'cucumber',
     cucumberOpts: {
-      require: ['./features/step_definitions/**/*.js'],
+      require: ['./step_definitions/**/*.ts'],
       timeout: 60000,
       ignoreUndefinedDefinitions: true,
       strict: false,

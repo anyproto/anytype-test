@@ -11,8 +11,8 @@ class LoginPage extends BasePage {
       "Settings button"
     );
     await this.verifyElementDisplayed(
-      "accessibility id:New Vault",
-      "New Vault button"
+      "accessibility id:I am new here",
+      "I am new here button"
     );
   }
 

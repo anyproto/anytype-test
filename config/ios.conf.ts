@@ -83,11 +83,11 @@ export const config: WebdriverIO.Config = {
       capabilities: {
         platformName: "iOS",
         "appium:automationName": "XCUITest",
-        "appium:deviceName": "iPhone 16",
-        "appium:platformVersion": "18.4",
+        "appium:deviceName": process.env.IPHONE_MODEL_A,
+        "appium:platformVersion": process.env.IOS_VERSION,
         "appium:app": process.env.IOS_APP_PATH,
         "appium:autoAcceptAlerts": true,
-        "appium:language": process.env.IOS_LANGUAGE || "en",
+        "appium:language": process.env.IOS_LANGUAGE,
         "appium:udid": process.env.USER_A_IOS_UUID,
         "appium:wdaLocalPort": 8100,
         "appium:simpleIsVisibleCheck": true,
@@ -99,11 +99,11 @@ export const config: WebdriverIO.Config = {
       capabilities: {
         platformName: "iOS",
         "appium:automationName": "XCUITest",
-        "appium:deviceName": "iPhone 16 Pro",
-        "appium:platformVersion": "18.4",
+        "appium:deviceName": process.env.IPHONE_MODEL_B,
+        "appium:platformVersion": process.env.IOS_VERSION,
         "appium:app": process.env.IOS_APP_PATH,
         "appium:autoAcceptAlerts": true,
-        "appium:language": process.env.IOS_LANGUAGE || "en",
+        "appium:language": process.env.IOS_LANGUAGE,
         "appium:udid": process.env.USER_B_IOS_UUID,
         "appium:wdaLocalPort": 8101,
         "appium:realDeviceScreenshotter": true,
@@ -173,21 +173,13 @@ export const config: WebdriverIO.Config = {
   // commands. Instead, they hook themselves up into the test process.
   services: [
     [
-      "appium",
+      'appium',
       {
-        args: {
-          address: "localhost",
-          port: 4723,
-          relaxedSecurity: true,
-          "base-path": "",
-          "allow-insecure": ["adb_shell"],
-          "session-override": true,
-        },
-        command: "appium",
-        logPath: "./",
-      },
+        address: 'localhost',
+        port: 4723,
+        relaxedSecurity: true
+       },
     ],
-    // [TimelineService],
   ],
 
   // Framework you want to run your specs with.

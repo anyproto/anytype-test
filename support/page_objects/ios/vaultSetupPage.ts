@@ -13,7 +13,7 @@ export class VaultSetupPage extends BasePage {
   }
 
   async createNewVault() {
-    await this.tap("accessibility id:New Vault");
+    await this.tap("accessibility id:I am new here");
   }
 
   async getMyKey() {
