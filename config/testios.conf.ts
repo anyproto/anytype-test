@@ -1,3 +1,18 @@
+import dotenv from 'dotenv';
+import path from 'path';
+
+// Debug: Print paths
+console.log('Current working directory:', process.cwd());
+console.log('Env export path:', path.resolve(process.cwd(), '.env.export'));
+
+// Load environment variables in order
+dotenv.config({ path: path.resolve(process.cwd(), '.env'), override: true });
+dotenv.config({ path: path.resolve(process.cwd(), '.env.local'), override: true });
+dotenv.config({ path: path.resolve(process.cwd(), '.env.export'), override: true });
+
+// Debug: Print environment variable
+console.log('IPHONE_MODEL_A:', process.env.IPHONE_MODEL_A);
+
 export const config = {
     //
     // ====================
@@ -20,14 +35,14 @@ export const config = {
         'appium:automationName': 'XCUITest',
   
         // Name + version should match what you created with `xcrun simctl create`
-        'appium:deviceName': process.env.DEVICE_NAME || 'iPhone 15',
-        'appium:platformVersion': process.env.PLATFORM_VERSION || '17.4',
+        'appium:deviceName': process.env.IPHONE_MODEL_A,
+        'appium:platformVersion': process.env.IOS_VERSION,
   
         // UDID of the simulator you created and booted
-        'appium:udid': process.env.IPHONE_A_UDID,
+        'appium:udid': process.env.USER_A_IOS_UUID,
   
         // Path to the .app you unzipped (for example `./Anytype Dev.app`)
-        'appium:app': process.env.APP_PATH || './Anytype Dev.app',
+        'appium:app': process.env.IOS_APP_PATH,
   
         // Misc. extras
         'appium:autoAcceptAlerts': true,
