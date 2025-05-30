@@ -1,17 +1,10 @@
 import dotenv from 'dotenv';
 import path from 'path';
 
-// Debug: Print paths
-console.log('Current working directory:', process.cwd());
-console.log('Env export path:', path.resolve(process.cwd(), '.env.export'));
-
 // Load environment variables in order
 dotenv.config({ path: path.resolve(process.cwd(), '.env'), override: true });
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local'), override: true });
 dotenv.config({ path: path.resolve(process.cwd(), '.env.export'), override: true });
-
-// Debug: Print environment variable
-console.log('IPHONE_MODEL_A:', process.env.IPHONE_MODEL_A);
 
 export const config = {
     //
@@ -66,40 +59,16 @@ export const config = {
     // Appium Service
     // ==============
     // This starts the Appium server so you don't have to do `appium &`
-    // services: [
-    //   [
-    //     'appium',
-    //     {
-    //       command: 'appium',
-    //       args: {
-    //         address: 'localhost',
-    //         port: 4723,
-    //         relaxedSecurity: true,
-    //         // For fresh sessions each run
-    //         'session-override': true,
-    //       },
-    //     },
-    //   ],
-    // ],
     services: [
-        [
-          "appium",
-          {
-            args: {
-              address: "localhost",
-              port: 4723,
-              relaxedSecurity: true,
-              "base-path": "",
-              "allow-insecure": ["adb_shell"],
-              "session-override": true,
-            },
-            command: "appium",
-            logPath: "./",
-          },
-        ],
-        // [TimelineService],
+      [
+        'appium',
+        {
+          address: 'localhost',
+          port: 4723,
+          relaxedSecurity: true
+         },
       ],
-    //
+    ],
     // ============
     // Test Framework
     // ============
