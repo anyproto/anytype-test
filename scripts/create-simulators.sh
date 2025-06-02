@@ -85,14 +85,8 @@ xcrun simctl list devices | grep "$USER_A_IOS_UUID" || true
 echo "Checking User B simulator state:"
 xcrun simctl list devices | grep "$USER_B_IOS_UUID" || true
 
-# Install the app on both simulators
-echo "Installing the app on simulators..."
-xcrun simctl install "$USER_A_IOS_UUID" "$IOS_APP_PATH"
-xcrun simctl install "$USER_B_IOS_UUID" "$IOS_APP_PATH"
-
 # Export UDIDs to environment variables and save to env.export
 echo "USER_A_IOS_UUID=$USER_A_IOS_UUID" > .env.export
 echo "USER_B_IOS_UUID=$USER_B_IOS_UUID" >> .env.export
-
 
 echo "Simulators successfully created and booted!" 
