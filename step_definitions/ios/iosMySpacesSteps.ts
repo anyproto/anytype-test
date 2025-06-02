@@ -1,5 +1,6 @@
 import { Then, When } from "@cucumber/cucumber";
 import MySpacesPage from "../../support/page_objects/ios/mySpacesPage";
+import SpaceTypePage from "../../support/page_objects/ios/spaceTypePage";
 import { Logger } from "@origranot/ts-logger";
 import SpacePage from "../../support/page_objects/ios/spacePage";
 import { getUserDriver } from "../../support/ios/iosUtils";
@@ -29,9 +30,11 @@ When(
   async function (user: string, name: string) {
     const userDriver = getUserDriver(user);
     this.mySpacesPage = new MySpacesPage(userDriver);
-    await this.mySpacesPage.createNewItem();
-    await this.mySpacesPage.typeItemTitle(name);
-    await this.mySpacesPage.createItem();
+    const spaceTypePage = await this.mySpacesPage.createNewItem();
+    const spaceCreatePage = await spaceTypePage.createDataType();
+    
+    await spaceCreatePage.typeItemTitle(name);
+    await spaceCreatePage.createItem();
     //if I see collaborate on spaces, then I complete item creation
     if (await this.mySpacesPage.isCollaborateOnSpacesBannerVisible()) {
       await this.mySpacesPage.completeItemCreation();

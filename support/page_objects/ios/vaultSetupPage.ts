@@ -17,8 +17,7 @@ export class VaultSetupPage extends BasePage {
   }
 
   async showMyKey() {
-    logger.info("Testing logger inside async function");
-    await this.tap("accessibility id:Show my Key");
+    await this.tap("accessibility id:Tap to Reveal");
   }
 
   async skipMyKey() {
@@ -29,13 +28,10 @@ export class VaultSetupPage extends BasePage {
     await this.tap("accessibility id:Done");
   }
 
-  async copyKeyToClipboardAndValidate() {
+  async validateBufferWithSeedPhrase() {
     // Get the mnemonic displayed in the UI
     const mnemonicElement = this.userDriver.$("XCUIElementTypeTextView");
     const displayedMnemonic = await mnemonicElement.getAttribute("value");
-
-    // Tap the "Copy to clipboard" button
-    await this.tap("accessibility id:Copy to clipboard");
 
     // Get clipboard content and decode from base64
     const clipboardContentBase64 = await this.userDriver.getClipboard();
