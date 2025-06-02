@@ -69,11 +69,7 @@ Then("{string} can enter his vault", async function (user: string) {
   logger.info(`STEP: ${user} can enter his vault`);
   const userDriver = getUserDriver(user);
   this.vaultSetupPage = new VaultSetupPage(userDriver);
-  await this.vaultSetupPage.enterVaultWithRetry();
-  // await this.vaultSetupPage.performSwipe(196, 87, 195, 655);
-  await this.vaultSetupPage.proceedToNextStep();
-  await this.vaultSetupPage.proceedToNextStep();
-  await this.vaultSetupPage.letsGo();
+  await this.vaultSetupPage.done();
 });
 
 Given(
@@ -91,13 +87,9 @@ Given("{string} creates a new vault", async function (user: string) {
   const userDriver = getUserDriver(user);
   this.vaultSetupPage = new VaultSetupPage(userDriver);
   await this.vaultSetupPage.createNewVault();
-  await this.vaultSetupPage.getMyKey();
   await this.vaultSetupPage.skipMyKey();
   await this.vaultSetupPage.enterName(user);
-  await this.vaultSetupPage.enterVaultWithRetry();
-  await this.vaultSetupPage.proceedToNextStep();
-  await this.vaultSetupPage.proceedToNextStep();
-  await this.vaultSetupPage.letsGo();
+  await this.vaultSetupPage.done();
 });
 
 Given("{string} goes to home screen", async function (user: string) {

@@ -16,21 +16,17 @@ export class VaultSetupPage extends BasePage {
     await this.tap("accessibility id:I am new here");
   }
 
-  async getMyKey() {
-    await this.tap("accessibility id:Get my Key");
-  }
-
   async showMyKey() {
     logger.info("Testing logger inside async function");
     await this.tap("accessibility id:Show my Key");
   }
 
   async skipMyKey() {
-    await this.tap("accessibility id:Skip");
+    await this.tap("accessibility id:Not now");
   }
 
-  async letsGo() {
-    await this.tap("accessibility id:Let’s Go");
+  async done() {
+    await this.tap("accessibility id:Done");
   }
 
   async copyKeyToClipboardAndValidate() {
@@ -94,36 +90,6 @@ export class VaultSetupPage extends BasePage {
 
   async enterName(name: string) {
     await this.enterTextInField(name, "XCUIElementTypeTextField");
-  }
-
-  async enterVaultWithRetry(maxRetries = 3, retryDelay = 2000) {
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      try {
-        await this.enterVault();
-
-        // Check if we're still on the vault setup page
-        const isStillOnSetupPage = await this.isSetYourNamePageVisible();
-
-        if (!isStillOnSetupPage) {
-          logger.info("Successfully entered the vault");
-          return; // Exit the method if we've successfully entered the vault
-        }
-
-        logger.info(`Attempt ${attempt}: Still on setup page, retrying...`);
-
-        // If we're still on the setup page, we need to try entering the vault again
-        if (attempt < maxRetries) {
-          await this.userDriver.pause(retryDelay); // Wait before retrying
-        }
-      } catch (error) {
-        logger.error(`Attempt ${attempt} failed:`, error);
-        if (attempt === maxRetries) {
-          throw error; // Rethrow the error if we've exhausted all retries
-        }
-        await this.userDriver.pause(retryDelay); // Wait before retrying
-      }
-    }
-    throw new Error("Failed to enter vault after maximum retries");
   }
 
   async isSetYourNamePageVisible() {

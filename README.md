@@ -61,7 +61,6 @@ anytype-test/
 ├── config/                 # Configuration files for different test environments
 │   ├── ios.conf.ts         # iOS test configuration
 │   ├── desktop.config.ts   # Desktop test configuration
-│   └── testios.conf.ts     # Test iOS configuration
 ├── features/               # Cucumber feature files (BDD scenarios)
 │   ├── api/                # API feature tests
 │   ├── desktop/            # Desktop feature tests
