@@ -10,8 +10,6 @@ import path from 'path';
 const logger = new Logger({ name: "custom" });
 
 Given("{string} chooses to create a new vault", async function (user: string) {
-  logger.info(`STEP: ${user} chooses to create a new vault`);
-
   const userDriver = getUserDriver(user);
 
   this.vaultSetupPage = new VaultSetupPage(userDriver);
@@ -20,7 +18,6 @@ Given("{string} chooses to create a new vault", async function (user: string) {
 });
 
 When("{string} enters his name", async function (user: string) {
-  logger.info(`STEP: ${user} enters his name`);
   const userDriver = getUserDriver(user);
   this.vaultSetupPage = new VaultSetupPage(userDriver);
   await this.vaultSetupPage.enterName(user);
@@ -29,7 +26,6 @@ When("{string} enters his name", async function (user: string) {
 When(
   "{string} should see his recovery key and copy it",
   async function (user: string) {
-    logger.info(`STEP: ${user} should see his recovery key and copy it`);
     const userDriver = getUserDriver(user);
     this.vaultSetupPage = new VaultSetupPage(userDriver);
 
@@ -66,7 +62,6 @@ When(
 );
 
 Then("{string} can enter his vault", async function (user: string) {
-  logger.info(`STEP: ${user} can enter his vault`);
   const userDriver = getUserDriver(user);
   this.vaultSetupPage = new VaultSetupPage(userDriver);
   await this.vaultSetupPage.done();
@@ -75,7 +70,6 @@ Then("{string} can enter his vault", async function (user: string) {
 Given(
   "{string} is on the first screen of ios app",
   async function (user: string) {
-    logger.info(`STEP: ${user} is on the first screen of ios app`);
     const userDriver = getUserDriver(user);
     this.loginPage = new LoginPage(userDriver);
     await this.loginPage.assertFirstPageIsVisible();
@@ -83,7 +77,6 @@ Given(
 );
 
 Given("{string} creates a new vault", async function (user: string) {
-  logger.info(`STEP: ${user} creates a new vault`);
   const userDriver = getUserDriver(user);
   this.vaultSetupPage = new VaultSetupPage(userDriver);
   await this.vaultSetupPage.createNewVault();
@@ -93,7 +86,6 @@ Given("{string} creates a new vault", async function (user: string) {
 });
 
 Given("{string} goes to home screen", async function (user: string) {
-  logger.info(`STEP: ${user} goes to home screen`);
   const userDriver = getUserDriver(user);
   await userDriver.execute("mobile: pressButton", { name: "home" });
 });

@@ -9,7 +9,6 @@ const logger = new Logger({ name: "custom" });
 Then(
   "{string} sees {string} in his spaces list",
   async function (user: string, spaceNameElement: string) {
-    logger.info(`STEP: ${user} sees ${spaceNameElement} in spaces list`);
     const userDriver = getUserDriver(user);
     this.mySpacesPage = new MySpacesPage(userDriver);
     await this.mySpacesPage.checkSpacesExist(spaceNameElement);
@@ -19,9 +18,6 @@ Then(
 Then(
   "{string} sees {string} and {string} in his spaces list",
   async function (user: string, firstSpace: string, secondSpace: string) {
-    logger.info(
-      `STEP: User A sees ${firstSpace} and ${secondSpace} in spaces list`
-    );
     const userDriver = getUserDriver(user);
     this.mySpacesPage = new MySpacesPage(userDriver);
     await this.mySpacesPage.checkSpacesExist(firstSpace, secondSpace);
@@ -31,7 +27,6 @@ Then(
 When(
   "{string} creates a new space named {string}",
   async function (user: string, name: string) {
-    logger.info(`STEP: ${user} creates a new space named ${name}`);
     const userDriver = getUserDriver(user);
     this.mySpacesPage = new MySpacesPage(userDriver);
     await this.mySpacesPage.createNewItem();
@@ -47,7 +42,6 @@ When(
 Then(
   "{string} is in {string} space",
   async function (user: string, spaceName: string) {
-    logger.info(`STEP: ${user} is in ${spaceName} space`);
     const userDriver = getUserDriver(user);
     this.spacePage = new SpacePage(userDriver);
     const widgetsElement = userDriver.$("accessibility id:x32/Widgets");
@@ -68,7 +62,6 @@ Then(
 );
 
 Then("{string} can tap navigate back button", async function (user: string) {
-  logger.info(`STEP: ${user} can tap navigate back button`);
   const userDriver = getUserDriver(user);
   this.spacePage = new SpacePage(userDriver);
   await this.spacePage.navigateBack();
@@ -77,9 +70,6 @@ Then("{string} can tap navigate back button", async function (user: string) {
 When(
   "{string} can access {string} space in the Anytype app",
   async function (user: string, spaceName: string) {
-    logger.info(
-      `STEP: ${user} can access ${spaceName} space in the Anytype app`
-    );
     const userDriver = getUserDriver(user);
     this.mySpacesPage = new MySpacesPage(userDriver);
     //wait for 12 seconds to make sure the space is loaded
