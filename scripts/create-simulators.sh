@@ -2,13 +2,38 @@
 
 source ./scripts/env.sh
 
+# Define colors
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
 open -a Simulator
 
 # Display Xcode version and available runtimes
 echo "Xcode info:"
 xcodebuild -version
-echo "Available iOS runtimes:"
-xcrun simctl list runtimes
+
+# Function to check if iOS runtime exists
+check_ios_runtime() {
+    local runtime="com.apple.CoreSimulator.SimRuntime.iOS-${IOS_VERSION//./-}"
+    if ! xcrun simctl list runtimes --json | jq -e ".runtimes[] | select(.identifier == \"$runtime\")" > /dev/null; then
+        echo "Available runtimes:"
+        xcrun simctl list runtimes
+        echo -e "${RED}Error: iOS $IOS_VERSION runtime not found!${NC}. Check .env or .env.local file."
+        exit 1
+    fi
+}
+
+# Function to check if device model exists
+check_device_model() {
+    local model=$1
+    local device_type="com.apple.CoreSimulator.SimDeviceType.${model// /-}"
+    if ! xcrun simctl list devicetypes --json | jq -e ".devicetypes[] | select(.identifier == \"$device_type\")" > /dev/null; then
+        echo "Available device types:"
+        xcrun simctl list devicetypes
+        echo -e "${RED}Error: Device model '$model' not found!${NC}. Check .env or .env.local file."
+        exit 1
+    fi
+}
 
 # Function to find existing simulator
 find_simulator() {
@@ -34,6 +59,9 @@ find_or_create_simulator() {
     local user=$2
     local uuid_var=$3
 
+    # Check if device model exists
+    check_device_model "$model"
+
     echo "Looking for existing $model..."
     local uuid=$(find_simulator "$model")
 
@@ -43,6 +71,11 @@ find_or_create_simulator() {
             "$model" \
             "com.apple.CoreSimulator.SimDeviceType.${model// /-}" \
             "com.apple.CoreSimulator.SimRuntime.iOS-${IOS_VERSION//./-}")
+        
+        if [ -z "$uuid" ]; then
+            echo -e "${RED}Error: Failed to create simulator for $user with model $model${NC}"
+            exit 1
+        fi
     else
         echo "Found existing simulator for $user with UDID: $uuid"
     fi
@@ -51,39 +84,59 @@ find_or_create_simulator() {
     eval "$uuid_var=$uuid"
 }
 
+# Function to check simulator state
+check_simulator_state() {
+    local uuid=$1
+    local state=$(xcrun simctl list devices --json | jq -r ".devices | to_entries[] | .value[] | select(.udid == \"$uuid\") | .state")
+    echo "$state"
+}
+
+# Function to ensure simulator is booted
+ensure_simulator_booted() {
+    local uuid=$1
+    local name=$2
+    
+    local state=$(check_simulator_state "$uuid")
+    if [ "$state" = "Booted" ]; then
+        echo "$name simulator is already booted"
+        return
+    fi
+
+    echo "Booting $name simulator..."
+    if ! xcrun simctl boot "$uuid"; then
+        echo -e "${RED}Error: Failed to boot $name simulator${NC}"
+        exit 1
+    fi
+
+    # Wait for simulators to fully boot
+    echo "Waiting 5 seconds for $name simulator to fully boot..."
+    sleep 5
+
+    # Check boot status
+    echo "Checking $name simulator boot status..."
+    if ! xcrun simctl bootstatus "$uuid" > /dev/null 2>&1; then
+        echo -e "${RED}Error: $name simulator failed to boot properly${NC}"
+        exit 1
+    fi
+
+    echo "$name simulator successfully booted"
+}
+
+# Check if iOS runtime exists before proceeding
+check_ios_runtime
+
 # Find or create simulators for both users
 find_or_create_simulator "$IPHONE_MODEL_A" "User A" "USER_A_IOS_UUID"
 find_or_create_simulator "$IPHONE_MODEL_B" "User B" "USER_B_IOS_UUID"
 
 # Boot simulators
-echo "Booting simulators..."
-xcrun simctl boot "$USER_A_IOS_UUID"
-xcrun simctl boot "$USER_B_IOS_UUID"
-
-# Check boot status
-echo "Checking boot status..."
-xcrun simctl bootstatus "$USER_A_IOS_UUID"
-xcrun simctl bootstatus "$USER_B_IOS_UUID"
+echo "Checking and booting simulators..."
+ensure_simulator_booted "$USER_A_IOS_UUID" "User A"
+ensure_simulator_booted "$USER_B_IOS_UUID" "User B"
 
 # Print UDIDs for debugging
 echo "User A simulator UDID: $USER_A_IOS_UUID"
 echo "User B simulator UDID: $USER_B_IOS_UUID"
-
-# Wait for simulators to fully boot
-echo "Waiting 5 seconds for simulators to fully boot..."
-sleep 5
-
-# List all devices
-echo "===== List of all simulators ====="
-xcrun simctl list devices
-
-# Check User A simulator state
-echo "Checking User A simulator state:"
-xcrun simctl list devices | grep "$USER_A_IOS_UUID" || true
-
-# Check User B simulator state
-echo "Checking User B simulator state:"
-xcrun simctl list devices | grep "$USER_B_IOS_UUID" || true
 
 # Export UDIDs to environment variables and save to env.export
 echo "USER_A_IOS_UUID=$USER_A_IOS_UUID" > .env.export
