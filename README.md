@@ -266,6 +266,13 @@ For running iOS tests, you need:
 
 ### Environment Configuration
 
+1. **Install Xcode from Store or [Developer Portal](https://developer.apple.com/download/all/)
+
+2. Run `make run-ios-simulators`
+
+3.1 Run smoke `test:ios:smoke`
+3.2 Run specific test `npm run test:ios @id`
+
 1. **Add Xcode tools to your PATH**:
    If you encounter "simctl is not in path" error, add Xcode developer tools to your PATH:
    ```bash
