@@ -128,15 +128,15 @@ export async function callListenSessionEvents(
                   message.value.spaceSyncStatusUpdate.syncingObjectsCounter.toString(),
                 status:
                   Event_Space_Status[
-                    message.value.spaceSyncStatusUpdate.status
+                  message.value.spaceSyncStatusUpdate.status
                   ],
                 network:
                   Event_Space_Network[
-                    message.value.spaceSyncStatusUpdate.network
+                  message.value.spaceSyncStatusUpdate.network
                   ],
                 error:
                   Event_Space_SyncError[
-                    message.value.spaceSyncStatusUpdate.error
+                  message.value.spaceSyncStatusUpdate.error
                   ],
               })
             );
@@ -144,6 +144,7 @@ export async function callListenSessionEvents(
             const { id, status } = message.value.spaceSyncStatusUpdate;
             const syncingObjectsCounter =
               message.value.spaceSyncStatusUpdate.syncingObjectsCounter;
+
             // Check if the ID matches the current user's spaceId and status is 0
             if (
               id === store.currentUser.accountSpaceId &&
