@@ -1,0 +1,84 @@
+name: Smoke iOS
+
+on:
+  schedule:
+    # Triggers the workflow every weekdays at 02:00 UTC:
+    - cron:  '0 2 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      build_ios_app:
+        description: 'Build new iOS App (true - build, false - user latest version)'
+        required: false
+        default: true
+        type: boolean
+      url_for_build:
+        description: "Prebuild iOS App URL"
+        required: false
+        type: string
+
+jobs:
+  trigger-build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Trigger and Wait for Build IPA
+        if: ${{ inputs.build_ios_app == true }}
+        uses: convictional/trigger-workflow-and-wait@v1.6.5
+        with:
+          owner: anyproto
+          repo: anytype-swift
+          workflow_file_name: ipa.yaml
+          ref: develop
+          github_token: ${{ secrets.ANY_CLA_TOKEN }}
+          client_payload: '{ "build_type": "dev" }'
+          wait_interval: 30
+
+  run-tests:
+    runs-on: [self-hosted, iOS]
+    needs: trigger-build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Set Xcode version
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '16.2'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Setup Appium
+        run: |
+          npm install -g appium@2.12.0
+          appium &
+      
+      - name: Download App
+        run: |
+          if [ "${{ inputs.url_for_build }}" != "" ]; then
+            make download_app_ios ${{ inputs.url_for_build }}
+          else
+            make download_latest_app_ios
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Run Simulators
+        run: make run-ios-simulators
+
+      - name: Run iOS Smoke
+        run: npm run test:ios:smoke
+        continue-on-error: true
+
+      - name: Upload Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: Results
+          path: ./results
+          
