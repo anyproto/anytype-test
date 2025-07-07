@@ -1,17 +1,10 @@
 import { driver } from "@wdio/globals";
 import { BasePage } from "./basePage";
+import SpaceTypePage from "./spaceTypePage";
 
 class MySpacesPage extends BasePage {
   constructor(userDriver: WebdriverIO.Browser) {
     super(userDriver);
-  }
-
-  async typeItemTitle(title: string) {
-    await this.enterTextInField(title, "accessibility id:Untitled");
-  }
-
-  async createItem() {
-    await this.tap("accessibility id:Create");
   }
 
   async completeItemCreation() {
@@ -26,6 +19,7 @@ class MySpacesPage extends BasePage {
 
   async createNewItem() {
     await this.tap("accessibility id:x32/Plus");
+    return new SpaceTypePage(this.userDriver);
   }
 
   async navigateToSettings() {
