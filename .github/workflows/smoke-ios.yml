@@ -2,12 +2,12 @@ name: Smoke iOS
 
 on:
   schedule:
-    # Triggers the workflow every weekdays at 02:00 UTC:
+    # Triggers the workflow every weekday at 02:00 UTC:
     - cron:  '0 2 * * 1-5'
   workflow_dispatch:
     inputs:
       build_ios_app:
-        description: 'Build new iOS App (true - build, false - user latest version)'
+        description: 'Build new iOS App (true - build, false - use latest version)'
         required: false
         default: true
         type: boolean
@@ -22,7 +22,7 @@ jobs:
     
     steps:
       - name: Trigger and Wait for Build IPA
-        if: ${{ inputs.build_ios_app == true }}
+        if: ${{ inputs.build_ios_app == true || github.event_name == 'schedule' }}
         uses: convictional/trigger-workflow-and-wait@v1.6.5
         with:
           owner: anyproto
