@@ -24,3 +24,6 @@ test-results/*
 !test-results/
 test-temp-translations.json
 .env
+build/*
+.env.export
+.env.local

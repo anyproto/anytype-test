@@ -61,7 +61,6 @@ anytype-test/
 ├── config/                 # Configuration files for different test environments
 │   ├── ios.conf.ts         # iOS test configuration
 │   ├── desktop.config.ts   # Desktop test configuration
-│   └── testios.conf.ts     # Test iOS configuration
 ├── features/               # Cucumber feature files (BDD scenarios)
 │   ├── api/                # API feature tests
 │   ├── desktop/            # Desktop feature tests
@@ -266,6 +265,25 @@ For running iOS tests, you need:
 - Valid Apple Developer account (for testing on real devices)
 
 ### Environment Configuration
+
+1. Install Xcode from Store or [Developer Portal](https://developer.apple.com/download/all/)
+2. Install gh `new install gh` and login `gh auth login`
+3. Prepare packages `npm install`
+4. Run `make run-ios-simulators`
+  4.1 If you receive an error for iOS version or device, you need to override the default values from `.env`
+    4.1.1 Create an `.env.local` file in the root of the project. You will see available versions and devices in result `make run-ios-simulators`
+    4.1.2 If you receive an error for iOS version, create `IOS_VERSION=Your version (18.4, 17.5)`.
+    4.1.3 If simulator version error, create `IPHONE_MODEL_A=iPhone name (iPhone 15, iPhone XR)` and `IPHONE_MODEL_B=The same as IPHONE_MODEL_A`
+    4.1.4 Example of correct filling is in `.env`
+5. Download app build
+   5.1 You can download lates build from CI - `make download_latest_app_ios`
+   5.2 You can download any build
+      .2.1 If needed run build from any branch from [workflow](https://github.com/anyproto/anytype-swift/actions/workflows/ipa.5yaml)
+      5.2.2 Copy link to build (Example https://github.com/anyproto/anytype-swift/actions/runs/15327896977)
+      5.2.3 Download build `make download_app_ios [LINK]`
+6. Run tests
+  6.1 Run smoke `npm run test:ios:smoke`
+  6.2 Run specific test `npm run test:ios @id`
 
 1. **Add Xcode tools to your PATH**:
    If you encounter "simctl is not in path" error, add Xcode developer tools to your PATH:

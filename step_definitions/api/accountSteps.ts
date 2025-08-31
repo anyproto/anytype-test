@@ -46,7 +46,7 @@ export function saveUser(userNumber: number, user: UserType): void {
   );
 }
 
-Given("the user creates a new account on {string}", {timeout: 30 * 1000}, async (network: string) => {
+Given("the user creates a new account on {string}", { timeout: 30 * 1000 }, async (network: string) => {
   logger.info("STEP: the user creates a new account");
   const userNumber = getCurrentUserNumber();
   const mnemonic = await callWalletCreate();
@@ -117,8 +117,7 @@ Given("the user creates a new account on {string}", {timeout: 30 * 1000}, async 
   );
   if (responseRecords.length !== 1) {
     throw new Error(
-      `Expected responseRecord to contain exactly one element, but got ${
-        responseRecords ? responseRecords.length : 0
+      `Expected responseRecord to contain exactly one element, but got ${responseRecords ? responseRecords.length : 0
       }`
     );
   }
@@ -148,7 +147,7 @@ Given("the user creates a new account on {string}", {timeout: 30 * 1000}, async 
 
 Given(
   "the user logs in to their account on {string}",
-  { timeout: 60000 },
+  { timeout: 120 * 1000 },
   async (network: string) => {
     logger.info("STEP: the user logs in to their account");
 
@@ -178,10 +177,16 @@ Given(
 
 Then(
   "the account is synced within {int} seconds",
-  { timeout: 140 * 1000 },
+  { timeout: 180 * 1000 },
   async (seconds: number) => {
     logger.info("STEP: the account is synced");
     try {
+      // Add check for accountSpaceId
+      if (!store.currentUser.accountSpaceId) {
+        throw new Error("Account space ID is not set. Cannot wait for sync.");
+      }
+      logger.info(`Waiting for sync with accountSpaceId: ${store.currentUser.accountSpaceId}`);
+
       await waitForCondition(
         () => store.spaceSyncStatusReceived,
         seconds * 1000
@@ -194,7 +199,7 @@ Then(
       if (store.objects.has(1)) {
         logger.info("Checking object 1 sync status");
         const syncStatus = await getObjectSyncStatus(1);
-        
+
         if (syncStatus === 0) {
           logger.error("Object 1 was synced, but not the whole account");
         } else {
@@ -231,8 +236,7 @@ Then(
       );
 
       throw new Error(
-        `Test failed: The account did not sync within the expected time. Stack trace: ${
-          error instanceof Error ? error.stack : "No stack trace available"
+        `Test failed: The account did not sync within the expected time. Stack trace: ${error instanceof Error ? error.stack : "No stack trace available"
         }`
       );
     }

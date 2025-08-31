@@ -11,9 +11,6 @@ const logger = new Logger({ name: "custom" });
 Given(
   "{string} navigates to the {string} space settings screen",
   async function (user: string, spaceName: string) {
-    logger.info(
-      `STEP: ${user} navigates to the "${spaceName}" space settings screen`
-    );
     const userDriver = getUserDriver(user);
     this.spacePage = new SpacePage(userDriver);
     await this.spacePage.tapSpaceName(spaceName);
@@ -23,7 +20,6 @@ Given(
 Given(
   "{string} selects {string} from space settings menu",
   async function (user: string, option: string) {
-    logger.info(`STEP: ${user} selects "${option}" from space settings menu`);
     const userDriver = getUserDriver(user);
     this.spacePage = new SpacePage(userDriver);
     switch (option) {
@@ -40,7 +36,6 @@ Given(
 );
 
 Given("{string} selects Generate Invite Link", async function (user: string) {
-  logger.info(`STEP: ${user} selects Generate Invite Link`);
   const userDriver = getUserDriver(user);
   this.spacePage = new SpacePage(userDriver);
   await this.spacePage.generateInviteLink();
@@ -50,7 +45,6 @@ Given("{string} selects Generate Invite Link", async function (user: string) {
 Given(
   "{string} sends an invitation to {string}",
   async function (user: string, userToInvite: string) {
-    logger.info(`STEP: ${user} sends an invitation to ${userToInvite}`);
     const userDriver = getUserDriver(user);
     this.spacePage = new SpacePage(userDriver);
     const inviteLink = await this.spacePage.copyInviteLink();
@@ -62,7 +56,6 @@ Given(
 When(
   "{string} receives and clicks the invitation link",
   async function (user: string) {
-    logger.info(`STEP: ${user} receives the invitation link`);
     const userDriver = getUserDriver(user);
     const inviteLink = LinkStorage.getInviteLink();
     if (!inviteLink) {
@@ -77,9 +70,6 @@ When(
 When(
   "{string} sends a request to join the {string} space",
   async function (user: string, spaceName: string) {
-    logger.info(
-      `STEP: ${user} sends a request to join the "${spaceName}" space`
-    );
     const userDriver = getUserDriver(user);
     await userDriver.pause(3000);
     this.spacePage = new SpacePage(userDriver);
@@ -90,7 +80,6 @@ When(
 Then(
   "{string} sees the Request to join Confirmation popup",
   async function (user: string) {
-    logger.info(`STEP: ${user} sees the Request to join Confirmation popup`);
     const userDriver = getUserDriver(user);
     this.spacePage = new SpacePage(userDriver);
     await this.spacePage.checkRequestToJoinConfirmationPopup();
@@ -101,9 +90,6 @@ Then(
 When(
   "{string} approves the join request of {string} with {string} rights",
   async function (approver: string, requester: string, rights: string) {
-    logger.info(
-      `STEP: ${approver} approves the join request of ${requester} with ${rights} rights`
-    );
     const userDriver = getUserDriver(approver);
     this.spacePage = new SpacePage(userDriver);
     await this.spacePage.approveJoinRequest(requester, rights);
@@ -117,7 +103,6 @@ When(
 When(
   "{string} declines the join request of {string}",
   async function (decliner: string, requester: string) {
-    logger.info(`STEP: ${decliner} declines the join request of ${requester}`);
     const userDriver = getUserDriver(decliner);
     this.spacePage = new SpacePage(userDriver);
     await this.spacePage.declineJoinRequest(requester);
@@ -127,7 +112,6 @@ When(
 When(
   "{string} sees the message {string} in chat",
   async function (user: string, message: string) {
-    logger.info(`STEP: ${user} sees the message "${message}" in chat`);
     const userDriver = getUserDriver(user);
     this.chatPage = new ChatPage(userDriver);
     await this.chatPage.logPageSource();
@@ -138,7 +122,6 @@ When(
 When(
   "{string} sends a message {string} in chat",
   async function (user: string, message: string) {
-    logger.info(`STEP: ${user} sends a message "${message}" in chat`);
     const userDriver = getUserDriver(user);
     this.chatPage = new ChatPage(userDriver);
     await this.chatPage.sendMessage(message);
@@ -148,9 +131,6 @@ When(
 When(
   "{string} doesn't see {string} in the space sharing menu",
   async function (activeUser: string, userToCheck: string) {
-    logger.info(
-      `STEP: ${activeUser} doesn't see ${userToCheck} in the space sharing menu`
-    );
     const userDriver = getUserDriver(activeUser);
     this.spacePage = new SpacePage(userDriver);
     await this.spacePage.assertUserIsInSpaceSharingMenu();
