@@ -23,3 +23,4 @@ mw/*
 test-results/*
 !test-results/
 test-temp-translations.json
+.env

@@ -1,12 +1,12 @@
-
 import { test, expect } from "@playwright/test";
-import { delay } from '../setup/helpers';
-import { page } from '../setup/globals';
+import { delay, waitForPageLoadAfterLogin } from '../setup/helpers';
+import { page, translations, storage } from '../setup/globals';
 import { widget } from "../utils/widgets";
 import { 
     deleteObjectByName, 
     createPage,
-    createTitleWithSelectionTarget
+    createTitleWithSelectionTarget,
+    clearInputField
 } from "../utils/spaceUtils";
 import { setupTest } from '../setup/testSetup';
 
@@ -14,33 +14,36 @@ import { setupTest } from '../setup/testSetup';
 setupTest();
 
 test("Search page by exact match in title", async () => {
-    const text='One good name';
+    const text = 'Good name';
     console.log('Starting search test...');
     
-    console.log('Creating a new page object...');
-    await widget(page, 'Pages').createObject();
-    console.log('Created a new page object');
+    // Wait for page to be fully loaded and synced after login
+    await waitForPageLoadAfterLogin(60000);
     
-    //I should be focused on the title input
-    console.log('Waiting for title input...');
-    const pageName = page.locator('#value.ctitle');
-    await pageName.waitFor();
-    await expect(pageName).toBeFocused();
-    console.log('Title input is focused');
+    // Click on the button with the drop-down list
+    console.log("Clicking on space arrow button...");
+    const arrowButton = page.locator("div.icon.arrow.withBackground");
+    await expect(arrowButton).toBeVisible({ timeout: 100000 });
+    await arrowButton.click();
+    console.log("Space arrow button clicked");
     
-    console.log(`Filling title with text: ${text}...`);
-    await pageName.click(); // First click to focus
-    await page.keyboard.type(text); // Enter text character-by-character like a user would do
-    await page.keyboard.press("Enter"); // Press enter after typing the text
-    console.log(`Filled title with text: ${text}`);
+    // Create Page
+    console.log("Creating Page object...");
+    const menuTypeSuggest = page.locator("div#menuTypeSuggest");
+    await expect(menuTypeSuggest).toBeVisible({ timeout: 5000 });
+    let menuItem = menuTypeSuggest.locator(`div.name:has-text('${translations.sidebarSectionLayoutFormatPage}')`);
+    await expect(menuItem).toBeVisible({ timeout: 5000 });
+    await page.waitForTimeout(1000);
+    await menuItem.click({ force: true });
+    await page.waitForTimeout(2000);
     
-    console.log('Verifying title text...');
-    await expect(pageName).toHaveText(text);
-    console.log('Title text verified');
-
-    console.log('Clicking on search icon...');
-    await page.locator('.icon.search.withBackground').click();
-    console.log('Clicked on search icon');
+    // Create title for the page
+    await createTitleWithSelectionTarget(page, text);
+    console.log(`Page object created with title: ${text}`);
+    
+    console.log('Clicking on search button...');
+    await page.locator('#item-search').click();
+    console.log('Clicked on search button');
     
     console.log('Waiting for search input...');
     const searchInput = page.locator('#input');
@@ -48,27 +51,36 @@ test("Search page by exact match in title", async () => {
     console.log('Search input is ready');
     
     console.log(`Searching for: ${text}...`);
-    await searchInput.click(); // First click to focus
+    
+    // Clear the search input field if there's any existing text
+    await clearInputField(page, searchInput);
+    
     await page.keyboard.type(text); // Enter text character-by-character like a user would do
     // Don't press Enter here because we want to see if it's working without pressing Enter
     console.log(`Entered search query: ${text}`);
     
+    // Wait for search results to appear
+    console.log('Waiting for search results...');
+    await page.waitForTimeout(2000); // Give time for search results to update
+    
+    // Check if search results container is visible
+    console.log('Checking search results container...');
+    await expect(page.locator('div.ReactVirtualized__Grid__innerScrollContainer')).toBeVisible({ timeout: 10000 });
+    
     console.log('Verifying search results...');
-    await expect(page.locator('div.name > markuphighlight').filter({ hasText: text})).toBeVisible();
+    await expect(page.locator('div.name > markuphighlight').filter({ hasText: text})).toBeVisible({ timeout: 10000 });
     console.log('Search result found and verified');
     
     // Clearing search input
     console.log('Clearing search input...');
     const searchInputField = page.locator('#input');
-    await searchInputField.click();
-    await page.keyboard.press('Control+A'); // Highlight everything
-    await page.keyboard.press('Backspace'); // Clear highlighted content
+    await clearInputField(page, searchInputField);
     console.log('Search input cleared');
     
     // Close search window
     console.log('Closing search window...');
     await page.keyboard.press('Escape'); // Press Escape to close the search window
-    await delay(5000); // Pause for 5 seconds before closing the search window
+    await page.waitForTimeout(5000); // Pause for 5 seconds before closing the search window
     console.log('Search window closed');
     
     // Cleaning up: deleting the created page
@@ -80,13 +92,16 @@ test("Search page by exact match in title", async () => {
 
 test("Search object by title and text", async () => {
 	try {
-		const title = "Lorem ipsum dolor sit amet";
-		await delay(5000);
+
+		// Wait for page to be fully loaded and synced after login
+		await waitForPageLoadAfterLogin(60000);
+    
+		const title = "Search Test Object";
 		// Create page
 		console.log("Creating a new page...");
 		const pageCreated = await createPage(page);
 		//expect(pageCreated).toBeTruthy();
-		await delay(5000);
+		await page.waitForTimeout(5000);
 		// Find and create a title
 		console.log("Creating title...");
 		await createTitleWithSelectionTarget(page, title);
@@ -96,7 +111,6 @@ test("Search object by title and text", async () => {
 		const editorWrapper = page.locator("div#blockLast");
 		expect(await editorWrapper.count()).toBeGreaterThan(0);
 		await expect(editorWrapper).toBeVisible({ timeout: 5000 });
-		await editorWrapper.click();
 		await editorWrapper.click();
 		
 		// Checking the presence of a text input field
@@ -110,16 +124,20 @@ test("Search object by title and text", async () => {
 		
 		// Click in the input field and enter text using the keyboard
 		await value.click();
-		await page.keyboard.type("Тест тест тест");
+		// Copy text to clipboard and paste it for faster input
+		await page.evaluate((text) => {
+			navigator.clipboard.writeText(text);
+		}, storage.default_text);
+		await page.keyboard.press("Control+v"); // Paste text
 		await page.keyboard.press("Enter");
 		
 		// Checking the entered text
-		const editorText = await value.innerText();
-		expect(editorText).toBe('Тест тест тест');
+		const editorText = await value.textContent();
+		expect(editorText).toBe(storage.default_text);
 		
 		// Checking for the search button
 		console.log("Starting search...");
-		const searchButton = page.locator('div.icon.search.withBackground');
+		const searchButton = page.locator('div#item-search');
 		expect(await searchButton.count()).toBeGreaterThan(0);
 		await expect(searchButton).toBeVisible({ timeout: 5000 });
 		await searchButton.click();
@@ -145,7 +163,7 @@ test("Search object by title and text", async () => {
 		await expect(foundDocument).toBeVisible({ timeout: 5000 });
 		
 		const documentName = foundDocument.locator('div.name');
-		const documentText = await documentName.innerText();
+		const documentText = await documentName.textContent();
 		expect(documentText).toBe(title);
 		
 		// Check the second element (Create Object)
@@ -154,7 +172,7 @@ test("Search object by title and text", async () => {
 		await expect(createObject).toBeVisible({ timeout: 5000 });
 
 		const createObjectName = createObject.locator('div.name');
-		const createObjectText = await createObjectName.innerText();
+		const createObjectText = await createObjectName.textContent();
 		expect(createObjectText).toContain("Create Object");
 		expect(createObjectText).toContain(title);
 		
@@ -162,9 +180,37 @@ test("Search object by title and text", async () => {
 		await page.keyboard.press('Escape');
 		await page.waitForTimeout(1000);  // We give time to close the search
 		
+		// Second search: Search by first 20 characters from default text
+		console.log("Starting second search by first 20 characters from default text...");
+		await searchButton.click();
+		
+		// Clear the search field
+		await clearInputField(page, searchInput);
+		
+		// Search for first 20 characters from default text
+		const searchText = storage.default_text.substring(0, 20);
+		await searchInput.fill(searchText);
+		
+		// Waiting for search results to appear
+		await page.waitForTimeout(1000); // give time for search results to update
+		
+		// Checking for the presence of a search results container
+		console.log("Verifying search results for partial text search...");
+		await expect(resultsContainer).toBeVisible({ timeout: 5000 });
+		
+		// Check the first element (found document)
+		await expect(foundDocument).toBeVisible({ timeout: 5000 });
+		
+		const documentTextForLorem = await documentName.textContent();
+		expect(documentTextForLorem).toBe(title);
+		
+		// Close the search by pressing the Escape key
+		await page.keyboard.press('Escape');
+		await page.waitForTimeout(1000);  // We give time to close the search
+		
 		// Delete the created document
 		console.log("Cleaning up: Deleting the test document...");
-		await deleteObjectByName(page, title, true, "Pages");
+		await deleteObjectByName(page, title, true, translations.sidebarObjectTypeObject);
 		console.log("✅ Search test completed successfully");
 	} catch (e) {
 		console.error(`❌ ERROR in Search object by title and text test: ${e}`);

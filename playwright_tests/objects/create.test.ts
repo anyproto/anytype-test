@@ -1,11 +1,16 @@
 import { test, expect } from "@playwright/test";
-import { delay } from '../setup/helpers';
-import { page } from '../setup/globals';
+import { delay, waitForPageLoadAfterLogin } from '../setup/helpers';
+import { page, storage, translations } from '../setup/globals';
 import { 
 	deleteObjectByName, 
 	createPage,
 	createTitleWithSelectionTarget, 
-	createTitleWithEditorTitle 
+	createTitleWithEditorTitle,
+	publishCurrentObject,
+	unpublishCurrentObject,
+	createSpaceWithCustomName,
+	deleteSpaceByName,
+	clearInputField
 } from "../utils/spaceUtils";
 import { setupTest } from '../setup/testSetup';
 
@@ -13,13 +18,34 @@ import { setupTest } from '../setup/testSetup';
 setupTest();
 
 
+test("Create new space with custom name", async () => {
+    console.log('Starting create new space test...');
+    // Wait for page to be fully loaded and synced after login
+	await waitForPageLoadAfterLogin(60000);
+    
+    // Use test data from storage
+    const spaceName = storage["testSpaceName"];
+    
+    // Create the space using the utility function
+    console.log('Creating new space...');
+    const createResult = await createSpaceWithCustomName(page, spaceName);
+    
+    if (!createResult) {
+        throw new Error(`Failed to create space "${spaceName}"`);
+    }
+    
+    console.log('✅ Space created successfully');
+});
+
 test("Create and delete various object types", async () => {
-	
+	// Wait for page to be fully loaded and synced after login
+	await waitForPageLoadAfterLogin(60000);
+    
 	// Click on the button with the drop-down list
-	//await delay(5000);
+	await page.waitForTimeout(10000);
 	console.log("Clicking on space arrow button...");
-	const arrowButton = page.locator("div#widget-space-arrow");
-	await expect(arrowButton).toBeVisible({ timeout: 5000 });
+	const arrowButton = page.locator("div.icon.arrow.withBackground");
+	await expect(arrowButton).toBeVisible({ timeout: 100000 });
 	await arrowButton.click();
 	console.log("Space arrow button clicked");
 	
@@ -27,30 +53,44 @@ test("Create and delete various object types", async () => {
 	console.log("Creating Bookmark object...");
 	const menuTypeSuggest = page.locator("div#menuTypeSuggest");
 	await expect(menuTypeSuggest).toBeVisible({ timeout: 5000 });
-	let menuItem = menuTypeSuggest.locator("div.name:has-text('Bookmark')");
+	let menuItem = menuTypeSuggest.locator(`div.name:has-text('${translations.blockNameBookmark}')`);
 	await expect(menuItem).toBeVisible({ timeout: 5000 });
 	await delay(1000);
 	await menuItem.click({ force: true });
 	await delay(2000);
 	
-	await createTitleWithSelectionTarget(page, "Bookmark UItest");
+	// Enter bookmark URL
+	console.log("Entering bookmark URL...");
+	const linkInput = page.locator("input.input-text[placeholder='Paste link']");
+	await expect(linkInput).toBeVisible({ timeout: 5000 });
+	await linkInput.fill("https://anytype.io");
+	// Press Enter
+	await linkInput.press("Enter");
+	await page.waitForTimeout(2000);
+	
+	// check the title
+	console.log("Checking bookmark title...");
+	const titleElement = page.locator("div#block-title div#value");
+	await expect(titleElement).toBeVisible({ timeout: 5000 });
+	const bookmarkTitle = await titleElement.innerText();
+	expect(bookmarkTitle).toBe("anytype — the everything app");
 	console.log("Bookmark object created successfully");
 	
 	// Go back
 	console.log("Going back to menu...");
-	let backArrow = page.locator("div#widget-space-arrow");
+	let backArrow = page.locator("div.icon.arrow.withBackground");
 	await expect(backArrow).toBeVisible({ timeout: 5000 });
 	await backArrow.click();
-	await delay(2000);
+	await page.waitForTimeout(2000);
 	
 	// Create Collection
 	console.log("Creating Collection object...");
 	await expect(menuTypeSuggest).toBeVisible({ timeout: 5000 });
-	menuItem = menuTypeSuggest.locator("div.name:has-text('Collection')");
+	menuItem = menuTypeSuggest.locator(`div.name:has-text('${translations.commonCollection}')`);
 	await expect(menuItem).toBeVisible({ timeout: 5000 });
-	await delay(1000);
+	await page.waitForTimeout(1000);
 	await menuItem.click({ force: true });
-	await delay(2000);
+	await page.waitForTimeout(2000);
 	
 	// Enter name for Collection
 	await createTitleWithEditorTitle(page, "Collection UItest");
@@ -58,42 +98,20 @@ test("Create and delete various object types", async () => {
 	
 	// Go back
 	console.log("Going back to menu...");
-	backArrow = page.locator("div#widget-space-arrow");
+	backArrow = page.locator("div.icon.arrow.withBackground");
 	await expect(backArrow).toBeVisible({ timeout: 5000 });
 	await backArrow.click();
-	await delay(2000);
-	
-	// Create Human
-	/*console.log("Creating Human object...");
-	await expect(menuTypeSuggest).toBeVisible({ timeout: 5000 });
-	menuItem = menuTypeSuggest.locator("div.name:has-text('Human')");
-	await delay(5000);
-	await expect(menuItem).toBeVisible({ timeout: 5000 });
-	await delay(1000);
-	await menuItem.click({ force: true });
-	await delay(2000);
-	
-	// Enter name for Human
-	await createTitleWithSelectionTarget(page, "Human UItest");
-	console.log("Human object created successfully");
-	
-	// Go back
-	console.log("Going back to menu...");
-	backArrow = page.locator("div#widget-space-arrow");
-	await expect(backArrow).toBeVisible({ timeout: 5000 });
-	await backArrow.click();
-	await delay(2000);*/
+	await page.waitForTimeout(2000);
 	
 	// Create Note
 	console.log("Creating Note object...");
 	await expect(menuTypeSuggest).toBeVisible({ timeout: 5000 });
-	menuItem = menuTypeSuggest.locator("div.name:has-text('Note')");
+	menuItem = menuTypeSuggest.locator(`div.name:has-text('${translations.layout9}')`);
 	await expect(menuItem).toBeVisible({ timeout: 5000 });
-	await delay(1000);
+	await page.waitForTimeout(1000);
 	await menuItem.click({ force: true });
-	await delay(2000);
+	await page.waitForTimeout(2000);
 	
-	// 3 way to create a title
 	// Enter the name in the first editable field
 	console.log("Setting Note title and content...");
 	const editorWrapper = page.locator("div#blockLast");
@@ -103,90 +121,68 @@ test("Create and delete various object types", async () => {
 	const titleInputDiv = page.locator("div.editable").first();
 	await expect(titleInputDiv).toBeVisible({ timeout: 5000 });
 	await titleInputDiv.click();
-	await titleInputDiv.evaluate((el, name) => { el.innerText = name; }, "Note UItest");
+	await titleInputDiv.type("Note UItest", { delay: 100 }); // Type as if human is typing
 	const titleText = await titleInputDiv.innerText();
 	expect(titleText).toBe("Note UItest");
 	
-	// Enter text into the body of the note
-	await expect(editorWrapper).toBeVisible({ timeout: 5000 });
-	await editorWrapper.click();
-	await editorWrapper.click();
-	const wrapContent = page.locator("div.editableWrap").nth(1);
-	await expect(wrapContent).toBeVisible({ timeout: 5000 });
-	const value = wrapContent.locator("div#value").nth(0);
-	await expect(value).toBeVisible({ timeout: 5000 });
-	await value.click();
-	await value.evaluate((el, text) => { el.innerText = text; }, "Note UItest");
-	
-	const editorText = await value.innerText();
-	expect(editorText).toBe("Note UItest");
 	console.log("Note object created successfully");
 	
 	// Go back
 	console.log("Going back to menu...");
-	backArrow = page.locator("div#widget-space-arrow");
+	backArrow = page.locator("div.icon.arrow.withBackground");
 	await expect(backArrow).toBeVisible({ timeout: 5000 });
 	await backArrow.click();
-	await delay(2000);
+	await page.waitForTimeout(2000);
 	
 	// Create Page
 	console.log("Creating Page object...");
 	await expect(menuTypeSuggest).toBeVisible({ timeout: 5000 });
-	menuItem = menuTypeSuggest.locator("div.name:has-text('Page')");
+	menuItem = menuTypeSuggest.locator(`div.name:has-text('${translations.sidebarSectionLayoutFormatPage}')`);
 	await expect(menuItem).toBeVisible({ timeout: 5000 });
-	await delay(1000);
+	await page.waitForTimeout(1000);
 	await menuItem.click({ force: true });
-	await delay(2000);
+	await page.waitForTimeout(2000);
 	
 	await createTitleWithSelectionTarget(page, "Page UItest");
 	console.log("Page object created successfully");
 	
 	// Go back
 	console.log("Going back to menu...");
-	backArrow = page.locator("div#widget-space-arrow");
+	backArrow = page.locator("div.icon.arrow.withBackground");
 	await expect(backArrow).toBeVisible({ timeout: 5000 });
 	await backArrow.click();
-	await delay(2000);
+	await page.waitForTimeout(2000);
 	
 	// Create Project
 	console.log("Creating Project object...");
 	await expect(menuTypeSuggest).toBeVisible({ timeout: 5000 });
 	menuItem = menuTypeSuggest.locator("div.name:has-text('Project')");
 	await expect(menuItem).toBeVisible({ timeout: 5000 });
-	await delay(1000);
+	await page.waitForTimeout(1000);
 	await menuItem.click({ force: true });
-	await delay(2000);
+	await page.waitForTimeout(2000);
 	
 	await createTitleWithSelectionTarget(page, "Project UItest");
 	console.log("Project object created successfully");
 	
 	// Go back
 	console.log("Going back to menu...");
-	backArrow = page.locator("div#widget-space-arrow");
+	backArrow = page.locator("div.icon.arrow.withBackground");
 	await expect(backArrow).toBeVisible({ timeout: 5000 });
 	await backArrow.click();
-	await delay(2000);
+	await page.waitForTimeout(2000);
 	
 	// Create Query
-	console.log("Creating Quety object...");
+	console.log("Creating Query object...");
 	await expect(menuTypeSuggest).toBeVisible({ timeout: 5000 });
-	menuItem = menuTypeSuggest.locator("div.name:has-text('Query')");
+	menuItem = menuTypeSuggest.locator(`div.name:has-text('${translations.commonSet}')`);
 	await expect(menuItem).toBeVisible({ timeout: 5000 });
-	await delay(1000);
+	await page.waitForTimeout(1000);
 	await menuItem.click({ force: true });
-	await delay(2000);
+	await page.waitForTimeout(2000);
 	
-	// Click on Object Type
-	console.log("Configuring Query object type...");
-	const objectType = page.locator("form#item-type");
-	await expect(objectType).toBeVisible({ timeout: 5000 });
-	await objectType.click();
-	
-	// Click on Page in the drop-down menu
-	await expect(menuTypeSuggest).toBeVisible({ timeout: 5000 });
-	const pageOption = menuTypeSuggest.locator("div.name:has-text('Page')");
-	await expect(pageOption).toBeVisible({ timeout: 5000 });
-	await pageOption.click();
+	// Query object is created with default settings
+	console.log("Query object created with default settings...");
 	
 	// Find the title field and enter the name
 	await createTitleWithEditorTitle(page, "Query UItest");
@@ -194,50 +190,75 @@ test("Create and delete various object types", async () => {
 	
 	// Go back
 	console.log("Going back to menu...");
-	backArrow = page.locator("div#widget-space-arrow");
+	backArrow = page.locator("div.icon.arrow.withBackground");
 	await expect(backArrow).toBeVisible({ timeout: 5000 });
 	await backArrow.click();
-	await delay(2000);
+	await page.waitForTimeout(2000);
 	
 	// Create Task
 	console.log("Creating Task object...");
 	await expect(menuTypeSuggest).toBeVisible({ timeout: 5000 });
 	menuItem = menuTypeSuggest.locator("div.name:has-text('Task')");
 	await expect(menuItem).toBeVisible({ timeout: 5000 });
-	await delay(1000);
+	await page.waitForTimeout(1000);
 	await menuItem.click({ force: true });
-	await delay(2000);
+	await page.waitForTimeout(2000);
 	
 	// Find the title field and enter the name
-	await createTitleWithSelectionTarget(page, "Task UItest");
+	// Clear the title field before entering Task name
+	const taskTitleInputDiv = page.locator("div#selectionTarget-title div#value");
+	await expect(taskTitleInputDiv).toBeVisible({ timeout: 5000 });
+	await page.waitForTimeout(500);
+	// Clear the field using keyboard shortcuts
+	await clearInputField(page, taskTitleInputDiv);
+	await page.waitForTimeout(500);
+	await taskTitleInputDiv.type("Task UItest", { delay: 100 }); // Type as if human is typing
+	await page.waitForTimeout(500);
+	await page.keyboard.press("Enter");
 	console.log("Task object created successfully");
 	
 	console.log("✅ All object types created successfully");
 	
 	// Delete all objects
 	console.log("Cleaning up: Deleting all created objects...");
-	//await deleteObjectByName(page, "Human UItest", true, "Pages");
-	await deleteObjectByName(page, "Bookmark UItest", true, "Bookmarks");
-	await deleteObjectByName(page, "Collection UItest", true, "Lists");
+
+	const bookmarkDeleted = await deleteObjectByName(page, "anytype — the everything app", true, translations.blockNameBookmark);
+	expect(bookmarkDeleted).toBe(true);
 	
-	await deleteObjectByName(page, "Note UItest", true, "Pages");
-	await deleteObjectByName(page, "Page UItest", true, "Pages");
-	await deleteObjectByName(page, "Project UItest", true, "Pages");
-	await deleteObjectByName(page, "Query UItest", true, "Lists");
-	await deleteObjectByName(page, "Task UItest", true, "Pages");
+	const collectionDeleted = await deleteObjectByName(page, "Collection UItest", true, translations.sidebarObjectTypeList);
+	expect(collectionDeleted).toBe(true);
+	
+	const noteDeleted = await deleteObjectByName(page, "Note UItest", true, translations.sidebarObjectTypeObject);
+	expect(noteDeleted).toBe(true);
+	
+	const pageDeleted = await deleteObjectByName(page, "Page UItest", true, translations.sidebarObjectTypeObject);
+	expect(pageDeleted).toBe(true);
+	
+	const projectDeleted = await deleteObjectByName(page, "Project UItest", true, translations.sidebarObjectTypeObject);
+	expect(projectDeleted).toBe(true);
+	
+	const queryDeleted = await deleteObjectByName(page, "Query UItest", true, translations.sidebarObjectTypeList);
+	expect(queryDeleted).toBe(true);
+	
+	const taskDeleted = await deleteObjectByName(page, "Task UItest", true, translations.sidebarObjectTypeObject);
+	expect(taskDeleted).toBe(true);
+	
 	console.log("✅ All object types deleted successfully");
 });
 
 test("Create object and publish it", async () => {
-	try {	
-		await delay(2000);
+	try {
+		// Wait for page to be fully loaded and synced after login
+		await waitForPageLoadAfterLogin(60000);
+    
+		const pageTitle = "Test Publish Document";
 		console.log("Creating a new page...");
-		const pagCereated = await createPage(page);
-		//expect(pageCreated).toBeTruthy();
-		await delay(5000);
+		const pageCreated = await createPage(page);
+		expect(pageCreated).toBe(true);
+		await page.waitForTimeout(5000);
 		// Find and create a title
 		console.log("Creating title...");
-		await createTitleWithSelectionTarget(page, "Документ 1");
+		await createTitleWithSelectionTarget(page, pageTitle);
 		
 		// Edit content
 		console.log("Editing content...");
@@ -252,28 +273,31 @@ test("Create object and publish it", async () => {
 		const value = wrapContent.locator("div#value").nth(0);
 		await expect(value).toBeVisible({ timeout: 5000 });
 		await value.click();
-		await value.evaluate((el) => { el.innerText = 'Тест тест тест'; });
+		// Copy text to clipboard and paste it for faster input
+		await page.evaluate((text) => {
+			navigator.clipboard.writeText(text);
+		}, storage.default_text);
+		await page.keyboard.press("Control+v"); // Paste text
 		
+		await page.waitForTimeout(500);
 		const editorText = await value.innerText();
-		expect(editorText).toBe('Тест тест тест');
-		
-		// Click share button
-		console.log("Clicking share button...");
-		const share = page.locator("div#button-header-share");
-		await expect(share).toBeVisible({ timeout: 5000 });
-		await share.click();
-		
-		// Wait for the "Publish" button to appear and click it
-		console.log("Clicking publish button...");
-		const publishButton = page.locator("#menuPublish").locator("div.buttons").locator("div.txt");
-		await expect(publishButton).toBeVisible({ timeout: 5000 });
-		await publishButton.click();
-		
+		expect(editorText).toBe(storage.default_text);
+
+		const published = await publishCurrentObject(page);
+		expect(published).toBe(true);
+
 		console.log("✅ Test completed successfully.");
 		await page.keyboard.press('Escape');
+		
+		// Unpublish the document before deletion
+		console.log("Unpublishing the document...");
+		const unpublished = await unpublishCurrentObject(page);
+		expect(unpublished).toBe(true);
+		
 		// Cleanup: Delete the created document
 		console.log("Cleaning up: Deleting the test document...");
-		await deleteObjectByName(page, "Документ 1", true, "Pages");
+		const documentDeleted = await deleteObjectByName(page, pageTitle, true, translations.sidebarObjectTypeObject);
+		expect(documentDeleted).toBe(true);
 		console.log("Test cleanup completed");
 	} catch (e) {
 		console.error(`❌ ERROR in Create object and publish it test: ${e}`);

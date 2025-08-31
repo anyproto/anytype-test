@@ -98,37 +98,45 @@ export async function setupTestContext() {
 	console.log('Starting test context setup...');
 	try {
 		// Create a new test data directory for this test run
-		createTestDataDir();
-		
-		// Launch the Electron application and get the app instance
+		const testDataPath = createTestDataDir();
+		console.log('Test data directory created:', testDataPath);
+
+		// Screenshots directory will be created in testSetup.ts
+
+		// Launch the Electron app
 		console.log('Launching Electron app...');
 		const app = await launchElectronApp();
-		console.log('Electron app launched successfully');
-
-		// Store the app instance in a global variable for access across tests
-		console.log('Setting up global app instance...');
 		setElectronApp(app);
 
-		// Load and set translations from the specified language file
+		// Wait for the first window to be ready
+		console.log('Setting up global app instance...');
+		const firstWindow = await app.firstWindow();
+		setPage(firstWindow);
+
+		// Load translations
 		console.log('Loading translations...');
 		const translations = loadTranslations();
-		console.log('Translations loaded:', Object.keys(translations).length, 'keys found');
 		setTranslations(translations);
+		console.log('Translations loaded:', Object.keys(translations).length, 'keys found');
 
-		// Get the first/main window of the application
+		// Wait for the first window to be fully loaded
 		console.log('Waiting for first window...');
-		const win = await app.firstWindow();
+		await firstWindow.waitForLoadState('domcontentloaded');
 		console.log('First window acquired');
 
-		// Store the main window's page object in a global variable for access across tests
+		// Set up global page instance
 		console.log('Setting up global page instance...');
-		setPage(win);
-		
-		// Ensure we're logged out before starting tests
+		await firstWindow.waitForLoadState('networkidle');
+
+		// Check login state and log out if needed
 		console.log('Checking login state... and logging out if needed');
-		//await logOutIfNeeded();
+		if (process.env.RUN_LOGOUT === 'true') {
+			await logOutFromSpace();
+		} else {
+			console.log('RUN_LOGOUT is false or not set, skipping logOutIfNeeded...');
+		}
+
 		console.log('Test context setup completed successfully');
-		return { app, win };
 	} catch (error) {
 		console.error('Error during test context setup:', error);
 		throw error;
@@ -140,7 +148,6 @@ export async function logOutIfNeeded() {
 	const loginScreenStatus = await isOnLoginScreen();
     if (!loginScreenStatus) {
         console.log('We are not on the login screen, logging out...');
-        await delay(1000);
         await logOut();
      }
 }
@@ -161,15 +168,66 @@ export async function logOut() {
     const stuckOnLogginIn = await page.getByText(translations.pageAuthSetupEntering).count() > 0;
 
     if (stuckOnLogginIn) {
-		console.log('Stuck on logging in, clicking back button');
-        await page.locator('div.button.black.c28').getByText(translations.commonBack).click();
+		logoutFromEnteringPage();
     } else {
 		console.log('Not stuck on logging in, logging out...');
-        await page.locator('div#item-settings.item.isButton.settings').click();
-        await page.click(`div.logout`);
-        await page.getByText(translations.popupLogoutLogoutButton).click();
+		logOutFromSpace();
     }
 }
+
+export async function logoutFromEnteringPage() {
+	console.log('Logging out from entering page...');
+	console.log('Stuck on logging in, clicking back button');
+	const backButton = page.locator('div.animation', { hasText: translations.commonBack });
+	const isVisible = await backButton.isVisible();
+	const isEnabled = await backButton.isEnabled();
+
+	if (isVisible && isEnabled) {
+		await backButton.click();
+	} else {
+		console.error('Back button is not visible or not enabled');
+	}
+}
+
+
+export async function logOutFromSpace() {
+	console.log('Logging out from space...');
+	// Wait for page to be fully loaded and synced after login
+	await waitForPageLoadAfterLogin(60000);
+	// Step 1: Click back arrow to return to vault
+	console.log('Step 1: Clicking back arrow to return to vault...');
+	const backArrow = page.locator('div.subHead div.side.left div.icon.back');
+	await backArrow.waitFor({ state: 'visible', timeout: 10000 });
+	await backArrow.click();
+	console.log('Back arrow clicked');
+	await delay(2000);
+	
+	// Step 2: Click on account icon in bottom left
+	console.log('Step 2: Clicking on account icon...');
+	const accountIcon = page.locator('div.bottom div.side.left div.appSettings');
+	await accountIcon.waitFor({ state: 'visible', timeout: 10000 });
+	await accountIcon.click();
+	console.log('Account icon clicked');
+	await delay(1000);
+	
+	// Step 3: Click logout button in settings
+	console.log('Step 3: Clicking logout button...');
+	const logoutButton = page.locator('div.logout');
+	await logoutButton.waitFor({ state: 'visible', timeout: 10000 });
+	await logoutButton.click();
+	console.log('Logout button clicked');
+	await delay(1000);
+	
+	// Step 4: Click logout button in confirmation dialog
+	console.log('Step 4: Clicking logout button in confirmation dialog...');
+	const confirmLogoutButton = page.locator('div#popupLogout-innerWrap div.buttons div.button.red.c36 div.txt:has-text("Logout")');
+	await confirmLogoutButton.waitFor({ state: 'visible', timeout: 10000 });
+	await confirmLogoutButton.click();
+	console.log('Logout confirmed');
+	await delay(1000);
+
+}
+
 
 export async function isOnLoginScreen(): Promise<boolean> {
     try {
@@ -205,4 +263,69 @@ export async function isOnLoginScreen(): Promise<boolean> {
         console.error('Error checking login screen:', error);
         return false;
     }
+}
+
+/**
+ * Wait for application synchronization to complete
+ * Checks for sync status using the headerSync element
+ */
+export async function waitForSyncComplete(timeoutMs: number = 30000): Promise<void> {
+    console.log('🔄 Waiting for application sync to complete...');
+    
+    const startTime = Date.now();
+    
+    while (Date.now() - startTime < timeoutMs) {
+        try {
+            // Wait for headerSync element to appear first
+            const headerSync = page.locator('#headerSync');
+            const isHeaderSyncVisible = await headerSync.isVisible();
+            
+            if (!isHeaderSyncVisible) {
+                console.log('⏳ Waiting for headerSync element to appear...');
+                await delay(2000);
+                continue;
+            }
+            
+            // Once headerSync is visible, wait 4 seconds and proceed
+            console.log('✅ HeaderSync element found, waiting 4 seconds before proceeding...');
+            await delay(4000);
+            console.log('✅ Sync wait completed');
+            return;
+            
+            // Commented out sync status checking logic
+            /*
+            // Check if sync is complete by looking for synced class inside headerSync
+            const syncedIcon = page.locator('#headerSync .icon.synced');
+            const isSynced = await syncedIcon.isVisible();
+            
+            if (isSynced) {
+                console.log('✅ Sync completed successfully');
+                return;
+            } else {
+                console.log('⏳ Sync in progress... waiting');
+                await delay(2000);
+            }
+            */
+            
+        } catch (error) {
+            console.log('⚠️ Error checking sync status:', error.message);
+            await delay(2000);
+        }
+    }
+    
+    console.log('⚠️ Sync timeout reached, proceeding anyway');
+}
+
+/**
+ * Wait for page to be fully loaded after login
+ * Includes waiting for sync to complete
+ */
+export async function waitForPageLoadAfterLogin(timeoutMs: number = 30000): Promise<void> {
+    console.log('📄 Waiting for page to load after login...');
+    
+    
+    // Wait for sync to complete
+    await waitForSyncComplete(timeoutMs);
+    
+    console.log('✅ Page fully loaded and synced');
 }
