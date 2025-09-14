@@ -1,10 +1,9 @@
 import { test, expect } from "@playwright/test";
 import { delay, waitForPageLoadAfterLogin } from '../setup/helpers';
 import { page, translations, storage } from '../setup/globals';
-import { widget } from "../utils/widgets";
 import { 
     deleteObjectByName, 
-    createPage,
+    createPageDefault,
     createTitleWithSelectionTarget,
     clearInputField
 } from "../utils/spaceUtils";
@@ -99,7 +98,7 @@ test("Search object by title and text", async () => {
 		const title = "Search Test Object";
 		// Create page
 		console.log("Creating a new page...");
-		const pageCreated = await createPage(page);
+		const pageCreated = await createPageDefault(page);
 		//expect(pageCreated).toBeTruthy();
 		await page.waitForTimeout(5000);
 		// Find and create a title
