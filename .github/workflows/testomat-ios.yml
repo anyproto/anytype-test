@@ -1,4 +1,4 @@
-name: Testomatio iOS
+name: Testomat iOS
 
 on:
   workflow_dispatch:
