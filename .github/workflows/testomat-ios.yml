@@ -26,7 +26,7 @@ jobs:
       - name: Start Testomat run
         env:
           TESTOMATIO: "${{ github.event.inputs.testomatio }}"
-          TESTOMATIO_RUN: "${{ agithub.event.inputs.run }}"
+          TESTOMATIO_RUN: "${{ github.event.inputs.run }}"
         run: npx -y -p @testomatio/reporter start-test-run --launch
 
   trigger-build:
