@@ -16,13 +16,28 @@ export function widget(page: Page, widgetName: string) {
     );
     
     return {
-      async createObject() {
-        await widgetLocator.hover();
-        await widgetLocator.locator('.iconWrap.create').click();
-      },
-      async more() {
-        await widgetLocator.hover();
-        await widgetLocator.locator('.iconWrap.more').click();
+      async createDefaultObject(title?: string) {
+        // Step 1: Create object by clicking plus button
+        console.log('Creating object by clicking plus button...');
+        const plusButton = page.locator('div.icon.plus.withBackground');
+        await plusButton.waitFor({ state: 'visible', timeout: 10000 });
+        await plusButton.click();
+        console.log('Plus button clicked');
+        await page.waitForTimeout(2000);
+        
+        // Step 2: Enter title for the object if provided
+        if (title) {
+          console.log(`Entering title for the object: ${title}...`);
+          // Wait a bit more for the page to load and title field to appear
+          await page.waitForTimeout(3000);
+          
+          const titleInput = page.locator('div#value.editable.value.focusable.ctitle[contenteditable="true"]');
+          await titleInput.waitFor({ state: 'visible', timeout: 20000 });
+          await titleInput.click();
+          await titleInput.type(title, { delay: 100 }); // Type as if human is typing
+          console.log(`Title entered: ${title}`);
+          await page.waitForTimeout(1000);
+        }
       },
   
       // Raw locators:
