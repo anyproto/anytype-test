@@ -86,7 +86,7 @@ jobs:
         run: make run-ios-simulators
 
       - name: Run iOS Smoke
-        run: npm run test:ios:full
+        run: npm run test:ios:ci
         continue-on-error: true
         env:
           TESTOMATIO: "${{ github.event.inputs.testomatio }}"

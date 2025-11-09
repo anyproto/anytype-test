@@ -73,7 +73,7 @@ jobs:
         run: make run-ios-simulators
 
       - name: Run Plan "iOS test run auto"
-        run: npx @testomatio/reporter run "npm run test:ios" --filter "testomatio:plan=c0912ea1"
+        run: npx @testomatio/reporter run "npm run test:ios:ci" --filter "testomatio:plan=c0912ea1"
         continue-on-error: true
         env:
           TESTOMATIO: ${{ secrets.TESTOMATIO }}
