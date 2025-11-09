@@ -72,10 +72,12 @@ jobs:
       - name: Run Simulators
         run: make run-ios-simulators
 
-      - name: Run iOS Smoke
-        run: npm run test:ios:smoke
+      - name: Run Plan "iOS test run auto"
+        run: npx @testomatio/reporter run --command "npm run test:ios" --filter "testomatio:plan=c0912ea1"
         continue-on-error: true
-
+        env:
+          TESTOMATIO: ${{ secrets.TESTOMATIO }}
+      
       - name: Upload Results
         uses: actions/upload-artifact@v4
         with:
