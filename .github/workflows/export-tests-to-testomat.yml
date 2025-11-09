@@ -1,0 +1,31 @@
+name: Export Tests to Testomat.io
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  export-tests:
+    name: Export Tests to Testomat.io
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Export Playwright tests
+        run: npx check-tests@latest Playwright "**/*{.,_}{test,spec,cy}.ts" --typescript
+        env:
+          TESTOMATIO: ${{ secrets.TESTOMATIO }}
+
+      - name: Export Cucumber tests
+        run: npx check-cucumber@latest "**/*.feature" --dir features
+        env:
+          TESTOMATIO: ${{ secrets.TESTOMATIO }}
