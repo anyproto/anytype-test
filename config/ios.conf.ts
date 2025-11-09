@@ -7,16 +7,6 @@ dotenv.config({ path: path.resolve(process.cwd(), '.env'), override: true });
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local'), override: true });
 dotenv.config({ path: path.resolve(process.cwd(), '.env.export'), override: true });
 
-function buildTagExpression(idsCsv?: string): string | undefined {
-  if (!idsCsv) return undefined
-  const tags = idsCsv
-    .split('|')
-    .map(s => s.trim())
-    .filter(Boolean)
-    .map(id => id.startsWith('@') ? id : `@${id}`)
-  return tags.length ? tags.join(' or ') : undefined
-}
-
 export const config: WebdriverIO.Config = {
     //
     // ====================
@@ -133,8 +123,7 @@ export const config: WebdriverIO.Config = {
       timeout: 60000,
       ignoreUndefinedDefinitions: true,
       strict: false,
-      format: ['pretty'],
-      tagExpression: buildTagExpression(process.env.TESTOMATIO_GREP),
+      format: ['pretty']
     },
   
     //
