@@ -6,6 +6,7 @@
   "scripts": {
     "test:api": "cucumber-js -p api",
     "test:desktop": "npx playwright test --config config/desktop.config.ts",
+    "test:desktop:debug": "npx playwright test --config config/desktop-debug.config.ts",
     "test:e2e": "cucumber-js -p api --tags @e2e",
     "test:comp": "cucumber-js -p api --tags @compatibility",
     "test:invite": "cucumber-js -p api --tags @invite",
@@ -66,6 +67,7 @@
     "@protobuf-ts/runtime-rpc": "^2.9.4",
     "@slack/web-api": "^7.4.0",
     "chalk": "^4.1.2",
+    "dotenv": "^17.2.1",
     "ejs": "^3.1.10"
   }
 }
