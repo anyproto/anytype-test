@@ -14,7 +14,6 @@ const logger = new Logger({ name: "custom" });
 When(
   "{string} sets network to {string}",
   async function (user: string, networkName: string) {
-    logger.info(`STEP: ${user} sets network to ${networkName}`);
     const userDriver = getUserDriver(user);
     this.loginPage = new LoginPage(userDriver);
     await this.loginPage.changeNetworkSettings();

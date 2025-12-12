@@ -15,8 +15,10 @@
     "test:local:testomatio": "cucumber-js -p api --tags @local --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
     "test:smoke:testomatio": "cucumber-js -p api --tags @smoke --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
     "test:comp:testomatio": "cucumber-js -p api --tags @compatibility --format ./node_modules/@testomatio/reporter/lib/adapter/cucumber.js",
-    "test:ios": "wdio run ./config/ios.conf.ts --cucumberOpts.tagExpression",
-    "test:testios:smoke": "wdio run ./config/testios.conf.ts --tags @smoke"
+    "test:ios": "wdio run config/ios.conf.ts --cucumberOpts.tagExpression",
+    "test:ios:smoke": "wdio run config/ios.conf.ts --cucumberOpts.tagExpression @smoke",
+    "test:ios:full": "wdio run config/ios.conf.ts",
+    "test:ios:ci": "./scripts/run-ios-from-testomat.sh"
   },
   "repository": {
     "type": "git",
@@ -37,7 +39,7 @@
     "@origranot/ts-logger": "^1.12.0",
     "@playwright/test": "^1.51.1",
     "@testing-library/webdriverio": "^3.2.1",
-    "@testomatio/reporter": "github:anshamray/reporter#fix-slack",
+    "@testomatio/reporter": "^2.3.6",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.8.1",
     "@types/unzipper": "^0.10.10",

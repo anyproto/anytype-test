@@ -23,4 +23,7 @@ mw/*
 test-results/*
 !test-results/
 test-temp-translations.json
+build/*
 .env
+.env.export
+.env.local

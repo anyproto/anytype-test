@@ -31,7 +31,7 @@ interface Paths {
  */
 export const setClientAsCurrentClient = (clientNumber: number): void => {
   store.currentClientNumber = clientNumber;
-  logger.info(`Switched to client number ${clientNumber}`, {
+  logger.info(`Switched to client number ${clientNumber} and reset sync status`, {
     user: clientNumber,
   });
   logger.debug(
@@ -46,7 +46,7 @@ export const setClientAsCurrentClient = (clientNumber: number): void => {
  * @param serverNumber The server number identifier.
  */
 Given(
-  "the server {string} {int} is running", {timeout: 180 * 1000},
+  "the server {string} {int} is running", { timeout: 180 * 1000 },
   async function (this: CustomWorld, heartVersion: string, serverNumber: number) {
     const scenarioName = this.scenario?.pickle.name || 'UnknownScenario';
     logger.info(`STEP: the server ${heartVersion} ${serverNumber} is running`);
@@ -57,7 +57,7 @@ Given(
       }
     );
 
-     // Check Go installation
+    // Check Go installation
     const isGoInstalled = await checkGoInstallation();
     if (!isGoInstalled) {
       logger.error(
@@ -241,14 +241,14 @@ function checkGoInstallation(): Promise<boolean> {
 
 export async function getObjectSyncStatus(objectNumber: number): Promise<number> {
   const object = store.objects.get(objectNumber);
-  
+
   if (!object) {
     throw new Error(`Object with number ${objectNumber} not found in store. Check you scenario.`);
   }
   const response = await callObjectSubscribeIds([object.objectId], object.spaceId, "objectSync");
-  const syncStatus = response[0]?.fields?.syncStatus?.kind?.oneofKind === "numberValue" 
-  ? response[0]?.fields?.syncStatus?.kind?.numberValue 
-  : undefined;
+  const syncStatus = response[0]?.fields?.syncStatus?.kind?.oneofKind === "numberValue"
+    ? response[0]?.fields?.syncStatus?.kind?.numberValue
+    : undefined;
 
   if (syncStatus === undefined) {
     throw new Error(`Sync status not found for object ${objectNumber}`);

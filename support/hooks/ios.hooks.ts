@@ -1,57 +1,55 @@
 import { browser } from "@wdio/globals";
-import { AfterStep, After } from "@cucumber/cucumber";
+import { AfterStep, After, BeforeStep, Before, ITestStepHookParameter, ITestCaseHookParameter } from "@cucumber/cucumber";
 import { Logger } from "@origranot/ts-logger";
-import { GRPCServerManager } from "../api/services/gprcServerManager";
-import { GRPCClientManager } from "../api/services/gprcClient";
-import { store } from "../api/helpers/store";
-import { callAccountDelete } from "../api/clients/accountApi";
-import { callWalletCreateSession } from "../api/clients/walletApi";
-import { updateClientToken } from "../api/clients/tokenManager";
+import fs from 'fs';
+import { driver } from "@wdio/globals";
 
 const logger = new Logger({ name: "custom" });
 
-AfterStep(async function (stepResult: { result: { status: string } }) {
-  if (stepResult.result.status === "failed") {
-    const timestamp = new Date().toISOString().replace(/[^0-9]/g, "");
-    const screenshotPath = `./results/screenshots/failed-${timestamp}.png`;
-    await browser.saveScreenshot(screenshotPath);
-    console.log(`Screenshot saved: ${screenshotPath}`);
+function getUniqueDirectoryName(baseDir: string): string {
+  let counter = 1;
+  let dirName = baseDir;
+  
+  while (fs.existsSync(dirName)) {
+    dirName = `${baseDir}-${counter}`;
+    counter++;
   }
+  
+  return dirName;
+}
+BeforeStep(async function (step: ITestStepHookParameter) {
+  if (step.pickle.steps[0].id == step.pickleStep.id) {
+    logger.info('='.repeat(30));
+    logger.info(`SCENARIO: ${step.pickle.name}, tags: ${step.pickle.tags.map(tag => tag.name).join(", ")}`);
+  }
+  // logger.info(`Executing step: ${step.pickleStep.text}`);
+  logger.info(`STEP: ${(step.pickleStep as any).keyword} ${step.pickleStep.text}`);
 });
 
-After(async function () {
-  try {
-    const grpcServerManager = new GRPCServerManager(
-      "heart",
-      process.cwd(),
-      "default"
-    );
+AfterStep(async function (step: ITestStepHookParameter) {
+  if (step.result?.status === "FAILED") {
+    const timestamp = new Date().toISOString().replace(/[:]/g, '-').replace(/\..+/, '');
+    const baseDir = `./results/failed/${timestamp}-${step.pickleStep.text}`.replace(/['"]/g, '');;
+    const screenshotsDir = getUniqueDirectoryName(baseDir);
+    
+    fs.mkdirSync(screenshotsDir, { recursive: true });
 
-    await grpcServerManager.startServer(1);
+    // Save screenshots and pageSource for all simulators
+    const instances = driver.instances || ['default'];
+    for (const simulatorName of instances) {
+      try {
+        const simulator = driver[simulatorName];
+        const capabilities = await simulator.capabilities;
+        const simulatorInfo = `${simulatorName}-${capabilities.deviceName}-${capabilities.platformVersion}`;
 
-    const server = store.servers.get(1);
-    if (!server) {
-      throw new Error("Failed to start the server");
-    }
-
-    const grpcClientManager = new GRPCClientManager(server.address);
-    store.grpcClientManager = grpcClientManager;
-    grpcClientManager.createClient(1);
-
-    if (store.users.size > 0) {
-      for (const [userNumber, user] of store.users) {
-        if (user.mnemonic) {
-          const token = await callWalletCreateSession(user.mnemonic);
-          updateClientToken(token);
-
-          await callAccountDelete();
-          logger.info(`Deleted account for user ${userNumber}`);
-        }
+        await simulator.saveScreenshot(`${screenshotsDir}/image-${simulatorInfo}.png`);
+        const pageSource = await simulator.getPageSource();
+        fs.writeFileSync(`${screenshotsDir}/pageSource-${simulatorInfo}.xml`, pageSource, 'utf-8');
+        logger.info(`Data saved for ${simulatorInfo}`);
+      } catch (error) {
+        logger.error(`Failed to save data for simulator ${simulatorName}:`, error);
       }
     }
-  } catch (error) {
-    logger.error("Failed to cleanup accounts:", error);
-  } finally {
-    store.clear();
+    logger.info(`All data saved in: ${screenshotsDir}`);
   }
 });

@@ -23,7 +23,7 @@ jobs:
         
       - name: Create config.yml file from secret
         env:
-          CONFIG_YML_CONTENT: ${{ secrets.CONFIG_YML_CONTENT }}
+          CONFIG_YML_CONTENT: ${{ secrets.ANY_SYNC_NETWORK_STAGE1 }}
         run: |
           echo "$CONFIG_YML_CONTENT" > config.yml
 
