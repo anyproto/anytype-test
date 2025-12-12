@@ -15,6 +15,9 @@ export const setupTest = () => {
     // Setup all test result directories
     DirectoryUtils.setupTestResultDirectories();
     
+    // Clean up old screenshots before starting tests
+    DirectoryUtils.cleanupScreenshots();
+    
     await setupTestContext();
   });
 

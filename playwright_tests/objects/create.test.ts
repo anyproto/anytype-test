@@ -3,7 +3,7 @@ import { delay, waitForPageLoadAfterLogin } from '../setup/helpers';
 import { page, storage, translations } from '../setup/globals';
 import { 
 	deleteObjectByName, 
-	createPage,
+	createPageDefault,
 	createTitleWithSelectionTarget, 
 	createTitleWithEditorTitle,
 	publishCurrentObject,
@@ -253,7 +253,7 @@ test("Create object and publish it", async () => {
     
 		const pageTitle = "Test Publish Document";
 		console.log("Creating a new page...");
-		const pageCreated = await createPage(page);
+		const pageCreated = await createPageDefault(page);
 		expect(pageCreated).toBe(true);
 		await page.waitForTimeout(5000);
 		// Find and create a title

@@ -1,12 +1,13 @@
 import dotenv from 'dotenv';
 import path, { format } from 'path';
+import testomatio from '@testomatio/reporter/webdriver';
 
 // Load environment variables in order
 dotenv.config({ path: path.resolve(process.cwd(), '.env'), override: true });
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local'), override: true });
 dotenv.config({ path: path.resolve(process.cwd(), '.env.export'), override: true });
 
-export const config = {
+export const config: WebdriverIO.Config = {
     //
     // ====================
     // Runner Configuration
@@ -17,7 +18,11 @@ export const config = {
     specs: ["../features/ios/*.feature"],
     exclude: [],
     // reporters: ['spec'],
-    // reporters: [],
+    reporters: [
+      [testomatio, {
+        apiKey: `${process.env.TESTOMATIO}`
+      }]
+    ],
     // ==================
     // Capabilities
     // ==================
@@ -118,8 +123,7 @@ export const config = {
       timeout: 60000,
       ignoreUndefinedDefinitions: true,
       strict: false,
-      format: ['pretty'],
-      // configFile: "./cucumber.cjs",
+      format: ['pretty']
     },
   
     //
@@ -127,5 +131,10 @@ export const config = {
     // Hooks
     // =====
     // (Omit hooks if you just want a minimal config)
+    afterTest: async function (test, context, { error }) {
+        if (error) {
+            await browser.takeScreenshot();
+        }
+    },
   };
   

@@ -1,8 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { page, translations, storage } from '../setup/globals';
 import { setupTest } from '../setup/testSetup';
-import { widget } from '../utils/widgets';
-import { deleteObjectFromBin, deleteSpaceByName } from '../utils/spaceUtils';
+import { createPageDefault, deleteObjectFromBin, deleteSpaceByName,  } from '../utils/spaceUtils';
 import { waitForPageLoadAfterLogin } from '../setup/helpers';
 
 // Setup test environment once
@@ -16,8 +15,7 @@ test("01_Delete object from bin", async () => {
     
     // Step 1: Create object with title using widget utility
     console.log('Step 1: Creating object with title using widget utility...');
-    const pagesWidget = widget(page, 'Pages');
-    await pagesWidget.createDefaultObject('Test bin object');
+    const pageCreated = await createPageDefault(page, 'Test bin object');
     console.log('Object created with title: Test bin object');
     await page.waitForTimeout(2000);
     

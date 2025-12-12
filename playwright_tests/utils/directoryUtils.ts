@@ -137,4 +137,56 @@ export class DirectoryUtils {
       return [];
     }
   }
+  
+  /**
+   * Clean up old screenshots automatically
+   */
+  static cleanupScreenshots(): void {
+    const screenshotsDir = this.getScreenshotsDir();
+    
+    if (!fs.existsSync(screenshotsDir)) {
+      return;
+    }
+    
+    try {
+      const files = fs.readdirSync(screenshotsDir)
+        .filter(file => file.endsWith('.png'))
+        .map(file => ({
+          name: file,
+          path: path.join(screenshotsDir, file),
+          stats: fs.statSync(path.join(screenshotsDir, file))
+        }))
+        .sort((a, b) => b.stats.mtime.getTime() - a.stats.mtime.getTime()); // newest first
+      
+      const now = Date.now();
+      const maxAgeMs = 24 * 60 * 60 * 1000; // 24 hours
+      const maxCount = 50; // keep only 50 newest files
+      
+      let deletedCount = 0;
+      
+      // Delete by age (older than 24 hours)
+      const oldFiles = files.filter(file => (now - file.stats.mtime.getTime()) > maxAgeMs);
+      oldFiles.forEach(file => {
+        fs.unlinkSync(file.path);
+        deletedCount++;
+      });
+      
+      // Delete by count (keep only the newest ones)
+      const remainingFiles = files.filter(file => (now - file.stats.mtime.getTime()) <= maxAgeMs);
+      if (remainingFiles.length > maxCount) {
+        const filesToDelete = remainingFiles.slice(maxCount);
+        filesToDelete.forEach(file => {
+          fs.unlinkSync(file.path);
+          deletedCount++;
+        });
+      }
+      
+      if (deletedCount > 0) {
+        console.log(`🧹 Cleaned up ${deletedCount} old screenshots`);
+      }
+      
+    } catch (error) {
+      console.error('Error during screenshot cleanup:', error);
+    }
+  }
 }

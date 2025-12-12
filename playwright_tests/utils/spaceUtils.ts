@@ -24,22 +24,41 @@ export async function openSpace(page: Page, spaceName: string): Promise<boolean>
   }
 }
 
+
 /**
- * Creates an empty page.
+ * Creates an empty page using default object creation (no menu selection).
  * @param page - Object of the Playwright page
+ * @param title - Optional title for the page
  * @returns {Promise<boolean>} - Whether the page is created successfully or not
  */
-export async function createPage(page: Page): Promise<boolean> {
+export async function createPageDefault(page: Page, title?: string): Promise<boolean> {
   try {
-    // Click the create button to open menu
-    const createButton = page.locator("div.plusWrapper").locator("div.plus");
-    await expect(createButton).toBeVisible({ timeout: 5000 });
-    await createButton.click();
- 
-    console.log("Page object created successfully.");
+    // Step 1: Create object by clicking plus button
+    console.log('Creating object by clicking plus button...');
+    const plusButton = page.locator('div.subHead div.plusWrapper div.icon.create.withBackground');
+    await plusButton.waitFor({ state: 'visible', timeout: 10000 });
+    await plusButton.click();
+    console.log('Plus button clicked');
+    await page.waitForTimeout(2000);
+    
+    // Step 2: Enter title for the object if provided
+    if (title) {
+      console.log(`Entering title for the object: ${title}...`);
+      // Wait a bit more for the page to load and title field to appear
+      await page.waitForTimeout(3000);
+      
+      const titleInput = page.locator('div#value.editable.value.focusable.ctitle[contenteditable="true"]');
+      await titleInput.waitFor({ state: 'visible', timeout: 20000 });
+      await titleInput.click();
+      await titleInput.type(title, { delay: 100 }); // Type as if human is typing
+      console.log(`Title entered: ${title}`);
+      await page.waitForTimeout(1000);
+    }
+
+    console.log("Page object created successfully using default method.");
     return true;
   } catch (e) {
-    console.log(`Error creating page: ${e}`);
+    console.log(`Error creating page using default method: ${e}`);
     return false;
   }
 }
@@ -112,7 +131,7 @@ export async function deleteObjectByName(
     }
     
     // Go back to main page
-    const backArrow = page.locator("div.titleWrap").locator("div.back");
+    const backArrow = page.locator("div.subHead").locator("div.back");
     await expect(backArrow).toBeVisible({ timeout: 5000 });
     await backArrow.click();
 
@@ -451,6 +470,223 @@ export async function clearInputField(page: Page, inputLocator: any): Promise<vo
 }
 
 /**
+ * Open slash menu in editor by typing "/" in the specified input field
+ * @param page - Object of the Playwright page
+ * @param inputLocator - Locator of the input field where to type "/"
+ * @returns {Promise<boolean>} - Whether the slash menu was opened successfully
+ */
+export async function openSlashMenu(page: Page, inputLocator: any): Promise<boolean> {
+  try {
+    console.log("Opening slash menu...");
+    
+    // Click on the input field to focus it
+    await inputLocator.click();
+    
+    // Type "/" to open the slash menu
+    await inputLocator.type("/");
+    
+    // Wait for the slash menu to appear
+    const slashMenu = page.locator("div.ReactVirtualized__Grid.ReactVirtualized__List");
+    await expect(slashMenu).toBeVisible({ timeout: 5000 });
+    
+    console.log("✅ Slash menu opened successfully");
+    return true;
+  } catch (e) {
+    console.log(`Error opening slash menu: ${e}`);
+    return false;
+  }
+}
+
+/**
+ * Select an item from the slash menu by its ID
+ * @param page - Object of the Playwright page
+ * @param itemId - ID of the menu item to select (e.g., "item-text-0", "item-text-1")
+ * @returns {Promise<boolean>} - Whether the item was selected successfully
+ */
+export async function selectSlashMenuItem(page: Page, itemId: string): Promise<boolean> {
+  try {
+    console.log(`Selecting slash menu item: ${itemId}`);
+    
+    // Find and click on the specified menu item
+    const menuItem = page.locator(`div#${itemId}.item.isBig.withDescription.withIcon`);
+    await expect(menuItem).toBeVisible({ timeout: 5000 });
+    await menuItem.click();
+    
+    // Wait for the menu to disappear
+    const slashMenu = page.locator("div.ReactVirtualized__Grid.ReactVirtualized__List");
+    await expect(slashMenu).not.toBeVisible({ timeout: 5000 });
+    
+    console.log(`✅ Slash menu item '${itemId}' selected successfully`);
+    return true;
+  } catch (e) {
+    console.log(`Error selecting slash menu item '${itemId}': ${e}`);
+    return false;
+  }
+}
+
+/**
+ * Scroll the slash menu to make the Embeds section visible
+ * @param page - Object of the Playwright page
+ * @returns {Promise<boolean>} - Whether the scroll was successful
+ */
+export async function scrollSlashMenuToEmbeds(page: Page): Promise<boolean> {
+  try {
+    console.log("Scrolling slash menu to Embeds section...");
+    
+    const slashMenu = page.locator("div.ReactVirtualized__Grid.ReactVirtualized__List");
+    await expect(slashMenu).toBeVisible({ timeout: 5000 });
+    
+    // Scroll to make the Embeds section visible (around position 1068px)
+    await slashMenu.evaluate((element) => {
+      element.scrollTop = 1000; // Scroll to approximately where Embeds section is
+    });
+    
+    await delay(1000); // Wait for scroll to complete
+    
+    // Verify that the Embeds section is visible
+    const embedsSection = page.locator("div#item-embed.sectionName");
+    const isVisible = await embedsSection.isVisible();
+    
+    if (isVisible) {
+      console.log("✅ Slash menu scrolled to Embeds section successfully");
+      return true;
+    } else {
+      console.log("Embeds section not visible, trying alternative scroll position...");
+      // Try scrolling a bit more
+      await slashMenu.evaluate((element) => {
+        element.scrollTop = 1100;
+      });
+      await delay(1000);
+      
+      const isVisibleAfterSecondScroll = await embedsSection.isVisible();
+      if (isVisibleAfterSecondScroll) {
+        console.log("✅ Slash menu scrolled to Embeds section successfully (second attempt)");
+        return true;
+      } else {
+        throw new Error("Embeds section still not visible after scrolling");
+      }
+    }
+  } catch (e) {
+    console.log(`Error scrolling slash menu to Embeds: ${e}`);
+    return false;
+  }
+}
+
+/**
+ * Remove cursor from current input field by clicking elsewhere
+ * @param page - Object of the Playwright page
+ * @param targetLocator - Optional locator to click on (defaults to first editor input)
+ * @returns {Promise<boolean>} - Whether the cursor was successfully removed
+ */
+export async function removeCursorFromInput(page: Page, targetLocator?: any): Promise<boolean> {
+  try {
+    console.log("Removing cursor from current input field...");
+    
+    // Use provided target locator or default to first editor input
+    const target = targetLocator || page.locator("div#value.editable.value.focusable").first();
+    await expect(target).toBeVisible({ timeout: 5000 });
+    await target.click();
+    
+    await delay(1000); // Wait for focus change
+    
+    console.log("✅ Cursor removed from input field successfully");
+    return true;
+  } catch (e) {
+    console.log(`Error removing cursor from input: ${e}`);
+    return false;
+  }
+}
+
+/**
+ * Add a title block via slash menu
+ * @param page - Object of the Playwright page
+ * @param titleText - Text to enter in the title field
+ * @param inputLocator - Locator for the input field where to add the title (optional, defaults to last editor input)
+ * @returns {Promise<boolean>} - Whether the title was added successfully
+ */
+export async function addTitleViaSlashMenu(page: Page, titleText: string, inputLocator?: any): Promise<boolean> {
+  try {
+    console.log(`Adding title '${titleText}' via slash menu...`);
+    
+    // Use provided input locator or find the last editor input
+    const editorInput = inputLocator || page.locator("div#value.editable.value.focusable").last();
+    await expect(editorInput).toBeVisible({ timeout: 5000 });
+    
+    // Open slash menu
+    const slashMenuOpened = await openSlashMenu(page, editorInput);
+    if (!slashMenuOpened) {
+      throw new Error("Failed to open slash menu");
+    }
+    
+    // Select Title item from the slash menu
+    const titleItemSelected = await selectSlashMenuItem(page, "item-text-1");
+    if (!titleItemSelected) {
+      throw new Error("Failed to select Title item from slash menu");
+    }
+    
+    await delay(1000);
+    
+    // Type the title text in the title field
+    const titleInput = page.locator("div#value.editable.value.focusable").last();
+    await expect(titleInput).toBeVisible({ timeout: 5000 });
+    await titleInput.click();
+    await titleInput.type(titleText);
+    
+    // Verify that the title was entered correctly
+    const titleContent = await titleInput.innerText();
+    expect(titleContent).toBe(titleText);
+    
+    console.log(`✅ Title '${titleText}' added successfully via slash menu`);
+    return true;
+  } catch (e) {
+    console.log(`Error adding title '${titleText}' via slash menu: ${e}`);
+    return false;
+  }
+}
+
+/**
+ * Handle error popup that may appear during tests
+ * @param page - Object of the Playwright page
+ * @param context - Context description for logging (e.g., "during object creation")
+ * @returns {Promise<boolean>} - Whether the error popup was handled successfully
+ */
+export async function handleErrorPopup(page: Page, context: string = "during test execution"): Promise<boolean> {
+  try {
+    // Check if error popup is visible
+    const errorPopup = page.locator("div#popupConfirm-innerWrap");
+    const isVisible = await errorPopup.isVisible({ timeout: 2000 });
+    
+    if (isVisible) {
+      console.log(`⚠️ Error popup detected ${context}`);
+      
+      // Get error message for logging
+      const errorMessage = await errorPopup.locator("div.label.descr").innerText();
+      console.log(`Error message: ${errorMessage}`);
+      
+      // Click Cancel button to dismiss the popup
+      const cancelButton = errorPopup.locator("div.button.blank.c36");
+      await expect(cancelButton).toBeVisible({ timeout: 5000 });
+      await cancelButton.click();
+      
+      // Wait for popup to disappear
+      await expect(errorPopup).not.toBeVisible({ timeout: 5000 });
+      
+      console.log(`✅ Error popup dismissed ${context}`);
+      
+      // Log this as a test issue but don't fail the test
+      console.log(`❌ TEST ISSUE: Error popup appeared ${context}. This indicates a potential problem with the application.`);
+      
+      return true;
+    }
+    
+    return false; // No popup was found
+  } catch (e) {
+    console.log(`Error handling popup ${context}: ${e}`);
+    return false;
+  }
+}
+
+/**
  * Create a new space with custom name
  * @param page - Object of the Playwright page
  * @param spaceName - Name of the space to create
@@ -532,6 +768,46 @@ export async function createSpaceWithCustomName(page: Page, spaceName: string): 
     
   } catch (e) {
     console.log(`Error creating space "${spaceName}": ${e}`);
+    return false;
+  }
+}
+
+/**
+ * Paste text into input field using Ctrl+V (universal function)
+ * @param page - Object of the Playwright page
+ * @param inputLocator - Locator of the input field to paste into
+ * @param text - The text to paste
+ * @returns {Promise<boolean>} - Whether the text was pasted successfully
+ */
+export async function pasteTextIntoInput(page: Page, inputLocator: any, text: string): Promise<boolean> {
+  try {
+    console.log("Pasting text into input field using Ctrl+V...");
+    
+    // Click on the input field to focus it
+    await expect(inputLocator).toBeVisible({ timeout: 5000 });
+    await inputLocator.click();
+    await delay(1000);
+    
+    // Set clipboard content
+    await page.evaluate((text) => {
+      navigator.clipboard.writeText(text);
+    }, text);
+    
+    // Paste using Ctrl+V
+    await page.keyboard.press("Control+v");
+    await delay(2000); // Wait for paste to complete
+    
+    // Verify that the text was pasted correctly
+    const inputContent = await inputLocator.innerText();
+    if (inputContent === text) {
+      console.log("✅ Text pasted successfully via Ctrl+V");
+      return true;
+    } else {
+      console.log(`❌ Text paste verification failed. Expected: ${text}, Got: ${inputContent}`);
+      return false;
+    }
+  } catch (e) {
+    console.log(`Error pasting text into input: ${e}`);
     return false;
   }
 }

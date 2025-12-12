@@ -1,9 +1,6 @@
-name: Smoke iOS
+name: Testomat iOS
 
 on:
-  schedule:
-    # Triggers the workflow every weekday at 02:00 UTC:
-    - cron:  '0 2 * * 1-5'
   workflow_dispatch:
     inputs:
       build_ios_app:
@@ -11,18 +8,34 @@ on:
         required: false
         default: true
         type: boolean
-      url_for_build:
-        description: "Prebuild iOS App URL"
+      grep:
+        description: 'tests to grep '
         required: false
-        type: string
+        default: ''
+      run:
+        required: false
+      testomatio:
+        required: false
+
 
 jobs:
+
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start Testomat run
+        env:
+          TESTOMATIO: "${{ github.event.inputs.testomatio }}"
+          TESTOMATIO_RUN: "${{ github.event.inputs.run }}"
+        run: npx -y -p @testomatio/reporter start-test-run --launch
+
   trigger-build:
     runs-on: ubuntu-latest
+    needs: prepare
     
     steps:
       - name: Trigger and Wait for Build IPA
-        if: ${{ inputs.build_ios_app == true || github.event_name == 'schedule' }}
+        if: ${{ inputs.build_ios_app == true }}
         uses: convictional/trigger-workflow-and-wait@v1.6.5
         with:
           owner: anyproto
@@ -33,7 +46,7 @@ jobs:
           client_payload: '{ "build_type": "dev" }'
           wait_interval: 30
 
-  run-tests:
+  tests:
     runs-on: [self-hosted, iOS]
     needs: trigger-build
 
@@ -72,15 +85,28 @@ jobs:
       - name: Run Simulators
         run: make run-ios-simulators
 
-      - name: Run Plan "iOS test run auto"
-        run: npx @testomatio/reporter run "npm run test:ios:ci -- " --filter "testomatio:plan=c0912ea1"
+      - name: Run iOS Smoke
+        run: npm run test:ios:ci
         continue-on-error: true
         env:
-          TESTOMATIO: ${{ secrets.TESTOMATIO }}
-      
+          TESTOMATIO: "${{ github.event.inputs.testomatio }}"
+          TESTOMATIO_RUN: "${{ github.event.inputs.run }}"
+          TESTOMATIO_GREP: "${{ github.event.inputs.grep }}"
+          TESTOMATIO_PROCEED: 1
+
       - name: Upload Results
         uses: actions/upload-artifact@v4
         with:
           name: Results
           path: ./results
-          
+        
+  finalize:
+    needs: tests
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Finish Testomat run
+        env:
+          TESTOMATIO: "${{ github.event.inputs.testomatio }}"
+          TESTOMATIO_RUN: "${{ github.event.inputs.run }}"
+        run: npx -y -p @testomatio/reporter start-test-run --finish

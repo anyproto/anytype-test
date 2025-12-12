@@ -42,35 +42,49 @@ export async function launchElectronApp(): Promise<ElectronApplication> {
 		}
 	}
 
-	const app = await electron.launch({
+	const launchOptions: any = {
 		args: [appInfo.main],
 		executablePath: appInfo.executable,
-	});
+	};
+
+	// Add headless mode if HEADLESS environment variable is set
+	if (process.env.HEADLESS === 'true') {
+		console.log('🚀 Starting Electron app in HEADLESS mode');
+		launchOptions.args.push('--headless=new');
+		launchOptions.args.push('--no-sandbox');
+		launchOptions.args.push('--disable-dev-shm-usage');
+	} else {
+		console.log('🖥️ Starting Electron app in GUI mode');
+	}
+
+	const app = await electron.launch(launchOptions);
 	
 	app.on("window", async (page) => {
-		const filename = page.url()?.split("/").pop();
-		console.log(`Window opened: ${filename}`);
-		
-		page.on("pageerror", (error) => {
-			console.error(error);
-		});
-		page.on("console", (msg) => {
-			try {
-				const text = msg.text();
-				// Try to parse any potential JSON in the message
-				const parsed = text.replace(/%c/g, '').split(' ').map(part => {
-					try {
-						return JSON.parse(part);
-					} catch {
-						return part;
-					}
-				}).join(' ');
-				console.log('\x1b[34m%s\x1b[0m', parsed);
-			} catch (error) {
-				// Fallback to original message if parsing fails
-				console.log('\x1b[34m%s\x1b[0m', msg.text());
-			}
-		});
+		if (process.env.SHOW_ANYTYPE_LOGS === 'true') {
+			const filename = page.url()?.split("/").pop();
+			console.log(`Window opened: ${filename}`);
+			
+			page.on("pageerror", (error) => {
+				console.error(error);
+			});
+			page.on("console", (msg) => {
+				try {
+					const text = msg.text();
+					// Try to parse any potential JSON in the message
+					const parsed = text.replace(/%c/g, '').split(' ').map(part => {
+						try {
+							return JSON.parse(part);
+						} catch {
+							return part;
+						}
+					}).join(' ');
+					console.log('\x1b[34m%s\x1b[0m', parsed);
+				} catch (error) {
+					// Fallback to original message if parsing fails
+					console.log('\x1b[34m%s\x1b[0m', msg.text());
+				}
+			});
+		}
 	});
 
 	return app;
@@ -126,7 +140,7 @@ export async function setupTestContext() {
 
 		// Set up global page instance
 		console.log('Setting up global page instance...');
-		await firstWindow.waitForLoadState('networkidle');
+		//await firstWindow.waitForLoadState('networkidle');
 
 		// Check login state and log out if needed
 		console.log('Checking login state... and logging out if needed');
@@ -277,22 +291,25 @@ export async function waitForSyncComplete(timeoutMs: number = 30000): Promise<vo
     while (Date.now() - startTime < timeoutMs) {
         try {
             // Wait for headerSync element to appear first
-            const headerSync = page.locator('#headerSync');
-            const isHeaderSyncVisible = await headerSync.isVisible();
+
+			const defaultObjectButton = page.locator('div.subHead div.plusWrapper div.icon.create.withBackground');
+			// await plusButton.waitFor({ state: 'visible', timeout: 10000 });
+            // const headerSync = page.locator('#headerSync');
+            const isHeaderSyncVisible = await defaultObjectButton.isVisible();
             
             if (!isHeaderSyncVisible) {
-                console.log('⏳ Waiting for headerSync element to appear...');
+                console.log('⏳ Waiting for defaultObjectButton element to appear...');
                 await delay(2000);
                 continue;
             }
             
             // Once headerSync is visible, wait 4 seconds and proceed
-            console.log('✅ HeaderSync element found, waiting 4 seconds before proceeding...');
+            console.log('✅ defaultObjectButton element found, waiting 4 seconds before proceeding...');
             await delay(4000);
             console.log('✅ Sync wait completed');
             return;
             
-            // Commented out sync status checking logic
+
             /*
             // Check if sync is complete by looking for synced class inside headerSync
             const syncedIcon = page.locator('#headerSync .icon.synced');
